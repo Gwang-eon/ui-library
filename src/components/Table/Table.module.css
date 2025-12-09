@@ -201,6 +201,16 @@
   padding: var(--spacing-4);
 }
 
+/* Expand button cell */
+.expandBtnCell {
+  width: 40px;
+}
+
+/* Empty state action */
+.emptyStateAction {
+  margin-top: var(--spacing-4);
+}
+
 /* ========================================
    LOADING SKELETON
    ======================================== */

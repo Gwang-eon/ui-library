@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo, useCallback } from 'react';
 import { Info, CheckCircle, AlertTriangle, XCircle, X } from 'lucide-react';
 import styles from './Toast.module.css';
 
@@ -27,7 +27,7 @@ const variantIcons = {
   error: XCircle,
 };
 
-export const Toast: React.FC<ToastProps> = ({
+export const Toast: React.FC<ToastProps> = memo(({
   variant = 'info',
   title,
   message,
@@ -46,6 +46,10 @@ export const Toast: React.FC<ToastProps> = ({
     }
   }, [duration, onClose]);
 
+  const handleClose = useCallback(() => {
+    onClose?.();
+  }, [onClose]);
+
   return (
     <div className={`${styles.toast} ${styles[`toast-${variant}`]}`} role="alert">
       <Icon className={styles['toast-icon']} size={20} />
@@ -56,7 +60,7 @@ export const Toast: React.FC<ToastProps> = ({
       {onClose && (
         <button
           className={styles['toast-close']}
-          onClick={onClose}
+          onClick={handleClose}
           aria-label="Close toast"
         >
           <X size={20} />
@@ -64,6 +68,6 @@ export const Toast: React.FC<ToastProps> = ({
       )}
     </div>
   );
-};
+});
 
 Toast.displayName = 'Toast';

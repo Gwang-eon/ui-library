@@ -191,4 +191,10 @@ const ModalFooter = ({ children, className = '' }: ModalFooterProps) => {
   return <div className={`${styles.modalFooter} ${className}`}>{children}</div>;
 };
 
+Modal.displayName = 'Modal';
+ModalHeader.displayName = 'ModalHeader';
+ModalTitle.displayName = 'ModalTitle';
+ModalBody.displayName = 'ModalBody';
+ModalFooter.displayName = 'ModalFooter';
+
 export { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter };

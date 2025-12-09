@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import styles from './DeviceCard.module.css';
 
 // ===== Types =====
@@ -74,13 +74,27 @@ const DeviceCard: React.FC<DeviceCardProps> & {
     compact && styles.deviceCardCompact,
     variant === 'warning' && styles.deviceCardWarning,
     variant === 'error' && styles.deviceCardError,
+    onClick && styles.deviceCardClickable,
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick();
+    }
+  }, [onClick]);
+
   return (
-    <div className={cardClasses} onClick={onClick}>
+    <div
+      className={cardClasses}
+      onClick={onClick}
+      onKeyDown={onClick ? handleKeyDown : undefined}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
       {children}
     </div>
   );
@@ -88,19 +102,19 @@ const DeviceCard: React.FC<DeviceCardProps> & {
 
 // ===== Sub Components =====
 
-const DeviceCardHeader: React.FC<DeviceCardHeaderProps> = ({ children, className = '' }) => {
+const DeviceCardHeader: React.FC<DeviceCardHeaderProps> = memo(({ children, className = '' }) => {
   return <div className={`${styles.deviceCardHeader} ${className}`}>{children}</div>;
-};
+});
 
-const DeviceCardBody: React.FC<DeviceCardBodyProps> = ({ children, className = '' }) => {
+const DeviceCardBody: React.FC<DeviceCardBodyProps> = memo(({ children, className = '' }) => {
   return <div className={`${styles.deviceCardBody} ${className}`}>{children}</div>;
-};
+});
 
-const DeviceCardFooter: React.FC<DeviceCardFooterProps> = ({ children, className = '' }) => {
+const DeviceCardFooter: React.FC<DeviceCardFooterProps> = memo(({ children, className = '' }) => {
   return <div className={`${styles.deviceCardFooter} ${className}`}>{children}</div>;
-};
+});
 
-const DeviceCardIcon: React.FC<DeviceCardIconProps> = ({
+const DeviceCardIcon: React.FC<DeviceCardIconProps> = memo(({
   children,
   background,
   size = 'default',
@@ -119,9 +133,9 @@ const DeviceCardIcon: React.FC<DeviceCardIconProps> = ({
       {children}
     </div>
   );
-};
+});
 
-const DeviceCardTitleSection: React.FC<DeviceCardTitleSectionProps> = ({
+const DeviceCardTitleSection: React.FC<DeviceCardTitleSectionProps> = memo(({
   title,
   subtitle,
   className = '',
@@ -132,24 +146,24 @@ const DeviceCardTitleSection: React.FC<DeviceCardTitleSectionProps> = ({
       {subtitle && <p className={styles.deviceCardSubtitle}>{subtitle}</p>}
     </div>
   );
-};
+});
 
-const DeviceCardMetrics: React.FC<DeviceCardMetricsProps> = ({ children, className = '' }) => {
+const DeviceCardMetrics: React.FC<DeviceCardMetricsProps> = memo(({ children, className = '' }) => {
   return <div className={`${styles.deviceMetrics} ${className}`}>{children}</div>;
-};
+});
 
-const DeviceCardMetric: React.FC<DeviceCardMetricProps> = ({ label, value, className = '' }) => {
+const DeviceCardMetric: React.FC<DeviceCardMetricProps> = memo(({ label, value, className = '' }) => {
   return (
     <div className={`${styles.deviceMetric} ${className}`}>
       <span className={styles.deviceMetricLabel}>{label}</span>
       <span className={styles.deviceMetricValue}>{value}</span>
     </div>
   );
-};
+});
 
-const DeviceCardInfo: React.FC<DeviceCardInfoProps> = ({ children, className = '' }) => {
+const DeviceCardInfo: React.FC<DeviceCardInfoProps> = memo(({ children, className = '' }) => {
   return <div className={`${styles.deviceInfo} ${className}`}>{children}</div>;
-};
+});
 
 // Attach sub-components
 DeviceCard.Header = DeviceCardHeader;
@@ -160,6 +174,17 @@ DeviceCard.TitleSection = DeviceCardTitleSection;
 DeviceCard.Metrics = DeviceCardMetrics;
 DeviceCard.Metric = DeviceCardMetric;
 DeviceCard.Info = DeviceCardInfo;
+
+// Display names for debugging
+DeviceCard.displayName = 'DeviceCard';
+DeviceCardHeader.displayName = 'DeviceCard.Header';
+DeviceCardBody.displayName = 'DeviceCard.Body';
+DeviceCardFooter.displayName = 'DeviceCard.Footer';
+DeviceCardIcon.displayName = 'DeviceCard.Icon';
+DeviceCardTitleSection.displayName = 'DeviceCard.TitleSection';
+DeviceCardMetrics.displayName = 'DeviceCard.Metrics';
+DeviceCardMetric.displayName = 'DeviceCard.Metric';
+DeviceCardInfo.displayName = 'DeviceCard.Info';
 
 export {
   DeviceCard,

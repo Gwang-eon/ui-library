@@ -288,7 +288,7 @@ const ExpandableRow: React.FC<ExpandableRowProps> = ({
   return (
     <>
       <tr className={`${styles.expandableRow} ${className}`}>
-        <td style={{ width: '40px' }}>
+        <td className={styles.expandBtnCell}>
           <button
             className={styles.expandBtn}
             onClick={toggleExpand}
@@ -303,7 +303,7 @@ const ExpandableRow: React.FC<ExpandableRowProps> = ({
       </tr>
       {isExpanded && (
         <tr className={styles.expandedContent}>
-          <td colSpan={100} style={{ padding: 0 }}>
+          <td colSpan={100}>
             <div className={styles.expandedDetails}>{expandedContent}</div>
           </td>
         </tr>
@@ -321,7 +321,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, actio
         {icon && <div className={styles.emptyStateIcon}>{icon}</div>}
         <h3 className={styles.emptyStateTitle}>{title}</h3>
         {description && <p className={styles.emptyStateDescription}>{description}</p>}
-        {action && <div style={{ marginTop: 'var(--spacing-4)' }}>{action}</div>}
+        {action && <div className={styles.emptyStateAction}>{action}</div>}
       </div>
     </div>
   );
@@ -337,5 +337,17 @@ Table.Cell = TableCell;
 Table.HeaderCell = TableHeaderCell;
 Table.ExpandableRow = ExpandableRow;
 Table.EmptyState = EmptyState;
+
+// Display names for debugging
+Table.displayName = 'Table';
+TableContainer.displayName = 'Table.Container';
+TableWrapper.displayName = 'Table.Wrapper';
+TableHead.displayName = 'Table.Head';
+TableBody.displayName = 'Table.Body';
+TableRow.displayName = 'Table.Row';
+TableCell.displayName = 'Table.Cell';
+TableHeaderCell.displayName = 'Table.HeaderCell';
+ExpandableRow.displayName = 'Table.ExpandableRow';
+EmptyState.displayName = 'Table.EmptyState';
 
 export { Table };

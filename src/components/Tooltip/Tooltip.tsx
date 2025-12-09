@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Tooltip.module.css';
 
@@ -9,6 +9,7 @@ export interface TooltipProps {
   delay?: number;
   rich?: boolean;
   className?: string;
+  id?: string;
 }
 
 const Tooltip = ({
@@ -18,7 +19,10 @@ const Tooltip = ({
   delay = 300,
   rich = false,
   className = '',
+  id,
 }: TooltipProps) => {
+  const generatedId = useId();
+  const tooltipId = id || `tooltip-${generatedId}`;
   const [isVisible, setIsVisible] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -99,7 +103,13 @@ const Tooltip = ({
   }, []);
 
   // Clone child element and add event handlers
-  const childProps = children.props as Record<string, any>;
+  interface ChildEventHandlers {
+    onMouseEnter?: (e: React.MouseEvent) => void;
+    onMouseLeave?: (e: React.MouseEvent) => void;
+    onFocus?: (e: React.FocusEvent) => void;
+    onBlur?: (e: React.FocusEvent) => void;
+  }
+  const childProps = children.props as ChildEventHandlers;
   const trigger = React.cloneElement(children, {
     ref: triggerRef,
     onMouseEnter: (e: React.MouseEvent) => {
@@ -118,8 +128,8 @@ const Tooltip = ({
       hideTooltip();
       childProps.onBlur?.(e);
     },
-    'aria-describedby': isVisible ? 'tooltip' : undefined,
-  } as any);
+    'aria-describedby': isVisible ? tooltipId : undefined,
+  } as React.HTMLAttributes<HTMLElement>);
 
   const positionClass = position === 'top' ? styles.tooltipTop :
                         position === 'right' ? styles.tooltipRight :
@@ -136,7 +146,7 @@ const Tooltip = ({
           ref={tooltipRef}
           className={`${styles.tooltip} ${positionClass} ${richClass} ${className}`}
           role="tooltip"
-          id="tooltip"
+          id={tooltipId}
           style={{
             top: `${tooltipPosition.top}px`,
             left: `${tooltipPosition.left}px`,
@@ -149,5 +159,7 @@ const Tooltip = ({
     </>
   );
 };
+
+Tooltip.displayName = 'Tooltip';
 
 export { Tooltip };

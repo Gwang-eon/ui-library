@@ -185,7 +185,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {labelPosition === 'horizontal' && message ? (
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
+          <div className={styles['input-horizontal-content']}>
             <div className={styles['input-wrapper']}>
               {leftIcon && <span className={styles['input-icon-left']}>{leftIcon}</span>}
 
