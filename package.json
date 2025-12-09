@@ -26,6 +26,7 @@
     "build": "vite build && tsc --emitDeclarationOnly",
     "build:types": "tsc --emitDeclarationOnly",
     "dev": "vite build --watch",
+    "preview": "vite --config vite.demo.config.ts",
     "lint": "eslint .",
     "prepublishOnly": "npm run build"
   },
