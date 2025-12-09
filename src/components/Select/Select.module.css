@@ -113,6 +113,28 @@
 }
 
 /* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.select-sm .custom-select-trigger {
+  min-height: 32px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-small);
+}
+
+.select-md .custom-select-trigger {
+  min-height: 40px;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-medium);
+}
+
+.select-lg .custom-select-trigger {
+  min-height: 48px;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-large);
+}
+
+/* ========================================
    TRIGGER CONTENT
    ======================================== */
 

@@ -1,7 +1,8 @@
 import { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import ReactDatePicker, { type ReactDatePickerProps } from 'react-datepicker';
 import { Calendar } from 'lucide-react';
-import 'react-datepicker/dist/react-datepicker.css';
+// Note: react-datepicker CSS should be imported in global styles
+// Import from '@gractor/ui/styles' or add 'react-datepicker/dist/react-datepicker.css' in your app
 import styles from './DatePicker.module.css';
 
 export type DatePickerSize = 'sm' | 'md' | 'lg';

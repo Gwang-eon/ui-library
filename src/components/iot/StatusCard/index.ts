@@ -1,2 +1,2 @@
-export { default, StatusCardGrid } from './StatusCard';
+export { default as StatusCard, StatusCardGrid } from './StatusCard';
 export type { StatusCardProps, StatusCardGridProps, StatusItem, StatusCardType } from './StatusCard';

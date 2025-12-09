@@ -15,6 +15,7 @@ export interface SelectOptionGroup {
 }
 
 export type SelectState = 'default' | 'error';
+export type SelectSize = 'sm' | 'md' | 'lg';
 
 export interface SelectProps {
   label?: string;
@@ -25,6 +26,7 @@ export interface SelectProps {
   options?: SelectOption[];
   groups?: SelectOptionGroup[];
   state?: SelectState;
+  size?: SelectSize;
   disabled?: boolean;
   helperText?: string;
   errorMessage?: string;
@@ -46,6 +48,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       options = [],
       groups = [],
       state = 'default',
+      size = 'md',
       disabled = false,
       helperText,
       errorMessage,
@@ -243,7 +246,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
             isOpen ? styles.open : ''
           } ${state === 'error' ? styles.error : ''} ${
             disabled ? styles.disabled : ''
-          }`}
+          } ${styles[`select-${size}`] || ''}`}
         >
           {/* Hidden native select for form submission */}
           <select
