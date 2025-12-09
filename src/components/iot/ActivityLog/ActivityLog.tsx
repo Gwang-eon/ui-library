@@ -85,7 +85,7 @@ export interface TimelineMetaItem {
   text: string;
 }
 
-export interface TimelineItemProps {
+export interface ActivityLogItemProps {
   level: LogLevel;
   title: string;
   description?: string;
@@ -94,7 +94,7 @@ export interface TimelineItemProps {
   className?: string;
 }
 
-export const TimelineItem: React.FC<TimelineItemProps> = ({
+export const ActivityLogItem: React.FC<ActivityLogItemProps> = ({
   level,
   title,
   description,

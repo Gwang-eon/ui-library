@@ -10,5 +10,5 @@ export type {
   TableCellProps,
   TableHeaderCellProps,
   ExpandableRowProps,
-  EmptyStateProps,
+  TableEmptyStateProps,
 } from './Table';

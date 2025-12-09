@@ -63,7 +63,7 @@ export interface ExpandableRowProps {
   className?: string;
 }
 
-export interface EmptyStateProps {
+export interface TableEmptyStateProps {
   icon?: ReactNode;
   title: string;
   description?: string;
@@ -105,7 +105,7 @@ const Table: React.FC<TableProps> & {
   Cell: typeof TableCell;
   HeaderCell: typeof TableHeaderCell;
   ExpandableRow: typeof ExpandableRow;
-  EmptyState: typeof EmptyState;
+  EmptyState: typeof TableEmptyState;
 } = ({
   children,
   striped = false,
@@ -314,7 +314,7 @@ const ExpandableRow: React.FC<ExpandableRowProps> = ({
 
 // ===== Empty State =====
 
-const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, action }) => {
+const TableEmptyState: React.FC<TableEmptyStateProps> = ({ icon, title, description, action }) => {
   return (
     <div className={styles.tableEmptyState}>
       <div className={styles.emptyStateContent}>
@@ -336,7 +336,7 @@ Table.Row = TableRow;
 Table.Cell = TableCell;
 Table.HeaderCell = TableHeaderCell;
 Table.ExpandableRow = ExpandableRow;
-Table.EmptyState = EmptyState;
+Table.EmptyState = TableEmptyState;
 
 // Display names for debugging
 Table.displayName = 'Table';
@@ -348,6 +348,6 @@ TableRow.displayName = 'Table.Row';
 TableCell.displayName = 'Table.Cell';
 TableHeaderCell.displayName = 'Table.HeaderCell';
 ExpandableRow.displayName = 'Table.ExpandableRow';
-EmptyState.displayName = 'Table.EmptyState';
+TableEmptyState.displayName = 'Table.EmptyState';
 
 export { Table };

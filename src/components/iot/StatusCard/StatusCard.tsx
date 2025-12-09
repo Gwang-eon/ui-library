@@ -5,14 +5,14 @@ import styles from './StatusCard.module.css';
 // Custom icon type
 type IconType = React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
 
-export type StatusType = 'success' | 'warning' | 'error' | 'info';
+export type StatusCardType = 'success' | 'warning' | 'error' | 'info';
 
 export interface StatusItem {
   icon?: IconType;
   label: string;
   value: string | number;
   percent?: string | number;
-  status?: StatusType;
+  status?: StatusCardType;
   onClick?: () => void;
 }
 
