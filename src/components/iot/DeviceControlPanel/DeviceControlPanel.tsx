@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import styles from './DeviceControlPanel.module.css';
 
 // Custom icon type
@@ -300,17 +301,7 @@ export const FanSpeedSelect: React.FC<FanSpeedSelectProps> = ({
           tabIndex={0}
         >
           <span className={styles.customSelectValue}>{value}</span>
-          <svg
-            className={styles.selectIcon}
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+          <ChevronDown className={styles.selectIcon} size={16} />
         </div>
         {isOpen && (
           <div className={styles.customSelectDropdown}>

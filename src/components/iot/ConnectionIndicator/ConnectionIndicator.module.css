@@ -274,3 +274,95 @@
     background-color: var(--color-error-400);
   }
 }
+
+/* Manual dark mode class support */
+:global(.dark-mode) .status-connected .connectionDot,
+:global([data-theme="dark"]) .status-connected .connectionDot {
+  background-color: var(--color-success-400);
+}
+
+:global(.dark-mode) .status-connected .connectionLabel,
+:global([data-theme="dark"]) .status-connected .connectionLabel {
+  color: var(--color-success-400);
+}
+
+:global(.dark-mode) .status-connecting .connectionDot,
+:global([data-theme="dark"]) .status-connecting .connectionDot {
+  background-color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .status-connecting .connectionLabel,
+:global([data-theme="dark"]) .status-connecting .connectionLabel {
+  color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .status-disconnected .connectionDot,
+:global([data-theme="dark"]) .status-disconnected .connectionDot {
+  background-color: var(--palette-gray-600);
+}
+
+:global(.dark-mode) .status-disconnected .connectionLabel,
+:global([data-theme="dark"]) .status-disconnected .connectionLabel {
+  color: var(--palette-gray-500);
+}
+
+:global(.dark-mode) .status-warning .connectionDot,
+:global([data-theme="dark"]) .status-warning .connectionDot {
+  background-color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .status-warning .connectionLabel,
+:global([data-theme="dark"]) .status-warning .connectionLabel {
+  color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .dotOnly-connected,
+:global([data-theme="dark"]) .dotOnly-connected {
+  background-color: var(--color-success-400);
+}
+
+:global(.dark-mode) .dotOnly-connecting,
+:global([data-theme="dark"]) .dotOnly-connecting {
+  background-color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .dotOnly-disconnected,
+:global([data-theme="dark"]) .dotOnly-disconnected {
+  background-color: var(--palette-gray-600);
+}
+
+:global(.dark-mode) .dotOnly-warning,
+:global([data-theme="dark"]) .dotOnly-warning {
+  background-color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .signalBar,
+:global([data-theme="dark"]) .signalBar {
+  background-color: var(--palette-gray-700);
+}
+
+:global(.dark-mode) .signal-excellent .signalBar,
+:global([data-theme="dark"]) .signal-excellent .signalBar {
+  background-color: var(--color-success-400);
+}
+
+:global(.dark-mode) .signal-good .signalBar:nth-child(1),
+:global(.dark-mode) .signal-good .signalBar:nth-child(2),
+:global(.dark-mode) .signal-good .signalBar:nth-child(3),
+:global([data-theme="dark"]) .signal-good .signalBar:nth-child(1),
+:global([data-theme="dark"]) .signal-good .signalBar:nth-child(2),
+:global([data-theme="dark"]) .signal-good .signalBar:nth-child(3) {
+  background-color: var(--color-success-400);
+}
+
+:global(.dark-mode) .signal-fair .signalBar:nth-child(1),
+:global(.dark-mode) .signal-fair .signalBar:nth-child(2),
+:global([data-theme="dark"]) .signal-fair .signalBar:nth-child(1),
+:global([data-theme="dark"]) .signal-fair .signalBar:nth-child(2) {
+  background-color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .signal-poor .signalBar:nth-child(1),
+:global([data-theme="dark"]) .signal-poor .signalBar:nth-child(1) {
+  background-color: var(--color-error-400);
+}

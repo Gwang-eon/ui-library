@@ -33,6 +33,9 @@ import {
   Zap,
   Sun,
   Moon,
+  ExternalLink,
+  BookOpen,
+  Code2,
 } from 'lucide-react';
 
 // Form Components
@@ -70,7 +73,7 @@ import { Steps } from '../src/components/Steps';
 
 // Overlay Components
 import { Tooltip } from '../src/components/Tooltip';
-import { Modal } from '../src/components/Modal';
+import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter } from '../src/components/Modal';
 
 // Layout Components
 import { Accordion } from '../src/components/Accordion';
@@ -108,17 +111,43 @@ function App() {
   return (
     <div className="demo-app">
       <header className="demo-header">
-        <h1>@gractor/ui</h1>
-        <p>IoT Platform UI Component Library</p>
-        <div className="demo-header-actions">
-          <Button
-            variant={darkMode ? 'primary' : 'outline'}
-            size="sm"
-            icon={darkMode ? <Moon size={16} /> : <Sun size={16} />}
-            onClick={toggleDarkMode}
-          >
-            {darkMode ? 'Dark' : 'Light'}
-          </Button>
+        <div className="demo-header-left">
+          <h1>@gractor/ui</h1>
+          <p>IoT Platform UI Component Library</p>
+        </div>
+        <div className="demo-header-right">
+          <div className="demo-header-links">
+            <a
+              href="https://design-system-wheat-beta.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="demo-header-link"
+            >
+              <BookOpen size={14} />
+              Storybook
+              <ExternalLink size={12} />
+            </a>
+            <a
+              href="https://pure-html-ui-kit.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="demo-header-link"
+            >
+              <Code2 size={14} />
+              Pure HTML
+              <ExternalLink size={12} />
+            </a>
+          </div>
+          <div className="demo-header-actions">
+            <Button
+              variant={darkMode ? 'primary' : 'outline'}
+              size="sm"
+              icon={darkMode ? <Moon size={16} /> : <Sun size={16} />}
+              onClick={toggleDarkMode}
+            >
+              {darkMode ? 'Dark' : 'Light'}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -355,12 +384,17 @@ function App() {
               <div className="demo-item">
                 <h3>Modal</h3>
                 <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
-                <Modal
-                  open={modalOpen}
-                  onClose={() => setModalOpen(false)}
-                  title="Modal Title"
-                >
-                  <p>This is the modal content. You can put any content here.</p>
+                <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+                  <ModalHeader onClose={() => setModalOpen(false)}>
+                    <ModalTitle>Modal Title</ModalTitle>
+                  </ModalHeader>
+                  <ModalBody>
+                    <p>This is the modal content. You can put any content here.</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button variant="outline" onClick={() => setModalOpen(false)}>Cancel</Button>
+                    <Button variant="primary" onClick={() => setModalOpen(false)}>Confirm</Button>
+                  </ModalFooter>
                 </Modal>
               </div>
 

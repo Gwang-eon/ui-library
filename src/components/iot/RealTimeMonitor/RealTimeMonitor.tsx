@@ -1,5 +1,6 @@
 import React from 'react';
 import type { LucideIcon } from 'lucide-react';
+import { ChevronUp, ChevronDown, Play, Pause, Download } from 'lucide-react';
 import styles from './RealTimeMonitor.module.css';
 
 type IconType = LucideIcon;
@@ -25,11 +26,11 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   );
 };
 
-// ==================== Metric Card ====================
+// ==================== Realtime Metric Card ====================
 
 export type MetricChangeType = 'increase' | 'decrease' | 'neutral';
 
-export interface MetricCardProps {
+export interface RealtimeMetricCardProps {
   icon: IconType;
   label: string;
   value: string;
@@ -40,7 +41,7 @@ export interface MetricCardProps {
   className?: string;
 }
 
-export const MetricCard: React.FC<MetricCardProps> = ({
+export const RealtimeMetricCard: React.FC<RealtimeMetricCardProps> = ({
   icon: Icon,
   label,
   value,
@@ -65,16 +66,8 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         </div>
         {change && (
           <div className={`${styles.metricChange} ${styles[`metricChange${changeType.charAt(0).toUpperCase() + changeType.slice(1)}`]}`}>
-            {changeType === 'increase' && (
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m18 15-6-6-6 6" />
-              </svg>
-            )}
-            {changeType === 'decrease' && (
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            )}
+            {changeType === 'increase' && <ChevronUp size={14} />}
+            {changeType === 'decrease' && <ChevronDown size={14} />}
             {change}
           </div>
         )}
@@ -176,16 +169,7 @@ export const MonitorContainer: React.FC<MonitorContainerProps> = ({
               onClick={onPause}
               aria-label={isPaused ? 'Resume monitoring' : 'Pause monitoring'}
             >
-              {isPaused ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="6" y="4" width="4" height="16" />
-                  <rect x="14" y="4" width="4" height="16" />
-                </svg>
-              )}
+              {isPaused ? <Play size={16} /> : <Pause size={16} />}
               {isPaused ? 'Resume' : 'Pause'}
             </button>
           )}
@@ -195,11 +179,7 @@ export const MonitorContainer: React.FC<MonitorContainerProps> = ({
               onClick={onDownload}
               aria-label="Download data"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" x2="12" y1="15" y2="3" />
-              </svg>
+              <Download size={16} />
               Download
             </button>
           )}
@@ -240,7 +220,7 @@ export const MetricGrid: React.FC<MetricGridProps> = ({
 export default {
   MonitorContainer,
   StatusIndicator,
-  MetricCard,
+  RealtimeMetricCard,
   MetricGrid,
   DataStreamTable,
 };

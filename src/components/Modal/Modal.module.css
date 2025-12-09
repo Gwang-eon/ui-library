@@ -175,29 +175,29 @@
     background-color: var(--overlay-dark);
   }
 
-  /* Modal Container */
+  /* Modal Container - use semantic tokens for 5-layer surface system */
   .modal {
-    background-color: var(--palette-gray-800);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    background-color: var(--surface-primary);
+    box-shadow: var(--shadow-xl);
   }
 
   /* Modal Header */
   .modalHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--border-subtle);
   }
 
   .modalTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Close Button */
   .modalClose {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .modalClose:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .modalClose:focus {
@@ -206,13 +206,61 @@
 
   /* Modal Body */
   .modalBody {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Modal Footer */
   .modalFooter {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--border-subtle);
   }
+}
+
+/* Manual dark mode class support */
+:global(.dark-mode) .modalOverlay,
+:global([data-theme="dark"]) .modalOverlay {
+  background-color: var(--overlay-dark);
+}
+
+:global(.dark-mode) .modal,
+:global([data-theme="dark"]) .modal {
+  background-color: var(--surface-primary);
+  box-shadow: var(--shadow-xl);
+}
+
+:global(.dark-mode) .modalHeader,
+:global([data-theme="dark"]) .modalHeader {
+  border-bottom-color: var(--border-subtle);
+}
+
+:global(.dark-mode) .modalTitle,
+:global([data-theme="dark"]) .modalTitle {
+  color: var(--text-primary);
+}
+
+:global(.dark-mode) .modalClose,
+:global([data-theme="dark"]) .modalClose {
+  color: var(--text-tertiary);
+}
+
+:global(.dark-mode) .modalClose:hover,
+:global([data-theme="dark"]) .modalClose:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+:global(.dark-mode) .modalClose:focus,
+:global([data-theme="dark"]) .modalClose:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+:global(.dark-mode) .modalBody,
+:global([data-theme="dark"]) .modalBody {
+  color: var(--text-secondary);
+}
+
+:global(.dark-mode) .modalFooter,
+:global([data-theme="dark"]) .modalFooter {
+  border-top-color: var(--border-subtle);
 }
 
 /* Reduced Motion */

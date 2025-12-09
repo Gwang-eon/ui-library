@@ -24,10 +24,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
 
   /**
-   * Icon button with icon styling
-   * @default false
+   * Icon to display before children
    */
-  icon?: boolean;
+  icon?: ReactNode;
 
   /**
    * Icon-only button (square aspect ratio)
@@ -84,7 +83,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'primary',
       size = 'md',
       loading = false,
-      icon = false,
+      icon,
       iconOnly = false,
       children,
       className = '',
@@ -99,7 +98,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       styles[`btn-${variant}`],
       styles[`btn-${size}`],
       loading && styles['btn-loading'],
-      (icon || iconOnly) && styles['btn-icon'],
+      iconOnly && styles['btn-icon'],
       className,
     ]
       .filter(Boolean)
@@ -114,6 +113,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading}
         {...rest}
       >
+        {icon && <span className={styles.btnIconWrapper}>{icon}</span>}
         {children}
       </button>
     );

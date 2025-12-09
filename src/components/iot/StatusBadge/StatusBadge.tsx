@@ -43,7 +43,7 @@ export interface StatusBadgeProps {
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   status,
   label,
-  showIndicator = false,
+  showIndicator = true,
   pulse = false,
   icon: Icon,
   className = '',
@@ -51,6 +51,11 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   const statusClassName = status.split('-').map((word, index) =>
     index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
   ).join('');
+
+  // Generate default label from status if not provided
+  const displayLabel = label ?? status.split('-').map(word =>
+    word.charAt(0).toUpperCase() + word.slice(1)
+  ).join(' ');
 
   return (
     <span className={`${styles.statusBadge} ${styles[`status${statusClassName.charAt(0).toUpperCase() + statusClassName.slice(1)}`]} ${className}`}>
@@ -60,7 +65,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
           className={`${styles.statusIndicator} ${pulse ? styles.statusIndicatorPulse : ''}`}
         />
       )}
-      {label && <span>{label}</span>}
+      <span>{displayLabel}</span>
     </span>
   );
 };

@@ -1,14 +1,12 @@
 import { forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import ReactDatePicker, { type DatePickerProps as ReactDatePickerProps } from 'react-datepicker';
+import ReactDatePicker, { type ReactDatePickerProps } from 'react-datepicker';
 import { Calendar } from 'lucide-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './DatePicker.module.css';
 
 export type DatePickerSize = 'sm' | 'md' | 'lg';
 
-// @ts-expect-error - Complex react-datepicker type causes circular reference error, but works at runtime
-export interface DatePickerProps
-  extends Omit<ReactDatePickerProps, 'onChange' | 'selected' | 'open' | 'onInputClick'> {
+export interface DatePickerProps {
   size?: DatePickerSize;
   error?: boolean;
   disabled?: boolean;
@@ -16,6 +14,19 @@ export interface DatePickerProps
   onChange?: (date: Date | null) => void;
   placeholder?: string;
   className?: string;
+  dateFormat?: string;
+  minDate?: Date;
+  maxDate?: Date;
+  showTimeSelect?: boolean;
+  timeFormat?: string;
+  timeIntervals?: number;
+  isClearable?: boolean;
+  showMonthDropdown?: boolean;
+  showYearDropdown?: boolean;
+  dropdownMode?: 'select' | 'scroll';
+  filterDate?: (date: Date) => boolean;
+  inline?: boolean;
+  monthsShown?: number;
 }
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -28,15 +39,27 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       onChange,
       placeholder = 'Select date',
       className = '',
-      ...props
+      dateFormat = 'yyyy-MM-dd',
+      minDate,
+      maxDate,
+      showTimeSelect,
+      timeFormat,
+      timeIntervals,
+      isClearable,
+      showMonthDropdown,
+      showYearDropdown,
+      dropdownMode,
+      filterDate,
+      inline,
+      monthsShown,
     },
     forwardedRef
   ) => {
-    const internalRef = useRef<any>(null);
+    const internalRef = useRef<HTMLInputElement>(null);
     const [isOpen, setIsOpen] = useState(false);
 
     // Forward the ref to the parent if provided
-    useImperativeHandle(forwardedRef, () => internalRef.current?.input as HTMLInputElement);
+    useImperativeHandle(forwardedRef, () => internalRef.current as HTMLInputElement);
 
     const wrapperClasses = [
       styles['date-picker'],
@@ -58,18 +81,27 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
     return (
       <div className={wrapperClasses}>
-        {/* @ts-expect-error - Complex react-datepicker type causes prop type mismatch, but works correctly */}
         <ReactDatePicker
-          {...props}
-          ref={internalRef}
           selected={value}
-          onChange={(date) => onChange?.(date)}
+          onChange={(date: Date | null) => onChange?.(date)}
           disabled={disabled}
           placeholderText={placeholder}
           className={styles['date-picker-input']}
           calendarClassName={styles['date-picker-calendar']}
           wrapperClassName={styles['date-picker-wrapper']}
-          dateFormat="yyyy-MM-dd"
+          dateFormat={dateFormat}
+          minDate={minDate}
+          maxDate={maxDate}
+          showTimeSelect={showTimeSelect}
+          timeFormat={timeFormat}
+          timeIntervals={timeIntervals}
+          isClearable={isClearable}
+          showMonthDropdown={showMonthDropdown}
+          showYearDropdown={showYearDropdown}
+          dropdownMode={dropdownMode}
+          filterDate={filterDate}
+          inline={inline}
+          monthsShown={monthsShown}
           open={isOpen}
           onInputClick={() => setIsOpen(true)}
           onClickOutside={() => setIsOpen(false)}

@@ -10,6 +10,12 @@ export default defineConfig({
       insertTypesEntry: true,
     }),
   ],
+  server: {
+    open: true,
+  },
+  preview: {
+    open: true,
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),

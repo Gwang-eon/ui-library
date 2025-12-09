@@ -245,7 +245,7 @@ export default {
   LogContainer,
   LogEntry,
   TimelineContainer,
-  TimelineItem,
+  ActivityLogItem,
   LogGroup,
   GroupedLogContainer,
   LogStat,

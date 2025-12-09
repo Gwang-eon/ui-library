@@ -233,6 +233,64 @@
   }
 }
 
+/* Manual dark mode class support */
+:global(.dark-mode) .tag,
+:global([data-theme="dark"]) .tag {
+  background: var(--palette-gray-700);
+  color: var(--palette-gray-100);
+  border-color: var(--palette-gray-600);
+}
+
+:global(.dark-mode) .default,
+:global([data-theme="dark"]) .default {
+  background: var(--palette-gray-700);
+  color: var(--palette-gray-100);
+  border-color: var(--palette-gray-600);
+}
+
+:global(.dark-mode) .primary,
+:global([data-theme="dark"]) .primary {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-primary-300);
+  border-color: var(--color-primary-600);
+}
+
+:global(.dark-mode) .success,
+:global([data-theme="dark"]) .success {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-300);
+  border-color: var(--color-success-600);
+}
+
+:global(.dark-mode) .warning,
+:global([data-theme="dark"]) .warning {
+  background: rgba(251, 191, 36, 0.2);
+  color: var(--color-warning-300);
+  border-color: var(--color-warning-600);
+}
+
+:global(.dark-mode) .error,
+:global([data-theme="dark"]) .error {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-300);
+  border-color: var(--color-error-600);
+}
+
+:global(.dark-mode) .remove:hover,
+:global([data-theme="dark"]) .remove:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark-mode) .clickable:hover,
+:global([data-theme="dark"]) .clickable:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark-mode) .clickable:focus-visible,
+:global([data-theme="dark"]) .clickable:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
 /* ========================================
    REDUCED MOTION
    ======================================== */

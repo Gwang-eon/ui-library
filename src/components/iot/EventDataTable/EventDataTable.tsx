@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Search, Filter, AlertCircle, AlertTriangle, Download, ChevronsUpDown, Eye, MoreHorizontal } from 'lucide-react';
 import styles from './EventDataTable.module.css';
 
 export interface EventData {
@@ -134,10 +135,7 @@ export const EventDataTable: React.FC<EventDataTableProps> = ({
           <div className={styles.tableControlsLeft}>
             {searchable && (
               <div className={styles.searchGroup}>
-                <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.35-4.35"></path>
-                </svg>
+                <Search className={styles.searchIcon} size={16} />
                 <input
                   type="text"
                   className={styles.searchInput}
@@ -156,42 +154,28 @@ export const EventDataTable: React.FC<EventDataTableProps> = ({
                   className={`${styles.filterBtn} ${selectedFilter === 'all' ? styles.filterBtnActive : ''}`}
                   onClick={() => setSelectedFilter('all')}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                  </svg>
+                  <Filter size={14} />
                   All Events
                 </button>
                 <button
                   className={`${styles.filterBtn} ${selectedFilter === 'critical' ? styles.filterBtnActive : ''}`}
                   onClick={() => setSelectedFilter('critical')}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                  </svg>
+                  <AlertCircle size={14} />
                   Errors
                 </button>
                 <button
                   className={`${styles.filterBtn} ${selectedFilter === 'warning' ? styles.filterBtnActive : ''}`}
                   onClick={() => setSelectedFilter('warning')}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
-                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                  </svg>
+                  <AlertTriangle size={14} />
                   Warnings
                 </button>
               </div>
             )}
             {exportable && (
               <button className={styles.exportBtn} onClick={onExport}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
+                <Download size={14} />
                 Export
               </button>
             )}
@@ -216,19 +200,13 @@ export const EventDataTable: React.FC<EventDataTableProps> = ({
               <th className={styles.sortableHeader} onClick={() => handleSort('time')}>
                 <div className={styles.headerContent}>
                   <span>Time</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="m7 15 5 5 5-5"></path>
-                    <path d="m7 9 5-5 5 5"></path>
-                  </svg>
+                  <ChevronsUpDown size={14} />
                 </div>
               </th>
               <th className={styles.sortableHeader} onClick={() => handleSort('severity')}>
                 <div className={styles.headerContent}>
                   <span>Severity</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="m7 15 5 5 5-5"></path>
-                    <path d="m7 9 5-5 5 5"></path>
-                  </svg>
+                  <ChevronsUpDown size={14} />
                 </div>
               </th>
               <th>Event Type</th>
@@ -280,20 +258,13 @@ export const EventDataTable: React.FC<EventDataTableProps> = ({
                       onClick={() => onView?.(event)}
                       aria-label="View details"
                     >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                      </svg>
+                      <Eye size={14} />
                     </button>
                     <button
                       className={styles.actionBtn}
                       aria-label="More options"
                     >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
-                      </svg>
+                      <MoreHorizontal size={14} />
                     </button>
                   </div>
                 </td>

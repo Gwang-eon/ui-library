@@ -352,3 +352,63 @@
     color: var(--palette-blue-800);
   }
 }
+
+/* Manual dark mode class support */
+:global(.dark-mode) .result,
+:global([data-theme="dark"]) .result {
+  background: var(--palette-gray-800);
+}
+
+:global(.dark-mode) .icon,
+:global([data-theme="dark"]) .icon {
+  background: var(--palette-gray-750);
+}
+
+:global(.dark-mode) .title,
+:global([data-theme="dark"]) .title {
+  color: var(--palette-gray-100);
+}
+
+:global(.dark-mode) .description,
+:global([data-theme="dark"]) .description {
+  color: var(--palette-gray-400);
+}
+
+:global(.dark-mode) .infoItem,
+:global([data-theme="dark"]) .infoItem {
+  border-bottom-color: var(--palette-gray-700);
+}
+
+:global(.dark-mode) .infoLabel,
+:global([data-theme="dark"]) .infoLabel {
+  color: var(--palette-gray-400);
+}
+
+:global(.dark-mode) .infoValue,
+:global([data-theme="dark"]) .infoValue {
+  color: var(--palette-gray-100);
+}
+
+:global(.dark-mode) .result.success .icon,
+:global([data-theme="dark"]) .result.success .icon {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-400);
+}
+
+:global(.dark-mode) .result.error .icon,
+:global([data-theme="dark"]) .result.error .icon {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-400);
+}
+
+:global(.dark-mode) .result.warning .icon,
+:global([data-theme="dark"]) .result.warning .icon {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .result.info .icon,
+:global([data-theme="dark"]) .result.info .icon {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-info-400);
+}

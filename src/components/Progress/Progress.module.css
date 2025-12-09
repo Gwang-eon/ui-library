@@ -313,6 +313,61 @@
   }
 }
 
+/* Manual dark mode class support */
+:global(.dark-mode) .progress,
+:global([data-theme="dark"]) .progress {
+  background-color: var(--palette-gray-700);
+}
+
+:global(.dark-mode) .progressBar,
+:global([data-theme="dark"]) .progressBar {
+  background-color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .progressBarSuccess,
+:global([data-theme="dark"]) .progressBarSuccess {
+  background-color: var(--color-success-400);
+}
+
+:global(.dark-mode) .progressBarWarning,
+:global([data-theme="dark"]) .progressBarWarning {
+  background-color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .progressBarError,
+:global([data-theme="dark"]) .progressBarError {
+  background-color: var(--color-error-400);
+}
+
+:global(.dark-mode) .progressCircularTrack,
+:global([data-theme="dark"]) .progressCircularTrack {
+  stroke: var(--palette-gray-700);
+}
+
+:global(.dark-mode) .progressSpinnerPrimary .progressSpinnerCircle,
+:global([data-theme="dark"]) .progressSpinnerPrimary .progressSpinnerCircle {
+  border-top-color: var(--color-primary-400);
+  border-right-color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .progressSpinnerSuccess .progressSpinnerCircle,
+:global([data-theme="dark"]) .progressSpinnerSuccess .progressSpinnerCircle {
+  border-top-color: var(--color-success-400);
+  border-right-color: var(--color-success-400);
+}
+
+:global(.dark-mode) .progressSpinnerWarning .progressSpinnerCircle,
+:global([data-theme="dark"]) .progressSpinnerWarning .progressSpinnerCircle {
+  border-top-color: var(--color-warning-400);
+  border-right-color: var(--color-warning-400);
+}
+
+:global(.dark-mode) .progressSpinnerDanger .progressSpinnerCircle,
+:global([data-theme="dark"]) .progressSpinnerDanger .progressSpinnerCircle {
+  border-top-color: var(--color-error-400);
+  border-right-color: var(--color-error-400);
+}
+
 /* ========================================
    REDUCED MOTION
    ======================================== */

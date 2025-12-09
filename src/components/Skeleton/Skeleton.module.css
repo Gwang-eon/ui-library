@@ -79,12 +79,24 @@
   .skeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-700) 0%,
-      var(--palette-gray-600) 50%,
-      var(--palette-gray-700) 100%
+      var(--surface-tertiary) 0%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 100%
     );
     background-size: 200% 100%;
   }
+}
+
+/* Manual dark mode class support */
+:global(.dark-mode) .skeleton,
+:global([data-theme="dark"]) .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+  background-size: 200% 100%;
 }
 
 /* ========================================

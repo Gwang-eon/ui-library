@@ -1,14 +1,14 @@
 export {
   MonitorContainer,
   StatusIndicator,
-  MetricCard,
+  RealtimeMetricCard,
   MetricGrid,
   DataStreamTable,
 } from './RealTimeMonitor';
 export type {
   MonitorContainerProps,
   StatusIndicatorProps,
-  MetricCardProps,
+  RealtimeMetricCardProps,
   MetricChangeType,
   MetricGridProps,
   DataStreamTableProps,
