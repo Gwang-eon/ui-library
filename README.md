@@ -90,6 +90,7 @@ import '@gractor/ui/styles';
 | `Carousel` | 캐러셀 |
 | `Image` | 이미지 |
 | `ImageViewer` | 이미지 뷰어 |
+| `OrderList` | 순서 목록 |
 
 ### 피드백
 | 컴포넌트 | 설명 |
@@ -136,6 +137,7 @@ import '@gractor/ui/styles';
 | `SplitButton` | 분할 버튼 |
 | `Toolbar` | 툴바 |
 | `Watermark` | 워터마크 |
+| `NotificationCenter` | 알림 센터 |
 
 ### IoT 컴포넌트
 | 컴포넌트 | 설명 |
