@@ -9,7 +9,7 @@
 /* Popconfirm */
 .popconfirm {
   position: absolute;
-  z-index: 1000;
+  z-index: var(--z-popover);
   visibility: hidden;
   opacity: 0;
   transition: all var(--duration-fast) var(--ease-out);

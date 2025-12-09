@@ -276,13 +276,18 @@ export const radius = {
 // ========================================
 
 export const zIndex = {
+  base: 1,
+  raised: 10,
   dropdown: 1000,
-  sticky: 1020,
-  fixed: 1030,
-  modalBackdrop: 1040,
-  modal: 1050,
-  popover: 1060,
-  tooltip: 1070,
+  sticky: 1100,
+  overlay: 1200,
+  drawer: 1300,
+  modalBackdrop: 1400,
+  modal: 1410,
+  popover: 1500,
+  toast: 1600,
+  tooltip: 1700,
+  max: 9999,
 } as const;
 
 // ========================================

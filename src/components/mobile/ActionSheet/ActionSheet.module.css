@@ -14,7 +14,7 @@
   background: transparent;
   transform: translateY(100%);
   transition: transform 0.3s var(--ease-out);
-  z-index: 1000;
+  z-index: var(--z-drawer);
   padding: var(--spacing-4);
   padding-bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom, 0px));
 }
@@ -150,7 +150,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s var(--ease-out), visibility 0.3s;
-  z-index: 999;
+  z-index: calc(var(--z-drawer) - 1);
 }
 
 .actionSheetBackdrop.show {

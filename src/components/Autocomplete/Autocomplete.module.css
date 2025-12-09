@@ -93,7 +93,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-base);
   box-shadow: var(--shadow-lg);
-  z-index: 1000;
+  z-index: var(--z-dropdown);
 }
 
 /* Custom scrollbar */

@@ -8,7 +8,7 @@
 
 .fab {
   position: fixed;
-  z-index: 900;
+  z-index: var(--z-sticky);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,7 +168,7 @@
 
 .fabWrapper {
   position: fixed;
-  z-index: 900;
+  z-index: var(--z-sticky);
 }
 
 .fabWrapper.bottomRight {
@@ -228,7 +228,7 @@
 
 .speedDial {
   position: fixed;
-  z-index: 900;
+  z-index: var(--z-sticky);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -315,7 +315,7 @@
   background: transparent;
   opacity: 1;
   visibility: visible;
-  z-index: 899;
+  z-index: calc(var(--z-sticky) - 1);
 }
 
 /* ==================== Dark Mode ==================== */

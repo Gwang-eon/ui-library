@@ -901,16 +901,22 @@
   --radius-full: 9999px;
 
   /* ========================================
-     Z-INDEX
+     Z-INDEX SCALE
+     계층 구조: base < raised < dropdown < sticky < overlay < drawer < modal < popover < toast < tooltip
      ======================================== */
 
+  --z-base: 1;
+  --z-raised: 10;
   --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
+  --z-sticky: 1100;
+  --z-overlay: 1200;
+  --z-drawer: 1300;
+  --z-modal-backdrop: 1400;
+  --z-modal: 1410;
+  --z-popover: 1500;
+  --z-toast: 1600;
+  --z-tooltip: 1700;
+  --z-max: 9999;
 }
 
 /* ========================================

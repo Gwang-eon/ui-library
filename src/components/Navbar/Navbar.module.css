@@ -194,7 +194,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   padding: var(--spacing-2);
-  z-index: 1000;
+  z-index: var(--z-dropdown);
   display: none;
 }
 
@@ -452,7 +452,7 @@
     overflow-y: auto;
     transform: translateX(-100%);
     transition: transform var(--duration-normal) var(--ease-out);
-    z-index: 999;
+    z-index: var(--z-sticky);
     box-shadow: var(--shadow-lg);
   }
 
@@ -511,7 +511,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
+    z-index: calc(var(--z-sticky) - 1);
     opacity: 0;
     transition: opacity var(--duration-normal) var(--ease-out);
   }
@@ -647,7 +647,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 998;
+  z-index: calc(var(--z-sticky) - 1);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
 }
@@ -674,7 +674,7 @@
   border-radius: var(--radius-base);
   transition: all var(--duration-fast) var(--ease-out);
   -webkit-tap-highlight-color: transparent;
-  z-index: 10;
+  z-index: var(--z-raised);
 }
 
 .sidebarClose:hover {
@@ -697,7 +697,7 @@
     bottom: 0;
     width: 280px; /* Slightly wider on mobile */
     max-width: 85vw; /* Don't cover entire screen */
-    z-index: 999;
+    z-index: var(--z-sticky);
     transform: translateX(-100%);
     transition: transform var(--duration-normal) var(--ease-out);
     box-shadow: var(--shadow-xl);

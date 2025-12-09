@@ -15,7 +15,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  z-index: 10001;
+  z-index: var(--z-popover);
   min-width: 200px;
   max-width: 400px;
   animation: popover-fade-in var(--duration-fast) var(--ease-out);

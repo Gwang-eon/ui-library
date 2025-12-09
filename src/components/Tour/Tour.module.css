@@ -11,7 +11,7 @@
   right: 0;
   bottom: 0;
   background: color-mix(in srgb, black 45%, transparent);
-  z-index: 1000;
+  z-index: var(--z-overlay);
   opacity: 0;
   transition: opacity var(--duration-normal) var(--ease-out);
   pointer-events: none;
@@ -33,7 +33,7 @@
   box-shadow: var(--shadow-xl);
   max-width: 400px;
   min-width: 280px;
-  z-index: 1001;
+  z-index: calc(var(--z-overlay) + 1);
   opacity: 0;
   transform: scale(0.95);
   transition: all var(--duration-normal) var(--ease-out);
@@ -148,7 +148,7 @@
 
 .tourTargetHighlight {
   position: relative;
-  z-index: 1001 !important;
+  z-index: calc(var(--z-overlay) + 1) !important;
   box-shadow: 0 0 0 4px var(--color-primary-500), var(--shadow-lg);
   border-radius: var(--radius-base);
   animation: tourPulse 2s infinite;
