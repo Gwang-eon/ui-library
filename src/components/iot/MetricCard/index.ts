@@ -1,2 +1,2 @@
-export { default, MetricCardGrid, MiniChart } from './MetricCard';
+export { default as MetricCard, MetricCardGrid, MiniChart } from './MetricCard';
 export type { MetricCardProps, MetricCardGridProps, MiniChartProps } from './MetricCard';
