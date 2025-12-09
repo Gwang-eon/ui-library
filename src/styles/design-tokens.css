@@ -1023,63 +1023,63 @@ body.dark-mode {
   --button-info-bg-hover: var(--color-info-500);
   --button-info-text: var(--palette-white);
 
-  /* Input - Dark Mode */
-  --input-bg: var(--palette-neutral-800);
-  --input-border: var(--palette-neutral-700);
-  --input-border-hover: var(--palette-neutral-600);
+  /* Input - Dark Mode (Dark Blue) */
+  --input-bg: var(--palette-dark-blue-800);
+  --input-border: var(--palette-dark-blue-700);
+  --input-border-hover: var(--palette-dark-blue-600);
   --input-border-focus: var(--color-primary-400);
-  --input-text: var(--palette-neutral-100);
-  --input-placeholder: var(--palette-neutral-500);
-  --input-disabled-bg: var(--palette-neutral-900);
-  --input-disabled-border: var(--palette-neutral-800);
-  --input-disabled-text: var(--palette-neutral-600);
-  --input-readonly-bg: var(--palette-neutral-800);
-  --input-readonly-border: var(--palette-neutral-700);
-  --input-readonly-text: var(--palette-neutral-300);
+  --input-text: var(--palette-dark-blue-100);
+  --input-placeholder: var(--palette-dark-blue-500);
+  --input-disabled-bg: var(--palette-dark-blue-900);
+  --input-disabled-border: var(--palette-dark-blue-800);
+  --input-disabled-text: var(--palette-dark-blue-600);
+  --input-readonly-bg: var(--palette-dark-blue-800);
+  --input-readonly-border: var(--palette-dark-blue-700);
+  --input-readonly-text: var(--palette-dark-blue-300);
   --input-success-border: var(--color-success-400);
   --input-warning-border: var(--color-warning-400);
   --input-error-border: var(--color-error-400);
   --input-info-border: var(--color-info-400);
 
-  /* Table - Dark Mode */
-  --table-header-bg: var(--palette-neutral-800);
-  --table-header-text: var(--palette-neutral-100);
-  --table-row-bg: var(--palette-neutral-900);
-  --table-row-hover-bg: var(--palette-neutral-800);
+  /* Table - Dark Mode (Dark Blue) */
+  --table-header-bg: var(--palette-dark-blue-800);
+  --table-header-text: var(--palette-dark-blue-100);
+  --table-row-bg: var(--palette-dark-blue-900);
+  --table-row-hover-bg: var(--palette-dark-blue-800);
   --table-row-selected-bg: var(--color-primary-950);
-  --table-row-stripe-bg: var(--palette-neutral-800);
-  --table-row-sum-bg: var(--palette-warm-grey-800);
-  --table-row-sum-text: var(--palette-warm-grey-100);
-  --table-row-subsum-bg: var(--palette-cool-grey-800);
-  --table-row-subsum-text: var(--palette-cool-grey-100);
-  --table-cell-border: var(--palette-neutral-700);
-  --table-footer-bg: var(--palette-neutral-800);
+  --table-row-stripe-bg: var(--palette-dark-blue-800);
+  --table-row-sum-bg: var(--palette-dark-blue-800);
+  --table-row-sum-text: var(--palette-dark-blue-100);
+  --table-row-subsum-bg: var(--palette-dark-blue-750);
+  --table-row-subsum-text: var(--palette-dark-blue-100);
+  --table-cell-border: var(--palette-dark-blue-700);
+  --table-footer-bg: var(--palette-dark-blue-800);
 
-  /* Text - Dark Mode (WCAG AA compliant) */
-  --text-primary: var(--palette-neutral-100);     /* 17.54:1 - Excellent */
-  --text-secondary: var(--palette-neutral-400);   /* 4.36:1 - AA Pass */
-  --text-tertiary: var(--palette-neutral-500);    /* 3.04:1 - Large text only */
-  --text-disabled: var(--palette-neutral-500);    /* 3.04:1 - Improved from 2.51:1 */
-  --text-inverse: var(--palette-neutral-900);
+  /* Text - Dark Mode (WCAG AA compliant, Dark Blue) */
+  --text-primary: var(--palette-dark-blue-100);     /* 17.54:1 - Excellent */
+  --text-secondary: var(--palette-dark-blue-300);   /* 4.36:1 - AA Pass */
+  --text-tertiary: var(--palette-dark-blue-400);    /* 3.04:1 - Large text only */
+  --text-disabled: var(--palette-dark-blue-500);    /* 3.04:1 - Improved from 2.51:1 */
+  --text-inverse: var(--palette-dark-blue-900);
   --text-link: var(--color-primary-400);       /* 7.12:1 - Excellent */
   --text-link-hover: var(--color-primary-300);
 
-  /* Surface - Dark Mode (5-layer system - Standard 10-step, Uniform Progression) */
-  --surface-secondary: var(--palette-neutral-900);   /* 페이지 배경 (body) #111827 */
-  --surface-primary: var(--palette-neutral-800);     /* 카드, 모달 (elevated) #1F2937 */
-  --surface-tertiary: var(--palette-neutral-700);    /* 섹션 (nested) #374151 */
-  --surface-quaternary: var(--palette-neutral-600);  /* 위젯 배경 #4B5563 */
-  --surface-quinary: var(--palette-neutral-500);     /* 서브 컴포넌트, 최상위 레이어 #6B7280 */
+  /* Surface - Dark Mode (5-layer system, Dark Blue) */
+  --surface-secondary: var(--palette-dark-blue-950);   /* 페이지 배경 (body) #091E34 */
+  --surface-primary: var(--palette-dark-blue-900);     /* 카드, 모달 (elevated) #102A43 */
+  --surface-tertiary: var(--palette-dark-blue-800);    /* 섹션 (nested) #243B53 */
+  --surface-quaternary: var(--palette-dark-blue-700);  /* 위젯 배경 #334E68 */
+  --surface-quinary: var(--palette-dark-blue-600);     /* 서브 컴포넌트, 최상위 레이어 #486581 */
 
-  /* Border - Dark Mode (WCAG AA: 3:1+ contrast) */
-  --border-default: var(--palette-neutral-500);  /* 3.04:1 - WCAG AA Pass */
-  --border-subtle: var(--palette-neutral-700);   /* Subtle borders */
-  --border-strong: var(--palette-neutral-400);   /* 4.36:1 - Strong emphasis */
-  --border-hover: var(--palette-neutral-400);    /* Hover state for borders */
+  /* Border - Dark Mode (WCAG AA: 3:1+ contrast, Dark Blue) */
+  --border-default: var(--palette-dark-blue-400);  /* WCAG AA Pass */
+  --border-subtle: var(--palette-dark-blue-600);   /* Subtle borders */
+  --border-strong: var(--palette-dark-blue-300);   /* Strong emphasis */
+  --border-hover: var(--palette-dark-blue-300);    /* Hover state for borders */
 
   /* Status Colors - Dark Mode (lighter variants) */
   --status-online: var(--color-success-400);
-  --status-offline: var(--palette-neutral-500);
+  --status-offline: var(--palette-dark-blue-500);
   --status-error: var(--color-error-400);
   --status-warning: var(--color-warning-400);
   --status-syncing: var(--color-primary-400);
@@ -1093,7 +1093,69 @@ body.dark-mode {
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
 
   /* Text color (background uses surface-secondary from base body style) */
-  color: var(--palette-neutral-100);
+  color: var(--palette-dark-blue-100);
+  background-color: var(--surface-secondary);
+}
+
+/* System preference dark mode - same as body.dark-mode */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-mode) {
+    /* Input - Dark Mode (Dark Blue) */
+    --input-bg: var(--palette-dark-blue-800);
+    --input-border: var(--palette-dark-blue-700);
+    --input-border-hover: var(--palette-dark-blue-600);
+    --input-border-focus: var(--color-primary-400);
+    --input-text: var(--palette-dark-blue-100);
+    --input-placeholder: var(--palette-dark-blue-500);
+    --input-disabled-bg: var(--palette-dark-blue-900);
+    --input-disabled-border: var(--palette-dark-blue-800);
+    --input-disabled-text: var(--palette-dark-blue-600);
+
+    /* Table - Dark Mode (Dark Blue) */
+    --table-header-bg: var(--palette-dark-blue-800);
+    --table-header-text: var(--palette-dark-blue-100);
+    --table-row-bg: var(--palette-dark-blue-900);
+    --table-row-hover-bg: var(--palette-dark-blue-800);
+    --table-row-stripe-bg: var(--palette-dark-blue-800);
+    --table-cell-border: var(--palette-dark-blue-700);
+
+    /* Text - Dark Mode (Dark Blue) */
+    --text-primary: var(--palette-dark-blue-100);
+    --text-secondary: var(--palette-dark-blue-300);
+    --text-tertiary: var(--palette-dark-blue-400);
+    --text-disabled: var(--palette-dark-blue-500);
+    --text-inverse: var(--palette-dark-blue-900);
+
+    /* Surface - Dark Mode (Dark Blue) */
+    --surface-secondary: var(--palette-dark-blue-950);
+    --surface-primary: var(--palette-dark-blue-900);
+    --surface-tertiary: var(--palette-dark-blue-800);
+    --surface-quaternary: var(--palette-dark-blue-700);
+    --surface-quinary: var(--palette-dark-blue-600);
+
+    /* Border - Dark Mode (Dark Blue) */
+    --border-default: var(--palette-dark-blue-400);
+    --border-subtle: var(--palette-dark-blue-600);
+    --border-strong: var(--palette-dark-blue-300);
+
+    /* Overlay - Dark Mode */
+    --overlay-light: rgba(0, 0, 0, 0.25);
+    --overlay-default: rgba(0, 0, 0, 0.6);
+    --overlay-dark: rgba(0, 0, 0, 0.8);
+    --overlay-darker: rgba(0, 0, 0, 0.9);
+
+    /* Shadow - Dark Mode */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+  }
+
+  body:not(.light-mode) {
+    color: var(--palette-dark-blue-100);
+    background-color: var(--palette-dark-blue-950);
+  }
 }
 
 /* ========================================
