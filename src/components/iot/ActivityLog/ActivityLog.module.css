@@ -1,0 +1,455 @@
+/**
+ * Activity Log Component
+ * Category: IoT
+ * Track device events, system changes, and user actions with detailed logging
+ */
+
+/* ==================== Log Container ==================== */
+
+.logContainer {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.logHeader {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logTitle {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.logTitle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.logFilters {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.logBody {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* ==================== Log Entry ==================== */
+
+.logEntry {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  gap: var(--spacing-4);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.logEntry:last-child {
+  border-bottom: none;
+}
+
+.logEntry:hover {
+  background: var(--surface-secondary);
+  cursor: pointer;
+}
+
+.logTimestamp {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-small);
+  font-family: var(--font-family-mono);
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+/* ==================== Log Icon ==================== */
+
+.logIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.logIconInfo {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+.logIconSuccess {
+  background: var(--color-success-100);
+  color: var(--color-success-600);
+}
+
+.logIconWarning {
+  background: var(--palette-orange-100);
+  color: var(--palette-orange-600);
+}
+
+.logIconError {
+  background: var(--color-error-100);
+  color: var(--color-error-600);
+}
+
+/* ==================== Log Content ==================== */
+
+.logContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.logMessage {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  font-size: var(--font-size-body-medium);
+}
+
+.logDetails {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* ==================== Timeline Container ==================== */
+
+.timelineContainer {
+  position: relative;
+  padding-left: var(--spacing-6);
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: var(--spacing-6);
+}
+
+.timelineItem:last-child {
+  padding-bottom: 0;
+}
+
+.timelineItem::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 0;
+  bottom: -24px;
+  width: 2px;
+  background: var(--border-default);
+}
+
+.timelineItem:last-child::before {
+  display: none;
+}
+
+/* ==================== Timeline Marker ==================== */
+
+.timelineMarker {
+  position: absolute;
+  left: -30px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid;
+  background: var(--surface-primary);
+}
+
+.timelineMarkerInfo {
+  border-color: var(--color-primary-500);
+}
+
+.timelineMarkerSuccess {
+  border-color: var(--color-success-500);
+}
+
+.timelineMarkerWarning {
+  border-color: var(--palette-orange-500);
+}
+
+.timelineMarkerError {
+  border-color: var(--color-error-500);
+}
+
+/* ==================== Timeline Content ==================== */
+
+.timelineContent {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+}
+
+.timelineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-2);
+}
+
+.timelineTitle {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+}
+
+.timelineTime {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  margin-left: var(--spacing-3);
+}
+
+.timelineDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-2);
+}
+
+.timelineMeta {
+  display: flex;
+  gap: var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  flex-wrap: wrap;
+}
+
+.timelineMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1-5);
+}
+
+.timelineMeta svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ==================== Grouped Log ==================== */
+
+.groupedLogContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.groupedLog {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.logGroupHeader {
+  background: var(--surface-secondary);
+  padding: var(--spacing-3) var(--spacing-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  font-size: var(--font-size-body-small);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.logGroupHeader svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==================== Log Statistics ==================== */
+
+.logStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.logStat {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  text-align: center;
+}
+
+.logStatValue {
+  font-size: var(--font-size-heading-2);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-1);
+}
+
+.logStatValueInfo {
+  color: var(--color-primary-500);
+}
+
+.logStatValueSuccess {
+  color: var(--color-success-500);
+}
+
+.logStatValueWarning {
+  color: var(--palette-orange-500);
+}
+
+.logStatValueError {
+  color: var(--color-error-500);
+}
+
+.logStatLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .logStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .logTimestamp {
+    min-width: 80px;
+    font-size: 12px;
+  }
+
+  .logHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+  }
+
+  .logFilters {
+    width: 100%;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Containers */
+  .logContainer,
+  .timelineContent,
+  .groupedLog,
+  .logStat {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  /* Header */
+  .logHeader {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .logTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .logGroupHeader {
+    background: var(--palette-gray-750);
+    color: var(--palette-gray-300);
+  }
+
+  /* Entry */
+  .logEntry {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .logEntry:hover {
+    background: var(--palette-gray-750);
+  }
+
+  .logTimestamp {
+    color: var(--palette-gray-500);
+  }
+
+  /* Log Content */
+  .logMessage {
+    color: var(--palette-gray-100);
+  }
+
+  .logDetails {
+    color: var(--palette-gray-500);
+  }
+
+  /* Timeline */
+  .timelineItem::before {
+    background: var(--palette-gray-700);
+  }
+
+  .timelineMarker {
+    background: var(--palette-gray-800);
+  }
+
+  .timelineTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .timelineTime {
+    color: var(--palette-gray-500);
+  }
+
+  .timelineDescription {
+    color: var(--palette-gray-400);
+  }
+
+  .timelineMeta {
+    color: var(--palette-gray-500);
+  }
+
+  /* Icons */
+  .logIconInfo {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+  }
+
+  .logIconSuccess {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--color-success-400);
+  }
+
+  .logIconWarning {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--palette-orange-400);
+  }
+
+  .logIconError {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--color-error-400);
+  }
+
+  /* Statistics */
+  .logStatLabel {
+    color: var(--palette-gray-500);
+  }
+
+  .logStatValueInfo {
+    color: var(--color-primary-400);
+  }
+
+  .logStatValueSuccess {
+    color: var(--color-success-400);
+  }
+
+  .logStatValueWarning {
+    color: var(--palette-orange-400);
+  }
+
+  .logStatValueError {
+    color: var(--color-error-400);
+  }
+}

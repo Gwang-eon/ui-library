@@ -1,0 +1,117 @@
+/* Watermark Component Styles */
+
+/* ========================================
+   WATERMARK CONTAINER
+   ======================================== */
+
+.watermarkContainer {
+  position: relative;
+  min-height: 200px;
+}
+
+/* ========================================
+   BASE WATERMARK
+   ======================================== */
+
+.watermark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0.08;
+}
+
+.watermarkText {
+  position: absolute;
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-size: 16px;
+  white-space: nowrap;
+  transform-origin: center;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ========================================
+   FULLSCREEN WATERMARK
+   ======================================== */
+
+.watermarkFullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9998; /* Below modals, above content */
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Increase opacity slightly for better visibility on dark backgrounds */
+  .watermark {
+    opacity: 0.12;
+  }
+
+  /* Use lighter color for dark mode */
+  .watermarkText {
+    color: var(--palette-gray-100);
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .watermarkText {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .watermarkText {
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   REDUCED TRANSPARENCY
+   ======================================== */
+
+@media (prefers-reduced-transparency: reduce) {
+  .watermark {
+    opacity: 0.05;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .watermark {
+    opacity: 0.25;
+  }
+
+  .watermarkText {
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .watermark {
+    opacity: 0.15 !important;
+    display: block !important;
+  }
+
+  .watermarkText {
+    color: #000000 !important;
+  }
+}

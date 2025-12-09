@@ -1,0 +1,230 @@
+/**
+ * Avatar Component
+ * @category Data Display
+ *
+ * Avatars display user profile images, initials, or icons
+ */
+
+/* ========================================
+   AVATAR BASE
+   ======================================== */
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-semibold);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   AVATAR SHAPES
+   ======================================== */
+
+.avatarCircle {
+  border-radius: 50%;
+}
+
+.avatarSquare {
+  border-radius: 0;
+}
+
+.avatarRounded {
+  border-radius: var(--radius-base);
+}
+
+/* ========================================
+   AVATAR SIZES
+   ======================================== */
+
+.avatarXs {
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+}
+
+.avatarSm {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+
+.avatarMd {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.avatarLg {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+.avatarXl {
+  width: 80px;
+  height: 80px;
+  font-size: 24px;
+}
+
+.avatar2xl {
+  width: 120px;
+  height: 120px;
+  font-size: 32px;
+}
+
+/* ========================================
+   AVATAR IMAGE
+   ======================================== */
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* ========================================
+   AVATAR COLORS
+   ======================================== */
+
+.avatarPrimary {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.avatarSuccess {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.avatarWarning {
+  background-color: var(--palette-orange-100);
+  color: var(--palette-orange-700);
+}
+
+.avatarError {
+  background-color: var(--color-error-100);
+  color: var(--color-error-700);
+}
+
+.avatarGrey {
+  background-color: var(--palette-gray-200);
+  color: var(--palette-gray-700);
+}
+
+/* ========================================
+   AVATAR BADGE (STATUS)
+   ======================================== */
+
+.avatarBadge {
+  position: absolute;
+  bottom: 4%;
+  right: 4%;
+  width: 22%;
+  height: 22%;
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--surface-primary);
+  background-color: var(--color-success-500);
+}
+
+.avatarBadgeOffline {
+  background-color: var(--palette-gray-400);
+}
+
+.avatarBadgeBusy {
+  background-color: var(--color-error-500);
+}
+
+.avatarBadgeAway {
+  background-color: var(--palette-orange-500);
+}
+
+/* ========================================
+   AVATAR GROUP
+   ======================================== */
+
+.avatarGroup {
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatarGroup .avatar {
+  border: 2px solid var(--surface-primary);
+  margin-left: -12px;
+  transition: transform var(--duration-fast) var(--ease-out), z-index 0s;
+}
+
+.avatarGroup .avatar:first-child {
+  margin-left: 0;
+}
+
+.avatarGroup .avatar:hover {
+  transform: translateY(-2px);
+  z-index: 10;
+}
+
+/* ========================================
+   AVATAR WITH ICON
+   ======================================== */
+
+.avatar svg {
+  width: 60%;
+  height: 60%;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .avatarPrimary {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+  }
+
+  .avatarSuccess {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: var(--color-success-400);
+  }
+
+  .avatarWarning {
+    background-color: rgba(249, 115, 22, 0.2);
+    color: var(--palette-orange-400);
+  }
+
+  .avatarError {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--color-error-400);
+  }
+
+  .avatarGrey {
+    background-color: var(--palette-gray-700);
+    color: var(--palette-gray-300);
+  }
+
+  .avatarBadge {
+    border-color: var(--palette-gray-800);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .avatarGroup .avatar {
+    transition: none;
+  }
+
+  .avatarGroup .avatar:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,497 @@
+/**
+ * Steps Component Styles
+ * Category: Navigation
+ * Display progress through a sequence of steps or stages
+ */
+
+/* ========================================
+   STEPS CONTAINER
+   ======================================== */
+
+.steps {
+  display: flex;
+  width: 100%;
+  padding: var(--spacing-4) 0;
+  position: relative;
+}
+
+/* ========================================
+   INDIVIDUAL STEP
+   ======================================== */
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* ========================================
+   CONNECTING LINE
+   ======================================== */
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20px; /* Center of 40px icon */
+  left: calc(50% + 20px); /* Start from icon center */
+  right: calc(-50% + 20px); /* End at next icon center */
+  height: 2px;
+  background-color: var(--border-default);
+  z-index: 0;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+/* ========================================
+   STEP ICON
+   ======================================== */
+
+.stepIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--surface-primary);
+  border: 2px solid var(--border-default);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  z-index: 1;
+}
+
+.stepIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   STEP CONTENT
+   ======================================== */
+
+.stepContent {
+  flex: 1;
+  text-align: center;
+  padding-top: var(--spacing-3);
+  max-width: 160px;
+}
+
+.stepTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  line-height: 1.4;
+}
+
+.stepDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ========================================
+   STEP STATES
+   ======================================== */
+
+/* Completed step */
+.step-completed .stepIcon {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: white;
+}
+
+.step-completed:not(:last-child)::after {
+  background-color: var(--color-primary-600);
+}
+
+/* Active step */
+.step-active .stepIcon {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-600);
+  color: var(--color-primary-600);
+  border-width: 3px;
+  box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+
+.step-active .stepTitle {
+  color: var(--color-primary-600);
+}
+
+/* Error step */
+.step-error .stepIcon {
+  background-color: var(--color-error-50);
+  border-color: var(--color-error-600);
+  color: var(--color-error-600);
+}
+
+.step-error .stepTitle {
+  color: var(--color-error-600);
+}
+
+.step-error .stepDescription {
+  color: var(--color-error-600);
+}
+
+.step-error:not(:last-child)::after {
+  background-color: var(--color-error-300);
+}
+
+/* Disabled step */
+.step-disabled .stepIcon {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-default);
+  color: var(--text-disabled);
+  opacity: 0.6;
+}
+
+.step-disabled .stepTitle {
+  color: var(--text-disabled);
+}
+
+.step-disabled .stepDescription {
+  color: var(--text-disabled);
+}
+
+/* Wait step (default/upcoming) */
+.step-wait .stepIcon {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   VERTICAL STEPS
+   ======================================== */
+
+.stepsVertical {
+  flex-direction: column;
+  padding: 0;
+}
+
+.stepsVertical .step {
+  flex: none;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-bottom: var(--spacing-6);
+  max-width: none;
+}
+
+.stepsVertical .step:last-child {
+  padding-bottom: 0;
+}
+
+.stepsVertical .stepContent {
+  text-align: left;
+  padding-top: 0;
+  padding-left: var(--spacing-4);
+  max-width: none;
+}
+
+.stepsVertical .step:not(:last-child)::after {
+  top: 48px; /* Below icon */
+  left: 20px; /* Center of icon */
+  right: auto;
+  width: 2px;
+  height: calc(100% - 48px + var(--spacing-6));
+  background-color: var(--border-default);
+}
+
+.stepsVertical .step-completed:not(:last-child)::after {
+  background-color: var(--color-primary-600);
+}
+
+.stepsVertical .step-error:not(:last-child)::after {
+  background-color: var(--color-error-300);
+}
+
+/* ========================================
+   CLICKABLE STEPS
+   ======================================== */
+
+.stepClickable {
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.stepClickable:hover .stepIcon {
+  border-color: var(--color-primary-400);
+  transform: scale(1.08);
+}
+
+.stepClickable:hover .stepTitle {
+  color: var(--color-primary-600);
+}
+
+.stepClickable:focus {
+  outline: none;
+}
+
+.stepClickable:focus-visible .stepIcon {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 3px;
+}
+
+.step-disabled.stepClickable {
+  cursor: not-allowed;
+}
+
+.step-disabled.stepClickable:hover .stepIcon {
+  transform: none;
+  border-color: var(--border-default);
+}
+
+.step-disabled.stepClickable:hover .stepTitle {
+  color: var(--text-disabled);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small size */
+.stepsSm .stepIcon {
+  width: 32px;
+  height: 32px;
+  font-size: var(--font-size-body-small);
+}
+
+.stepsSm .stepIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.stepsSm .step:not(:last-child)::after {
+  top: 16px; /* Center of 32px icon */
+  left: calc(50% + 16px);
+  right: calc(-50% + 16px);
+}
+
+.stepsSm .stepContent {
+  padding-top: var(--spacing-2);
+}
+
+.stepsSm .stepTitle {
+  font-size: var(--font-size-body-small);
+}
+
+.stepsSm .stepDescription {
+  font-size: var(--font-size-caption);
+}
+
+.stepsSm.stepsVertical .step:not(:last-child)::after {
+  top: 40px;
+  left: 16px;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .stepIcon {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-400);
+  }
+
+  .step:not(:last-child)::after {
+    background-color: var(--palette-gray-700);
+  }
+
+  .stepTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .stepDescription {
+    color: var(--palette-gray-400);
+  }
+
+  .step-completed .stepIcon {
+    background-color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+    color: white;
+  }
+
+  .step-completed:not(:last-child)::after {
+    background-color: var(--color-primary-600);
+  }
+
+  .step-active .stepIcon {
+    background-color: rgba(59, 130, 246, 0.15);
+    border-color: var(--color-primary-500);
+    color: var(--color-primary-400);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+
+  .step-active .stepTitle {
+    color: var(--color-primary-400);
+  }
+
+  .step-error .stepIcon {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: var(--color-error-500);
+    color: var(--color-error-400);
+  }
+
+  .step-error .stepTitle {
+    color: var(--color-error-400);
+  }
+
+  .step-error .stepDescription {
+    color: var(--color-error-400);
+  }
+
+  .step-error:not(:last-child)::after {
+    background-color: var(--color-error-500);
+  }
+
+  .step-disabled .stepIcon {
+    background-color: var(--palette-gray-900);
+    border-color: var(--palette-gray-800);
+    color: var(--palette-gray-600);
+  }
+
+  .step-disabled .stepTitle {
+    color: var(--palette-gray-600);
+  }
+
+  .step-disabled .stepDescription {
+    color: var(--palette-gray-600);
+  }
+
+  .stepClickable:hover .stepIcon {
+    border-color: var(--color-primary-500);
+  }
+
+  .stepClickable:hover .stepTitle {
+    color: var(--color-primary-400);
+  }
+
+  .stepClickable:focus-visible .stepIcon {
+    outline-color: var(--color-primary-500);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .steps:not(.stepsVertical) {
+    flex-direction: column;
+  }
+
+  .steps:not(.stepsVertical) .step {
+    flex: none;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: var(--spacing-5);
+    max-width: none;
+  }
+
+  .steps:not(.stepsVertical) .step:last-child {
+    padding-bottom: 0;
+  }
+
+  .steps:not(.stepsVertical) .stepContent {
+    text-align: left;
+    padding-top: 0;
+    padding-left: var(--spacing-3);
+    max-width: none;
+  }
+
+  .steps:not(.stepsVertical) .step:not(:last-child)::after {
+    top: 48px;
+    left: 20px;
+    right: auto;
+    width: 2px;
+    height: calc(100% - 48px + var(--spacing-5));
+  }
+
+  .steps:not(.stepsVertical) .step-completed:not(:last-child)::after {
+    background-color: var(--color-primary-600);
+  }
+
+  /* Smaller descriptions on mobile */
+  .steps:not(.stepsVertical) .stepDescription {
+    font-size: var(--font-size-caption);
+  }
+}
+
+@media (max-width: 480px) {
+  .stepIcon {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-body-small);
+  }
+
+  .stepIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .stepTitle {
+    font-size: var(--font-size-body-small);
+  }
+
+  .stepDescription {
+    font-size: var(--font-size-caption);
+  }
+
+  .steps:not(.stepsVertical) .step:not(:last-child)::after {
+    top: 40px;
+    left: 16px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .stepIcon,
+  .stepClickable,
+  .step:not(:last-child)::after {
+    transition: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .stepIcon {
+    border-width: 3px;
+  }
+
+  .step-active .stepIcon {
+    border-width: 4px;
+  }
+
+  .step:not(:last-child)::after {
+    height: 3px;
+  }
+
+  .stepsVertical .step:not(:last-child)::after {
+    width: 3px;
+    height: calc(100% - 48px + var(--spacing-6));
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .step:not(:last-child)::after {
+    background-color: var(--border-default) !important;
+  }
+}

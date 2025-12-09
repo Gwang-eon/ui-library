@@ -1,0 +1,221 @@
+/**
+ * Divider Component
+ * @category Foundation
+ */
+
+/* Base divider styles */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-default);
+  margin: var(--spacing-4) 0;
+  width: 100%;
+}
+
+/* ========================================
+   Orientation
+   ======================================== */
+
+/* Vertical divider */
+.divider-vertical {
+  display: inline-block;
+  width: 1px;
+  height: 24px;
+  margin: 0 var(--spacing-2);
+  border-top: none;
+  border-left: 1px solid var(--border-default);
+  vertical-align: middle;
+}
+
+/* ========================================
+   Thickness Variants
+   ======================================== */
+
+.divider-thin {
+  border-top-width: 1px;
+}
+
+.divider-medium {
+  border-top-width: 2px;
+}
+
+.divider-thick {
+  border-top-width: 4px;
+}
+
+.divider-vertical.divider-thin {
+  border-left-width: 1px;
+}
+
+.divider-vertical.divider-medium {
+  border-left-width: 2px;
+}
+
+.divider-vertical.divider-thick {
+  border-left-width: 4px;
+}
+
+/* ========================================
+   Style Variants
+   ======================================== */
+
+.divider-dashed {
+  border-top-style: dashed;
+}
+
+.divider-dotted {
+  border-top-style: dotted;
+}
+
+.divider-vertical.divider-dashed {
+  border-left-style: dashed;
+}
+
+.divider-vertical.divider-dotted {
+  border-left-style: dotted;
+}
+
+/* ========================================
+   Spacing Variants
+   ======================================== */
+
+.divider-spacing-sm {
+  margin: var(--spacing-2) 0;
+}
+
+.divider-spacing-md {
+  margin: var(--spacing-4) 0;
+}
+
+.divider-spacing-lg {
+  margin: var(--spacing-6) 0;
+}
+
+/* ========================================
+   Divider with Text
+   ======================================== */
+
+.divider-with-text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border: none;
+  margin: var(--spacing-4) 0;
+  position: relative;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--border-default);
+}
+
+.divider-with-text::before {
+  margin-right: var(--spacing-3);
+}
+
+.divider-with-text::after {
+  margin-left: var(--spacing-3);
+}
+
+.divider-text {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-1);
+}
+
+/* Text alignment variants */
+.divider-text-left::before {
+  flex: 0;
+  margin-right: 0;
+}
+
+.divider-text-left .divider-text {
+  margin-right: var(--spacing-3);
+}
+
+.divider-text-right::after {
+  flex: 0;
+  margin-left: 0;
+}
+
+.divider-text-right .divider-text {
+  margin-left: var(--spacing-3);
+}
+
+/* With text thickness variants */
+.divider-with-text.divider-medium::before,
+.divider-with-text.divider-medium::after {
+  border-top-width: 2px;
+}
+
+.divider-with-text.divider-thick::before,
+.divider-with-text.divider-thick::after {
+  border-top-width: 4px;
+}
+
+/* With text style variants */
+.divider-with-text.divider-dashed::before,
+.divider-with-text.divider-dashed::after {
+  border-top-style: dashed;
+}
+
+.divider-with-text.divider-dotted::before,
+.divider-with-text.divider-dotted::after {
+  border-top-style: dotted;
+}
+
+/* ========================================
+   Mobile Responsive
+   ======================================== */
+
+@media (max-width: 768px) {
+  .divider {
+    margin: var(--spacing-3) 0;
+  }
+
+  .divider-spacing-md {
+    margin: var(--spacing-3) 0;
+  }
+
+  .divider-spacing-lg {
+    margin: var(--spacing-5) 0;
+  }
+
+  .divider-with-text::before {
+    margin-right: var(--spacing-2);
+  }
+
+  .divider-with-text::after {
+    margin-left: var(--spacing-2);
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Base divider */
+  .divider {
+    border-top-color: var(--palette-gray-700);
+  }
+
+  /* Vertical divider */
+  .divider-vertical {
+    border-left-color: var(--palette-gray-700);
+  }
+
+  /* Divider with text */
+  .divider-with-text::before,
+  .divider-with-text::after {
+    border-top-color: var(--palette-gray-700);
+  }
+
+  .divider-text {
+    color: var(--palette-gray-400);
+  }
+}

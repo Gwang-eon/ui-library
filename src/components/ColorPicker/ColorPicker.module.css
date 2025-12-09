@@ -1,0 +1,684 @@
+/* Color Picker Component Styles */
+
+/* ========================================
+   COLOR PICKER
+   ======================================== */
+
+.colorPicker {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  position: relative;
+}
+
+.colorPickerLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.colorPickerTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  max-width: 280px;
+}
+
+/* ========================================
+   COLOR SWATCH
+   ======================================== */
+
+.colorSwatch {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-base);
+  border: 2px solid var(--border-default);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.colorSwatch:hover {
+  border-color: var(--border-strong);
+  transform: scale(1.05);
+}
+
+.colorSwatchLg {
+  width: 48px;
+  height: 48px;
+}
+
+/* ========================================
+   COLOR INPUT
+   ======================================== */
+
+.colorInput {
+  flex: 1;
+  height: 32px;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-family: monospace;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.colorInput:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+.colorInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.colorPickerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.colorPickerBtn:hover:not(:disabled) {
+  background: var(--surface-secondary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.colorPickerBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   COLOR PICKER DROPDOWN
+   ======================================== */
+
+.colorPickerDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 1000;
+}
+
+/* ========================================
+   COLOR PICKER PANEL
+   ======================================== */
+
+.colorPickerPanel {
+  width: 320px;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.colorPickerHeader {
+  padding: var(--spacing-5);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-secondary);
+}
+
+.colorPickerTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.colorPickerPreview {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.colorValue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.colorValueHex {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.colorValueRgb {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  font-family: monospace;
+}
+
+/* ========================================
+   COLOR PICKER BODY
+   ======================================== */
+
+.colorPickerBody {
+  padding: var(--spacing-5);
+}
+
+.colorInputGroup {
+  margin-bottom: var(--spacing-4);
+}
+
+.colorInputLabel {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-2);
+}
+
+.colorInputText {
+  width: 100%;
+  height: 36px;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.colorInputText:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+.colorInputRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
+}
+
+.colorInputNumber {
+  width: 100%;
+  height: 36px;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.colorInputNumber:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+/* Remove number input spinners */
+.colorInputNumber::-webkit-outer-spin-button,
+.colorInputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.colorInputNumber[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* ========================================
+   COLOR PRESETS
+   ======================================== */
+
+.colorPresets {
+  margin-bottom: var(--spacing-5);
+}
+
+.colorPresetsTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.colorPresetsGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--spacing-2);
+}
+
+.colorPresetItem {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.colorPresetItem:hover {
+  border-color: var(--border-strong);
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.colorPresetItem:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+/* ========================================
+   RECENT COLORS
+   ======================================== */
+
+.colorRecent {
+  margin-bottom: var(--spacing-4);
+}
+
+.colorRecentTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.colorRecentList {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.colorRecentItem {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.colorRecentItem:hover {
+  border-color: var(--border-strong);
+  transform: scale(1.1);
+}
+
+/* ========================================
+   COLOR PICKER FOOTER
+   ======================================== */
+
+.colorPickerFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4) var(--spacing-5);
+  border-top: 1px solid var(--border-default);
+  background: var(--surface-tertiary);
+}
+
+/* ========================================
+   COMPACT COLOR PICKER
+   ======================================== */
+
+.colorPickerCompact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  position: relative;
+}
+
+.colorSwatches {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.colorSwatchesSm .colorSwatchBtn {
+  width: 28px;
+  height: 28px;
+}
+
+.colorSwatchBtn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.colorSwatchBtn:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  transform: scale(1.1);
+}
+
+.colorSwatchBtn:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+.colorSwatchBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.colorSwatchBtnActive {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+.colorSwatchBtnActive::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid var(--color-primary-500);
+}
+
+.colorSwatchBtnCustom {
+  background: var(--surface-secondary);
+  color: var(--text-tertiary);
+  border-style: dashed;
+}
+
+.colorSwatchBtnCustom:hover:not(:disabled) {
+  background: var(--surface-tertiary);
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .colorPickerPanel {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .colorPickerPanel {
+    width: 280px;
+  }
+
+  .colorPickerHeader,
+  .colorPickerBody,
+  .colorPickerFooter {
+    padding: var(--spacing-4);
+  }
+
+  .colorPresetsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .colorPickerTrigger {
+    max-width: 100%;
+  }
+
+  .colorPickerPanel {
+    width: calc(100vw - 32px);
+    max-width: 320px;
+  }
+
+  .colorPresetsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .colorSwatches {
+    gap: var(--spacing-1-5);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .colorSwatch,
+  .colorPickerBtn,
+  .colorPresetItem,
+  .colorRecentItem,
+  .colorSwatchBtn {
+    transition: none;
+  }
+
+  .colorSwatch:hover,
+  .colorPresetItem:hover,
+  .colorRecentItem:hover,
+  .colorSwatchBtn:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .colorSwatch,
+  .colorInput,
+  .colorPickerBtn,
+  .colorPresetItem,
+  .colorSwatchBtn {
+    border-width: 2px;
+  }
+
+  .colorPickerPanel {
+    border-width: 2px;
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .colorPickerDropdown {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Label */
+  .colorPickerLabel {
+    color: var(--palette-gray-300);
+  }
+
+  /* Color Swatch */
+  .colorSwatch {
+    border-color: var(--palette-gray-700);
+  }
+
+  .colorSwatch:hover {
+    border-color: var(--palette-gray-600);
+  }
+
+  /* Color Input */
+  .colorInput {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .colorInput:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Picker Button */
+  .colorPickerBtn {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-200);
+  }
+
+  .colorPickerBtn:hover:not(:disabled) {
+    background: var(--palette-gray-700);
+    border-color: var(--color-primary-500);
+  }
+
+  /* Dropdown */
+  .colorPickerDropdown {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Panel */
+  .colorPickerPanel {
+    background: var(--palette-gray-850);
+    border-color: var(--palette-gray-700);
+  }
+
+  /* Panel Header */
+  .colorPickerHeader {
+    background: var(--palette-gray-800);
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  /* Panel Title */
+  .colorPickerTitle {
+    color: var(--palette-gray-100);
+  }
+
+  /* Color Values */
+  .colorValueHex {
+    color: var(--palette-gray-100);
+  }
+
+  .colorValueRgb {
+    color: var(--palette-gray-500);
+  }
+
+  /* Panel Body Inputs */
+  .colorInputLabel {
+    color: var(--palette-gray-300);
+  }
+
+  .colorInputText {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .colorInputText:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .colorInputNumber {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .colorInputNumber:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Preset and Recent Titles */
+  .colorPresetsTitle,
+  .colorRecentTitle {
+    color: var(--palette-gray-100);
+  }
+
+  /* Preset Items */
+  .colorPresetItem {
+    border-color: var(--palette-gray-700);
+  }
+
+  .colorPresetItem:hover {
+    border-color: var(--palette-gray-600);
+  }
+
+  .colorPresetItem.active {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Recent Colors */
+  .colorRecentItem {
+    border-color: var(--palette-gray-700);
+  }
+
+  .colorRecentItem:hover {
+    border-color: var(--palette-gray-600);
+  }
+
+  /* Swatch Buttons */
+  .colorSwatchBtn {
+    border-color: var(--palette-gray-700);
+  }
+
+  .colorSwatchBtn:hover {
+    border-color: var(--palette-gray-600);
+  }
+
+  .colorSwatchBtn.active {
+    border-color: var(--color-primary-500);
+  }
+
+  .colorSwatchBtnCustom {
+    background: var(--palette-gray-800);
+    color: var(--palette-gray-500);
+    border-color: var(--palette-gray-700);
+  }
+
+  .colorSwatchBtnCustom:hover:not(:disabled) {
+    background: var(--palette-gray-750);
+    color: var(--palette-gray-400);
+  }
+
+  /* Footer */
+  .colorPickerFooter {
+    background: var(--palette-gray-800);
+    border-top-color: var(--palette-gray-700);
+  }
+
+  /* Section Headers */
+  .colorSection h3,
+  .colorSection h4 {
+    color: var(--palette-gray-300);
+  }
+
+  /* Helper Text */
+  .colorPickerHelper {
+    color: var(--palette-gray-400);
+  }
+}

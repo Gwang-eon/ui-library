@@ -1,0 +1,411 @@
+/**
+ * Table Component
+ * @category Data Display
+ *
+ * Tables display data in rows and columns
+ */
+
+/* ========================================
+   TABLE CONTAINER
+   ======================================== */
+
+.tableContainer {
+  width: 100%;
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ========================================
+   TABLE
+   ======================================== */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background-color: var(--surface-secondary);
+}
+
+.table th {
+  padding: var(--spacing-3) var(--spacing-4);
+  text-align: left;
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Actions column */
+.table .tableColActions {
+  width: 120px;
+}
+
+.table tbody tr:hover {
+  background-color: var(--surface-secondary);
+}
+
+.table tbody tr.selected {
+  background-color: var(--color-primary-50);
+}
+
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========================================
+   TABLE ACTIONS TOOLBAR
+   ======================================== */
+
+.tableActions {
+  display: flex;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-4);
+}
+
+/* ========================================
+   SORTABLE COLUMNS
+   ======================================== */
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: var(--spacing-8) !important;
+}
+
+.sortable:hover {
+  background-color: var(--surface-tertiary);
+}
+
+.sortable::after {
+  content: '⇅';
+  position: absolute;
+  right: var(--spacing-3);
+  opacity: 0.3;
+  font-size: var(--font-size-body-small);
+}
+
+.sortable.asc::after {
+  content: '↑';
+  opacity: 1;
+  color: var(--color-primary-500);
+}
+
+.sortable.desc::after {
+  content: '↓';
+  opacity: 1;
+  color: var(--color-primary-500);
+}
+
+/* ========================================
+   TABLE VARIANTS
+   ======================================== */
+
+/* Sticky header */
+.tableSticky thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tableSticky thead th {
+  background-color: var(--surface-secondary);
+  box-shadow: 0 1px 0 var(--border-default);
+}
+
+/* Striped rows */
+.tableStriped tbody tr:nth-child(even) {
+  background-color: var(--surface-secondary);
+}
+
+.tableStriped tbody tr:nth-child(even):hover {
+  background-color: var(--surface-tertiary);
+}
+
+/* Compact variant */
+.tableCompact th,
+.tableCompact td {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-small);
+}
+
+/* ========================================
+   EXPANDABLE ROWS
+   ======================================== */
+
+.expandableRow {
+  cursor: default;
+}
+
+.expandBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.expandBtn:hover {
+  background-color: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.expandBtn:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.chevronIcon {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.expandBtn[aria-expanded="true"] .chevronIcon {
+  transform: rotate(90deg);
+}
+
+.expandedContent {
+  background-color: var(--surface-secondary);
+}
+
+.expandedContent td {
+  padding: 0 !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.expandedDetails {
+  padding: var(--spacing-4);
+}
+
+/* ========================================
+   LOADING SKELETON
+   ======================================== */
+
+.tableLoading tbody tr {
+  pointer-events: none;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 25%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+  height: 16px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonText {
+  height: 16px;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.tableEmptyState {
+  position: absolute;
+  top: 52px; /* thead height */
+  left: 0;
+  right: 0;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-primary);
+  z-index: 5;
+}
+
+.emptyStateContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-12) var(--spacing-6);
+}
+
+.emptyStateIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--text-tertiary);
+  opacity: 0.5;
+}
+
+.emptyStateTitle {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.emptyStateDescription {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-tertiary);
+  max-width: 400px;
+  margin: 0;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Table Container */
+  .tableContainer {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  /* Table Header */
+  .table thead {
+    background-color: var(--palette-gray-900);
+  }
+
+  .table th {
+    color: var(--palette-gray-300);
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  /* Table Cells */
+  .table td {
+    color: var(--palette-gray-200);
+    border-bottom-color: var(--palette-gray-750);
+  }
+
+  /* Hover State */
+  .table tbody tr:hover {
+    background-color: var(--palette-gray-750);
+  }
+
+  /* Selected Row */
+  .table tbody tr.selected {
+    background-color: rgba(59, 130, 246, 0.15);
+  }
+
+  /* Sortable Columns */
+  .sortable:hover {
+    background-color: var(--palette-gray-850);
+  }
+
+  .sortable.asc::after,
+  .sortable.desc::after {
+    color: var(--color-primary-400);
+  }
+
+  /* Sticky Header */
+  .tableSticky thead th {
+    background-color: var(--palette-gray-900);
+    box-shadow: 0 1px 0 var(--palette-gray-700);
+  }
+
+  /* Striped Rows */
+  .tableStriped tbody tr:nth-child(even) {
+    background-color: var(--palette-gray-850);
+  }
+
+  .tableStriped tbody tr:nth-child(even):hover {
+    background-color: var(--palette-gray-750);
+  }
+
+  /* Expand Button */
+  .expandBtn {
+    color: var(--palette-gray-400);
+  }
+
+  .expandBtn:hover {
+    background-color: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .expandBtn:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  /* Expanded Content */
+  .expandedContent {
+    background-color: var(--palette-gray-850);
+  }
+
+  .expandedContent td {
+    border-bottom-color: var(--palette-gray-700) !important;
+  }
+
+  /* Loading Skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--palette-gray-800) 25%,
+      var(--palette-gray-750) 50%,
+      var(--palette-gray-800) 75%
+    );
+  }
+
+  /* Empty State */
+  .tableEmptyState {
+    background-color: var(--palette-gray-800);
+  }
+
+  .emptyStateIcon {
+    color: var(--palette-gray-500);
+  }
+
+  .emptyStateTitle {
+    color: var(--palette-gray-300);
+  }
+
+  .emptyStateDescription {
+    color: var(--palette-gray-500);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+
+  .chevronIcon {
+    transition: none;
+  }
+}

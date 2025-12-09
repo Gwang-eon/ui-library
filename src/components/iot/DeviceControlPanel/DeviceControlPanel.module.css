@@ -1,0 +1,748 @@
+/**
+ * Device Control Panel Component
+ * Category: IoT
+ * Control interface for IoT devices with switches, sliders, and action buttons
+ */
+
+/* ==================== Control Item ==================== */
+
+.controlItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-3);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+}
+
+.controlLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.controlLabel svg {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ==================== Switch (Toggle) ==================== */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.switchInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--surface-tertiary);
+  transition: var(--duration-normal) var(--ease-out);
+  border-radius: var(--radius-full);
+}
+
+.switchSlider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: var(--duration-normal) var(--ease-out);
+  border-radius: 50%;
+}
+
+.switchInput:checked + .switchSlider {
+  background-color: var(--color-primary-500);
+}
+
+.switchInput:focus + .switchSlider {
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.switchInput:checked + .switchSlider:before {
+  transform: translateX(20px);
+}
+
+.switchInput:disabled + .switchSlider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==================== Slider ==================== */
+
+.slider {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--surface-tertiary);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.slider:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Webkit (Chrome, Safari, newer Edge) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+
+.slider::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+.slider:disabled::-webkit-slider-thumb {
+  background: var(--text-tertiary);
+  cursor: not-allowed;
+}
+
+/* Firefox */
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  cursor: pointer;
+  border: none;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+
+.slider::-moz-range-thumb:active {
+  transform: scale(1.1);
+}
+
+.slider:disabled::-moz-range-thumb {
+  background: var(--text-tertiary);
+  cursor: not-allowed;
+}
+
+/* ==================== Device Control Card ==================== */
+
+.deviceControlCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.deviceControlCard:hover {
+  border-color: var(--color-primary-300);
+  box-shadow: var(--shadow-md);
+}
+
+.deviceHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.deviceIconCircle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.iconVariant-warning {
+  background: var(--palette-orange-100);
+  color: var(--palette-orange-600);
+}
+
+.iconVariant-primary {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+.iconVariant-success {
+  background: var(--color-success-100);
+  color: var(--color-success-600);
+}
+
+.iconVariant-error {
+  background: var(--color-error-100);
+  color: var(--color-error-600);
+}
+
+.deviceInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.deviceName {
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deviceId {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin: var(--spacing-1) 0 0 0;
+}
+
+.controlSliderWrapper {
+  margin-top: var(--spacing-3);
+}
+
+.controlSliderLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-2);
+  display: block;
+}
+
+/* Device Card Loading */
+.deviceControlCard.loading {
+  pointer-events: none;
+}
+
+.iconSkeleton,
+.nameSkeleton,
+.idSkeleton,
+.toggleSkeleton,
+.sliderSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.iconSkeleton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.deviceInfo {
+  flex: 1;
+}
+
+.nameSkeleton {
+  width: 60%;
+  height: 20px;
+  margin-bottom: var(--spacing-2);
+}
+
+.idSkeleton {
+  width: 40%;
+  height: 14px;
+}
+
+.toggleSkeleton {
+  width: 44px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.sliderSkeleton {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+/* ==================== Mode Selection ==================== */
+
+.modeSelection {
+  margin-bottom: var(--spacing-6);
+}
+
+.modeLabel {
+  display: block;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btnGroup {
+  display: inline-flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+}
+
+.btn {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  border: none;
+  background: var(--surface-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  border-right: 1px solid var(--border-default);
+}
+
+.btn:last-child {
+  border-right: none;
+}
+
+.btnSm {
+  padding: var(--spacing-1-5) var(--spacing-3);
+  font-size: var(--font-size-body-small);
+}
+
+.btnGhost {
+  background: transparent;
+}
+
+.btn:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.btn.active {
+  background: var(--color-primary-500);
+  color: white;
+}
+
+.btn:focus {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  z-index: 1;
+}
+
+/* ==================== Temperature Control ==================== */
+
+.temperatureDisplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-3);
+}
+
+.temperatureValue {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-600);
+}
+
+.sliderRange {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-top: var(--spacing-1);
+}
+
+/* ==================== Fan Speed Select ==================== */
+
+.customSelect {
+  position: relative;
+}
+
+.customSelectTrigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.customSelectTrigger:hover {
+  border-color: var(--color-primary-300);
+  background: var(--surface-secondary);
+}
+
+.customSelectTrigger:focus {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.customSelectValue {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+}
+
+.selectIcon {
+  color: var(--text-tertiary);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.customSelectDropdown {
+  position: absolute;
+  top: calc(100% + var(--spacing-1));
+  left: 0;
+  right: 0;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.customSelectOption {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.customSelectOption:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.customSelectOption.selected {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ==================== Animations ==================== */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .deviceControlCard {
+    padding: var(--spacing-4);
+  }
+
+  .deviceIconCircle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .deviceName {
+    font-size: var(--font-size-body-medium);
+  }
+
+  .temperatureValue {
+    font-size: var(--font-size-heading-4);
+  }
+
+  .btnGroup {
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .deviceControlCard {
+    padding: var(--spacing-3);
+  }
+
+  .deviceHeader {
+    gap: var(--spacing-2);
+  }
+
+  .controlItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+
+  .slider {
+    width: 100%;
+  }
+}
+
+/* ==================== High Contrast Mode ==================== */
+
+@media (prefers-contrast: high) {
+  .deviceControlCard,
+  .customSelectTrigger,
+  .customSelectDropdown {
+    border-width: 2px;
+  }
+
+  .btnGroup {
+    border-width: 2px;
+  }
+
+  .btn {
+    border-right-width: 2px;
+  }
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .deviceControlCard,
+  .slider,
+  .switchSlider,
+  .switchSlider:before,
+  .btn,
+  .customSelectTrigger,
+  .customSelectOption,
+  .selectIcon {
+    transition: none;
+  }
+
+  .iconSkeleton,
+  .nameSkeleton,
+  .idSkeleton,
+  .toggleSkeleton,
+  .sliderSkeleton {
+    animation: none;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Control Item */
+  .controlItem {
+    background: var(--palette-gray-750);
+  }
+
+  .controlLabel {
+    color: var(--palette-gray-100);
+  }
+
+  .controlLabel svg {
+    color: var(--palette-gray-500);
+  }
+
+  /* Device Control Card */
+  .deviceControlCard {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .deviceControlCard:hover {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Device Info */
+  .deviceName {
+    color: var(--palette-gray-100);
+  }
+
+  .deviceId {
+    color: var(--palette-gray-500);
+  }
+
+  /* Icon Variants */
+  .iconVariant-warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--palette-orange-400);
+  }
+
+  .iconVariant-primary {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+  }
+
+  .iconVariant-success {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--color-success-400);
+  }
+
+  .iconVariant-error {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--color-error-400);
+  }
+
+  /* Switch */
+  .switchSlider {
+    background-color: var(--palette-gray-700);
+  }
+
+  .switchInput:checked + .switchSlider {
+    background-color: var(--color-primary-500);
+  }
+
+  .switchInput:focus + .switchSlider {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  /* Slider */
+  .slider {
+    background: var(--palette-gray-700);
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+
+  .slider::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+
+  .slider:disabled::-webkit-slider-thumb {
+    background: var(--palette-gray-600);
+  }
+
+  .slider:disabled::-moz-range-thumb {
+    background: var(--palette-gray-600);
+  }
+
+  /* Control Slider */
+  .controlSliderLabel {
+    color: var(--palette-gray-400);
+  }
+
+  /* Skeleton Loading */
+  .iconSkeleton,
+  .nameSkeleton,
+  .idSkeleton,
+  .toggleSkeleton,
+  .sliderSkeleton {
+    background: linear-gradient(
+      90deg,
+      var(--palette-gray-750) 0%,
+      var(--palette-gray-700) 50%,
+      var(--palette-gray-750) 100%
+    );
+  }
+
+  /* Mode Selection */
+  .modeLabel {
+    color: var(--palette-gray-400);
+  }
+
+  .btnGroup {
+    border-color: var(--palette-gray-700);
+  }
+
+  .btn {
+    background: var(--palette-gray-800);
+    color: var(--palette-gray-400);
+    border-right-color: var(--palette-gray-700);
+  }
+
+  .btn:hover {
+    background: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .btn.active {
+    background: var(--color-primary-500);
+    color: white;
+  }
+
+  .btn:focus {
+    outline-color: var(--color-primary-400);
+  }
+
+  /* Temperature Control */
+  .temperatureValue {
+    color: var(--color-primary-400);
+  }
+
+  .sliderRange {
+    color: var(--palette-gray-500);
+  }
+
+  /* Custom Select */
+  .customSelectTrigger {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .customSelectTrigger:hover {
+    border-color: var(--color-primary-500);
+    background: var(--palette-gray-750);
+  }
+
+  .customSelectTrigger:focus {
+    outline-color: var(--color-primary-400);
+  }
+
+  .customSelectValue {
+    color: var(--palette-gray-100);
+  }
+
+  .selectIcon {
+    color: var(--palette-gray-500);
+  }
+
+  .customSelectDropdown {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .customSelectOption {
+    color: var(--palette-gray-400);
+  }
+
+  .customSelectOption:hover {
+    background: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .customSelectOption.selected {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+  }
+}

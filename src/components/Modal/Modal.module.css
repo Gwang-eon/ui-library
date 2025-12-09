@@ -1,0 +1,228 @@
+/**
+ * Modal Component
+ * Category: Feedback
+ * Modal dialogs and overlays
+ */
+
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn var(--duration-normal) var(--ease-out);
+}
+
+/* Modal Container */
+.modal {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  background-color: var(--surface-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  animation: scaleIn var(--duration-normal) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal Sizes */
+.modalSm {
+  max-width: 400px;
+}
+
+.modalMd {
+  max-width: 600px;
+}
+
+.modalLg {
+  max-width: 800px;
+}
+
+.modalFull {
+  max-width: 90%;
+  width: 90%;
+}
+
+/* Modal Header */
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-5) var(--spacing-6);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.modalTitle {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  padding: var(--spacing-1);
+  line-height: 1;
+  border-radius: var(--radius-base);
+  transition: all var(--duration-fast) var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalClose:hover {
+  background-color: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.modalClose:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+/* Modal Body */
+.modalBody {
+  padding: var(--spacing-6);
+  overflow-y: auto;
+  flex: 1;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Modal Footer */
+.modalFooter {
+  display: flex;
+  gap: var(--spacing-3);
+  justify-content: flex-end;
+  padding: var(--spacing-4) var(--spacing-6);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .modalSm,
+  .modalMd,
+  .modalLg,
+  .modalFull {
+    max-width: 95%;
+  }
+
+  .modalHeader {
+    padding: var(--spacing-4) var(--spacing-4);
+  }
+
+  .modalTitle {
+    font-size: var(--font-size-heading-5);
+  }
+
+  .modalBody {
+    padding: var(--spacing-4);
+  }
+
+  .modalFooter {
+    padding: var(--spacing-3) var(--spacing-4);
+    flex-direction: column-reverse;
+  }
+
+  .modalFooter > button {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Modal Overlay - darker in dark mode */
+  .modalOverlay {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* Modal Container */
+  .modal {
+    background-color: var(--palette-gray-800);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Modal Header */
+  .modalHeader {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .modalTitle {
+    color: var(--palette-gray-100);
+  }
+
+  /* Close Button */
+  .modalClose {
+    color: var(--palette-gray-400);
+  }
+
+  .modalClose:hover {
+    background-color: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .modalClose:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+
+  /* Modal Body */
+  .modalBody {
+    color: var(--palette-gray-300);
+  }
+
+  /* Modal Footer */
+  .modalFooter {
+    border-top-color: var(--palette-gray-700);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .modalOverlay,
+  .modal {
+    animation: none;
+  }
+
+  .modalClose {
+    transition: none;
+  }
+}

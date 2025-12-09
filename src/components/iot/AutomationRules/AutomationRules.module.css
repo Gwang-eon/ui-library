@@ -1,0 +1,419 @@
+/**
+ * Automation Rules Component
+ * Category: IoT
+ * Manage and visualize automation rules with triggers, conditions, and actions
+ */
+
+/* ==================== Utilities ==================== */
+
+.iconSm {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ==================== Rule Card ==================== */
+
+.ruleCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  margin-bottom: var(--spacing-4);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.ruleCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==================== Rule Header ==================== */
+
+.ruleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.ruleHeaderLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.ruleIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--surface-secondary);
+  flex-shrink: 0;
+}
+
+.ruleCategoryIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary-600);
+}
+
+.ruleInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.ruleTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.ruleName {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.ruleDescription {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body-small);
+  line-height: 1.5;
+}
+
+/* ==================== Badges ==================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.badgeSuccess {
+  background: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.badgeDefault {
+  background: var(--surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+/* ==================== Rule Actions ==================== */
+
+.ruleActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-shrink: 0;
+}
+
+.btnIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-base);
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.ruleCard:hover .btnIcon {
+  opacity: 1;
+}
+
+.btnIcon:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.ruleDivider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-default);
+  margin: 0 var(--spacing-2);
+}
+
+/* ==================== Toggle Switch ==================== */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switchInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--surface-tertiary);
+  transition: var(--duration-fast);
+  border-radius: var(--radius-full);
+}
+
+.switchSlider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: var(--duration-fast);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+.switchInput:checked + .switchSlider {
+  background-color: var(--color-primary-500);
+}
+
+.switchInput:focus + .switchSlider {
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.switchInput:checked + .switchSlider:before {
+  transform: translateX(20px);
+}
+
+/* ==================== Rule Meta Groups ==================== */
+
+.ruleMetaGroups {
+  display: flex;
+  gap: var(--spacing-6);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-4);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ruleMetaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  min-width: 0;
+}
+
+.ruleMetaLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1-5);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+}
+
+.ruleMetaValue {
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+}
+
+/* ==================== Rule Flow ==================== */
+
+.ruleFlow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.ruleStep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-3);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  min-width: 150px;
+  flex-shrink: 0;
+}
+
+.ruleStepLabel {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ruleStepContent {
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.ruleArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.ruleArrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .ruleHeader {
+    flex-direction: column;
+  }
+
+  .ruleActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .ruleMetaGroups {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ruleFlow {
+    flex-direction: column;
+  }
+
+  .ruleStep {
+    width: 100%;
+  }
+
+  .ruleArrow {
+    transform: rotate(90deg);
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Card */
+  .ruleCard {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .ruleCard:hover {
+    border-color: var(--palette-gray-600);
+  }
+
+  /* Header */
+  .ruleHeader {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .ruleIconWrapper,
+  .ruleMetaGroups,
+  .ruleFlow {
+    background: var(--palette-gray-750);
+  }
+
+  .ruleCategoryIcon {
+    color: var(--color-primary-400);
+  }
+
+  .ruleName {
+    color: var(--palette-gray-100);
+  }
+
+  .ruleDescription {
+    color: var(--palette-gray-400);
+  }
+
+  /* Badges */
+  .badgeSuccess {
+    background: var(--color-success-900);
+    color: var(--color-success-300);
+  }
+
+  .badgeDefault {
+    background: var(--palette-gray-700);
+    color: var(--palette-gray-400);
+  }
+
+  /* Actions */
+  .btnIcon {
+    color: var(--palette-gray-500);
+  }
+
+  .btnIcon:hover {
+    background: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .ruleDivider {
+    background: var(--palette-gray-700);
+  }
+
+  /* Switch */
+  .switchSlider {
+    background-color: var(--palette-gray-700);
+  }
+
+  .switchInput:focus + .switchSlider {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  /* Meta Groups */
+  .ruleMetaLabel {
+    color: var(--palette-gray-500);
+  }
+
+  .ruleMetaValue {
+    color: var(--palette-gray-100);
+  }
+
+  /* Rule Flow */
+  .ruleStep {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .ruleStepLabel {
+    color: var(--palette-gray-500);
+  }
+
+  .ruleStepContent {
+    color: var(--palette-gray-100);
+  }
+
+  .ruleArrow {
+    color: var(--palette-gray-500);
+  }
+}

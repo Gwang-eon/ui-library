@@ -1,0 +1,166 @@
+/**
+ * Popover Component
+ * @category Feedback
+ *
+ * Floating container for rich content triggered by user interaction
+ */
+
+/* ========================================
+   POPOVER
+   ======================================== */
+
+.popover {
+  position: fixed;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 10001;
+  min-width: 200px;
+  max-width: 400px;
+  animation: popover-fade-in var(--duration-fast) var(--ease-out);
+}
+
+@keyframes popover-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popoverTop {
+  /* Positioned via JavaScript */
+}
+
+.popoverBottom {
+  /* Positioned via JavaScript */
+}
+
+.popoverLeft {
+  /* Positioned via JavaScript */
+}
+
+.popoverRight {
+  /* Positioned via JavaScript */
+}
+
+.popoverWide {
+  min-width: 320px;
+  max-width: 500px;
+}
+
+/* ========================================
+   POPOVER HEADER
+   ======================================== */
+
+.popoverHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.popoverTitle {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.popoverClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.popoverClose:hover {
+  background-color: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   POPOVER CONTENT
+   ======================================== */
+
+.popoverContent {
+  padding: var(--spacing-4);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   POPOVER FOOTER
+   ======================================== */
+
+.popoverFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .popover {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .popoverHeader {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .popoverTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .popoverClose {
+    color: var(--palette-gray-400);
+  }
+
+  .popoverClose:hover {
+    background-color: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .popoverContent {
+    color: var(--palette-gray-200);
+  }
+
+  .popoverFooter {
+    border-top-color: var(--palette-gray-700);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .popover {
+    animation: none;
+  }
+
+  .popoverClose {
+    transition: none;
+  }
+}

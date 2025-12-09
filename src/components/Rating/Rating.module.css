@@ -1,0 +1,373 @@
+/**
+ * Rating Component Styles
+ * Category: Foundation
+ * Star rating for user feedback and quality assessment
+ */
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.label {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-1);
+}
+
+/* ========================================
+   RATING BASE
+   ======================================== */
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.rating.readonly,
+.rating.disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ========================================
+   STAR
+   ======================================== */
+
+.star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--border-default);
+  transition: all var(--duration-fast);
+  position: relative;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.star svg {
+  width: 100%;
+  height: 100%;
+}
+
+.rating:not(.readonly):not(.disabled) .star {
+  cursor: pointer;
+}
+
+.rating:not(.readonly):not(.disabled) .star:hover {
+  transform: scale(1.1);
+}
+
+/* ========================================
+   STAR STATES
+   ======================================== */
+
+/* Filled */
+.star.filled {
+  color: var(--color-warning-500);
+}
+
+/* Half - using gradient with background-clip */
+.star.half {
+  position: relative;
+}
+
+.star.half::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--color-warning-500);
+  z-index: 1;
+  overflow: hidden;
+  -webkit-mask-image: var(--star-mask);
+  mask-image: var(--star-mask);
+}
+
+.star.half svg {
+  color: var(--border-default);
+}
+
+/* Alternative half-star implementation using clip-path */
+.star.half {
+  background: linear-gradient(
+    90deg,
+    var(--color-warning-500) 0%,
+    var(--color-warning-500) 50%,
+    var(--border-default) 50%,
+    var(--border-default) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+}
+
+/* Hover state */
+.star.hover.filled,
+.star.hover.half {
+  color: var(--color-warning-600);
+}
+
+/* Focused (keyboard navigation) */
+.star.focused {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.rating.sm .star {
+  width: 16px;
+  height: 16px;
+}
+
+.rating.lg .star {
+  width: 32px;
+  height: 32px;
+}
+
+/* ========================================
+   DISABLED STATE
+   ======================================== */
+
+.rating.disabled .star {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rating.disabled .star.filled {
+  color: var(--text-disabled);
+}
+
+/* ========================================
+   CUSTOM ICONS
+   ======================================== */
+
+/* Heart variant */
+.rating.heart .star.filled {
+  color: var(--color-error-500);
+}
+
+.rating.heart .star.hover.filled {
+  color: var(--color-error-600);
+}
+
+/* Circle variant */
+.rating.circle .star.filled {
+  color: var(--color-primary-500);
+}
+
+.rating.circle .star.hover.filled {
+  color: var(--color-primary-600);
+}
+
+/* ========================================
+   VALUE DISPLAY
+   ======================================== */
+
+.value {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.count {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.description {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--spacing-1);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes star-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.rating:not(.readonly):not(.disabled) .star:active {
+  animation: star-pulse 0.3s ease;
+}
+
+/* ========================================
+   FOCUS STATE (KEYBOARD NAVIGATION)
+   ======================================== */
+
+.rating:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .star {
+    color: var(--palette-gray-600);
+  }
+
+  .star.filled {
+    color: var(--color-warning-400);
+  }
+
+  .star.half {
+    background: linear-gradient(
+      90deg,
+      var(--color-warning-400) 0%,
+      var(--color-warning-400) 50%,
+      var(--palette-gray-600) 50%,
+      var(--palette-gray-600) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .star.hover.filled,
+  .star.hover.half {
+    color: var(--color-warning-300);
+  }
+
+  .star.focused {
+    outline-color: var(--color-primary-400);
+  }
+
+  .rating:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  /* Heart variant */
+  .rating.heart .star.filled {
+    color: var(--color-error-400);
+  }
+
+  .rating.heart .star.hover.filled {
+    color: var(--color-error-300);
+  }
+
+  /* Circle variant */
+  .rating.circle .star.filled {
+    color: var(--color-primary-400);
+  }
+
+  .rating.circle .star.hover.filled {
+    color: var(--color-primary-300);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .star {
+    width: 20px;
+    height: 20px;
+  }
+
+  .rating.sm .star {
+    width: 14px;
+    height: 14px;
+  }
+
+  .rating.lg .star {
+    width: 28px;
+    height: 28px;
+  }
+
+  .value,
+  .count,
+  .description,
+  .label {
+    font-size: var(--font-size-caption);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    transition: none;
+  }
+
+  .star:hover {
+    transform: none;
+  }
+
+  .star:active {
+    animation: none;
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .rating {
+    cursor: default;
+  }
+
+  .star {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .star.filled {
+    color: var(--palette-yellow-600);
+  }
+
+  .rating.heart .star.filled {
+    color: var(--palette-red-700);
+  }
+
+  .rating.circle .star.filled {
+    color: var(--palette-blue-700);
+  }
+}

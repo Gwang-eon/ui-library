@@ -1,0 +1,254 @@
+/**
+ * Tag Component Styles
+ * Category: Foundation
+ * Tag/chip elements for labels and filters
+ */
+
+/* ========================================
+   BASE TAG
+   ======================================== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 4px 12px;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+  border-radius: var(--radius-base);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  /* Default colors */
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-200);
+}
+
+/* ========================================
+   COLOR VARIANTS
+   ======================================== */
+
+.default {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-200);
+}
+
+.primary {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+  border-color: var(--color-primary-200);
+}
+
+.success {
+  background: var(--color-success-100);
+  color: var(--color-success-700);
+  border-color: var(--color-success-200);
+}
+
+.warning {
+  background: var(--color-warning-100);
+  color: var(--color-warning-700);
+  border-color: var(--color-warning-200);
+}
+
+.error {
+  background: var(--color-error-100);
+  color: var(--color-error-700);
+  border-color: var(--color-error-200);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.sm {
+  padding: 2px 8px;
+  font-size: var(--font-size-label-small);
+  gap: 2px;
+}
+
+.lg {
+  padding: 6px 16px;
+  font-size: var(--font-size-body-medium);
+  gap: var(--spacing-2);
+}
+
+/* ========================================
+   REMOVABLE TAG
+   ======================================== */
+
+.removable {
+  padding-right: 8px;
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: currentColor;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.remove:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.sm .remove {
+  width: 14px;
+  height: 14px;
+}
+
+.lg .remove {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========================================
+   CLICKABLE TAG
+   ======================================== */
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.clickable:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.clickable:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   ICON
+   ======================================== */
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.sm .icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ========================================
+   TAG GROUP
+   ======================================== */
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .tag {
+    background: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+    border-color: var(--palette-gray-600);
+  }
+
+  .default {
+    background: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+    border-color: var(--palette-gray-600);
+  }
+
+  .primary {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-300);
+    border-color: var(--color-primary-600);
+  }
+
+  .success {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--color-success-300);
+    border-color: var(--color-success-600);
+  }
+
+  .warning {
+    background: rgba(251, 191, 36, 0.2);
+    color: var(--color-warning-300);
+    border-color: var(--color-warning-600);
+  }
+
+  .error {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--color-error-300);
+    border-color: var(--color-error-600);
+  }
+
+  .remove:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .remove:focus-visible {
+    outline-color: currentColor;
+  }
+
+  .clickable:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .clickable:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .tag,
+  .remove,
+  .clickable {
+    transition-duration: 0.01ms !important;
+  }
+
+  .clickable:hover {
+    transform: none;
+  }
+
+  .clickable:active {
+    transform: none;
+  }
+}

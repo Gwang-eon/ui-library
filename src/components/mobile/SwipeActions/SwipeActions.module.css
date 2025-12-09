@@ -1,0 +1,142 @@
+/**
+ * Swipe Actions Component
+ * Category: Mobile
+ * Swipe-to-reveal actions for list items
+ */
+
+/* ==================== Swipe Container ==================== */
+
+.swipeContainer {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+
+/* ==================== Swipe Item (Main Content) ==================== */
+
+.swipeItem {
+  position: relative;
+  z-index: 2;
+  background: var(--surface-primary);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.swipeItem:active {
+  cursor: grabbing;
+}
+
+/* Prevent text selection during swipe */
+.swipeItem.swiping {
+  transition: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ==================== Swipe Actions Background ==================== */
+
+.swipeActionsLeft,
+.swipeActionsRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.swipeActionsLeft {
+  left: 0;
+  justify-content: flex-start;
+}
+
+.swipeActionsRight {
+  right: 0;
+  justify-content: flex-end;
+}
+
+/* ==================== Swipe Action Button ==================== */
+
+.swipeAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 100%;
+  min-height: 44px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+  gap: var(--spacing-1);
+}
+
+.actionIcon {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2px;
+}
+
+/* ==================== Swipe Action Variants ==================== */
+
+.swipeAction.delete {
+  background: var(--color-danger-600);
+}
+
+.swipeAction.delete:active {
+  background: var(--color-danger-700);
+}
+
+.swipeAction.favorite {
+  background: var(--color-warning-500);
+}
+
+.swipeAction.favorite:active {
+  background: var(--color-warning-600);
+}
+
+.swipeAction.archive {
+  background: var(--palette-grey-500);
+}
+
+.swipeAction.archive:active {
+  background: var(--palette-grey-600);
+}
+
+.swipeAction.edit {
+  background: var(--color-primary-600);
+}
+
+.swipeAction.edit:active {
+  background: var(--color-primary-700);
+}
+
+/* ==================== Dark Mode ==================== */
+
+body.dark-mode .swipeContainer,
+body[class*='theme-dark'] .swipeContainer {
+  background: var(--surface-primary);
+}
+
+body.dark-mode .swipeItem,
+body[class*='theme-dark'] .swipeItem {
+  background: var(--surface-primary);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .swipeItem,
+  .swipeAction {
+    transition: none;
+  }
+}

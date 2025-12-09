@@ -1,0 +1,283 @@
+/**
+ * KPI Card Component Styles
+ * @category IoT
+ *
+ * Key Performance Indicator display cards with trends and comparisons
+ */
+
+/* ========================================
+   KPI CARD
+   ======================================== */
+
+.kpiCard {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.kpiCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.kpiCard:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+body.dark-mode .kpiCard:focus-visible,
+body[class*="theme-dark"] .kpiCard:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+/* ========================================
+   KPI HEADER
+   ======================================== */
+
+.kpiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-2);
+}
+
+.kpiLabel {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ========================================
+   KPI VALUE
+   ======================================== */
+
+.kpiValue {
+  font-size: var(--font-size-display-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-2);
+}
+
+/* ========================================
+   KPI TREND
+   ======================================== */
+
+.kpiTrend {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-body-small);
+}
+
+.trendValue {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-weight: var(--font-weight-medium);
+}
+
+.trendDescription {
+  opacity: 0.7;
+}
+
+.trendPositive {
+  color: var(--color-success-600);
+}
+
+.trendNegative {
+  color: var(--color-error-600);
+}
+
+.trendNeutral {
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   KPI CARD GRID
+   ======================================== */
+
+.kpiCardGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--kpi-grid-columns, 4), 1fr);
+  gap: var(--spacing-4);
+}
+
+/* Responsive grid */
+@media (max-width: 1279px) {
+  .kpiCardGrid {
+    grid-template-columns: repeat(min(var(--kpi-grid-columns, 4), 3), 1fr);
+  }
+}
+
+@media (max-width: 1023px) {
+  .kpiCardGrid {
+    grid-template-columns: repeat(min(var(--kpi-grid-columns, 4), 2), 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .kpiCardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   LOADING SKELETON
+   ======================================== */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 25%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* KPI Card */
+  .kpiCard {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .kpiCard:hover {
+    border-color: var(--palette-gray-600);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .kpiCard:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  /* KPI Label */
+  .kpiLabel {
+    color: var(--palette-gray-400);
+  }
+
+  /* KPI Value */
+  .kpiValue {
+    color: var(--palette-gray-100);
+  }
+
+  /* Trend */
+  .trendPositive {
+    color: var(--color-success-400);
+  }
+
+  .trendNegative {
+    color: var(--color-error-400);
+  }
+
+  .trendNeutral {
+    color: var(--palette-gray-500);
+  }
+
+  .trendDescription {
+    color: var(--palette-gray-500);
+  }
+
+  /* Skeleton Loading */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--palette-gray-750) 25%,
+      var(--palette-gray-700) 50%,
+      var(--palette-gray-750) 75%
+    );
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 767px) {
+  .kpiCard {
+    padding: var(--spacing-5);
+  }
+
+  .kpiLabel {
+    font-size: var(--font-size-body-small);
+  }
+
+  .kpiValue {
+    font-size: 32px;
+    margin-bottom: var(--spacing-1);
+  }
+
+  .kpiTrend {
+    font-size: var(--font-size-body-small);
+  }
+}
+
+@media (max-width: 374px) {
+  .kpiCard {
+    padding: var(--spacing-4);
+  }
+
+  .kpiValue {
+    font-size: 28px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .kpiCard {
+    padding: var(--spacing-5);
+  }
+
+  .kpiValue {
+    font-size: 32px;
+  }
+}
+
+/* Landscape orientation */
+@media (max-width: 767px) and (orientation: landscape) {
+  .kpiCard {
+    padding: var(--spacing-4);
+  }
+
+  .kpiValue {
+    font-size: 28px;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST & REDUCED MOTION
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .kpiCard {
+    border-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kpiCard {
+    transition: none;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}

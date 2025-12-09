@@ -1,0 +1,494 @@
+/**
+ * Slider Component Styles
+ * Category: Foundation
+ * Allows users to select a value or range from a continuous or discrete set
+ */
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.valueDisplay {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   SINGLE SLIDER
+   ======================================== */
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-default);
+  outline: none;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+/* Webkit (Chrome, Safari, Edge) Thumb */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: var(--color-primary-600);
+  box-shadow: var(--shadow-lg);
+}
+
+.slider::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+/* Firefox Thumb */
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.slider::-moz-range-thumb:hover {
+  background: var(--color-primary-600);
+  box-shadow: var(--shadow-lg);
+}
+
+.slider::-moz-range-thumb:active {
+  transform: scale(1.1);
+}
+
+/* Firefox Track */
+.slider::-moz-range-track {
+  background: transparent;
+}
+
+/* Focus State */
+.slider:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Disabled State */
+.slider:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slider:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  background: var(--text-disabled);
+}
+
+.slider:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  background: var(--text-disabled);
+}
+
+/* ========================================
+   WITH ICONS
+   ======================================== */
+
+.sliderWithIcons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.iconBefore,
+.iconAfter {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+}
+
+.iconAfter {
+  color: var(--color-primary-500);
+}
+
+.iconBefore svg,
+.iconAfter svg {
+  width: 20px;
+  height: 20px;
+}
+
+.valueInline {
+  min-width: 48px;
+  text-align: right;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   MIN/MAX LABELS
+   ======================================== */
+
+.minMaxLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   HELPER TEXT
+   ======================================== */
+
+.helperText {
+  margin: 0;
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   RANGE SLIDER (MIN-MAX)
+   ======================================== */
+
+.rangeWrapper {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.rangeTrack {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  background: var(--border-default);
+  border-radius: 3px;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.rangeFill {
+  position: absolute;
+  height: 6px;
+  background: var(--color-primary-500);
+  border-radius: 3px;
+  pointer-events: none;
+  transition: all var(--duration-fast) var(--ease-out);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.rangeInput {
+  position: absolute;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  height: 6px;
+  outline: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Min slider */
+.rangeInput:first-of-type {
+  z-index: 2;
+}
+
+/* Max slider */
+.rangeInput:last-of-type {
+  z-index: 3;
+}
+
+/* Webkit Range Thumb */
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  cursor: pointer;
+  border: 3px solid var(--surface-primary);
+  box-shadow: var(--shadow-md);
+  pointer-events: auto;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.rangeInput::-webkit-slider-thumb:hover {
+  background: var(--color-primary-600);
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.1);
+}
+
+.rangeInput::-webkit-slider-thumb:active {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+
+/* Firefox Range Thumb */
+.rangeInput::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  cursor: pointer;
+  border: 3px solid var(--surface-primary);
+  box-shadow: var(--shadow-md);
+  pointer-events: auto;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.rangeInput::-moz-range-thumb:hover {
+  background: var(--color-primary-600);
+  box-shadow: var(--shadow-lg);
+  transform: scale(1.1);
+}
+
+.rangeInput::-moz-range-thumb:active {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+
+.rangeInput::-moz-range-track {
+  background: transparent;
+}
+
+/* Focus State for Range */
+.rangeInput:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.rangeInput:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Disabled State for Range */
+.rangeInput:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  background: var(--text-disabled);
+}
+
+.rangeInput:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  background: var(--text-disabled);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Label */
+  .label {
+    color: var(--palette-gray-300);
+  }
+
+  /* Helper Text */
+  .helperText {
+    color: var(--palette-gray-400);
+  }
+
+  /* Min/Max Labels */
+  .minMaxLabels {
+    color: var(--palette-gray-500);
+  }
+
+  /* Icons */
+  .iconBefore {
+    color: var(--palette-gray-500);
+  }
+
+  .iconAfter {
+    color: var(--color-primary-400);
+  }
+
+  /* Slider Track */
+  .slider {
+    background: var(--palette-gray-700);
+  }
+
+  .slider::-webkit-slider-thumb {
+    background: var(--color-primary-400);
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    background: var(--color-primary-500);
+  }
+
+  .slider::-moz-range-thumb {
+    background: var(--color-primary-400);
+  }
+
+  .slider::-moz-range-thumb:hover {
+    background: var(--color-primary-500);
+  }
+
+  .slider:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  .rangeTrack {
+    background: var(--palette-gray-700);
+  }
+
+  .rangeFill {
+    background: var(--color-primary-400);
+  }
+
+  .rangeInput::-webkit-slider-thumb {
+    background: var(--color-primary-400);
+    border-color: var(--palette-gray-800);
+  }
+
+  .rangeInput::-webkit-slider-thumb:hover {
+    background: var(--color-primary-500);
+  }
+
+  .rangeInput::-webkit-slider-thumb:active {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+
+  .rangeInput::-moz-range-thumb {
+    background: var(--color-primary-400);
+    border-color: var(--palette-gray-800);
+  }
+
+  .rangeInput::-moz-range-thumb:hover {
+    background: var(--color-primary-500);
+  }
+
+  .rangeInput::-moz-range-thumb:active {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+
+  .rangeInput:focus-visible::-webkit-slider-thumb {
+    outline-color: var(--color-primary-400);
+  }
+
+  .rangeInput:focus-visible::-moz-range-thumb {
+    outline-color: var(--color-primary-400);
+  }
+
+  .valueDisplay {
+    color: var(--palette-gray-100);
+  }
+
+  .valueInline {
+    color: var(--palette-gray-100);
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .slider::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .rangeInput::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .rangeInput::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .iconBefore svg,
+  .iconAfter svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slider::-webkit-slider-thumb,
+  .slider::-moz-range-thumb,
+  .rangeFill,
+  .rangeInput::-webkit-slider-thumb,
+  .rangeInput::-moz-range-thumb {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .slider {
+    border: 1px solid currentColor;
+  }
+
+  .slider::-webkit-slider-thumb {
+    border: 2px solid var(--palette-white);
+  }
+
+  .slider::-moz-range-thumb {
+    border: 2px solid var(--palette-white);
+  }
+
+  .rangeTrack {
+    border: 1px solid currentColor;
+  }
+
+  .rangeInput::-webkit-slider-thumb {
+    border-width: 2px;
+  }
+
+  .rangeInput::-moz-range-thumb {
+    border-width: 2px;
+  }
+}

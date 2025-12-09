@@ -1,0 +1,496 @@
+/**
+ * TreeSelect Component Styles
+ * Select with hierarchical tree data structure for complex categorization
+ */
+
+/* ========================================
+   TREESELECT CONTAINER
+   ======================================== */
+
+.treeselect {
+  position: relative;
+  width: 100%;
+}
+
+/* ========================================
+   TREESELECT TRIGGER
+   ======================================== */
+
+.treeselectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  gap: var(--spacing-2);
+}
+
+.treeselectTrigger:hover {
+  border-color: var(--color-primary-500);
+}
+
+.treeselectTrigger:focus,
+.treeselectTrigger:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-color: var(--color-primary-500);
+}
+
+.treeselectTrigger[aria-expanded='true'] {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.treeselectTrigger.disabled {
+  background: var(--surface-secondary);
+  border-color: var(--border-default);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.treeselectTrigger.disabled:hover {
+  border-color: var(--border-default);
+}
+
+.treeselectValue {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  color: var(--text-tertiary);
+}
+
+.treeselectIcons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-shrink: 0;
+}
+
+.treeselectClearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out);
+}
+
+.treeselectClearBtn:hover {
+  color: var(--text-primary);
+}
+
+.treeselectIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.treeselectIconOpen {
+  transform: rotate(180deg);
+}
+
+/* ========================================
+   TREESELECT DROPDOWN
+   ======================================== */
+
+.treeselectDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  animation: slideIn 0.2s var(--ease-out);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar styling */
+.treeselectDropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.treeselectDropdown::-webkit-scrollbar-track {
+  background: var(--surface-secondary);
+  border-radius: var(--radius-base);
+}
+
+.treeselectDropdown::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-base);
+}
+
+.treeselectDropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ========================================
+   TREESELECT SEARCH
+   ======================================== */
+
+.treeselectSearch {
+  position: sticky;
+  top: 0;
+  background: var(--surface-primary);
+  padding: var(--spacing-3);
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  z-index: 1;
+}
+
+.treeselectSearchIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.treeselectSearchInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  outline: none;
+  padding: 0;
+}
+
+.treeselectSearchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   TREESELECT TREE
+   ======================================== */
+
+.treeselectTree {
+  padding: var(--spacing-2);
+}
+
+.treeNode {
+  margin-bottom: var(--spacing-1);
+}
+
+.treeNodeContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease-out);
+  user-select: none;
+}
+
+.treeNodeContent:hover {
+  background: var(--surface-secondary);
+}
+
+.treeNodeSelected {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+
+.treeNodeDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.treeExpandBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+}
+
+.treeExpandBtn:hover {
+  background: var(--surface-tertiary);
+  color: var(--text-secondary);
+}
+
+.treeIndent {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.treeCheckbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin-right: var(--spacing-2);
+}
+
+.treeLabel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-body);
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.treeIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+}
+
+.treeIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.treeChildren {
+  margin-left: var(--spacing-5);
+  padding-left: var(--spacing-2);
+  border-left: 1px solid var(--border-default);
+}
+
+.treeselectEmpty {
+  padding: var(--spacing-6) var(--spacing-4);
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-small);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Trigger */
+  .treeselectTrigger {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .treeselectTrigger:hover {
+    border-color: var(--color-primary-500);
+  }
+
+  .treeselectTrigger:focus,
+  .treeselectTrigger:focus-visible {
+    border-color: var(--color-primary-500);
+    outline-color: var(--color-primary-400);
+  }
+
+  .treeselectTrigger[aria-expanded='true'] {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .treeselectTrigger.disabled {
+    background: var(--palette-gray-900);
+    border-color: var(--palette-gray-800);
+    color: var(--palette-gray-600);
+  }
+
+  /* Placeholder */
+  .placeholder {
+    color: var(--palette-gray-500);
+  }
+
+  /* Clear Button & Icons */
+  .treeselectClearBtn {
+    color: var(--palette-gray-400);
+  }
+
+  .treeselectClearBtn:hover {
+    color: var(--palette-gray-200);
+  }
+
+  .treeselectIcon {
+    color: var(--palette-gray-400);
+  }
+
+  /* Dropdown */
+  .treeselectDropdown {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Search */
+  .treeselectSearch {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .treeselectSearchInput {
+    background: var(--palette-gray-900);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .treeselectSearchInput::placeholder {
+    color: var(--palette-gray-500);
+  }
+
+  .treeselectSearchInput:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .treeselectSearchIcon {
+    color: var(--palette-gray-400);
+  }
+
+  /* Tree Nodes */
+  .treeNode {
+    color: var(--palette-gray-200);
+  }
+
+  .treeNodeContent {
+    color: var(--palette-gray-200);
+  }
+
+  .treeNodeContent:hover {
+    background: var(--palette-gray-750);
+  }
+
+  .treeNodeSelected {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary-400);
+  }
+
+  .treeNodeDisabled {
+    color: var(--palette-gray-600);
+  }
+
+  /* Expand Button */
+  .treeExpandBtn {
+    color: var(--palette-gray-400);
+  }
+
+  .treeExpandBtn:hover {
+    background: var(--palette-gray-700);
+    color: var(--palette-gray-200);
+  }
+
+  /* Empty State */
+  .treeselectEmpty {
+    color: var(--palette-gray-500);
+  }
+
+  /* Scrollbar */
+  .treeselectDropdown::-webkit-scrollbar-track {
+    background: var(--palette-gray-900);
+  }
+
+  .treeselectDropdown::-webkit-scrollbar-thumb {
+    background: var(--palette-gray-600);
+  }
+
+  .treeselectDropdown::-webkit-scrollbar-thumb:hover {
+    background: var(--palette-gray-500);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .treeselectDropdown {
+    max-height: 250px;
+  }
+
+  .treeChildren {
+    margin-left: var(--spacing-4);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .treeselectDropdown {
+    animation: none;
+  }
+
+  .treeselectIcon,
+  .treeNodeContent,
+  .treeExpandBtn,
+  .treeselectClearBtn {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .treeselectTrigger {
+    border-width: 2px;
+  }
+
+  .treeselectTrigger:focus {
+    outline-width: 3px;
+  }
+
+  .treeNodeSelected {
+    border: 2px solid var(--color-primary-600);
+  }
+}
+
+/* ========================================
+   PRINT
+   ======================================== */
+
+@media print {
+  .treeselectDropdown {
+    display: none;
+  }
+}

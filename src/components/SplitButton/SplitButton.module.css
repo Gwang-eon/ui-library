@@ -1,0 +1,319 @@
+/* Split Button Component Styles */
+
+/* Container */
+.splitButton {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Action Button */
+.splitButtonAction {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+/* Toggle Button */
+.splitButtonToggle {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: var(--spacing-3);
+  padding-right: var(--spacing-3);
+  min-width: auto;
+}
+
+/* Add border between buttons */
+.splitButtonAction + .splitButtonToggle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Dropdown Menu */
+.splitButtonMenu {
+  position: absolute;
+  top: calc(100% + var(--spacing-2));
+  right: 0;
+  min-width: 200px;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-2) 0;
+  list-style: none;
+  margin: 0;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--duration-fast), transform var(--duration-fast),
+    visibility var(--duration-fast);
+}
+
+/* Open state */
+.splitButtonMenuOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Menu Item */
+.splitButtonMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) var(--spacing-4);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+  user-select: none;
+}
+
+.splitButtonMenuItem:hover {
+  background-color: var(--surface-secondary);
+}
+
+.splitButtonMenuItem:active {
+  background-color: var(--border-default);
+}
+
+.splitButtonMenuItem:focus {
+  outline: none;
+  background-color: var(--surface-secondary);
+}
+
+/* Menu Item Icon */
+.splitButtonMenuItemIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: color var(--duration-fast);
+}
+
+.splitButtonMenuItem:hover .splitButtonMenuItemIcon {
+  color: var(--text-primary);
+}
+
+/* Danger Menu Item */
+.splitButtonMenuItemDanger {
+  color: var(--color-error-600);
+}
+
+.splitButtonMenuItemDanger:hover {
+  background-color: var(--color-error-50);
+  color: var(--color-error-700);
+}
+
+.splitButtonMenuItemDanger .splitButtonMenuItemIcon {
+  color: var(--color-error-500);
+}
+
+.splitButtonMenuItemDanger:hover .splitButtonMenuItemIcon {
+  color: var(--color-error-700);
+}
+
+/* Menu Divider */
+.splitButtonMenuDivider {
+  height: 1px;
+  background: var(--border-default);
+  margin: var(--spacing-2) 0;
+}
+
+/* Sizes */
+/* Small */
+.splitButtonSm .splitButtonToggle {
+  padding-left: var(--spacing-2);
+  padding-right: var(--spacing-2);
+}
+
+.splitButtonSm .splitButtonMenu {
+  min-width: 160px;
+}
+
+.splitButtonSm .splitButtonMenuItem {
+  padding: var(--spacing-1-5) var(--spacing-3);
+  font-size: var(--font-size-sm);
+}
+
+.splitButtonSm .splitButtonMenuItemIcon {
+  width: 12px;
+  height: 12px;
+}
+
+/* Large */
+.splitButtonLg .splitButtonToggle {
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+.splitButtonLg .splitButtonMenu {
+  min-width: 240px;
+}
+
+.splitButtonLg .splitButtonMenuItem {
+  padding: var(--spacing-3) var(--spacing-5);
+  font-size: var(--font-size-lg);
+}
+
+.splitButtonLg .splitButtonMenuItemIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  /* Menu */
+  .splitButtonMenu {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Menu Items */
+  .splitButtonMenuItem {
+    color: var(--palette-gray-200);
+  }
+
+  .splitButtonMenuItem:hover {
+    background-color: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .splitButtonMenuItem:active {
+    background-color: var(--palette-gray-700);
+  }
+
+  .splitButtonMenuItem:focus {
+    background-color: var(--palette-gray-750);
+  }
+
+  /* Icons */
+  .splitButtonMenuItemIcon {
+    color: var(--palette-gray-400);
+  }
+
+  .splitButtonMenuItem:hover .splitButtonMenuItemIcon {
+    color: var(--palette-gray-200);
+  }
+
+  /* Divider */
+  .splitButtonMenuDivider {
+    background: var(--palette-gray-700);
+  }
+
+  /* Danger Items */
+  .splitButtonMenuItemDanger {
+    color: var(--color-error-400);
+  }
+
+  .splitButtonMenuItemDanger:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--color-error-300);
+  }
+
+  .splitButtonMenuItemDanger .splitButtonMenuItemIcon {
+    color: var(--color-error-400);
+  }
+
+  .splitButtonMenuItemDanger:hover .splitButtonMenuItemIcon {
+    color: var(--color-error-300);
+  }
+
+  /* Focus */
+  .splitButtonAction:focus-visible,
+  .splitButtonToggle:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .splitButtonMenu {
+    min-width: 180px;
+  }
+
+  .splitButtonMenuItem {
+    padding: var(--spacing-2-5) var(--spacing-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .splitButtonMenu {
+    left: 0;
+    right: 0;
+    min-width: 100%;
+  }
+}
+
+/* Focus Styles (Accessibility) */
+.splitButtonAction:focus-visible,
+.splitButtonToggle:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  z-index: 1;
+}
+
+/* Animation for menu opening */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.splitButtonMenuOpen {
+  animation: slideDown var(--duration-fast) var(--ease-out);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .splitButtonMenu {
+    transition: none;
+  }
+
+  .splitButtonMenuItem {
+    transition: none;
+  }
+
+  .splitButtonMenuOpen {
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .splitButtonMenu {
+    border-width: 2px;
+  }
+
+  .splitButtonMenuItem:focus {
+    outline: 2px solid var(--text-primary);
+    outline-offset: -2px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .splitButtonToggle {
+    display: none;
+  }
+
+  .splitButtonMenu {
+    display: none;
+  }
+}

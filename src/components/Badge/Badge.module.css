@@ -1,0 +1,100 @@
+/**
+ * Badge Component
+ * @category Foundation
+ * Based on: assets/css/components/foundation/badge.css
+ */
+
+/* ========================================
+   BASE BADGE (MEDIUM - DEFAULT)
+   ======================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small */
+.badge-sm {
+  padding: 1px 6px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* Medium (default) - already defined above */
+
+/* Large */
+.badge-lg {
+  padding: 4px 12px;
+  font-size: var(--font-size-body-medium);
+  line-height: 1.6;
+}
+
+/* ========================================
+   VARIANT COLORS
+   ======================================== */
+
+.badge-default {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+.badge-primary {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.badge-success {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.badge-warning {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.badge-error {
+  background-color: var(--color-error-100);
+  color: var(--color-error-700);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .badge-default {
+    background-color: var(--palette-gray-700);
+    color: var(--palette-gray-200);
+    border: 1px solid var(--palette-gray-600);
+  }
+
+  .badge-primary {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+  }
+
+  .badge-success {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: var(--color-success-400);
+  }
+
+  .badge-warning {
+    background-color: rgba(251, 191, 36, 0.2);
+    color: var(--color-warning-300);
+  }
+
+  .badge-error {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--color-error-300);
+  }
+}

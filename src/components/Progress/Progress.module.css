@@ -1,0 +1,331 @@
+/**
+ * Progress Component
+ * @category Feedback
+ *
+ * Progress indicators for operations and resource usage
+ */
+
+/* ========================================
+   LINEAR PROGRESS
+   ======================================== */
+
+.progress {
+  width: 100%;
+  background-color: var(--color-gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+.progressSm {
+  height: 4px;
+}
+
+.progressMd {
+  height: 8px;
+}
+
+.progressLg {
+  height: 12px;
+}
+
+.progressBar {
+  height: 100%;
+  background-color: var(--color-primary-500);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-base) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.progressBarSuccess {
+  background-color: var(--color-success-500);
+}
+
+.progressBarWarning {
+  background-color: var(--color-warning-500);
+}
+
+.progressBarError {
+  background-color: var(--color-error-500);
+}
+
+/* Striped Variant */
+.progressBarStriped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 20px 20px;
+}
+
+.progressBarAnimated {
+  animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+  from {
+    background-position: 20px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Indeterminate Progress */
+.progressBarIndeterminate {
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary-500),
+    transparent
+  );
+  animation: progress-indeterminate 1.5s ease-in-out infinite;
+}
+
+.progressBarIndeterminate.progressBarSuccess {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-success-500),
+    transparent
+  );
+}
+
+.progressBarIndeterminate.progressBarWarning {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-warning-500),
+    transparent
+  );
+}
+
+.progressBarIndeterminate.progressBarError {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-error-500),
+    transparent
+  );
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ========================================
+   CIRCULAR PROGRESS
+   ======================================== */
+
+.progressCircular {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressCircularTrack {
+  fill: none;
+  stroke: var(--color-gray-200);
+}
+
+.progressCircularBar {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--duration-base) var(--ease-out);
+}
+
+/* ========================================
+   PROGRESS SPINNER (Indeterminate)
+   ======================================== */
+
+.progressSpinner {
+  display: inline-block;
+  position: relative;
+}
+
+.progressSpinnerSm {
+  width: 24px;
+  height: 24px;
+}
+
+.progressSpinnerMd {
+  width: 50px;
+  height: 50px;
+}
+
+.progressSpinnerLg {
+  width: 100px;
+  height: 100px;
+}
+
+.progressSpinnerCircle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  animation: spinner-rotate 1s linear infinite;
+}
+
+.progressSpinnerSm .progressSpinnerCircle {
+  border-width: 2px;
+}
+
+.progressSpinnerMd .progressSpinnerCircle {
+  border-width: 4px;
+}
+
+.progressSpinnerLg .progressSpinnerCircle {
+  border-width: 6px;
+}
+
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner Color Variants */
+.progressSpinnerPrimary .progressSpinnerCircle {
+  border-top-color: var(--color-primary-500);
+  border-right-color: var(--color-primary-500);
+}
+
+.progressSpinnerSuccess .progressSpinnerCircle {
+  border-top-color: var(--color-success-500);
+  border-right-color: var(--color-success-500);
+}
+
+.progressSpinnerWarning .progressSpinnerCircle {
+  border-top-color: var(--color-warning-500);
+  border-right-color: var(--color-warning-500);
+}
+
+.progressSpinnerDanger .progressSpinnerCircle {
+  border-top-color: var(--color-error-500);
+  border-right-color: var(--color-error-500);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Linear Progress */
+  .progress {
+    background-color: var(--palette-gray-700);
+  }
+
+  .progressBar {
+    background-color: var(--color-primary-400);
+  }
+
+  .progressBarSuccess {
+    background-color: var(--color-success-400);
+  }
+
+  .progressBarWarning {
+    background-color: var(--color-warning-400);
+  }
+
+  .progressBarError {
+    background-color: var(--color-error-400);
+  }
+
+  /* Indeterminate variants */
+  .progressBarIndeterminate {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-primary-400),
+      transparent
+    );
+  }
+
+  .progressBarIndeterminate.progressBarSuccess {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-success-400),
+      transparent
+    );
+  }
+
+  .progressBarIndeterminate.progressBarWarning {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-warning-400),
+      transparent
+    );
+  }
+
+  .progressBarIndeterminate.progressBarError {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-error-400),
+      transparent
+    );
+  }
+
+  /* Circular Progress */
+  .progressCircularTrack {
+    stroke: var(--palette-gray-700);
+  }
+
+  /* Spinners */
+  .progressSpinnerPrimary .progressSpinnerCircle {
+    border-top-color: var(--color-primary-400);
+    border-right-color: var(--color-primary-400);
+  }
+
+  .progressSpinnerSuccess .progressSpinnerCircle {
+    border-top-color: var(--color-success-400);
+    border-right-color: var(--color-success-400);
+  }
+
+  .progressSpinnerWarning .progressSpinnerCircle {
+    border-top-color: var(--color-warning-400);
+    border-right-color: var(--color-warning-400);
+  }
+
+  .progressSpinnerDanger .progressSpinnerCircle {
+    border-top-color: var(--color-error-400);
+    border-right-color: var(--color-error-400);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .progressBar,
+  .progressCircularBar {
+    transition: none;
+  }
+
+  .progressBarAnimated,
+  .progressBarIndeterminate,
+  .progressSpinnerCircle {
+    animation: none;
+  }
+}

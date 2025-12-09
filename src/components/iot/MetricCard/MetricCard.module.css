@@ -1,0 +1,562 @@
+/**
+ * Metric Card Component
+ * Category: IoT
+ * Metric display cards for IoT data
+ */
+
+.metricCard {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.metricCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.metricCard.clickable {
+  cursor: pointer;
+}
+
+.metricCard.clickable:active {
+  transform: scale(0.99);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-4);
+}
+
+.label {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-tertiary);
+}
+
+/* Body */
+.body {
+  margin-bottom: var(--spacing-2);
+}
+
+.value {
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-2);
+}
+
+.change {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.change.positive {
+  color: var(--color-success-600);
+}
+
+.change.negative {
+  color: var(--color-error-600);
+}
+
+.change.neutral {
+  color: var(--text-tertiary);
+}
+
+.subtext {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-top: var(--spacing-1);
+}
+
+/* Comparative Metrics */
+.comparative {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+
+.comparativeItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.comparativeLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  font-weight: var(--font-weight-medium);
+}
+
+.comparativeValue {
+  font-size: var(--font-size-heading-5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* Progress Bar */
+.progressContainer {
+  margin-top: var(--spacing-3);
+  width: 100%;
+  height: 4px;
+  background-color: var(--surface-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background-color: var(--color-primary-500);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.progressBar.warning {
+  background-color: var(--color-warning-500);
+}
+
+.progressBar.error {
+  background-color: var(--color-error-500);
+}
+
+.progressBar.success {
+  background-color: var(--color-success-500);
+}
+
+/* Mini Chart */
+.chart {
+  margin-top: var(--spacing-3);
+}
+
+.miniChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2px;
+  height: 40px;
+}
+
+.chartBar {
+  flex: 1;
+  background-color: var(--color-primary-300);
+  border-radius: 2px;
+  transition: height var(--duration-normal) var(--ease-out);
+}
+
+/* Status Badges (Live/Alert) */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.statusBadge.live {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusBadge.alert {
+  background-color: var(--color-error-100);
+  color: var(--color-error-700);
+}
+
+/* Pulse animation for live/alert badges */
+.pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.statusBadge.live .pulse {
+  background-color: var(--color-success-500);
+}
+
+.statusBadge.alert .pulse {
+  background-color: var(--color-error-500);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.3);
+  }
+}
+
+/* Variants */
+.metricCard.compact {
+  padding: var(--spacing-3);
+}
+
+.metricCard.compact .header {
+  margin-bottom: var(--spacing-2);
+}
+
+.metricCard.compact .value {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+
+.metricCard.live {
+  border-color: var(--color-success-300);
+}
+
+.metricCard.alert {
+  border-color: var(--color-error-300);
+}
+
+/* MetricCardGrid */
+.grid {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+/* Loading Skeleton */
+.metricCard.loading .header,
+.metricCard.loading .body {
+  pointer-events: none;
+}
+
+.labelSkeleton,
+.iconSkeleton,
+.valueSkeleton,
+.subtextSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.labelSkeleton {
+  width: 60%;
+  height: 14px;
+}
+
+.iconSkeleton {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-base);
+}
+
+.valueSkeleton {
+  width: 80%;
+  height: 32px;
+  margin-bottom: var(--spacing-2);
+}
+
+.subtextSkeleton {
+  width: 50%;
+  height: 12px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Card */
+  .metricCard {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .metricCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Header */
+  .label {
+    color: var(--palette-gray-300);
+  }
+
+  .icon {
+    color: var(--palette-gray-400);
+  }
+
+  /* Body */
+  .value {
+    color: var(--palette-gray-100);
+  }
+
+  .change.positive {
+    color: var(--color-success-400);
+  }
+
+  .change.negative {
+    color: var(--color-error-400);
+  }
+
+  .change.neutral {
+    color: var(--palette-gray-400);
+  }
+
+  .subtext {
+    color: var(--palette-gray-400);
+  }
+
+  /* Comparative Metrics */
+  .comparativeLabel {
+    color: var(--palette-gray-400);
+  }
+
+  .comparativeValue {
+    color: var(--palette-gray-100);
+  }
+
+  /* Progress Bar */
+  .progressContainer {
+    background-color: var(--palette-gray-750);
+  }
+
+  /* Mini Chart */
+  .chartBar {
+    background-color: var(--color-primary-400);
+  }
+
+  /* Status Badges */
+  .statusBadge.live {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: var(--color-success-300);
+  }
+
+  .statusBadge.alert {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--color-error-300);
+  }
+
+  .pulse {
+    opacity: 0.9;
+  }
+
+  /* Variants */
+  .metricCard.live {
+    border-color: var(--color-success-600);
+  }
+
+  .metricCard.alert {
+    border-color: var(--color-error-600);
+  }
+
+  /* Loading Skeleton */
+  .labelSkeleton,
+  .iconSkeleton,
+  .valueSkeleton,
+  .subtextSkeleton {
+    background: linear-gradient(
+      90deg,
+      var(--palette-gray-750) 0%,
+      var(--palette-gray-700) 50%,
+      var(--palette-gray-750) 100%
+    );
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE ENHANCEMENTS
+   ======================================== */
+
+/* Mobile Touch Optimization */
+@media (max-width: 767px) {
+  .metricCard {
+    padding: var(--spacing-4);
+    border-radius: var(--radius-base);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .header {
+    margin-bottom: var(--spacing-3);
+  }
+
+  .label {
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .value {
+    font-size: 24px;
+    margin-bottom: var(--spacing-1);
+  }
+
+  .change {
+    font-size: var(--font-size-body-small);
+    gap: 4px;
+  }
+
+  .subtext {
+    font-size: var(--font-size-body-small);
+  }
+
+  .comparative {
+    gap: var(--spacing-2);
+  }
+
+  .comparativeValue {
+    font-size: var(--font-size-heading-6);
+  }
+
+  .progressContainer {
+    margin-top: var(--spacing-2);
+  }
+
+  .chart {
+    margin-top: var(--spacing-2);
+  }
+
+  .miniChart {
+    height: 32px;
+  }
+
+  .metricCard.clickable:active {
+    transform: scale(0.98);
+    opacity: 0.95;
+  }
+
+  .metricCard.compact {
+    padding: var(--spacing-3);
+  }
+
+  .metricCard.compact .value {
+    font-size: 20px;
+  }
+}
+
+/* Very small mobile screens */
+@media (max-width: 374px) {
+  .metricCard {
+    padding: var(--spacing-3);
+  }
+
+  .value {
+    font-size: 22px;
+  }
+
+  .comparative {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet - 2-column grid optimization */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .metricCard {
+    padding: var(--spacing-4);
+  }
+
+  .value {
+    font-size: 24px;
+  }
+
+  .grid {
+    gap: var(--spacing-3);
+  }
+}
+
+/* Touch devices - regardless of screen size */
+@media (hover: none) and (pointer: coarse) {
+  .metricCard:hover {
+    box-shadow: none;
+  }
+
+  .metricCard.clickable:active {
+    box-shadow: var(--shadow-md);
+    transform: scale(0.98);
+  }
+}
+
+/* Landscape orientation - compact layout */
+@media (max-width: 767px) and (orientation: landscape) {
+  .metricCard {
+    padding: var(--spacing-3);
+  }
+
+  .value {
+    font-size: 20px;
+  }
+
+  .header {
+    margin-bottom: var(--spacing-2);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .metricCard {
+    border-width: 2px;
+  }
+
+  .progressBar {
+    height: 6px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .metricCard,
+  .progressBar,
+  .chartBar {
+    transition: none;
+  }
+
+  .metricCard.clickable:active {
+    transform: none;
+  }
+
+  .pulse {
+    animation: none;
+    opacity: 1;
+  }
+
+  .labelSkeleton,
+  .iconSkeleton,
+  .valueSkeleton,
+  .subtextSkeleton {
+    animation: none;
+  }
+}

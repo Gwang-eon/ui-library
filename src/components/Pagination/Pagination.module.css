@@ -1,0 +1,104 @@
+/**
+ * Pagination
+ * @category Navigation
+ */
+
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.pagination > span {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-tertiary);
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  padding: 0 var(--spacing-1);
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--spacing-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background-color: var(--surface-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+  font-size: var(--font-size-body-medium);
+}
+
+.pagination-btn:hover:not(:disabled):not(.active) {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-strong);
+}
+
+.pagination-btn.active {
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: var(--palette-white);
+}
+
+.pagination-btn:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Text elements */
+  .pagination > span {
+    color: var(--palette-gray-400);
+  }
+
+  .pagination-ellipsis {
+    color: var(--palette-gray-400);
+  }
+
+  /* Buttons */
+  .pagination-btn {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .pagination-btn:hover:not(:disabled):not(.active) {
+    background-color: var(--palette-gray-750);
+    border-color: var(--palette-gray-600);
+  }
+
+  .pagination-btn.active {
+    background-color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+    color: white;
+  }
+
+  .pagination-btn:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  .pagination-info {
+    background-color: var(--palette-gray-800);
+    color: var(--palette-gray-300);
+  }
+}

@@ -1,0 +1,421 @@
+/**
+ * Input / Text Field
+ * @category Foundation
+ *
+ * Uses atomic patterns from atomic.css for consistent styling
+ */
+
+/* Input Group - compose from atomic */
+.input-group {
+  composes: input-group from global;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+/* Input Label - compose from atomic */
+.input-label {
+  composes: input-label from global;
+}
+
+.required {
+  color: var(--color-error-500);
+  font-weight: var(--font-weight-semibold);
+  margin-left: 2px;
+}
+
+/* Input Wrapper - compose from atomic */
+.input-wrapper {
+  composes: input-wrapper from global;
+}
+
+/* Base Input - compose from atomic */
+.input {
+  composes: input-base from global;
+  height: 40px;
+}
+
+/* Input Sizes */
+.input-sm {
+  composes: input-base--sm from global;
+  height: 32px;
+}
+
+.input-md {
+  height: 40px;
+}
+
+.input-lg {
+  composes: input-base--lg from global;
+  height: 48px;
+}
+
+/* Error State */
+.error {
+  border-color: var(--input-error-border);
+}
+
+.error:focus {
+  border-color: var(--input-error-border);
+  box-shadow: 0 0 0 3px var(--color-error-100);
+}
+
+/* Success State */
+.success {
+  border-color: var(--input-success-border);
+}
+
+.success:focus {
+  border-color: var(--input-success-border);
+  box-shadow: 0 0 0 3px var(--color-success-100);
+}
+
+/* Warning State */
+.warning {
+  border-color: var(--input-warning-border);
+}
+
+.warning:focus {
+  border-color: var(--input-warning-border);
+  box-shadow: 0 0 0 3px var(--color-warning-100);
+}
+
+/* Icon Support - compose from atomic */
+.input-with-left-icon {
+  composes: input-base--icon-left from global;
+}
+
+.input-with-right-icon {
+  composes: input-base--icon-right from global;
+}
+
+.input-icon-left {
+  composes: input-icon input-icon--left from global;
+}
+
+.input-icon-right {
+  composes: input-icon input-icon--right from global;
+}
+
+/* Messages - compose from atomic */
+.input-message {
+  composes: input-helper from global;
+}
+
+.input-error {
+  composes: input-error-message from global;
+}
+
+.input-success {
+  composes: input-success-message from global;
+}
+
+.input-warning {
+  composes: input-warning-message from global;
+}
+
+/* ========================================
+   INPUT STYLE VARIANTS
+   ======================================== */
+
+/* Filled Style (Material Design) */
+.input-filled {
+  background-color: var(--surface-tertiary);
+  border: none;
+  border-bottom: 2px solid var(--border-default);
+  border-radius: var(--radius-base) var(--radius-base) 0 0;
+}
+
+.input-filled:hover:not(:disabled):not(:read-only) {
+  background-color: var(--surface-tertiary);
+  border-bottom-color: var(--input-border-hover);
+}
+
+.input-filled:focus {
+  background-color: var(--surface-tertiary);
+  border-bottom-color: var(--input-border-focus);
+  box-shadow: none;
+}
+
+.input-filled.error {
+  border-bottom-color: var(--color-error-500);
+  background-color: var(--color-error-50);
+}
+
+.input-filled.success {
+  border-bottom-color: var(--color-success-500);
+}
+
+.input-filled.warning {
+  border-bottom-color: var(--color-warning-500);
+}
+
+/* Underline Style (Minimalist) */
+.input-underline {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.input-underline:hover:not(:disabled):not(:read-only) {
+  border-bottom-color: var(--input-border-hover);
+}
+
+.input-underline:focus {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--input-border-focus);
+  box-shadow: none;
+}
+
+.input-underline.error {
+  border-bottom-color: var(--color-error-500);
+  border-bottom-width: 2px;
+}
+
+.input-underline.success {
+  border-bottom-color: var(--color-success-500);
+  border-bottom-width: 2px;
+}
+
+.input-underline.warning {
+  border-bottom-color: var(--color-warning-500);
+  border-bottom-width: 2px;
+}
+
+/* Flush / Borderless Style (Inline editing) */
+.input-flush {
+  composes: input-base--borderless from global;
+}
+
+.input-flush.error {
+  outline: 1px solid var(--color-error-500);
+}
+
+.input-flush.success {
+  outline: 1px solid var(--color-success-500);
+}
+
+.input-flush.warning {
+  outline: 1px solid var(--color-warning-500);
+}
+
+/* Horizontal Label Layout */
+.input-group-horizontal {
+  composes: input-group--horizontal from global;
+}
+
+.input-group-horizontal .input-label {
+  min-width: 120px;
+  padding-top: var(--input-padding-y);
+  flex-shrink: 0;
+}
+
+/* Size-specific label alignment for horizontal layout */
+.input-group-horizontal:has(.input-sm) .input-label {
+  padding-top: 6px;
+}
+
+.input-group-horizontal:has(.input-lg) .input-label {
+  padding-top: 14px;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE ENHANCEMENTS
+   ======================================== */
+
+@media (max-width: 767px) {
+  /* Label - larger on mobile */
+  .input-label {
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Helper and error text */
+  .input-message,
+  .input-error,
+  .input-success,
+  .input-warning {
+    font-size: 12px;
+  }
+
+  /* Focus shadow - more subtle on mobile */
+  .input:focus {
+    box-shadow: 0 0 0 2px var(--color-primary-50);
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Label */
+  .input-label {
+    color: var(--palette-gray-300);
+  }
+
+  /* Required asterisk */
+  .required {
+    color: var(--color-error-400);
+  }
+
+  /* Helper and Message Text */
+  .input-message {
+    color: var(--palette-gray-400);
+  }
+
+  .input-error {
+    color: var(--color-error-400);
+  }
+
+  .input-success {
+    color: var(--color-success-400);
+  }
+
+  .input-warning {
+    color: var(--color-warning-400);
+  }
+
+  /* Base Input - Dark Mode */
+  .input {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .input::placeholder {
+    color: var(--palette-gray-500);
+  }
+
+  .input:hover:not(:disabled):not(:focus):not(:read-only) {
+    border-color: var(--color-primary-500);
+  }
+
+  .input:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .input:disabled {
+    background-color: var(--palette-gray-900);
+    border-color: var(--palette-gray-800);
+    color: var(--palette-gray-600);
+  }
+
+  .input:read-only {
+    background-color: var(--palette-gray-850);
+    border-color: var(--palette-gray-750);
+    color: var(--palette-gray-300);
+  }
+
+  /* Input Icons */
+  .input-icon-left,
+  .input-icon-right {
+    color: var(--palette-gray-400);
+  }
+
+  /* Error State - Dark Mode */
+  .error {
+    border-color: var(--color-error-500);
+  }
+
+  .error:focus {
+    border-color: var(--color-error-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
+
+  /* Success State - Dark Mode */
+  .success {
+    border-color: var(--color-success-500);
+  }
+
+  .success:focus {
+    border-color: var(--color-success-500);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+  }
+
+  /* Warning State - Dark Mode */
+  .warning {
+    border-color: var(--color-warning-500);
+  }
+
+  .warning:focus {
+    border-color: var(--color-warning-500);
+    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.15);
+  }
+
+  /* Underline Style - Dark Mode */
+  .input-underline {
+    border-bottom-color: var(--palette-gray-700);
+    color: var(--palette-gray-100);
+  }
+
+  .input-underline::placeholder {
+    color: var(--palette-gray-500);
+  }
+
+  .input-underline:hover:not(:disabled):not(:read-only) {
+    border-bottom-color: var(--color-primary-500);
+  }
+
+  .input-underline:focus {
+    border-bottom-color: var(--color-primary-500);
+  }
+
+  .input-underline.error {
+    border-bottom-color: var(--color-error-500);
+  }
+
+  .input-underline.success {
+    border-bottom-color: var(--color-success-500);
+  }
+
+  .input-underline.warning {
+    border-bottom-color: var(--color-warning-500);
+  }
+
+  /* Flush Style - Dark Mode */
+  .input-flush {
+    color: var(--palette-gray-100);
+  }
+
+  .input-flush::placeholder {
+    color: var(--palette-gray-500);
+  }
+
+  .input-flush:hover:not(:disabled):not(:read-only) {
+    background-color: var(--palette-gray-800);
+  }
+
+  .input-flush:focus {
+    background-color: var(--palette-gray-800);
+  }
+
+  /* Filled Style - Dark Mode */
+  .input-filled {
+    background-color: var(--palette-gray-800);
+  }
+
+  .input-filled:hover:not(:disabled):not(:read-only) {
+    background-color: var(--palette-gray-750);
+  }
+
+  .input-filled:focus {
+    background-color: var(--palette-gray-800);
+  }
+
+  .input-filled.error {
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+
+  /* Mobile dark mode adjustments */
+  @media (max-width: 767px) {
+    .input:focus {
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    }
+  }
+}

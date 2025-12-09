@@ -1,0 +1,419 @@
+/**
+ * Drawer Component Styles
+ * Category: Navigation
+ * Slide-in panel for navigation, filters, or additional content
+ */
+
+/* ========================================
+   BASE DRAWER CONTAINER
+   ======================================== */
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: visibility 0s linear var(--duration-slow),
+              opacity var(--duration-slow) var(--ease-out);
+}
+
+.drawerOpen {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: visibility 0s linear 0s,
+              opacity var(--duration-slow) var(--ease-out);
+}
+
+/* ========================================
+   OVERLAY
+   ======================================== */
+
+.drawerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.drawerOpen .drawerOverlay {
+  opacity: 1;
+}
+
+/* ========================================
+   DRAWER CONTENT
+   ======================================== */
+
+.drawerContent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-primary);
+  box-shadow: var(--shadow-xl);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+/* ========================================
+   PLACEMENT VARIANTS
+   ======================================== */
+
+/* Left Placement */
+.drawer-left .drawerContent {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 400px;
+  transform: translateX(-100%);
+}
+
+.drawer-left.drawerOpen .drawerContent {
+  transform: translateX(0);
+}
+
+/* Right Placement */
+.drawer-right .drawerContent {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  transform: translateX(100%);
+}
+
+.drawer-right.drawerOpen .drawerContent {
+  transform: translateX(0);
+}
+
+/* Top Placement */
+.drawer-top .drawerContent {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  transform: translateY(-100%);
+}
+
+.drawer-top.drawerOpen .drawerContent {
+  transform: translateY(0);
+}
+
+/* Bottom Placement */
+.drawer-bottom .drawerContent {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  transform: translateY(100%);
+}
+
+.drawer-bottom.drawerOpen .drawerContent {
+  transform: translateY(0);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small */
+.drawer-sm.drawer-left .drawerContent,
+.drawer-sm.drawer-right .drawerContent {
+  width: 320px;
+}
+
+.drawer-sm.drawer-top .drawerContent,
+.drawer-sm.drawer-bottom .drawerContent {
+  height: 320px;
+}
+
+/* Large */
+.drawer-lg.drawer-left .drawerContent,
+.drawer-lg.drawer-right .drawerContent {
+  width: 600px;
+}
+
+.drawer-lg.drawer-top .drawerContent,
+.drawer-lg.drawer-bottom .drawerContent {
+  height: 600px;
+}
+
+/* ========================================
+   DRAWER STRUCTURE
+   ======================================== */
+
+/* Header */
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-5);
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.drawerTitle {
+  margin: 0;
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.drawerClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-base);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.drawerClose:hover {
+  background-color: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.drawerClose:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+.drawerClose svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Body */
+.drawerBody {
+  flex: 1;
+  padding: var(--spacing-5);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Navigation Items */
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.drawerNavItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--radius-base);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.drawerNavItem:hover {
+  background-color: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.drawerNavItem:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+.drawerNavItemActive {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+
+.drawerNavItem svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Footer */
+.drawerFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-5);
+  border-top: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .drawerContent {
+    background-color: var(--palette-gray-800);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  }
+
+  .drawerOverlay {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  .drawerHeader {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .drawerTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .drawerClose {
+    color: var(--palette-gray-400);
+  }
+
+  .drawerClose:hover {
+    background-color: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .drawerClose:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  .drawerNavItem {
+    color: var(--palette-gray-400);
+  }
+
+  .drawerNavItem:hover {
+    background-color: var(--palette-gray-750);
+    color: var(--palette-gray-100);
+  }
+
+  .drawerNavItem:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  .drawerNavItemActive {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary-400);
+  }
+
+  .drawerFooter {
+    border-top-color: var(--palette-gray-700);
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .drawer-left .drawerContent,
+  .drawer-right .drawerContent {
+    width: 320px;
+  }
+
+  .drawer-lg.drawer-left .drawerContent,
+  .drawer-lg.drawer-right .drawerContent {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .drawerHeader {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .drawerTitle {
+    font-size: var(--font-size-heading-5);
+  }
+
+  .drawerBody {
+    padding: var(--spacing-4);
+  }
+
+  .drawerFooter {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .drawer-left .drawerContent,
+  .drawer-right .drawerContent,
+  .drawer-lg.drawer-left .drawerContent,
+  .drawer-lg.drawer-right .drawerContent {
+    width: 100%;
+    max-width: none;
+  }
+
+  .drawer-top .drawerContent,
+  .drawer-bottom .drawerContent {
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .drawerFooter {
+    flex-direction: column-reverse;
+  }
+
+  .drawerFooter > * {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawerOverlay,
+  .drawerContent {
+    transition: none;
+  }
+
+  .drawer-left .drawerContent,
+  .drawer-right .drawerContent,
+  .drawer-top .drawerContent,
+  .drawer-bottom .drawerContent {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .drawerContent {
+    border: 2px solid var(--border-default);
+  }
+
+  .drawerClose {
+    border: 1px solid var(--border-default);
+  }
+
+  .drawerClose:hover {
+    border-color: var(--text-primary);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .drawer {
+    display: none;
+  }
+}

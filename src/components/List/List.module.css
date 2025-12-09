@@ -1,0 +1,159 @@
+/**
+ * List Component
+ * @category Data Display
+ *
+ * Lists display a series of items in a structured, easy-to-scan format.
+ */
+
+/* ========================================
+   LIST CONTAINER
+   ======================================== */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ========================================
+   LIST VARIANTS
+   ======================================== */
+
+.listCompact .listItem {
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.listDivided .listItem {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.listDivided .listItem:last-child {
+  border-bottom: none;
+}
+
+/* ========================================
+   LIST ITEM
+   ======================================== */
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.listItem:last-child {
+  border-bottom: none;
+}
+
+.listItemInteractive {
+  cursor: pointer;
+}
+
+.listItemInteractive:hover {
+  background-color: var(--surface-secondary);
+}
+
+.listItemInteractive:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) var(--spacing-6);
+  text-align: center;
+}
+
+.emptyStateIcon {
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyStateTitle {
+  font-size: var(--font-size-heading-5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.emptyStateDescription {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-4);
+}
+
+.emptyStateAction {
+  margin-top: var(--spacing-2);
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .listItem {
+    transition: none;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* List Container */
+  .list {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  /* List Item */
+  .listItem {
+    color: var(--palette-gray-100);
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .listItemInteractive:hover {
+    background-color: var(--palette-gray-750);
+  }
+
+  .listItemInteractive:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  /* List Divided */
+  .listDivided .listItem {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  /* Empty State */
+  .emptyStateIcon {
+    color: var(--palette-gray-500);
+  }
+
+  .emptyStateTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .emptyStateDescription {
+    color: var(--palette-gray-400);
+  }
+}

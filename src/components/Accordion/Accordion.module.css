@@ -1,0 +1,155 @@
+/**
+ * Accordion Component
+ * @category Data Display
+ *
+ * Accordions allow users to expand and collapse sections of content
+ * to manage screen space efficiently.
+ */
+
+/* ========================================
+   ACCORDION CONTAINER
+   ======================================== */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   ACCORDION ITEM
+   ======================================== */
+
+.accordionItem {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  margin-bottom: var(--spacing-2);
+  overflow: hidden;
+}
+
+.accordionItem:last-child {
+  margin-bottom: 0;
+}
+
+/* ========================================
+   ACCORDION HEADER
+   ======================================== */
+
+.accordionHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4);
+  background-color: var(--surface-primary);
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  text-align: left;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.accordionHeader:hover {
+  background-color: var(--surface-secondary);
+}
+
+.accordionHeader:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
+}
+
+.accordionItemOpen .accordionHeader {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ========================================
+   ACCORDION ICON
+   ======================================== */
+
+.accordionIcon {
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-out);
+  color: var(--text-tertiary);
+}
+
+.accordionItemOpen .accordionIcon {
+  transform: rotate(180deg);
+}
+
+/* ========================================
+   ACCORDION CONTENT
+   ======================================== */
+
+.accordionContent {
+  overflow: hidden;
+  background-color: var(--surface-primary);
+  transition: max-height var(--duration-normal) var(--ease-out);
+}
+
+.accordionBody {
+  padding: var(--spacing-4);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .accordionIcon {
+    transition: none;
+  }
+
+  .accordionContent {
+    transition: none;
+  }
+
+  .accordionHeader {
+    transition: none;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Accordion Item */
+  .accordionItem {
+    border-color: var(--palette-gray-700);
+  }
+
+  /* Accordion Header */
+  .accordionHeader {
+    background-color: var(--palette-gray-800);
+    color: var(--palette-gray-100);
+  }
+
+  .accordionHeader:hover {
+    background-color: var(--palette-gray-750);
+  }
+
+  .accordionHeader:focus-visible {
+    outline-color: var(--color-primary-400);
+  }
+
+  .accordionItemOpen .accordionHeader {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  /* Accordion Icon */
+  .accordionIcon {
+    color: var(--palette-gray-400);
+  }
+
+  /* Accordion Content */
+  .accordionContent {
+    background-color: var(--palette-gray-800);
+  }
+
+  .accordionBody {
+    color: var(--palette-gray-300);
+  }
+}

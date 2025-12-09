@@ -1,0 +1,241 @@
+/**
+ * Device Card Component
+ * @category IoT Components
+ *
+ * Device Cards display IoT device information including status,
+ * real-time metrics, and quick actions.
+ */
+
+/* ========================================
+   DEVICE CARD BASE
+   ======================================== */
+
+.deviceCard {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.deviceCard:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+/* ========================================
+   DEVICE CARD HEADER
+   ======================================== */
+
+.deviceCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+/* ========================================
+   DEVICE ICON
+   ======================================== */
+
+.deviceIcon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-base);
+}
+
+.deviceIconSm {
+  width: 40px;
+  height: 40px;
+}
+
+/* ========================================
+   DEVICE CARD TITLE SECTION
+   ======================================== */
+
+.deviceCardTitleSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.deviceCardTitle {
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 0;
+}
+
+.deviceCardSubtitle {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ========================================
+   DEVICE CARD BODY
+   ======================================== */
+
+.deviceCardBody {
+  margin-bottom: var(--spacing-4);
+}
+
+/* ========================================
+   DEVICE METRICS
+   ======================================== */
+
+.deviceMetrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+}
+
+.deviceMetric {
+  display: flex;
+  flex-direction: column;
+}
+
+.deviceMetricLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-1);
+}
+
+.deviceMetricValue {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   DEVICE INFO
+   ======================================== */
+
+.deviceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  margin-top: var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   DEVICE CARD FOOTER
+   ======================================== */
+
+.deviceCardFooter {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding-top: var(--spacing-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ========================================
+   COMPACT VARIANT
+   ======================================== */
+
+.deviceCardCompact {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+}
+
+.deviceCardCompact .deviceCardTitle {
+  font-size: var(--font-size-body-medium);
+  margin-bottom: 2px;
+}
+
+.deviceCardCompact .deviceCardSubtitle {
+  font-size: var(--font-size-body-small);
+}
+
+/* ========================================
+   STATE VARIANTS
+   ======================================== */
+
+.deviceCardWarning {
+  border-color: var(--color-warning-300);
+  background-color: var(--color-warning-50);
+}
+
+.deviceCardError {
+  border-color: var(--color-error-300);
+  background-color: var(--color-error-50);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Base Card */
+  .deviceCard {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .deviceCard:hover {
+    border-color: var(--palette-gray-600);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Title and Text */
+  .deviceCardTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .deviceCardSubtitle {
+    color: var(--palette-gray-400);
+  }
+
+  /* Metrics */
+  .deviceMetricLabel {
+    color: var(--palette-gray-500);
+  }
+
+  .deviceMetricValue {
+    color: var(--palette-gray-100);
+  }
+
+  /* Device Info */
+  .deviceInfo {
+    color: var(--palette-gray-500);
+  }
+
+  /* Footer */
+  .deviceCardFooter {
+    border-top-color: var(--palette-gray-700);
+  }
+
+  /* State Variants */
+  .deviceCardWarning {
+    border-color: var(--color-warning-700);
+    background-color: rgba(251, 191, 36, 0.1);
+  }
+
+  .deviceCardError {
+    border-color: var(--color-error-700);
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .deviceCard {
+    transition: none;
+  }
+}

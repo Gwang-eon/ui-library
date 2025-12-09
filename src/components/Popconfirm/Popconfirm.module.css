@@ -1,0 +1,320 @@
+/* Popconfirm Component Styles */
+
+/* Container */
+.popconfirmContainer {
+  position: relative;
+  display: inline-block;
+}
+
+/* Popconfirm */
+.popconfirm {
+  position: absolute;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.popconfirmShow {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Popconfirm Content */
+.popconfirmContent {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-4);
+  min-width: 280px;
+  max-width: 360px;
+}
+
+/* Popconfirm Message */
+.popconfirmMessage {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.popconfirmIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popconfirmIconInfo {
+  color: var(--color-primary-500);
+}
+
+.popconfirmIconSuccess {
+  color: var(--color-success-500);
+}
+
+.popconfirmIconWarning {
+  color: var(--color-warning-500);
+}
+
+.popconfirmIconDanger {
+  color: var(--color-error-500);
+}
+
+/* Popconfirm Title */
+.popconfirmTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  line-height: 1.4;
+}
+
+/* Popconfirm Description */
+.popconfirmDescription {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Popconfirm Actions */
+.popconfirmActions {
+  display: flex;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+}
+
+/* Placement Variants */
+/* Bottom (default) */
+.popconfirm {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+
+.popconfirmShow {
+  transform: translateX(-50%) scale(1);
+}
+
+.popconfirm::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-color: var(--border-default);
+}
+
+.popconfirm::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom-color: var(--surface-primary);
+}
+
+/* Top */
+.popconfirmTop {
+  top: auto;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+
+.popconfirmTop.popconfirmShow {
+  transform: translateX(-50%) scale(1);
+}
+
+.popconfirmTop::before {
+  top: 100%;
+  bottom: auto;
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-top-color: var(--border-default);
+}
+
+.popconfirmTop::after {
+  top: calc(100% + 1px);
+  bottom: auto;
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-top-color: var(--surface-primary);
+}
+
+/* Left */
+.popconfirmLeft {
+  top: 50%;
+  left: auto;
+  right: calc(100% + 8px);
+  transform: translateY(-50%) scale(0.95);
+}
+
+.popconfirmLeft.popconfirmShow {
+  transform: translateY(-50%) scale(1);
+}
+
+.popconfirmLeft::before {
+  top: 50%;
+  left: 100%;
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-left-color: var(--border-default);
+}
+
+.popconfirmLeft::after {
+  top: 50%;
+  left: calc(100% + 1px);
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-left-color: var(--surface-primary);
+}
+
+/* Right */
+.popconfirmRight {
+  top: 50%;
+  left: calc(100% + 8px);
+  transform: translateY(-50%) scale(0.95);
+}
+
+.popconfirmRight.popconfirmShow {
+  transform: translateY(-50%) scale(1);
+}
+
+.popconfirmRight::before {
+  top: 50%;
+  right: 100%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-right-color: var(--border-default);
+}
+
+.popconfirmRight::after {
+  top: 50%;
+  right: calc(100% + 1px);
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-right-color: var(--surface-primary);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  /* Content */
+  .popconfirmContent {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Arrow */
+  .popconfirm::after,
+  .popconfirmTop::after,
+  .popconfirmLeft::after,
+  .popconfirmRight::after {
+    border-bottom-color: var(--palette-gray-800);
+    border-top-color: var(--palette-gray-800);
+    border-left-color: var(--palette-gray-800);
+    border-right-color: var(--palette-gray-800);
+  }
+
+  /* Text */
+  .popconfirmTitle {
+    color: var(--palette-gray-100);
+  }
+
+  .popconfirmDescription {
+    color: var(--palette-gray-300);
+  }
+
+  /* Icons */
+  .popconfirmIconInfo {
+    color: var(--color-primary-400);
+  }
+
+  .popconfirmIconSuccess {
+    color: var(--color-success-400);
+  }
+
+  .popconfirmIconWarning {
+    color: var(--color-warning-400);
+  }
+
+  .popconfirmIconDanger {
+    color: var(--color-error-400);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .popconfirmContent {
+    min-width: 240px;
+    max-width: 300px;
+    padding: var(--spacing-3);
+  }
+
+  .popconfirmMessage {
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .popconfirmIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .popconfirmTitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .popconfirmDescription {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .popconfirm {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .popconfirmContent {
+    border-width: 2px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .popconfirm {
+    display: none;
+  }
+}

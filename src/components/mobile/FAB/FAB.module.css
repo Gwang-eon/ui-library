@@ -1,0 +1,423 @@
+/**
+ * FAB (Floating Action Button) Component
+ * Category: Mobile
+ * Mobile-native floating action button for primary actions
+ */
+
+/* ==================== FAB Container ==================== */
+
+.fab {
+  position: fixed;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-600);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ==================== FAB Sizes ==================== */
+
+.standard {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+}
+
+.mini {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.extended {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 var(--spacing-5);
+  border-radius: 24px;
+  gap: var(--spacing-2);
+}
+
+/* ==================== FAB Positions ==================== */
+
+.bottomRight {
+  bottom: var(--spacing-5);
+  right: var(--spacing-5);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.bottomLeft {
+  bottom: var(--spacing-5);
+  left: var(--spacing-5);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.bottomCenter {
+  bottom: var(--spacing-5);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.topRight {
+  top: var(--spacing-5);
+  right: var(--spacing-5);
+  top: calc(var(--spacing-5) + env(safe-area-inset-top, 0px));
+}
+
+/* ==================== FAB Icon ==================== */
+
+.icon {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2px;
+}
+
+.mini .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==================== FAB Label ==================== */
+
+.label {
+  font-size: var(--font-size-body-medium);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ==================== FAB States ==================== */
+
+.fab:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
+  transform: scale(1.05);
+}
+
+.bottomCenter:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.fab:active {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+  transform: scale(0.95);
+}
+
+.bottomCenter:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+.fab:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+}
+
+.fab:disabled:hover,
+.fab:disabled:active {
+  transform: scale(1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+}
+
+.bottomCenter:disabled:hover,
+.bottomCenter:disabled:active {
+  transform: translateX(-50%) scale(1);
+}
+
+/* ==================== FAB Hide State ==================== */
+
+.hidden {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bottomCenter.hidden {
+  transform: translateX(-50%) scale(0);
+}
+
+/* ==================== FAB Color Variants ==================== */
+
+.secondary {
+  background: var(--color-secondary-600);
+}
+
+.success {
+  background: var(--color-success-600);
+}
+
+.warning {
+  background: var(--color-warning-600);
+}
+
+.error {
+  background: var(--color-danger-600);
+}
+
+/* ==================== FAB with Badge ==================== */
+
+.fabWrapper {
+  position: fixed;
+  z-index: 900;
+}
+
+.fabWrapper.bottomRight {
+  bottom: var(--spacing-5);
+  right: var(--spacing-5);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.fabWrapper.bottomLeft {
+  bottom: var(--spacing-5);
+  left: var(--spacing-5);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.fabWrapper.bottomCenter {
+  bottom: var(--spacing-5);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.fabWrapper.topRight {
+  top: var(--spacing-5);
+  right: var(--spacing-5);
+  top: calc(var(--spacing-5) + env(safe-area-inset-top, 0px));
+}
+
+.fabWrapper .fab {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  top: auto;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--color-danger-600);
+  color: #FFFFFF;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 2px solid var(--surface-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ==================== Speed Dial Container ==================== */
+
+.speedDial {
+  position: fixed;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-4);
+}
+
+.speedDial.bottomRight {
+  bottom: var(--spacing-5);
+  right: var(--spacing-5);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.speedDial.bottomLeft {
+  bottom: var(--spacing-5);
+  left: var(--spacing-5);
+  bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+.speedDial.topRight {
+  top: var(--spacing-5);
+  right: var(--spacing-5);
+  top: calc(var(--spacing-5) + env(safe-area-inset-top, 0px));
+}
+
+/* ==================== Speed Dial Actions ==================== */
+
+.speedDialActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.speedDialOpen .speedDialActions {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ==================== Speed Dial Action Item ==================== */
+
+.speedDialAction {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.speedDialActionLabel {
+  padding: var(--spacing-1-5) var(--spacing-2-5);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body-small);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.speedDialOpen .speedDialActionLabel {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.speedDialAction .fab {
+  position: relative;
+  bottom: auto;
+  right: auto;
+}
+
+/* ==================== Speed Dial Backdrop ==================== */
+
+.speedDialBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  opacity: 1;
+  visibility: visible;
+  z-index: 899;
+}
+
+/* ==================== Dark Mode ==================== */
+
+body.dark-mode .fab,
+body[class*='theme-dark'] .fab {
+  background: var(--color-primary-500);
+}
+
+body.dark-mode .secondary,
+body[class*='theme-dark'] .secondary {
+  background: var(--color-secondary-500);
+}
+
+body.dark-mode .success,
+body[class*='theme-dark'] .success {
+  background: var(--color-success-500);
+}
+
+body.dark-mode .warning,
+body[class*='theme-dark'] .warning {
+  background: var(--color-warning-500);
+}
+
+body.dark-mode .error,
+body[class*='theme-dark'] .error {
+  background: var(--color-danger-500);
+}
+
+body.dark-mode .speedDialActionLabel,
+body[class*='theme-dark'] .speedDialActionLabel {
+  background: var(--palette-grey-800);
+  color: var(--palette-grey-100);
+}
+
+body.dark-mode .badge,
+body[class*='theme-dark'] .badge {
+  border-color: var(--palette-grey-900);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .fab,
+  .speedDialActions,
+  .speedDialActionLabel {
+    transition: none;
+  }
+
+  .fab:hover {
+    transform: scale(1);
+  }
+
+  .bottomCenter:hover {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* ==================== Very Small Screens ==================== */
+
+@media (max-width: 374px) {
+  .bottomRight,
+  .bottomLeft,
+  .bottomCenter,
+  .fabWrapper.bottomRight,
+  .fabWrapper.bottomLeft,
+  .fabWrapper.bottomCenter,
+  .speedDial.bottomRight,
+  .speedDial.bottomLeft {
+    bottom: var(--spacing-4);
+    bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bottomRight,
+  .fabWrapper.bottomRight,
+  .speedDial.bottomRight {
+    right: var(--spacing-4);
+  }
+
+  .bottomLeft,
+  .fabWrapper.bottomLeft,
+  .speedDial.bottomLeft {
+    left: var(--spacing-4);
+  }
+
+  .extended {
+    padding: 0 var(--spacing-4);
+  }
+}
+
+/* ==================== Landscape Orientation ==================== */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .bottomRight,
+  .bottomLeft,
+  .bottomCenter,
+  .fabWrapper.bottomRight,
+  .fabWrapper.bottomLeft,
+  .fabWrapper.bottomCenter,
+  .speedDial.bottomRight,
+  .speedDial.bottomLeft {
+    bottom: var(--spacing-4);
+    bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom, 0px));
+  }
+}

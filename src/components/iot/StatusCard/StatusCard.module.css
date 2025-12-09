@@ -1,0 +1,689 @@
+/**
+ * Status Card Component
+ * @category IoT
+ *
+ * Overview cards for device status, health metrics, and system state
+ */
+
+/* ========================================
+   STATUS CARD CONTAINER
+   ======================================== */
+
+.statusCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.statusCard:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.statusCard.clickable {
+  cursor: pointer;
+}
+
+.statusCard.clickable:active {
+  transform: scale(0.99);
+}
+
+/* ========================================
+   CARD HEADER
+   ======================================== */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-5);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.title {
+  font-size: var(--font-size-heading-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.total {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-600);
+}
+
+/* ========================================
+   CARD BODY
+   ======================================== */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.body.horizontal {
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/* ========================================
+   STATUS ITEMS
+   ======================================== */
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-base);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.itemIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-base);
+  flex-shrink: 0;
+}
+
+.itemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-1);
+}
+
+.itemValue {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.itemPercent {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+}
+
+/* Status Item Variants */
+.item.success .itemIcon {
+  background: var(--color-success-100);
+  color: var(--color-success-600);
+}
+
+.item.warning .itemIcon {
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
+}
+
+.item.error .itemIcon {
+  background: var(--color-error-100);
+  color: var(--color-error-600);
+}
+
+.item.info .itemIcon {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+/* ========================================
+   CLICKABLE STATUS ITEMS
+   ======================================== */
+
+.item.clickable {
+  cursor: pointer;
+}
+
+.item.clickable:hover {
+  background: var(--surface-secondary);
+}
+
+.itemArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+}
+
+.item.clickable:hover .itemArrow {
+  color: var(--text-primary);
+}
+
+/* ========================================
+   COMPACT STATUS CARD
+   ======================================== */
+
+.statusCard.compact {
+  padding: var(--spacing-4);
+}
+
+.statusCard.compact .header {
+  margin-bottom: var(--spacing-3);
+  padding-bottom: var(--spacing-2);
+}
+
+.statusCard.compact .title {
+  font-size: var(--font-size-body-large);
+}
+
+.compactItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-base);
+}
+
+.compactValue {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-1);
+}
+
+.compactLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+.compactItem.success .compactValue {
+  color: var(--color-success-600);
+}
+
+.compactItem.warning .compactValue {
+  color: var(--color-warning-600);
+}
+
+.compactItem.error .compactValue {
+  color: var(--color-error-600);
+}
+
+.compactItem.info .compactValue {
+  color: var(--color-primary-600);
+}
+
+/* ========================================
+   PROGRESS BAR
+   ======================================== */
+
+.progressContainer {
+  width: 100%;
+  height: 8px;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin: var(--spacing-2) 0;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--color-primary-500);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.progressSuccess {
+  background: var(--color-success-500);
+}
+
+.progressWarning {
+  background: var(--color-warning-500);
+}
+
+.progressError {
+  background: var(--color-error-500);
+}
+
+/* ========================================
+   CARD FOOTER
+   ======================================== */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   MINI STATUS CARD
+   ======================================== */
+
+.statusCard.mini {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+}
+
+.statusCard.mini .header,
+.statusCard.mini .body {
+  display: none;
+}
+
+.miniIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.iconSuccess {
+  background: var(--color-success-100);
+  color: var(--color-success-600);
+}
+
+.iconWarning {
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
+}
+
+.iconError {
+  background: var(--color-error-100);
+  color: var(--color-error-600);
+}
+
+.iconInfo,
+.iconPrimary {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+.miniContent {
+  flex: 1;
+}
+
+.miniValue {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+}
+
+.miniLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   STATUS CARD GRID
+   ======================================== */
+
+.grid {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+/* ========================================
+   LOADING SKELETON
+   ======================================== */
+
+.statusCard.loading .header,
+.statusCard.loading .body {
+  pointer-events: none;
+}
+
+.titleSkeleton,
+.badgeSkeleton,
+.iconSkeleton,
+.labelSkeleton,
+.valueSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.titleSkeleton {
+  width: 40%;
+  height: 20px;
+}
+
+.badgeSkeleton {
+  width: 60px;
+  height: 24px;
+  border-radius: var(--radius-full);
+}
+
+.itemSkeleton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+}
+
+.iconSkeleton {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.contentSkeleton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.labelSkeleton {
+  width: 50%;
+  height: 12px;
+}
+
+.valueSkeleton {
+  width: 30%;
+  height: 18px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .body.horizontal {
+    flex-direction: column;
+  }
+
+  .item {
+    padding: var(--spacing-2);
+  }
+
+  .statusCard.mini {
+    padding: var(--spacing-4);
+  }
+
+  .header {
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-3);
+  }
+
+  .title {
+    font-size: var(--font-size-body-large);
+  }
+
+  .total {
+    font-size: var(--font-size-heading-4);
+  }
+
+  .itemIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .itemValue {
+    font-size: var(--font-size-heading-5);
+  }
+
+  .miniIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .miniValue {
+    font-size: var(--font-size-heading-4);
+  }
+}
+
+/* Very small mobile screens */
+@media (max-width: 374px) {
+  .statusCard {
+    padding: var(--spacing-4);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .statusCard:hover {
+    box-shadow: none;
+  }
+
+  .statusCard.clickable:active {
+    box-shadow: var(--shadow-sm);
+    transform: scale(0.98);
+  }
+
+  .item.clickable:hover {
+    background: transparent;
+  }
+
+  .item.clickable:active {
+    background: var(--surface-secondary);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .statusCard {
+    border-width: 2px;
+  }
+
+  .header {
+    border-bottom-width: 2px;
+  }
+
+  .itemIcon {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .statusCard,
+  .item,
+  .progressBar {
+    transition: none;
+  }
+
+  .statusCard.clickable:active {
+    transform: none;
+  }
+
+  .titleSkeleton,
+  .badgeSkeleton,
+  .iconSkeleton,
+  .labelSkeleton,
+  .valueSkeleton {
+    animation: none;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Card */
+  .statusCard {
+    background-color: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .statusCard:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Header */
+  .header {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .title {
+    color: var(--palette-gray-100);
+  }
+
+  .total {
+    color: var(--color-primary-400);
+  }
+
+  /* Items */
+  .item {
+    border-bottom-color: var(--palette-gray-700);
+  }
+
+  .item.clickable:hover {
+    background-color: var(--palette-gray-750);
+  }
+
+  /* Item Icons - use subtle transparency for better visual hierarchy */
+  .item.success .itemIcon {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--color-success-400);
+  }
+
+  .item.warning .itemIcon {
+    background: rgba(251, 146, 60, 0.15);
+    color: var(--color-warning-400);
+  }
+
+  .item.error .itemIcon {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--color-error-400);
+  }
+
+  .item.info .itemIcon {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary-400);
+  }
+
+  .itemLabel {
+    color: var(--palette-gray-300);
+  }
+
+  .itemValue {
+    color: var(--palette-gray-100);
+  }
+
+  .itemPercent {
+    color: var(--palette-gray-400);
+  }
+
+  .itemArrow {
+    color: var(--palette-gray-400);
+  }
+
+  .item.clickable:hover .itemArrow {
+    color: var(--palette-gray-200);
+  }
+
+  /* Compact Card */
+  .compactLabel {
+    color: var(--palette-gray-300);
+  }
+
+  .compactItem.success .compactValue {
+    color: var(--color-success-400);
+  }
+
+  .compactItem.warning .compactValue {
+    color: var(--color-warning-400);
+  }
+
+  .compactItem.error .compactValue {
+    color: var(--color-error-400);
+  }
+
+  .compactItem.info .compactValue {
+    color: var(--color-primary-400);
+  }
+
+  /* Progress Bar */
+  .progressContainer {
+    background-color: var(--palette-gray-750);
+  }
+
+  /* Footer */
+  .footer {
+    color: var(--palette-gray-400);
+  }
+
+  /* Mini Card Icons */
+  .iconSuccess {
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--color-success-400);
+  }
+
+  .iconWarning {
+    background: rgba(251, 146, 60, 0.15);
+    color: var(--color-warning-400);
+  }
+
+  .iconError {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--color-error-400);
+  }
+
+  .iconInfo,
+  .iconPrimary {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary-400);
+  }
+
+  .miniValue {
+    color: var(--palette-gray-100);
+  }
+
+  .miniLabel {
+    color: var(--palette-gray-300);
+  }
+
+  /* Loading Skeleton */
+  .titleSkeleton,
+  .badgeSkeleton,
+  .iconSkeleton,
+  .labelSkeleton,
+  .valueSkeleton {
+    background: linear-gradient(
+      90deg,
+      var(--palette-gray-750) 0%,
+      var(--palette-gray-700) 50%,
+      var(--palette-gray-750) 100%
+    );
+  }
+}

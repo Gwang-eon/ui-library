@@ -1,0 +1,383 @@
+/**
+ * Device List Item Component
+ * Category: IoT
+ * List items for displaying device information in tables and lists
+ */
+
+/* ==================== Container ==================== */
+
+.container {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: var(--spacing-2);
+}
+
+.containerSpaced {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  background: transparent;
+  border: none;
+  overflow: visible;
+}
+
+.containerSpaced .deviceListItem {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.containerSpaced .deviceListItem:last-child {
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ==================== Device List Item ==================== */
+
+.deviceListItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-primary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-2);
+}
+
+.deviceListItem:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.deviceListItem:hover {
+  background: var(--surface-secondary);
+}
+
+/* ==================== Checkbox ==================== */
+
+.checkbox {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* ==================== Icon ==================== */
+
+.icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+  border-radius: var(--radius-base);
+}
+
+.iconSvg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==================== Content ==================== */
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-1);
+}
+
+.name {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  position: relative;
+  padding-left: var(--spacing-3);
+}
+
+.metaItem::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--border-strong);
+}
+
+.metaItem:first-child {
+  padding-left: 0;
+}
+
+.metaItem:first-child::before {
+  content: "";
+}
+
+/* ==================== Metrics ==================== */
+
+.metrics {
+  display: flex;
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-2);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.metricLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+.metricValue {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.metricValueWarning {
+  color: var(--color-warning-600);
+}
+
+.metricValueError {
+  color: var(--color-danger-600);
+}
+
+/* ==================== Value ==================== */
+
+.value {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-right: var(--spacing-4);
+}
+
+/* ==================== Actions ==================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+/* ==================== Arrow ==================== */
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==================== Variants ==================== */
+
+/* Compact */
+.compact {
+  padding: var(--spacing-3) var(--spacing-4);
+}
+
+.compact .name {
+  font-size: var(--font-size-body-small);
+}
+
+.compact .value {
+  font-size: var(--font-size-body-large);
+  margin-right: var(--spacing-3);
+}
+
+/* With Metrics */
+.withMetrics {
+  padding: var(--spacing-5);
+}
+
+/* Offline */
+.offline {
+  opacity: 0.6;
+}
+
+.offline .icon {
+  background: var(--surface-tertiary);
+  color: var(--text-disabled);
+}
+
+/* Clickable */
+.clickable {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.clickable:hover {
+  background: var(--surface-secondary);
+}
+
+.clickable:hover .arrow {
+  color: var(--text-primary);
+}
+
+.clickable .name {
+  color: var(--text-link);
+}
+
+.clickable:hover .name {
+  color: var(--color-primary-700);
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .deviceListItem {
+    flex-wrap: wrap;
+    padding: var(--spacing-4);
+  }
+
+  .checkbox {
+    order: 1;
+  }
+
+  .icon {
+    order: 2;
+  }
+
+  .content {
+    order: 3;
+    flex: 1 1 100%;
+    margin-top: var(--spacing-2);
+  }
+
+  .actions {
+    order: 4;
+    margin-left: auto;
+  }
+
+  .metrics {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-1);
+  }
+
+  .metaItem {
+    padding-left: 0;
+  }
+
+  .metaItem::before {
+    display: none;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .containerSpaced {
+    background: transparent;
+  }
+
+  .deviceListItem {
+    background: var(--palette-gray-800);
+    border-color: var(--palette-gray-700);
+  }
+
+  .deviceListItem:hover {
+    background: var(--palette-gray-750);
+  }
+
+  .icon {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary-400);
+  }
+
+  .name {
+    color: var(--palette-gray-100);
+  }
+
+  .metaItem {
+    color: var(--palette-gray-500);
+  }
+
+  .metaItem::before {
+    color: var(--palette-gray-600);
+  }
+
+  .metricLabel {
+    color: var(--palette-gray-500);
+  }
+
+  .metricValue {
+    color: var(--palette-gray-100);
+  }
+
+  .metricValueWarning {
+    color: var(--color-warning-400);
+  }
+
+  .metricValueError {
+    color: var(--color-danger-400);
+  }
+
+  .value {
+    color: var(--palette-gray-100);
+  }
+
+  .arrow {
+    color: var(--palette-gray-500);
+  }
+
+  .clickable:hover .arrow {
+    color: var(--palette-gray-300);
+  }
+
+  .clickable .name {
+    color: var(--color-primary-400);
+  }
+
+  .clickable:hover .name {
+    color: var(--color-primary-300);
+  }
+
+  .offline .icon {
+    background: var(--palette-gray-900);
+    color: var(--palette-gray-600);
+  }
+}

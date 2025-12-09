@@ -1,0 +1,276 @@
+/**
+ * Connection Indicator Component
+ * Category: IoT
+ * Visual indicators for device connection status and signal strength
+ */
+
+/* ==================== Connection Indicator ==================== */
+
+.connectionIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.connectionDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.connectionLabel {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+/* ==================== Connection States ==================== */
+
+/* Connected */
+.status-connected .connectionDot {
+  background-color: var(--color-success-500);
+}
+
+.status-connected .connectionLabel {
+  color: var(--color-success-700);
+}
+
+/* Connecting */
+.status-connecting .connectionDot {
+  background-color: var(--color-primary-500);
+}
+
+.status-connecting .connectionLabel {
+  color: var(--color-primary-700);
+}
+
+/* Disconnected */
+.status-disconnected .connectionDot {
+  background-color: var(--text-disabled);
+}
+
+.status-disconnected .connectionLabel {
+  color: var(--text-tertiary);
+}
+
+/* Warning */
+.status-warning .connectionDot {
+  background-color: var(--palette-orange-500);
+}
+
+.status-warning .connectionLabel {
+  color: var(--palette-orange-700);
+}
+
+/* ==================== Sizes ==================== */
+
+/* Small */
+.size-sm .connectionDot {
+  width: 6px;
+  height: 6px;
+}
+
+.size-sm .connectionLabel {
+  font-size: var(--font-size-body-small);
+}
+
+/* Medium (default) - already defined above */
+
+/* Large */
+.size-lg .connectionDot {
+  width: 12px;
+  height: 12px;
+}
+
+.size-lg .connectionLabel {
+  font-size: var(--font-size-body-medium);
+}
+
+/* ==================== Pulse Animation ==================== */
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* ==================== Connection Dot Only (Compact) ==================== */
+
+.connectionDotOnly {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotOnly-connected {
+  background-color: var(--color-success-500);
+}
+
+.dotOnly-connecting {
+  background-color: var(--color-primary-500);
+}
+
+.dotOnly-disconnected {
+  background-color: var(--text-disabled);
+}
+
+.dotOnly-warning {
+  background-color: var(--palette-orange-500);
+}
+
+/* ==================== Signal Indicator ==================== */
+
+.signalIndicator {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.signalBar {
+  width: 3px;
+  background-color: var(--border-strong);
+  border-radius: 2px;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.signalBar:nth-child(1) {
+  height: 25%;
+}
+
+.signalBar:nth-child(2) {
+  height: 50%;
+}
+
+.signalBar:nth-child(3) {
+  height: 75%;
+}
+
+.signalBar:nth-child(4) {
+  height: 100%;
+}
+
+/* ==================== Signal Strength Levels ==================== */
+
+/* Excellent (4 bars) */
+.signal-excellent .signalBar {
+  background-color: var(--color-success-500);
+}
+
+/* Good (3 bars) */
+.signal-good .signalBar:nth-child(1),
+.signal-good .signalBar:nth-child(2),
+.signal-good .signalBar:nth-child(3) {
+  background-color: var(--color-success-500);
+}
+
+/* Fair (2 bars) */
+.signal-fair .signalBar:nth-child(1),
+.signal-fair .signalBar:nth-child(2) {
+  background-color: var(--palette-orange-500);
+}
+
+/* Poor (1 bar) */
+.signal-poor .signalBar:nth-child(1) {
+  background-color: var(--color-error-500);
+}
+
+/* None (0 bars) - all bars stay default color */
+.signal-none .signalBar {
+  background-color: var(--border-strong);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .status-connected .connectionDot {
+    background-color: var(--color-success-400);
+  }
+
+  .status-connected .connectionLabel {
+    color: var(--color-success-400);
+  }
+
+  .status-connecting .connectionDot {
+    background-color: var(--color-primary-400);
+  }
+
+  .status-connecting .connectionLabel {
+    color: var(--color-primary-400);
+  }
+
+  .status-disconnected .connectionDot {
+    background-color: var(--palette-gray-600);
+  }
+
+  .status-disconnected .connectionLabel {
+    color: var(--palette-gray-500);
+  }
+
+  .status-warning .connectionDot {
+    background-color: var(--color-warning-400);
+  }
+
+  .status-warning .connectionLabel {
+    color: var(--color-warning-400);
+  }
+
+  .dotOnly-connected {
+    background-color: var(--color-success-400);
+  }
+
+  .dotOnly-connecting {
+    background-color: var(--color-primary-400);
+  }
+
+  .dotOnly-disconnected {
+    background-color: var(--palette-gray-600);
+  }
+
+  .dotOnly-warning {
+    background-color: var(--color-warning-400);
+  }
+
+  .signalBar {
+    background-color: var(--palette-gray-700);
+  }
+
+  .signal-excellent .signalBar {
+    background-color: var(--color-success-400);
+  }
+
+  .signal-good .signalBar:nth-child(1),
+  .signal-good .signalBar:nth-child(2),
+  .signal-good .signalBar:nth-child(3) {
+    background-color: var(--color-success-400);
+  }
+
+  .signal-fair .signalBar:nth-child(1),
+  .signal-fair .signalBar:nth-child(2) {
+    background-color: var(--color-warning-400);
+  }
+
+  .signal-poor .signalBar:nth-child(1) {
+    background-color: var(--color-error-400);
+  }
+}

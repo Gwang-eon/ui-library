@@ -1,0 +1,79 @@
+/**
+ * Tooltip Component
+ * @category Feedback
+ *
+ * Contextual information on hover/focus
+ */
+
+/* ========================================
+   TOOLTIP
+   ======================================== */
+
+.tooltip {
+  position: fixed;
+  z-index: 10000;
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: var(--palette-gray-900);
+  color: var(--palette-white);
+  font-size: var(--font-size-body-small);
+  line-height: 1.4;
+  border-radius: var(--radius-base);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: tooltip-fade-in var(--duration-fast) var(--ease-out);
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tooltipTop {
+  /* Positioned via JavaScript */
+}
+
+.tooltipBottom {
+  /* Positioned via JavaScript */
+}
+
+.tooltipLeft {
+  /* Positioned via JavaScript */
+}
+
+.tooltipRight {
+  /* Positioned via JavaScript */
+}
+
+/* ========================================
+   RICH TOOLTIP (Multi-line)
+   ======================================== */
+
+.tooltipRich {
+  white-space: normal;
+  max-width: 250px;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .tooltip {
+    background-color: var(--palette-gray-100);
+    color: var(--palette-gray-900);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    animation: none;
+  }
+}
