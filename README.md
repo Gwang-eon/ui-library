@@ -171,6 +171,50 @@ import '@gractor/ui/styles';
 | `PullToRefresh` | 당겨서 새로고침 |
 | `SwipeActions` | 스와이프 액션 |
 
+## 다크모드 지원
+
+라이브러리는 다크모드를 완벽 지원합니다. 다음 두 가지 방식으로 다크모드를 활성화할 수 있습니다:
+
+### 1. 시스템 설정 자동 감지
+```css
+/* 자동으로 prefers-color-scheme: dark 감지 */
+@media (prefers-color-scheme: dark) {
+  /* 다크모드 스타일 자동 적용 */
+}
+```
+
+### 2. 수동 클래스 토글
+```tsx
+// body에 dark-mode 클래스 추가
+document.body.classList.add('dark-mode');
+
+// 또는 data-theme 속성 사용
+document.documentElement.setAttribute('data-theme', 'dark');
+```
+
+```tsx
+// 토글 예시
+function ThemeToggle() {
+  const [isDark, setIsDark] = useState(false);
+
+  const toggleTheme = () => {
+    document.body.classList.toggle('dark-mode');
+    setIsDark(!isDark);
+  };
+
+  return <Button onClick={toggleTheme}>{isDark ? '라이트' : '다크'} 모드</Button>;
+}
+```
+
+## 데모 실행
+
+```bash
+npm install
+npm run dev     # 개발 서버 실행 (브라우저 자동 열림)
+npm run build   # 프로덕션 빌드
+npm run preview # 빌드된 결과물 미리보기
+```
+
 ## 빌드
 
 ```bash
@@ -182,6 +226,20 @@ npm run build
 
 - React 18+ 또는 19+
 - lucide-react (아이콘)
+
+## 브라우저 지원
+
+- Chrome (최신)
+- Firefox (최신)
+- Safari (최신)
+- Edge (최신)
+
+## 접근성
+
+- 키보드 네비게이션 지원
+- ARIA 속성 지원
+- `prefers-reduced-motion` 지원
+- 고대비 모드 지원 (`prefers-contrast: high`)
 
 ## 라이선스
 
