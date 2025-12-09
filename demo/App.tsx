@@ -65,7 +65,7 @@ import { EmptyState } from '../src/components/EmptyState';
 // Navigation Components
 import { Breadcrumb } from '../src/components/Breadcrumb';
 import { Pagination } from '../src/components/Pagination';
-import { Tabs } from '../src/components/Tabs';
+import { Tabs, TabsList, Tab, TabPanel } from '../src/components/Tabs';
 import { Steps } from '../src/components/Steps';
 
 // Overlay Components
@@ -312,10 +312,10 @@ function App() {
             <div className="demo-grid">
               <div className="demo-item full-width">
                 <h3>Alert</h3>
-                <Alert type="info" message="This is an info alert" />
-                <Alert type="success" message="Operation successful!" />
-                <Alert type="warning" message="Warning: Please check your input" />
-                <Alert type="error" message="Error: Something went wrong" />
+                <Alert variant="info">This is an info alert</Alert>
+                <Alert variant="success">Operation successful!</Alert>
+                <Alert variant="warning">Warning: Please check your input</Alert>
+                <Alert variant="error">Error: Something went wrong</Alert>
               </div>
 
               <div className="demo-item">
@@ -340,7 +340,7 @@ function App() {
                 <Result
                   status="success"
                   title="Operation Successful"
-                  subTitle="Your request has been processed."
+                  description="Your request has been processed."
                 />
               </div>
 
@@ -400,13 +400,16 @@ function App() {
 
               <div className="demo-item full-width">
                 <h3>Tabs</h3>
-                <Tabs
-                  items={[
-                    { key: '1', label: 'Tab 1', children: <p>Content of Tab 1</p> },
-                    { key: '2', label: 'Tab 2', children: <p>Content of Tab 2</p> },
-                    { key: '3', label: 'Tab 3', children: <p>Content of Tab 3</p> },
-                  ]}
-                />
+                <Tabs defaultValue="1">
+                  <TabsList>
+                    <Tab value="1">Tab 1</Tab>
+                    <Tab value="2">Tab 2</Tab>
+                    <Tab value="3">Tab 3</Tab>
+                  </TabsList>
+                  <TabPanel value="1"><p>Content of Tab 1</p></TabPanel>
+                  <TabPanel value="2"><p>Content of Tab 2</p></TabPanel>
+                  <TabPanel value="3"><p>Content of Tab 3</p></TabPanel>
+                </Tabs>
               </div>
 
               <div className="demo-item full-width">
@@ -423,13 +426,11 @@ function App() {
 
               <div className="demo-item full-width">
                 <h3>Accordion</h3>
-                <Accordion
-                  items={[
-                    { key: '1', title: 'Section 1', content: 'Content for section 1' },
-                    { key: '2', title: 'Section 2', content: 'Content for section 2' },
-                    { key: '3', title: 'Section 3', content: 'Content for section 3' },
-                  ]}
-                />
+                <Accordion>
+                  <Accordion.Item title="Section 1">Content for section 1</Accordion.Item>
+                  <Accordion.Item title="Section 2">Content for section 2</Accordion.Item>
+                  <Accordion.Item title="Section 3">Content for section 3</Accordion.Item>
+                </Accordion>
               </div>
 
               <div className="demo-item">
@@ -474,23 +475,22 @@ function App() {
               <div className="demo-item">
                 <h3>MetricCard</h3>
                 <MetricCard
-                  title="Temperature"
-                  value={23.5}
-                  unit="C"
-                  trend="up"
-                  trendValue={2.3}
-                  icon={<Thermometer size={20} />}
+                  label="Temperature"
+                  value="23.5°C"
+                  change={{ type: 'positive', text: '+2.3°C' }}
+                  icon={Thermometer}
                 />
               </div>
 
               <div className="demo-item">
                 <h3>KpiCard</h3>
                 <KpiCard
-                  title="System Uptime"
+                  label="System Uptime"
                   value="99.9%"
-                  description="Last 30 days"
-                  trend="up"
-                  icon={<Activity size={20} />}
+                  trend="positive"
+                  trendValue="+0.1%"
+                  trendDescription="vs. last month"
+                  icon={Activity}
                 />
               </div>
             </div>
