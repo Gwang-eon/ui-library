@@ -103,7 +103,7 @@
 /* Success Button */
 .btn-success {
   background-color: var(--color-success-600);
-  color: white;
+  color: var(--palette-white);
   border-color: var(--color-success-600);
 }
 
@@ -121,7 +121,7 @@
 /* Warning Button */
 .btn-warning {
   background-color: var(--color-warning-600);
-  color: white;
+  color: var(--palette-white);
   border-color: var(--color-warning-600);
 }
 
@@ -139,7 +139,7 @@
 /* Error Button */
 .btn-error {
   background-color: var(--color-error-600);
-  color: white;
+  color: var(--palette-white);
   border-color: var(--color-error-600);
 }
 
@@ -222,7 +222,7 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  border: 2px solid white;
+  border: 2px solid var(--palette-white);
   border-right-color: transparent;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;

@@ -226,7 +226,7 @@
 /* Selected Day */
 .date-picker :global(.react-datepicker__day--selected) {
   background-color: var(--color-primary-600);
-  color: white;
+  color: var(--palette-white);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -293,7 +293,7 @@
 
 .date-picker :global(.react-datepicker__time-list-item--selected) {
   background-color: var(--color-primary-600);
-  color: white;
+  color: var(--palette-white);
   font-weight: var(--font-weight-medium);
 }
 
@@ -385,7 +385,7 @@
 
   .date-picker :global(.react-datepicker__day--selected) {
     background-color: var(--color-primary-600);
-    color: white;
+    color: var(--palette-white);
   }
 
   .date-picker :global(.react-datepicker__day--selected:hover) {

@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: center;
   background: var(--color-primary-600);
-  color: #FFFFFF;
+  color: var(--palette-white);
   border: none;
   border-radius: 50%;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
@@ -212,7 +212,7 @@
   height: 20px;
   padding: 0 6px;
   background: var(--color-danger-600);
-  color: #FFFFFF;
+  color: var(--palette-white);
   border-radius: 10px;
   font-size: 12px;
   font-weight: var(--font-weight-semibold);

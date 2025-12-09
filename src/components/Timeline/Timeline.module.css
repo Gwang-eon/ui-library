@@ -518,8 +518,8 @@
   }
 
   .timelineMarker {
-    border-color: #000000;
-    background: #ffffff;
+    border-color: var(--palette-black);
+    background: var(--palette-white);
   }
 
   .timelineItem.timelineInteractive:hover {

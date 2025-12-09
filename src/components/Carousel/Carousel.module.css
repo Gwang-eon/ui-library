@@ -161,7 +161,7 @@
 }
 
 .carouselIndicator.active {
-  background: white;
+  background: var(--palette-white);
   width: 24px;
   border-radius: 5px;
 }
