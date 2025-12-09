@@ -224,36 +224,37 @@ function App() {
             <div className="demo-grid">
               <div className="demo-item">
                 <h3>Card</h3>
-                <Card
-                  title="Card Title"
-                  subtitle="Card subtitle"
-                >
-                  <p>Card content goes here. This is a simple card component.</p>
+                <Card variant="elevated" hoverable>
+                  <Card.Header>
+                    <Card.Title>Device Status</Card.Title>
+                  </Card.Header>
+                  <Card.Content>
+                    <p>Card content goes here. This is a simple card component with proper structure.</p>
+                  </Card.Content>
+                  <Card.Footer>
+                    <Button size="sm" variant="ghost">View Details</Button>
+                  </Card.Footer>
                 </Card>
               </div>
 
               <div className="demo-item">
                 <h3>Badge</h3>
                 <div className="demo-row">
-                  <Badge count={5}>
-                    <div style={{ width: 40, height: 40, background: 'var(--surface-secondary)', borderRadius: 8 }} />
-                  </Badge>
-                  <Badge count={99}>
-                    <div style={{ width: 40, height: 40, background: 'var(--surface-secondary)', borderRadius: 8 }} />
-                  </Badge>
-                  <Badge dot>
-                    <div style={{ width: 40, height: 40, background: 'var(--surface-secondary)', borderRadius: 8 }} />
-                  </Badge>
+                  <Badge variant="default">Default</Badge>
+                  <Badge variant="primary">Primary</Badge>
+                  <Badge variant="success">Success</Badge>
+                  <Badge variant="warning">Warning</Badge>
+                  <Badge variant="error">Error</Badge>
                 </div>
               </div>
 
               <div className="demo-item">
                 <h3>Avatar</h3>
                 <div className="demo-row">
-                  <Avatar size="sm" />
-                  <Avatar size="md" name="John Doe" />
+                  <Avatar size="sm" initials="AB" color="primary" />
+                  <Avatar size="md" initials="JD" color="success" />
                   <Avatar size="lg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=1" />
-                  <Avatar size="xl" name="Jane Smith" />
+                  <Avatar size="xl" initials="JS" color="warning" />
                 </div>
               </div>
 
@@ -261,10 +262,10 @@ function App() {
                 <h3>Tag</h3>
                 <div className="demo-row">
                   <Tag>Default</Tag>
-                  <Tag color="primary" icon={<Star size={12} />}>Featured</Tag>
-                  <Tag color="success" icon={<Wifi size={12} />}>Online</Tag>
-                  <Tag color="warning" icon={<Clock size={12} />}>Pending</Tag>
-                  <Tag color="danger" icon={<WifiOff size={12} />}>Offline</Tag>
+                  <Tag variant="primary" icon={<Star size={12} />}>Featured</Tag>
+                  <Tag variant="success" icon={<Wifi size={12} />}>Online</Tag>
+                  <Tag variant="warning" icon={<Clock size={12} />}>Pending</Tag>
+                  <Tag variant="error" icon={<WifiOff size={12} />}>Offline</Tag>
                 </div>
               </div>
 
@@ -279,17 +280,26 @@ function App() {
 
               <div className="demo-item">
                 <h3>Progress</h3>
-                <Progress percent={30} />
-                <Progress percent={60} status="active" />
-                <Progress percent={100} status="success" />
-                <Progress percent={70} status="error" />
+                <Progress>
+                  <Progress.Bar value={30} variant="primary" />
+                </Progress>
+                <Progress>
+                  <Progress.Bar value={60} variant="success" />
+                </Progress>
+                <Progress>
+                  <Progress.Bar value={100} variant="warning" striped />
+                </Progress>
+                <Progress>
+                  <Progress.Bar value={70} variant="error" />
+                </Progress>
               </div>
 
               <div className="demo-item full-width">
                 <h3>Divider</h3>
                 <Divider />
-                <Divider>With Text</Divider>
-                <Divider orientation="left">Left</Divider>
+                <Divider>Section Title</Divider>
+                <Divider textAlign="left">Left Aligned</Divider>
+                <Divider textAlign="right">Right Aligned</Divider>
               </div>
             </div>
           </section>
