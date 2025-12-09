@@ -652,6 +652,7 @@
   --ease-emphasized-in: cubic-bezier(0.4, 0, 0.6, 1);
   --ease-emphasized-out: cubic-bezier(0.2, 0, 0, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-mobile: cubic-bezier(0.32, 0.72, 0, 1);         /* iOS-style spring */
 
   /* ========================================
      COMPONENT MOTION TOKENS

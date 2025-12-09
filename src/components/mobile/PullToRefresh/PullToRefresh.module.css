@@ -17,7 +17,7 @@
 
 .pullToRefreshContent {
   position: relative;
-  transition: transform 0.3s var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-out);
   will-change: transform;
 }
 
@@ -44,7 +44,7 @@
   gap: var(--spacing-2);
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.2s var(--ease-out);
+  transition: opacity var(--duration-fast) var(--ease-out);
 }
 
 .pullIndicator.visible {
@@ -57,7 +57,7 @@
   width: 32px;
   height: 32px;
   color: var(--color-primary-600);
-  transition: transform 0.2s var(--ease-out);
+  transition: transform var(--duration-fast) var(--ease-out);
   display: flex;
   align-items: center;
   justify-content: center;

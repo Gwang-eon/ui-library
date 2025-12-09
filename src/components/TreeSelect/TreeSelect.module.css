@@ -28,7 +28,7 @@
   font-size: var(--font-size-body);
   color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.2s var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
   gap: var(--spacing-2);
 }
 
@@ -88,7 +88,7 @@
   border: none;
   color: var(--text-tertiary);
   cursor: pointer;
-  transition: color 0.15s var(--ease-out);
+  transition: color var(--duration-instant) var(--ease-out);
 }
 
 .treeselectClearBtn:hover {
@@ -100,7 +100,7 @@
   width: 16px;
   height: 16px;
   color: var(--text-tertiary);
-  transition: transform 0.2s var(--ease-out);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 
 .treeselectIconOpen {
@@ -212,7 +212,7 @@
   padding: var(--spacing-2) var(--spacing-3);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background-color 0.15s var(--ease-out);
+  transition: background-color var(--duration-instant) var(--ease-out);
   user-select: none;
 }
 
@@ -244,7 +244,7 @@
   color: var(--text-tertiary);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.15s var(--ease-out);
+  transition: all var(--duration-instant) var(--ease-out);
 }
 
 .treeExpandBtn:hover {

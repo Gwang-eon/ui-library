@@ -13,7 +13,7 @@
   right: 0;
   background: transparent;
   transform: translateY(100%);
-  transition: transform 0.3s var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-out);
   z-index: var(--z-drawer);
   padding: var(--spacing-4);
   padding-bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom, 0px));
@@ -72,7 +72,7 @@
   font-size: var(--font-size-body-medium);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: background 0.15s var(--ease-out);
+  transition: background var(--duration-instant) var(--ease-out);
   width: 100%;
   text-align: center;
   -webkit-tap-highlight-color: transparent;
@@ -128,7 +128,7 @@
   font-size: var(--font-size-body-medium);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: background 0.15s var(--ease-out);
+  transition: background var(--duration-instant) var(--ease-out);
   width: 100%;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   -webkit-tap-highlight-color: transparent;
@@ -149,7 +149,7 @@
   background: var(--overlay-default);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s var(--ease-out), visibility 0.3s;
+  transition: opacity var(--duration-base) var(--ease-out), visibility var(--duration-base);
   z-index: calc(var(--z-drawer) - 1);
 }
 

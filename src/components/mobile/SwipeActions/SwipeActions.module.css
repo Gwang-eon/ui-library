@@ -22,7 +22,7 @@
   position: relative;
   z-index: 2;
   background: var(--surface-primary);
-  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: transform var(--duration-fast) var(--ease-emphasized-out);
   touch-action: pan-y;
   cursor: grab;
 }
@@ -75,7 +75,7 @@
   font-weight: var(--font-weight-medium);
   border: none;
   cursor: pointer;
-  transition: all 0.2s var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
   -webkit-tap-highlight-color: transparent;
   gap: var(--spacing-1);
 }
