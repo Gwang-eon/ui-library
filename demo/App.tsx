@@ -52,7 +52,7 @@ import { Badge } from '../src/components/Badge';
 import { Avatar } from '../src/components/Avatar';
 import { Tag } from '../src/components/Tag';
 import { Statistic } from '../src/components/Statistic';
-import { Progress } from '../src/components/Progress';
+import { Progress, ProgressBar } from '../src/components/Progress';
 import { Divider } from '../src/components/Divider';
 
 // Feedback Components
@@ -281,16 +281,16 @@ function App() {
               <div className="demo-item">
                 <h3>Progress</h3>
                 <Progress>
-                  <Progress.Bar value={30} variant="primary" />
+                  <ProgressBar value={30} variant="primary" />
                 </Progress>
                 <Progress>
-                  <Progress.Bar value={60} variant="success" />
+                  <ProgressBar value={60} variant="success" />
                 </Progress>
                 <Progress>
-                  <Progress.Bar value={100} variant="warning" striped />
+                  <ProgressBar value={100} variant="warning" striped />
                 </Progress>
                 <Progress>
-                  <Progress.Bar value={70} variant="error" />
+                  <ProgressBar value={70} variant="error" />
                 </Progress>
               </div>
 
