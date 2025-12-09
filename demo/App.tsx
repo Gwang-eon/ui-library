@@ -1,6 +1,40 @@
 import { useState } from 'react';
 import './App.css';
 
+// Lucide Icons
+import {
+  Plus,
+  Save,
+  Trash2,
+  Edit,
+  Search,
+  Settings,
+  User,
+  Mail,
+  Lock,
+  Bell,
+  Heart,
+  Star,
+  Download,
+  Upload,
+  RefreshCw,
+  ChevronRight,
+  Home,
+  Folder,
+  File,
+  Calendar,
+  Clock,
+  MapPin,
+  Phone,
+  Wifi,
+  WifiOff,
+  Thermometer,
+  Activity,
+  Zap,
+  Sun,
+  Moon,
+} from 'lucide-react';
+
 // Form Components
 import { Button } from '../src/components/Button';
 import { Input } from '../src/components/Input';
@@ -77,11 +111,14 @@ function App() {
         <h1>@gractor/ui</h1>
         <p>IoT Platform UI Component Library</p>
         <div className="demo-header-actions">
-          <Toggle
-            checked={darkMode}
-            onChange={toggleDarkMode}
-            label="Dark Mode"
-          />
+          <Button
+            variant={darkMode ? 'primary' : 'outline'}
+            size="sm"
+            icon={darkMode ? <Moon size={16} /> : <Sun size={16} />}
+            onClick={toggleDarkMode}
+          >
+            {darkMode ? 'Dark' : 'Light'}
+          </Button>
         </div>
       </header>
 
@@ -106,24 +143,24 @@ function App() {
               <div className="demo-item">
                 <h3>Button</h3>
                 <div className="demo-row">
-                  <Button variant="primary">Primary</Button>
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="outline">Outline</Button>
-                  <Button variant="ghost">Ghost</Button>
-                  <Button variant="danger">Danger</Button>
+                  <Button variant="primary" icon={<Plus size={16} />}>Create</Button>
+                  <Button variant="secondary" icon={<Save size={16} />}>Save</Button>
+                  <Button variant="outline" icon={<Edit size={16} />}>Edit</Button>
+                  <Button variant="ghost" icon={<Settings size={16} />}>Settings</Button>
+                  <Button variant="danger" icon={<Trash2 size={16} />}>Delete</Button>
                 </div>
                 <div className="demo-row">
-                  <Button size="sm">Small</Button>
-                  <Button size="md">Medium</Button>
-                  <Button size="lg">Large</Button>
+                  <Button size="sm" icon={<Download size={14} />}>Small</Button>
+                  <Button size="md" icon={<Upload size={16} />}>Medium</Button>
+                  <Button size="lg" icon={<RefreshCw size={18} />}>Large</Button>
                 </div>
               </div>
 
               <div className="demo-item">
                 <h3>Input</h3>
-                <Input placeholder="Default input" />
-                <Input placeholder="With label" label="Email" />
-                <Input placeholder="Disabled" disabled />
+                <Input placeholder="Search..." prefix={<Search size={16} />} />
+                <Input placeholder="Enter email" label="Email" prefix={<Mail size={16} />} />
+                <Input placeholder="Password" type="password" prefix={<Lock size={16} />} />
                 <Input placeholder="Error state" status="error" statusMessage="Invalid input" />
               </div>
 
@@ -224,10 +261,10 @@ function App() {
                 <h3>Tag</h3>
                 <div className="demo-row">
                   <Tag>Default</Tag>
-                  <Tag color="primary">Primary</Tag>
-                  <Tag color="success">Success</Tag>
-                  <Tag color="warning">Warning</Tag>
-                  <Tag color="danger">Danger</Tag>
+                  <Tag color="primary" icon={<Star size={12} />}>Featured</Tag>
+                  <Tag color="success" icon={<Wifi size={12} />}>Online</Tag>
+                  <Tag color="warning" icon={<Clock size={12} />}>Pending</Tag>
+                  <Tag color="danger" icon={<WifiOff size={12} />}>Offline</Tag>
                 </div>
               </div>
 
@@ -432,6 +469,7 @@ function App() {
                   unit="C"
                   trend="up"
                   trendValue={2.3}
+                  icon={<Thermometer size={20} />}
                 />
               </div>
 
@@ -442,6 +480,7 @@ function App() {
                   value="99.9%"
                   description="Last 30 days"
                   trend="up"
+                  icon={<Activity size={20} />}
                 />
               </div>
             </div>
