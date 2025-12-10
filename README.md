@@ -54,15 +54,13 @@ const padding = spacing.spacing[4]; // '16px'
 ### CSS 스타일
 
 ```tsx
-// 컴포넌트 스타일 (CSS Modules 번들)
-import '@gractor/ui/styles';
+// 필수: 두 CSS 파일 모두 임포트 (순서 중요)
+import '@gractor/ui/dist/styles/all.css';  // 디자인 토큰 + 기본 스타일
+import '@gractor/ui/dist/ui.css';          // 컴포넌트 스타일
 
-// 개별 스타일 임포트
-import '@gractor/ui/styles/tokens';  // CSS 변수 (design-tokens)
-import '@gractor/ui/styles/base';    // 기본 스타일
-
-// 모든 스타일 (tokens + base + atomic)
-import '@gractor/ui/styles/all';
+// 개별 스타일 (필요시)
+import '@gractor/ui/dist/styles/design-tokens.css';  // CSS 변수만
+import '@gractor/ui/dist/styles/base.css';           // 기본 스타일만
 ```
 
 ## 컴포넌트 목록
@@ -276,6 +274,10 @@ WCAG 2.1 AA 수준의 접근성을 지원합니다:
   errorMessage="필수 항목입니다"  // 스크린 리더에서 자동으로 읽힘
 />
 ```
+
+## 상세 사용 가이드
+
+더 자세한 사용법은 [USAGE_GUIDE.md](./docs/USAGE_GUIDE.md)를 참고해 주세요.
 
 ## 기여하기
 
