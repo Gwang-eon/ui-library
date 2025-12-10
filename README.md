@@ -2,6 +2,9 @@
 
 IoT Platform UI Component Library
 
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18%20%7C%2019-61dafb.svg)](https://reactjs.org/)
+
 ## 설치
 
 ```bash
@@ -61,7 +64,7 @@ import '@gractor/ui/styles';
 | `Select` | 선택 박스 |
 | `Checkbox` | 체크박스 |
 | `Radio` | 라디오 버튼 |
-| `Toggle` | 토글 스위치 |
+| `Toggle` | 토글 스위치 (size: sm/md/lg) |
 | `Textarea` | 텍스트 영역 |
 | `FileUpload` | 파일 업로드 |
 | `Slider` | 슬라이더 |
@@ -228,6 +231,7 @@ npm run build
 
 - React 18+ 또는 19+
 - lucide-react (아이콘)
+- TypeScript 5.0+ (타입 정의 포함)
 
 ## 브라우저 지원
 
@@ -238,10 +242,23 @@ npm run build
 
 ## 접근성
 
-- 키보드 네비게이션 지원
-- ARIA 속성 지원
-- `prefers-reduced-motion` 지원
-- 고대비 모드 지원 (`prefers-contrast: high`)
+WCAG 2.1 AA 수준의 접근성을 지원합니다:
+
+- **키보드 네비게이션** - 모든 인터랙티브 컴포넌트 탭/엔터 지원
+- **ARIA 속성** - role, aria-label, aria-describedby 등 완전 지원
+- **에러 상태 연결** - 폼 컴포넌트의 에러 메시지가 스크린 리더에 자동 연결
+- **포커스 관리** - Modal, Drawer 등 포커스 트랩 지원
+- **모션 감소** - `prefers-reduced-motion` 지원
+- **고대비 모드** - `prefers-contrast: high` 지원
+
+```tsx
+// 에러 상태 예시 - aria-describedby 자동 연결
+<Checkbox
+  label="약관에 동의"
+  error
+  errorMessage="필수 항목입니다"  // 스크린 리더에서 자동으로 읽힘
+/>
+```
 
 ## 라이선스
 
