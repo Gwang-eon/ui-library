@@ -54,7 +54,7 @@
   font-size: var(--font-size-label-medium);
   font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
-  margin-bottom: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
 }
 
 /* Upload Area */

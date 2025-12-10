@@ -7,7 +7,7 @@
 .colorPicker {
   display: inline-flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  gap: var(--spacing-1);
   position: relative;
 }
 
