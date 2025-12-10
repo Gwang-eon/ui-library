@@ -55,10 +55,10 @@ const padding = spacing.spacing[4]; // '16px'
 
 ```tsx
 // 번들된 전체 스타일 (권장)
-import '@gractor/ui/dist/ui.css';
-
-// 또는 개별 스타일
 import '@gractor/ui/styles';
+
+// 또는 직접 경로
+import '@gractor/ui/dist/ui.css';
 ```
 
 ## 컴포넌트 목록
