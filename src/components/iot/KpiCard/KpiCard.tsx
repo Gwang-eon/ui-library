@@ -1,44 +1,55 @@
-import React from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import styles from './KpiCard.module.css';
 
-// ========================================
-// TYPES
-// ========================================
-
-// Type for Lucide React icons
 type IconType = React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
 
 export type TrendType = 'positive' | 'negative' | 'neutral';
 
 export interface KpiCardProps {
-  /** KPI label/name */
   label: string;
-  /** KPI value */
   value: string | number;
-  /** Trend direction */
   trend?: TrendType;
-  /** Trend value (e.g., "12%", "8", "+15") */
   trendValue?: string;
-  /** Trend description (e.g., "vs. last month") */
   trendDescription?: string;
-  /** Optional icon */
   icon?: IconType;
-  /** Icon color (CSS color variable or hex) */
   iconColor?: string;
-  /** Loading state */
   loading?: boolean;
-  /** Additional CSS class */
   className?: string;
-  /** Click handler */
   onClick?: () => void;
 }
 
-// ========================================
-// KPI CARD COMPONENT
-// ========================================
+// Skeleton styles
+const skeletonStyles = {
+  label: { height: 16, width: '50%' } as React.CSSProperties,
+  icon: { width: 24, height: 24, borderRadius: 4 } as React.CSSProperties,
+  value: { height: 40, width: '60%', marginBottom: 8 } as React.CSSProperties,
+  trend: { height: 14, width: '40%' } as React.CSSProperties,
+};
 
-const KpiCard: React.FC<KpiCardProps> = ({
+// Skeleton component
+const KpiCardSkeleton = memo<{ className?: string }>(({ className }) => {
+  const containerClassName = useMemo(() =>
+    `${styles.kpiCard} ${className || ''}`,
+    [className]
+  );
+
+  return (
+    <div className={containerClassName}>
+      <div className={styles.kpiHeader}>
+        <div className={styles.skeleton} style={skeletonStyles.label} />
+        <div className={styles.skeleton} style={skeletonStyles.icon} />
+      </div>
+      <div className={styles.skeleton} style={skeletonStyles.value} />
+      <div className={styles.skeleton} style={skeletonStyles.trend} />
+    </div>
+  );
+});
+
+KpiCardSkeleton.displayName = 'KpiCard.Skeleton';
+
+// Main component
+const KpiCard = memo<KpiCardProps>(({
   label,
   value,
   trend,
@@ -50,64 +61,71 @@ const KpiCard: React.FC<KpiCardProps> = ({
   className,
   onClick,
 }) => {
-  // Loading state
-  if (loading) {
-    return <KpiCardSkeleton className={className} />;
-  }
+  const containerClassName = useMemo(() =>
+    `${styles.kpiCard} ${className || ''}`,
+    [className]
+  );
 
-  // Get trend icon
-  const getTrendIcon = () => {
+  const iconStyle = useMemo(() => ({ color: iconColor }), [iconColor]);
+
+  const trendIcon = useMemo(() => {
     if (!trend || trend === 'neutral') {
       return <Minus size={14} />;
     }
 
-    // For positive trend
     if (trend === 'positive') {
-      // Check if trend value indicates increase or decrease
       const isIncrease = trendValue?.includes('↑') || (!trendValue?.includes('↓') && !trendValue?.includes('-'));
       return isIncrease ? <TrendingUp size={14} /> : <TrendingDown size={14} />;
     }
 
-    // For negative trend
     if (trend === 'negative') {
-      // Check if trend value indicates increase or decrease
       const isIncrease = trendValue?.includes('↑') || (!trendValue?.includes('↓') && !trendValue?.includes('-'));
       return isIncrease ? <TrendingUp size={14} /> : <TrendingDown size={14} />;
     }
 
     return null;
-  };
+  }, [trend, trendValue]);
 
-  // Clean trend value (remove arrows if using icon)
-  const cleanTrendValue = trendValue?.replace(/[↑↓→]/g, '').trim();
+  const cleanTrendValue = useMemo(() =>
+    trendValue?.replace(/[↑↓→]/g, '').trim(),
+    [trendValue]
+  );
+
+  const trendClassName = useMemo(() =>
+    `${styles.kpiTrend} ${trend ? styles[`trend${trend.charAt(0).toUpperCase()}${trend.slice(1)}`] : ''}`,
+    [trend]
+  );
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick();
+    }
+  }, [onClick]);
+
+  if (loading) {
+    return <KpiCardSkeleton className={className} />;
+  }
 
   return (
     <div
-      className={`${styles.kpiCard} ${className || ''}`}
+      className={containerClassName}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
-      onKeyDown={(e) => {
-        if (onClick && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          onClick();
-        }
-      }}
+      onKeyDown={handleKeyDown}
     >
-      {/* Header with label and optional icon */}
       <div className={styles.kpiHeader}>
         <div className={styles.kpiLabel}>{label}</div>
-        {Icon && <Icon size={24} style={{ color: iconColor }} />}
+        {Icon && <Icon size={24} style={iconStyle} />}
       </div>
 
-      {/* Value */}
       <div className={styles.kpiValue}>{value}</div>
 
-      {/* Trend */}
       {(trend || trendValue) && (
-        <div className={`${styles.kpiTrend} ${trend ? styles[`trend${trend.charAt(0).toUpperCase()}${trend.slice(1)}`] : ''}`}>
+        <div className={trendClassName}>
           <div className={styles.trendValue}>
-            {getTrendIcon()}
+            {trendIcon}
             {cleanTrendValue && <span>{cleanTrendValue}</span>}
           </div>
           {trendDescription && <span className={styles.trendDescription}>{trendDescription}</span>}
@@ -115,58 +133,35 @@ const KpiCard: React.FC<KpiCardProps> = ({
       )}
     </div>
   );
-};
+});
 
-// ========================================
-// LOADING SKELETON
-// ========================================
+KpiCard.displayName = 'KpiCard';
 
-interface KpiCardSkeletonProps {
-  className?: string;
-}
-
-const KpiCardSkeleton: React.FC<KpiCardSkeletonProps> = ({ className }) => {
-  return (
-    <div className={`${styles.kpiCard} ${className || ''}`}>
-      <div className={styles.kpiHeader}>
-        <div className={`${styles.skeleton}`} style={{ height: 16, width: '50%' }} />
-        <div className={`${styles.skeleton}`} style={{ width: 24, height: 24, borderRadius: 4 }} />
-      </div>
-      <div className={`${styles.skeleton}`} style={{ height: 40, width: '60%', marginBottom: 8 }} />
-      <div className={`${styles.skeleton}`} style={{ height: 14, width: '40%' }} />
-    </div>
-  );
-};
-
-// ========================================
-// KPI CARD GRID
-// ========================================
-
+// Grid component
 interface KpiCardGridProps {
   children: React.ReactNode;
-  /** Number of columns (1-6) */
   columns?: 1 | 2 | 3 | 4 | 5 | 6;
   className?: string;
 }
 
-const KpiCardGrid: React.FC<KpiCardGridProps> = ({ children, columns = 4, className }) => {
-  const gridStyle = {
-    '--kpi-grid-columns': columns,
-  } as React.CSSProperties;
+const KpiCardGrid = memo<KpiCardGridProps>(({ children, columns = 4, className }) => {
+  const gridStyle = useMemo(() =>
+    ({ '--kpi-grid-columns': columns } as React.CSSProperties),
+    [columns]
+  );
+
+  const gridClassName = useMemo(() =>
+    `${styles.kpiCardGrid} ${className || ''}`,
+    [className]
+  );
 
   return (
-    <div className={`${styles.kpiCardGrid} ${className || ''}`} style={gridStyle}>
+    <div className={gridClassName} style={gridStyle}>
       {children}
     </div>
   );
-};
+});
 
-// ========================================
-// EXPORTS
-// ========================================
-
-KpiCard.displayName = 'KpiCard';
-KpiCardSkeleton.displayName = 'KpiCard.Skeleton';
 KpiCardGrid.displayName = 'KpiCard.Grid';
 
 export default KpiCard;

@@ -24,41 +24,29 @@ export interface Device {
     meta?: DeviceMetaItem[];
 }
 export interface DeviceListProps {
-    /** Array of devices to display */
     devices: Device[];
-    /** View mode */
     view?: 'grid' | 'list' | 'compact';
-    /** Loading state */
     loading?: boolean;
-    /** Empty state message */
     emptyMessage?: string;
-    /** Empty state description */
     emptyDescription?: string;
-    /** Empty state action */
     onEmptyAction?: () => void;
-    /** Empty state action label */
     emptyActionLabel?: string;
-    /** Callback when device is clicked */
     onDeviceClick?: (device: Device) => void;
-    /** Callback for primary action (configure/settings) */
     onPrimaryAction?: (device: Device) => void;
-    /** Primary action label */
     primaryActionLabel?: string;
-    /** Callback for secondary action (view/details) */
     onSecondaryAction?: (device: Device) => void;
-    /** Secondary action label */
     secondaryActionLabel?: string;
-    /** Callback for more actions */
     onMoreActions?: (device: Device) => void;
-    /** Additional CSS class */
     className?: string;
 }
-declare const DeviceList: React.FC<DeviceListProps>;
+declare const LoadingSkeleton: React.MemoExoticComponent<() => import("react/jsx-runtime").JSX.Element>;
+declare const ListLoadingSkeleton: React.MemoExoticComponent<() => import("react/jsx-runtime").JSX.Element>;
+declare const CompactLoadingSkeleton: React.MemoExoticComponent<() => import("react/jsx-runtime").JSX.Element>;
 interface GridCardProps {
     device: Device;
     onClick?: (device: Device) => void;
 }
-declare const GridCard: React.FC<GridCardProps>;
+declare const GridCard: React.NamedExoticComponent<GridCardProps>;
 interface ListItemProps {
     device: Device;
     onPrimaryAction?: (device: Device) => void;
@@ -66,14 +54,12 @@ interface ListItemProps {
     onSecondaryAction?: (device: Device) => void;
     secondaryActionLabel?: string;
 }
-declare const ListItem: React.FC<ListItemProps>;
+declare const ListItem: React.NamedExoticComponent<ListItemProps>;
 interface CompactCardProps {
     device: Device;
     onMoreActions?: (device: Device) => void;
 }
-declare const CompactCard: React.FC<CompactCardProps>;
-declare const LoadingSkeleton: React.FC;
-declare const ListLoadingSkeleton: React.FC;
-declare const CompactLoadingSkeleton: React.FC;
+declare const CompactCard: React.NamedExoticComponent<CompactCardProps>;
+declare const DeviceList: React.NamedExoticComponent<DeviceListProps>;
 export default DeviceList;
 export { GridCard, ListItem, CompactCard, LoadingSkeleton, ListLoadingSkeleton, CompactLoadingSkeleton, };

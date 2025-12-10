@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { Search } from 'lucide-react';
 import styles from './AlarmPanel.module.css';
@@ -27,7 +27,7 @@ export interface AlarmPanelProps {
   className?: string;
 }
 
-export const AlarmPanel: React.FC<AlarmPanelProps> = ({
+export const AlarmPanel = memo<AlarmPanelProps>(({
   title = 'Active Alarms',
   summary,
   actions,
@@ -38,8 +38,20 @@ export const AlarmPanel: React.FC<AlarmPanelProps> = ({
   onViewAll,
   className = '',
 }) => {
+  const containerClassName = useMemo(() =>
+    `${styles.alarmPanel} ${compact ? styles.alarmPanelCompact : ''} ${className}`,
+    [compact, className]
+  );
+
+  const handleViewAllClick = useCallback((e: React.MouseEvent) => {
+    if (onViewAll) {
+      e.preventDefault();
+      onViewAll();
+    }
+  }, [onViewAll]);
+
   return (
-    <div className={`${styles.alarmPanel} ${compact ? styles.alarmPanelCompact : ''} ${className}`}>
+    <div className={containerClassName}>
       <div className={styles.alarmPanelHeader}>
         <h3 className={styles.alarmPanelTitle}>{title}</h3>
         {summary && !actions && !viewAllLink && (
@@ -63,12 +75,7 @@ export const AlarmPanel: React.FC<AlarmPanelProps> = ({
           <a
             href={viewAllLink}
             className={styles.alarmPanelLink}
-            onClick={(e) => {
-              if (onViewAll) {
-                e.preventDefault();
-                onViewAll();
-              }
-            }}
+            onClick={handleViewAllClick}
           >
             View All →
           </a>
@@ -78,7 +85,37 @@ export const AlarmPanel: React.FC<AlarmPanelProps> = ({
       <div className={styles.alarmPanelBody}>{children}</div>
     </div>
   );
-};
+});
+
+AlarmPanel.displayName = 'AlarmPanel';
+
+// ==================== Filter Button ====================
+
+interface FilterButtonProps {
+  filter: { severity: string; label: string; count: number };
+  isActive: boolean;
+  onSelect: (severity: string) => void;
+}
+
+const FilterButton = memo<FilterButtonProps>(({ filter, isActive, onSelect }) => {
+  const handleClick = useCallback(() => {
+    onSelect(filter.severity);
+  }, [filter.severity, onSelect]);
+
+  const className = useMemo(() =>
+    `${styles.alarmFilterBtn} ${isActive ? styles.alarmFilterActive : ''}`,
+    [isActive]
+  );
+
+  return (
+    <button className={className} onClick={handleClick}>
+      <span>{filter.label}</span>
+      <span className={styles.alarmFilterCount}>{filter.count}</span>
+    </button>
+  );
+});
+
+FilterButton.displayName = 'AlarmPanel.FilterButton';
 
 // ==================== Alarm Panel Filters ====================
 
@@ -98,7 +135,7 @@ export interface AlarmPanelFiltersProps {
   className?: string;
 }
 
-export const AlarmPanelFilters: React.FC<AlarmPanelFiltersProps> = ({
+export const AlarmPanelFilters = memo<AlarmPanelFiltersProps>(({
   filters,
   activeFilter,
   onFilterChange,
@@ -107,20 +144,25 @@ export const AlarmPanelFilters: React.FC<AlarmPanelFiltersProps> = ({
   searchPlaceholder = 'Search alarms...',
   className = '',
 }) => {
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onSearchChange?.(e.target.value);
+  }, [onSearchChange]);
+
+  const containerClassName = useMemo(() =>
+    `${styles.alarmPanelFilters} ${className}`,
+    [className]
+  );
+
   return (
-    <div className={`${styles.alarmPanelFilters} ${className}`}>
+    <div className={containerClassName}>
       <div className={styles.alarmFilterGroup}>
         {filters.map((filter) => (
-          <button
+          <FilterButton
             key={filter.severity}
-            className={`${styles.alarmFilterBtn} ${
-              activeFilter === filter.severity ? styles.alarmFilterActive : ''
-            }`}
-            onClick={() => onFilterChange(filter.severity)}
-          >
-            <span>{filter.label}</span>
-            <span className={styles.alarmFilterCount}>{filter.count}</span>
-          </button>
+            filter={filter}
+            isActive={activeFilter === filter.severity}
+            onSelect={onFilterChange}
+          />
         ))}
       </div>
       {onSearchChange && (
@@ -131,13 +173,33 @@ export const AlarmPanelFilters: React.FC<AlarmPanelFiltersProps> = ({
             className={styles.alarmSearchInput}
             placeholder={searchPlaceholder}
             value={searchValue}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={handleSearchChange}
           />
         </div>
       )}
     </div>
   );
-};
+});
+
+AlarmPanelFilters.displayName = 'AlarmPanel.Filters';
+
+// ==================== Alarm Meta Item ====================
+
+interface AlarmMetaItemComponentProps {
+  item: { icon: IconType; text: string };
+}
+
+const AlarmMetaItemComponent = memo<AlarmMetaItemComponentProps>(({ item }) => {
+  const Icon = item.icon;
+  return (
+    <span className={styles.alarmMetaItem}>
+      <Icon />
+      <span>{item.text}</span>
+    </span>
+  );
+});
+
+AlarmMetaItemComponent.displayName = 'AlarmPanel.MetaItem';
 
 // ==================== Alarm Item ====================
 
@@ -161,7 +223,7 @@ export interface AlarmItemProps {
   className?: string;
 }
 
-export const AlarmItem: React.FC<AlarmItemProps> = ({
+export const AlarmItem = memo<AlarmItemProps>(({
   icon: Icon,
   severity,
   title,
@@ -175,16 +237,19 @@ export const AlarmItem: React.FC<AlarmItemProps> = ({
   onClick,
   className = '',
 }) => {
-  const itemClassName = [
-    styles.alarmItem,
-    styles[`alarmItem${severity.charAt(0).toUpperCase() + severity.slice(1)}`],
-    isNew ? styles.alarmItemNew : '',
-    isAcknowledged ? styles.alarmItemAcknowledged : '',
-    isResolved ? styles.alarmItemResolved : '',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const itemClassName = useMemo(() =>
+    [
+      styles.alarmItem,
+      styles[`alarmItem${severity.charAt(0).toUpperCase() + severity.slice(1)}`],
+      isNew ? styles.alarmItemNew : '',
+      isAcknowledged ? styles.alarmItemAcknowledged : '',
+      isResolved ? styles.alarmItemResolved : '',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' '),
+    [severity, isNew, isAcknowledged, isResolved, className]
+  );
 
   return (
     <div className={itemClassName} onClick={onClick}>
@@ -203,11 +268,8 @@ export const AlarmItem: React.FC<AlarmItemProps> = ({
         <p className={styles.alarmDescription}>{description}</p>
         {meta && meta.length > 0 && (
           <div className={styles.alarmMeta}>
-            {meta.map((item, index) => (
-              <span key={index} className={styles.alarmMetaItem}>
-                <item.icon />
-                <span>{item.text}</span>
-              </span>
+            {meta.map((item) => (
+              <AlarmMetaItemComponent key={item.text} item={item} />
             ))}
           </div>
         )}
@@ -215,7 +277,9 @@ export const AlarmItem: React.FC<AlarmItemProps> = ({
       {actions && <div className={styles.alarmActions}>{actions}</div>}
     </div>
   );
-};
+});
+
+AlarmItem.displayName = 'AlarmPanel.Item';
 
 // ==================== Alarm Item Compact ====================
 
@@ -229,7 +293,7 @@ export interface AlarmItemCompactProps {
   className?: string;
 }
 
-export const AlarmItemCompact: React.FC<AlarmItemCompactProps> = ({
+export const AlarmItemCompact = memo<AlarmItemCompactProps>(({
   icon: Icon,
   severity,
   title,
@@ -238,13 +302,16 @@ export const AlarmItemCompact: React.FC<AlarmItemCompactProps> = ({
   onClick,
   className = '',
 }) => {
-  const itemClassName = [
-    styles.alarmItemCompact,
-    styles[`alarmItemCompact${severity.charAt(0).toUpperCase() + severity.slice(1)}`],
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const itemClassName = useMemo(() =>
+    [
+      styles.alarmItemCompact,
+      styles[`alarmItemCompact${severity.charAt(0).toUpperCase() + severity.slice(1)}`],
+      className,
+    ]
+      .filter(Boolean)
+      .join(' '),
+    [severity, className]
+  );
 
   return (
     <div className={itemClassName} onClick={onClick}>
@@ -258,7 +325,9 @@ export const AlarmItemCompact: React.FC<AlarmItemCompactProps> = ({
       {action}
     </div>
   );
-};
+});
+
+AlarmItemCompact.displayName = 'AlarmPanel.ItemCompact';
 
 // ==================== Main Export ====================
 

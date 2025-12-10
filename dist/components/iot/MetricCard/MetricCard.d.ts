@@ -30,17 +30,17 @@ export interface MetricCardProps {
     className?: string;
     style?: React.CSSProperties;
 }
-export declare const MetricCard: React.FC<MetricCardProps>;
+export declare const MetricCard: React.NamedExoticComponent<MetricCardProps>;
 export interface MetricCardGridProps {
     children: React.ReactNode;
     columns?: number;
     className?: string;
 }
-export declare const MetricCardGrid: React.FC<MetricCardGridProps>;
+export declare const MetricCardGrid: React.NamedExoticComponent<MetricCardGridProps>;
 export interface MiniChartProps {
     data: number[];
     color?: 'primary' | 'success' | 'warning' | 'error';
     height?: number;
 }
-export declare const MiniChart: React.FC<MiniChartProps>;
+export declare const MiniChart: React.NamedExoticComponent<MiniChartProps>;
 export default MetricCard;

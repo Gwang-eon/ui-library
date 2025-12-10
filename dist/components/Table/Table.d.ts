@@ -55,14 +55,21 @@ export interface TableEmptyStateProps {
     description?: string;
     action?: ReactNode;
 }
-declare const TableContainer: React.FC<{
+declare const TableContainer: React.NamedExoticComponent<{
     children: ReactNode;
     className?: string;
 }>;
-declare const TableWrapper: React.FC<{
+declare const TableWrapper: React.NamedExoticComponent<{
     children: ReactNode;
     className?: string;
 }>;
+declare const TableHead: React.NamedExoticComponent<TableHeadProps>;
+declare const TableBody: React.NamedExoticComponent<TableBodyProps>;
+declare const TableRow: React.NamedExoticComponent<TableRowProps>;
+declare const TableCell: React.NamedExoticComponent<TableCellProps>;
+declare const TableHeaderCell: React.NamedExoticComponent<TableHeaderCellProps>;
+declare const ExpandableRow: React.NamedExoticComponent<ExpandableRowProps>;
+declare const TableEmptyState: React.NamedExoticComponent<TableEmptyStateProps>;
 declare const Table: React.FC<TableProps> & {
     Container: typeof TableContainer;
     Wrapper: typeof TableWrapper;
@@ -74,11 +81,4 @@ declare const Table: React.FC<TableProps> & {
     ExpandableRow: typeof ExpandableRow;
     EmptyState: typeof TableEmptyState;
 };
-declare const TableHead: React.FC<TableHeadProps>;
-declare const TableBody: React.FC<TableBodyProps>;
-declare const TableRow: React.FC<TableRowProps>;
-declare const TableCell: React.FC<TableCellProps>;
-declare const TableHeaderCell: React.FC<TableHeaderCellProps>;
-declare const ExpandableRow: React.FC<ExpandableRowProps>;
-declare const TableEmptyState: React.FC<TableEmptyStateProps>;
 export { Table };

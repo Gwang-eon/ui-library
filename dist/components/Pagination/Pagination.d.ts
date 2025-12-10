@@ -1,5 +1,10 @@
 import React from 'react';
 import type { ReactNode, ButtonHTMLAttributes } from 'react';
+export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    active?: boolean;
+    children: ReactNode;
+}
+export declare const PaginationButton: React.NamedExoticComponent<PaginationButtonProps>;
 export interface PaginationProps {
     currentPage: number;
     totalPages: number;
@@ -14,12 +19,7 @@ export interface PaginationProps {
     className?: string;
     'aria-label'?: string;
 }
-export declare const Pagination: React.FC<PaginationProps>;
-export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    active?: boolean;
-    children: ReactNode;
-}
-export declare const PaginationButton: React.FC<PaginationButtonProps>;
+export declare const Pagination: React.NamedExoticComponent<PaginationProps>;
 export interface PaginationInfoProps {
     currentPage: number;
     totalPages: number;
@@ -27,7 +27,7 @@ export interface PaginationInfoProps {
     pageSize?: number;
     className?: string;
 }
-export declare const PaginationInfo: React.FC<PaginationInfoProps>;
+export declare const PaginationInfo: React.NamedExoticComponent<PaginationInfoProps>;
 export interface SimplePaginationProps {
     currentPage: number;
     totalPages: number;
@@ -38,4 +38,4 @@ export interface SimplePaginationProps {
     className?: string;
     'aria-label'?: string;
 }
-export declare const SimplePagination: React.FC<SimplePaginationProps>;
+export declare const SimplePagination: React.NamedExoticComponent<SimplePaginationProps>;

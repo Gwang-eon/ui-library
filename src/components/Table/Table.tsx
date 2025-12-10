@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, type ReactNode } from 'react';
+import React, { useState, createContext, useContext, memo, useMemo, useCallback, type ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
 import styles from './Table.module.css';
 
@@ -76,137 +76,121 @@ const TableContext = createContext<TableContextValue>({});
 
 const useTableContext = () => useContext(TableContext);
 
+// ===== Skeleton Row Component =====
+
+const SkeletonRow = memo<{ cellCount: number }>(({ cellCount }) => (
+  <tr>
+    {Array.from({ length: cellCount }).map((_, cellIndex) => (
+      <td key={`skeleton-cell-${cellIndex}`}>
+        <div className={styles.skeleton}>
+          <div className={styles.skeletonText} />
+        </div>
+      </td>
+    ))}
+  </tr>
+));
+
+SkeletonRow.displayName = 'Table.SkeletonRow';
+
 // ===== Table Container =====
 
-const TableContainer: React.FC<{ children: ReactNode; className?: string }> = ({
+const TableContainer = memo<{ children: ReactNode; className?: string }>(({
   children,
   className = '',
 }) => {
   return <div className={`${styles.tableContainer} ${className}`}>{children}</div>;
-};
+});
+
+TableContainer.displayName = 'Table.Container';
 
 // ===== Table Wrapper =====
 
-const TableWrapper: React.FC<{ children: ReactNode; className?: string }> = ({
+const TableWrapper = memo<{ children: ReactNode; className?: string }>(({
   children,
   className = '',
 }) => {
   return <div className={`${styles.tableWrapper} ${className}`}>{children}</div>;
-};
+});
 
-// ===== Main Table =====
-
-const Table: React.FC<TableProps> & {
-  Container: typeof TableContainer;
-  Wrapper: typeof TableWrapper;
-  Head: typeof TableHead;
-  Body: typeof TableBody;
-  Row: typeof TableRow;
-  Cell: typeof TableCell;
-  HeaderCell: typeof TableHeaderCell;
-  ExpandableRow: typeof ExpandableRow;
-  EmptyState: typeof TableEmptyState;
-} = ({
-  children,
-  striped = false,
-  compact = false,
-  stickyHeader = false,
-  loading = false,
-  className = '',
-}) => {
-  const tableClasses = [
-    styles.table,
-    striped && styles.tableStriped,
-    compact && styles.tableCompact,
-    stickyHeader && styles.tableSticky,
-    loading && styles.tableLoading,
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  return (
-    <TableContext.Provider value={{ striped, compact, stickyHeader, loading }}>
-      <table className={tableClasses}>{children}</table>
-    </TableContext.Provider>
-  );
-};
+TableWrapper.displayName = 'Table.Wrapper';
 
 // ===== Table Head =====
 
-const TableHead: React.FC<TableHeadProps> = ({ children, className = '' }) => {
+const TableHead = memo<TableHeadProps>(({ children, className = '' }) => {
   return <thead className={className}>{children}</thead>;
-};
+});
+
+TableHead.displayName = 'Table.Head';
 
 // ===== Table Body =====
 
-const TableBody: React.FC<TableBodyProps> = ({ children, className = '' }) => {
+const TableBody = memo<TableBodyProps>(({ children, className = '' }) => {
   const { loading } = useTableContext();
 
   if (loading) {
-    // Render skeleton rows when loading
     return (
       <tbody className={className}>
         {Array.from({ length: 5 }).map((_, index) => (
-          <tr key={index}>
-            {Array.from({ length: 5 }).map((_, cellIndex) => (
-              <td key={cellIndex}>
-                <div className={styles.skeleton}>
-                  <div className={styles.skeletonText} />
-                </div>
-              </td>
-            ))}
-          </tr>
+          <SkeletonRow key={`skeleton-row-${index}`} cellCount={5} />
         ))}
       </tbody>
     );
   }
 
   return <tbody className={className}>{children}</tbody>;
-};
+});
+
+TableBody.displayName = 'Table.Body';
 
 // ===== Table Row =====
 
-const TableRow: React.FC<TableRowProps> = ({
+const TableRow = memo<TableRowProps>(({
   children,
   selected = false,
   onClick,
   className = '',
 }) => {
-  const rowClasses = [styles.row, selected && styles.selected, className]
-    .filter(Boolean)
-    .join(' ');
+  const rowClasses = useMemo(() =>
+    [styles.row, selected && styles.selected, className]
+      .filter(Boolean)
+      .join(' '),
+    [selected, className]
+  );
 
   return (
     <tr className={rowClasses} onClick={onClick}>
       {children}
     </tr>
   );
-};
+});
+
+TableRow.displayName = 'Table.Row';
 
 // ===== Table Cell =====
 
-const TableCell: React.FC<TableCellProps> = ({
+const TableCell = memo<TableCellProps>(({
   children,
   width,
   align = 'left',
   className = '',
 }) => {
-  const style = {
+  const style = useMemo(() => ({
     width,
-    textAlign: align,
-  };
+    textAlign: align as React.CSSProperties['textAlign'],
+  }), [width, align]);
 
   return (
     <td className={className} style={style}>
       {children}
     </td>
   );
-};
+});
+
+TableCell.displayName = 'Table.Cell';
 
 // ===== Table Header Cell =====
 
-const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
+const TableHeaderCell = memo<TableHeaderCellProps>(({
   children,
   sortable = false,
   sortDirection = null,
@@ -217,31 +201,30 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 }) => {
   const sortClass = sortDirection === 'asc' ? styles.asc : sortDirection === 'desc' ? styles.desc : '';
 
-  const headerClasses = [
-    sortable && styles.sortable,
-    sortClass,
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const headerClasses = useMemo(() =>
+    [sortable && styles.sortable, sortClass, className]
+      .filter(Boolean)
+      .join(' '),
+    [sortable, sortClass, className]
+  );
 
-  const style = {
+  const style = useMemo(() => ({
     width,
-    textAlign: align,
-  };
+    textAlign: align as React.CSSProperties['textAlign'],
+  }), [width, align]);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (sortable && onSort) {
       onSort();
     }
-  };
+  }, [sortable, onSort]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (sortable && onSort && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
       onSort();
     }
-  };
+  }, [sortable, onSort]);
 
   return (
     <th
@@ -262,11 +245,13 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
       {children}
     </th>
   );
-};
+});
+
+TableHeaderCell.displayName = 'Table.HeaderCell';
 
 // ===== Expandable Row =====
 
-const ExpandableRow: React.FC<ExpandableRowProps> = ({
+const ExpandableRow = memo<ExpandableRowProps>(({
   children,
   expandedContent,
   defaultExpanded = false,
@@ -274,20 +259,25 @@ const ExpandableRow: React.FC<ExpandableRowProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const toggleExpand = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleExpand();
+      setIsExpanded(prev => !prev);
     }
-  };
+  }, []);
+
+  const rowClassName = useMemo(() =>
+    `${styles.expandableRow} ${className}`,
+    [className]
+  );
 
   return (
     <>
-      <tr className={`${styles.expandableRow} ${className}`}>
+      <tr className={rowClassName}>
         <td className={styles.expandBtnCell}>
           <button
             className={styles.expandBtn}
@@ -310,11 +300,13 @@ const ExpandableRow: React.FC<ExpandableRowProps> = ({
       )}
     </>
   );
-};
+});
+
+ExpandableRow.displayName = 'Table.ExpandableRow';
 
 // ===== Empty State =====
 
-const TableEmptyState: React.FC<TableEmptyStateProps> = ({ icon, title, description, action }) => {
+const TableEmptyState = memo<TableEmptyStateProps>(({ icon, title, description, action }) => {
   return (
     <div className={styles.tableEmptyState}>
       <div className={styles.emptyStateContent}>
@@ -324,6 +316,56 @@ const TableEmptyState: React.FC<TableEmptyStateProps> = ({ icon, title, descript
         {action && <div className={styles.emptyStateAction}>{action}</div>}
       </div>
     </div>
+  );
+});
+
+TableEmptyState.displayName = 'Table.EmptyState';
+
+// ===== Main Table =====
+
+const Table: React.FC<TableProps> & {
+  Container: typeof TableContainer;
+  Wrapper: typeof TableWrapper;
+  Head: typeof TableHead;
+  Body: typeof TableBody;
+  Row: typeof TableRow;
+  Cell: typeof TableCell;
+  HeaderCell: typeof TableHeaderCell;
+  ExpandableRow: typeof ExpandableRow;
+  EmptyState: typeof TableEmptyState;
+} = ({
+  children,
+  striped = false,
+  compact = false,
+  stickyHeader = false,
+  loading = false,
+  className = '',
+}) => {
+  const tableClasses = useMemo(() =>
+    [
+      styles.table,
+      striped && styles.tableStriped,
+      compact && styles.tableCompact,
+      stickyHeader && styles.tableSticky,
+      loading && styles.tableLoading,
+      className,
+    ]
+      .filter(Boolean)
+      .join(' '),
+    [striped, compact, stickyHeader, loading, className]
+  );
+
+  const contextValue = useMemo(() => ({
+    striped,
+    compact,
+    stickyHeader,
+    loading,
+  }), [striped, compact, stickyHeader, loading]);
+
+  return (
+    <TableContext.Provider value={contextValue}>
+      <table className={tableClasses}>{children}</table>
+    </TableContext.Provider>
   );
 };
 
@@ -338,16 +380,6 @@ Table.HeaderCell = TableHeaderCell;
 Table.ExpandableRow = ExpandableRow;
 Table.EmptyState = TableEmptyState;
 
-// Display names for debugging
 Table.displayName = 'Table';
-TableContainer.displayName = 'Table.Container';
-TableWrapper.displayName = 'Table.Wrapper';
-TableHead.displayName = 'Table.Head';
-TableBody.displayName = 'Table.Body';
-TableRow.displayName = 'Table.Row';
-TableCell.displayName = 'Table.Cell';
-TableHeaderCell.displayName = 'Table.HeaderCell';
-ExpandableRow.displayName = 'Table.ExpandableRow';
-TableEmptyState.displayName = 'Table.EmptyState';
 
 export { Table };

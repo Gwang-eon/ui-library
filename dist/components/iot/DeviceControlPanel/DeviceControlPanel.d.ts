@@ -16,7 +16,7 @@ export interface ControlItemProps {
     disabled?: boolean;
     className?: string;
 }
-export declare const ControlItem: React.FC<ControlItemProps>;
+export declare const ControlItem: React.NamedExoticComponent<ControlItemProps>;
 export type DeviceIconVariant = 'warning' | 'primary' | 'success' | 'error';
 export interface DeviceControlCardProps {
     icon: IconType;
@@ -35,7 +35,7 @@ export interface DeviceControlCardProps {
     loading?: boolean;
     className?: string;
 }
-export declare const DeviceControlCard: React.FC<DeviceControlCardProps>;
+export declare const DeviceControlCard: React.NamedExoticComponent<DeviceControlCardProps>;
 export interface ModeSelectionProps {
     label: string;
     modes: string[];
@@ -43,7 +43,7 @@ export interface ModeSelectionProps {
     onModeChange: (mode: string) => void;
     className?: string;
 }
-export declare const ModeSelection: React.FC<ModeSelectionProps>;
+export declare const ModeSelection: React.NamedExoticComponent<ModeSelectionProps>;
 export interface TemperatureControlProps {
     label: string;
     value: number;
@@ -53,7 +53,7 @@ export interface TemperatureControlProps {
     onChange: (value: number) => void;
     className?: string;
 }
-export declare const TemperatureControl: React.FC<TemperatureControlProps>;
+export declare const TemperatureControl: React.NamedExoticComponent<TemperatureControlProps>;
 export interface FanSpeedSelectProps {
     label: string;
     value: string;
@@ -61,12 +61,12 @@ export interface FanSpeedSelectProps {
     onChange: (value: string) => void;
     className?: string;
 }
-export declare const FanSpeedSelect: React.FC<FanSpeedSelectProps>;
+export declare const FanSpeedSelect: React.NamedExoticComponent<FanSpeedSelectProps>;
 declare const _default: {
-    ControlItem: React.FC<ControlItemProps>;
-    DeviceControlCard: React.FC<DeviceControlCardProps>;
-    ModeSelection: React.FC<ModeSelectionProps>;
-    TemperatureControl: React.FC<TemperatureControlProps>;
-    FanSpeedSelect: React.FC<FanSpeedSelectProps>;
+    ControlItem: React.NamedExoticComponent<ControlItemProps>;
+    DeviceControlCard: React.NamedExoticComponent<DeviceControlCardProps>;
+    ModeSelection: React.NamedExoticComponent<ModeSelectionProps>;
+    TemperatureControl: React.NamedExoticComponent<TemperatureControlProps>;
+    FanSpeedSelect: React.NamedExoticComponent<FanSpeedSelectProps>;
 };
 export default _default;

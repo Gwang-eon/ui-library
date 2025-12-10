@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useMemo, useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
 import styles from './DeviceControlPanel.module.css';
 
-// Custom icon type
 type IconType = React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
 
 // ==================== Control Item ====================
@@ -20,7 +19,7 @@ export interface ControlItemProps {
   className?: string;
 }
 
-export const ControlItem: React.FC<ControlItemProps> = ({
+export const ControlItem = memo<ControlItemProps>(({
   icon: Icon,
   label,
   type,
@@ -34,13 +33,26 @@ export const ControlItem: React.FC<ControlItemProps> = ({
 }) => {
   const [internalValue, setInternalValue] = useState(value);
 
-  const handleChange = (newValue: boolean | number) => {
+  const handleChange = useCallback((newValue: boolean | number) => {
     setInternalValue(newValue);
     onChange?.(newValue);
-  };
+  }, [onChange]);
+
+  const handleCheckboxChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(e.target.checked);
+  }, [handleChange]);
+
+  const handleSliderChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(Number(e.target.value));
+  }, [handleChange]);
+
+  const containerClassName = useMemo(() =>
+    `${styles.controlItem} ${className}`,
+    [className]
+  );
 
   return (
-    <div className={`${styles.controlItem} ${className}`}>
+    <div className={containerClassName}>
       <div className={styles.controlLabel}>
         {Icon && <Icon size={20} />}
         <span>{label}</span>
@@ -51,7 +63,7 @@ export const ControlItem: React.FC<ControlItemProps> = ({
             type="checkbox"
             className={styles.switchInput}
             checked={internalValue as boolean}
-            onChange={(e) => handleChange(e.target.checked)}
+            onChange={handleCheckboxChange}
             disabled={disabled}
           />
           <span className={styles.switchSlider}></span>
@@ -64,13 +76,15 @@ export const ControlItem: React.FC<ControlItemProps> = ({
           max={max}
           step={step}
           value={internalValue as number}
-          onChange={(e) => handleChange(Number(e.target.value))}
+          onChange={handleSliderChange}
           disabled={disabled}
         />
       )}
     </div>
   );
-};
+});
+
+ControlItem.displayName = 'DeviceControlPanel.ControlItem';
 
 // ==================== Device Control Card ====================
 
@@ -94,7 +108,7 @@ export interface DeviceControlCardProps {
   className?: string;
 }
 
-export const DeviceControlCard: React.FC<DeviceControlCardProps> = ({
+export const DeviceControlCard = memo<DeviceControlCardProps>(({
   icon: Icon,
   iconVariant = 'primary',
   name,
@@ -114,19 +128,31 @@ export const DeviceControlCard: React.FC<DeviceControlCardProps> = ({
   const [isOn, setIsOn] = useState(switchValue);
   const [value, setValue] = useState(sliderValue);
 
-  const handleSwitchChange = (checked: boolean) => {
+  const handleSwitchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
     setIsOn(checked);
     onSwitchChange?.(checked);
-  };
+  }, [onSwitchChange]);
 
-  const handleSliderChange = (newValue: number) => {
+  const handleSliderChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
     setValue(newValue);
     onSliderChange?.(newValue);
-  };
+  }, [onSliderChange]);
+
+  const containerClassName = useMemo(() =>
+    `${styles.deviceControlCard} ${loading ? styles.loading : ''} ${className}`,
+    [loading, className]
+  );
+
+  const iconCircleClassName = useMemo(() =>
+    `${styles.deviceIconCircle} ${styles[`iconVariant-${iconVariant}`]}`,
+    [iconVariant]
+  );
 
   if (loading) {
     return (
-      <div className={`${styles.deviceControlCard} ${styles.loading} ${className}`}>
+      <div className={containerClassName}>
         <div className={styles.deviceHeader}>
           <div className={styles.iconSkeleton} />
           <div className={styles.deviceInfo}>
@@ -141,9 +167,9 @@ export const DeviceControlCard: React.FC<DeviceControlCardProps> = ({
   }
 
   return (
-    <div className={`${styles.deviceControlCard} ${className}`}>
+    <div className={containerClassName}>
       <div className={styles.deviceHeader}>
-        <div className={`${styles.deviceIconCircle} ${styles[`iconVariant-${iconVariant}`]}`}>
+        <div className={iconCircleClassName}>
           <Icon size={24} />
         </div>
         <div className={styles.deviceInfo}>
@@ -155,7 +181,7 @@ export const DeviceControlCard: React.FC<DeviceControlCardProps> = ({
             type="checkbox"
             className={styles.switchInput}
             checked={isOn}
-            onChange={(e) => handleSwitchChange(e.target.checked)}
+            onChange={handleSwitchChange}
           />
           <span className={styles.switchSlider}></span>
         </label>
@@ -169,13 +195,42 @@ export const DeviceControlCard: React.FC<DeviceControlCardProps> = ({
           max={sliderMax}
           step={sliderStep}
           value={value}
-          onChange={(e) => handleSliderChange(Number(e.target.value))}
+          onChange={handleSliderChange}
           disabled={!isOn}
         />
       </div>
     </div>
   );
-};
+});
+
+DeviceControlCard.displayName = 'DeviceControlPanel.DeviceControlCard';
+
+// ==================== Mode Button ====================
+
+interface ModeButtonProps {
+  mode: string;
+  isSelected: boolean;
+  onSelect: (mode: string) => void;
+}
+
+const ModeButton = memo<ModeButtonProps>(({ mode, isSelected, onSelect }) => {
+  const handleClick = useCallback(() => {
+    onSelect(mode);
+  }, [mode, onSelect]);
+
+  const className = useMemo(() =>
+    `${styles.btn} ${styles.btnSm} ${styles.btnGhost} ${isSelected ? styles.active : ''}`,
+    [isSelected]
+  );
+
+  return (
+    <button className={className} onClick={handleClick}>
+      {mode}
+    </button>
+  );
+});
+
+ModeButton.displayName = 'DeviceControlPanel.ModeButton';
 
 // ==================== Mode Selection ====================
 
@@ -187,32 +242,36 @@ export interface ModeSelectionProps {
   className?: string;
 }
 
-export const ModeSelection: React.FC<ModeSelectionProps> = ({
+export const ModeSelection = memo<ModeSelectionProps>(({
   label,
   modes,
   selectedMode,
   onModeChange,
   className = '',
 }) => {
+  const containerClassName = useMemo(() =>
+    `${styles.modeSelection} ${className}`,
+    [className]
+  );
+
   return (
-    <div className={`${styles.modeSelection} ${className}`}>
+    <div className={containerClassName}>
       <label className={styles.modeLabel}>{label}</label>
       <div className={styles.btnGroup} role="group">
         {modes.map((mode) => (
-          <button
+          <ModeButton
             key={mode}
-            className={`${styles.btn} ${styles.btnSm} ${styles.btnGhost} ${
-              selectedMode === mode ? styles.active : ''
-            }`}
-            onClick={() => onModeChange(mode)}
-          >
-            {mode}
-          </button>
+            mode={mode}
+            isSelected={selectedMode === mode}
+            onSelect={onModeChange}
+          />
         ))}
       </div>
     </div>
   );
-};
+});
+
+ModeSelection.displayName = 'DeviceControlPanel.ModeSelection';
 
 // ==================== Temperature Control ====================
 
@@ -226,7 +285,7 @@ export interface TemperatureControlProps {
   className?: string;
 }
 
-export const TemperatureControl: React.FC<TemperatureControlProps> = ({
+export const TemperatureControl = memo<TemperatureControlProps>(({
   label,
   value,
   min = 16,
@@ -235,8 +294,17 @@ export const TemperatureControl: React.FC<TemperatureControlProps> = ({
   onChange,
   className = '',
 }) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(Number(e.target.value));
+  }, [onChange]);
+
+  const containerClassName = useMemo(() =>
+    `${styles.modeSelection} ${className}`,
+    [className]
+  );
+
   return (
-    <div className={`${styles.modeSelection} ${className}`}>
+    <div className={containerClassName}>
       <div className={styles.temperatureDisplay}>
         <span className={styles.modeLabel}>{label}</span>
         <span className={styles.temperatureValue}>
@@ -250,21 +318,44 @@ export const TemperatureControl: React.FC<TemperatureControlProps> = ({
         min={min}
         max={max}
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={handleChange}
       />
       <div className={styles.sliderRange}>
-        <span>
-          {min}
-          {unit}
-        </span>
-        <span>
-          {max}
-          {unit}
-        </span>
+        <span>{min}{unit}</span>
+        <span>{max}{unit}</span>
       </div>
     </div>
   );
-};
+});
+
+TemperatureControl.displayName = 'DeviceControlPanel.TemperatureControl';
+
+// ==================== Fan Speed Option ====================
+
+interface FanSpeedOptionProps {
+  option: string;
+  isSelected: boolean;
+  onSelect: (option: string) => void;
+}
+
+const FanSpeedOption = memo<FanSpeedOptionProps>(({ option, isSelected, onSelect }) => {
+  const handleClick = useCallback(() => {
+    onSelect(option);
+  }, [option, onSelect]);
+
+  const className = useMemo(() =>
+    `${styles.customSelectOption} ${isSelected ? styles.selected : ''}`,
+    [isSelected]
+  );
+
+  return (
+    <div className={className} onClick={handleClick}>
+      {option}
+    </div>
+  );
+});
+
+FanSpeedOption.displayName = 'DeviceControlPanel.FanSpeedOption';
 
 // ==================== Fan Speed Select ====================
 
@@ -276,7 +367,7 @@ export interface FanSpeedSelectProps {
   className?: string;
 }
 
-export const FanSpeedSelect: React.FC<FanSpeedSelectProps> = ({
+export const FanSpeedSelect = memo<FanSpeedSelectProps>(({
   label,
   value,
   options,
@@ -285,18 +376,27 @@ export const FanSpeedSelect: React.FC<FanSpeedSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = (option: string) => {
+  const toggleOpen = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+
+  const handleSelect = useCallback((option: string) => {
     onChange(option);
     setIsOpen(false);
-  };
+  }, [onChange]);
+
+  const containerClassName = useMemo(() =>
+    `${styles.modeSelection} ${className}`,
+    [className]
+  );
 
   return (
-    <div className={`${styles.modeSelection} ${className}`}>
+    <div className={containerClassName}>
       <label className={styles.modeLabel}>{label}</label>
       <div className={styles.customSelect}>
         <div
           className={styles.customSelectTrigger}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleOpen}
           role="button"
           tabIndex={0}
         >
@@ -306,22 +406,21 @@ export const FanSpeedSelect: React.FC<FanSpeedSelectProps> = ({
         {isOpen && (
           <div className={styles.customSelectDropdown}>
             {options.map((option) => (
-              <div
+              <FanSpeedOption
                 key={option}
-                className={`${styles.customSelectOption} ${
-                  option === value ? styles.selected : ''
-                }`}
-                onClick={() => handleSelect(option)}
-              >
-                {option}
-              </div>
+                option={option}
+                isSelected={option === value}
+                onSelect={handleSelect}
+              />
             ))}
           </div>
         )}
       </div>
     </div>
   );
-};
+});
+
+FanSpeedSelect.displayName = 'DeviceControlPanel.FanSpeedSelect';
 
 // ==================== Main Export ====================
 

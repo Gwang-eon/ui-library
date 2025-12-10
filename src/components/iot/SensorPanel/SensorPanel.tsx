@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import {
   Thermometer,
   TrendingUp,
@@ -12,7 +12,6 @@ import styles from './SensorPanel.module.css';
 // TYPES
 // ========================================
 
-// Type for Lucide React icons
 type IconType = React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
 
 export type SensorStatus = 'normal' | 'warning' | 'error' | 'ok';
@@ -35,51 +34,144 @@ export interface SensorThreshold {
 }
 
 export interface SensorPanelProps {
-  /** Sensor label/name */
   label: string;
-  /** Current sensor value */
   value: string | number;
-  /** Value unit (e.g., °C, %, kW) */
   unit?: string;
-  /** Sensor status */
   status?: SensorStatus;
-  /** Status badge text */
   statusText?: string;
-  /** Sensor icon */
   icon?: IconType;
-  /** Icon color variant */
   iconVariant?: IconColorVariant;
-  /** Normal range text (for basic variant) */
   rangeText?: string;
-  /** Variant type */
   variant?: SensorVariant;
-  /** Sensor ID (for detailed variant) */
   sensorId?: string;
-  /** Trend direction */
   trendDirection?: TrendDirection;
-  /** Trend value (e.g., +8%, -5%) */
   trendValue?: string;
-  /** Trend label */
   trendLabel?: string;
-  /** Additional stats (for detailed variant) */
   stats?: SensorStat[];
-  /** Threshold information */
   threshold?: SensorThreshold;
-  /** Last updated timestamp */
   lastUpdated?: string;
-  /** Loading state */
   loading?: boolean;
-  /** Additional CSS class */
   className?: string;
-  /** Click handler */
   onClick?: () => void;
 }
+
+// ========================================
+// SKELETON STYLES (memoized)
+// ========================================
+
+const skeletonStyles = {
+  compactIcon: { width: 20, height: 20, borderRadius: 4 } as React.CSSProperties,
+  compactLabel: { height: 14, width: '60%', marginBottom: 8 } as React.CSSProperties,
+  compactValue: { height: 28, width: '40%' } as React.CSSProperties,
+  detailedIcon: { width: 40, height: 40, borderRadius: 'var(--radius-lg)' } as React.CSSProperties,
+  detailedTitle: { height: 18, width: '50%', marginBottom: 8 } as React.CSSProperties,
+  detailedSubtitle: { height: 14, width: '30%' } as React.CSSProperties,
+  detailedValue: { height: 40, width: '60%', marginBottom: 24 } as React.CSSProperties,
+  statLabel: { height: 14, width: '40%' } as React.CSSProperties,
+  statValue: { height: 14, width: '30%' } as React.CSSProperties,
+  basicIcon: { width: 56, height: 56, borderRadius: 'var(--radius-lg)' } as React.CSSProperties,
+  basicLabel: { height: 14, width: '60%', marginBottom: 8 } as React.CSSProperties,
+  basicValue: { height: 28, width: '40%' } as React.CSSProperties,
+  basicRange: { height: 13, width: '70%', marginTop: 16 } as React.CSSProperties,
+  flex1: { flex: 1 } as React.CSSProperties,
+};
+
+// ========================================
+// STAT ROW COMPONENT
+// ========================================
+
+interface StatRowProps {
+  stat: SensorStat;
+}
+
+const StatRow = memo<StatRowProps>(({ stat }) => (
+  <div className={styles.statRow}>
+    <span className={styles.statLabel}>{stat.label}</span>
+    <span className={styles.statValue}>{stat.value}</span>
+  </div>
+));
+
+StatRow.displayName = 'SensorPanel.StatRow';
+
+// ========================================
+// LOADING SKELETON
+// ========================================
+
+interface SensorPanelSkeletonProps {
+  variant?: SensorVariant;
+  className?: string;
+}
+
+const SensorPanelSkeleton = memo<SensorPanelSkeletonProps>(({ variant = 'basic', className }) => {
+  const containerClassName = useMemo(() => {
+    if (variant === 'compact') return `${styles.compactCard} ${className || ''}`;
+    if (variant === 'detailed') return `${styles.detailedCard} ${className || ''}`;
+    return `${styles.basicCard} ${className || ''}`;
+  }, [variant, className]);
+
+  if (variant === 'compact') {
+    return (
+      <div className={containerClassName}>
+        <div className={styles.compactHeader}>
+          <div className={`${styles.skeleton} ${styles.skeletonIcon}`} style={skeletonStyles.compactIcon} />
+          <div className={`${styles.skeleton} ${styles.skeletonBadge}`} />
+        </div>
+        <div className={styles.skeleton} style={skeletonStyles.compactLabel} />
+        <div className={styles.skeleton} style={skeletonStyles.compactValue} />
+      </div>
+    );
+  }
+
+  if (variant === 'detailed') {
+    return (
+      <div className={containerClassName}>
+        <div className={styles.cardHeader}>
+          <div className={styles.detailedSensorHeader}>
+            <div className={styles.skeleton} style={skeletonStyles.detailedIcon} />
+            <div style={skeletonStyles.flex1}>
+              <div className={styles.skeleton} style={skeletonStyles.detailedTitle} />
+              <div className={styles.skeleton} style={skeletonStyles.detailedSubtitle} />
+            </div>
+          </div>
+          <div className={`${styles.skeleton} ${styles.skeletonBadge}`} />
+        </div>
+        <div className={styles.cardBody}>
+          <div className={styles.skeleton} style={skeletonStyles.detailedValue} />
+          <div className={styles.sensorStatsBox}>
+            {[1, 2, 3].map((i) => (
+              <div key={`stat-skeleton-${i}`} className={styles.statRow}>
+                <div className={styles.skeleton} style={skeletonStyles.statLabel} />
+                <div className={styles.skeleton} style={skeletonStyles.statValue} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={containerClassName}>
+      <div className={styles.sensorHeader}>
+        <div className={styles.skeleton} style={skeletonStyles.basicIcon} />
+        <div style={skeletonStyles.flex1}>
+          <div className={styles.skeleton} style={skeletonStyles.basicLabel} />
+          <div className={styles.skeleton} style={skeletonStyles.basicValue} />
+        </div>
+        <div className={`${styles.skeleton} ${styles.skeletonBadge}`} />
+      </div>
+      <div className={styles.skeleton} style={skeletonStyles.basicRange} />
+    </div>
+  );
+});
+
+SensorPanelSkeleton.displayName = 'SensorPanel.Skeleton';
 
 // ========================================
 // SENSOR PANEL COMPONENT
 // ========================================
 
-const SensorPanel: React.FC<SensorPanelProps> = ({
+const SensorPanel = memo<SensorPanelProps>(({
   label,
   value,
   unit,
@@ -100,41 +192,79 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
   className,
   onClick,
 }) => {
-  // Loading state
+  const badgeClass = useMemo(() => {
+    switch (status) {
+      case 'normal':
+      case 'ok':
+        return 'Success';
+      case 'warning':
+        return 'Warning';
+      case 'error':
+        return 'Error';
+      default:
+        return 'Success';
+    }
+  }, [status]);
+
+  const displayStatusText = useMemo(() =>
+    statusText || (status === 'ok' ? 'OK' : status.charAt(0).toUpperCase() + status.slice(1)),
+    [statusText, status]
+  );
+
+  const iconColorStyle = useMemo(() =>
+    ({ color: `var(--color-${iconVariant}-600)` }),
+    [iconVariant]
+  );
+
+  const iconCircleClass = useMemo(() =>
+    styles[`iconCircle${iconVariant.charAt(0).toUpperCase()}${iconVariant.slice(1)}`],
+    [iconVariant]
+  );
+
+  const badgeClassName = useMemo(() =>
+    `${styles.badge} ${styles[`badge${badgeClass}`]}`,
+    [badgeClass]
+  );
+
+  const badgeXsClassName = useMemo(() =>
+    `${styles.badge} ${styles.badgeXs} ${styles[`badge${badgeClass}`]}`,
+    [badgeClass]
+  );
+
+  const containerClassName = useMemo(() => {
+    if (variant === 'compact') return `${styles.compactCard} ${className || ''}`;
+    if (variant === 'detailed') return `${styles.detailedCard} ${className || ''}`;
+    return `${styles.basicCard} ${className || ''}`;
+  }, [variant, className]);
+
+  const trendClassName = useMemo(() => {
+    if (trendDirection === 'down') return `${styles.trendValue} ${styles.trendPositive}`;
+    if (trendDirection === 'up') return `${styles.trendValue} ${styles.trendNegative}`;
+    return styles.trendValue;
+  }, [trendDirection]);
+
+  const progressWidth = useMemo(() => {
+    if (!threshold) return '0%';
+    return `${threshold.percentage || ((threshold.currentValue / threshold.maxValue) * 100)}%`;
+  }, [threshold]);
+
+  const progressStyle = useMemo(() => ({ width: progressWidth }), [progressWidth]);
+
   if (loading) {
     return <SensorPanelSkeleton variant={variant} className={className} />;
   }
 
-  // Get status badge class
-  const getStatusBadgeClass = () => {
-    switch (status) {
-      case 'normal':
-      case 'ok':
-        return 'success';
-      case 'warning':
-        return 'warning';
-      case 'error':
-        return 'error';
-      default:
-        return 'success';
-    }
-  };
-
-  const badgeClass = getStatusBadgeClass();
-  const displayStatusText = statusText || (status === 'ok' ? 'OK' : status.charAt(0).toUpperCase() + status.slice(1));
-
-  // Render based on variant
   if (variant === 'compact') {
     return (
       <div
-        className={`${styles.compactCard} ${className || ''}`}
+        className={containerClassName}
         onClick={onClick}
         role={onClick ? 'button' : undefined}
         tabIndex={onClick ? 0 : undefined}
       >
         <div className={styles.compactHeader}>
-          <Icon className={styles.compactIcon} style={{ color: `var(--color-${iconVariant}-600)` }} />
-          <span className={`${styles.badge} ${styles.badgeXs} ${styles[`badge${badgeClass.charAt(0).toUpperCase()}${badgeClass.slice(1)}`]}`}>
+          <Icon className={styles.compactIcon} style={iconColorStyle} />
+          <span className={badgeXsClassName}>
             {displayStatusText}
           </span>
         </div>
@@ -149,10 +279,10 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
 
   if (variant === 'detailed') {
     return (
-      <div className={`${styles.detailedCard} ${className || ''}`}>
+      <div className={containerClassName}>
         <div className={styles.cardHeader}>
           <div className={styles.detailedSensorHeader}>
-            <div className={`${styles.sensorIconCircle} ${styles[`iconCircle${iconVariant.charAt(0).toUpperCase()}${iconVariant.slice(1)}`]}`}>
+            <div className={`${styles.sensorIconCircle} ${iconCircleClass}`}>
               <Icon size={20} />
             </div>
             <div className={styles.detailedSensorInfo}>
@@ -160,7 +290,7 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
               {sensorId && <p className={styles.detailedSensorId}>Sensor ID: {sensorId}</p>}
             </div>
           </div>
-          <span className={`${styles.badge} ${styles[`badge${badgeClass.charAt(0).toUpperCase()}${badgeClass.slice(1)}`]}`}>
+          <span className={badgeClassName}>
             {displayStatusText}
           </span>
         </div>
@@ -175,7 +305,7 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
             </div>
             {trendDirection && trendValue && (
               <div className={styles.trendIndicator}>
-                <div className={`${styles.trendValue} ${trendDirection === 'down' ? styles.trendPositive : trendDirection === 'up' ? styles.trendNegative : ''}`}>
+                <div className={trendClassName}>
                   {trendDirection === 'up' ? <TrendingUp size={16} /> : trendDirection === 'down' ? <TrendingDown size={16} /> : null}
                   <span>{trendValue}</span>
                 </div>
@@ -186,11 +316,8 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
 
           {stats && stats.length > 0 && (
             <div className={styles.sensorStatsBox}>
-              {stats.map((stat, index) => (
-                <div key={index} className={styles.statRow}>
-                  <span className={styles.statLabel}>{stat.label}</span>
-                  <span className={styles.statValue}>{stat.value}</span>
-                </div>
+              {stats.map((stat) => (
+                <StatRow key={stat.label} stat={stat} />
               ))}
             </div>
           )}
@@ -204,7 +331,7 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
               <div className={styles.progress}>
                 <div
                   className={`${styles.progressBar} ${styles.progressBarSuccess}`}
-                  style={{ width: `${threshold.percentage || ((threshold.currentValue / threshold.maxValue) * 100)}%` }}
+                  style={progressStyle}
                 />
               </div>
               <div className={styles.thresholdRange}>
@@ -227,16 +354,15 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
     );
   }
 
-  // Basic variant (default)
   return (
     <div
-      className={`${styles.basicCard} ${className || ''}`}
+      className={containerClassName}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
     >
       <div className={styles.sensorHeader}>
-        <div className={`${styles.sensorIconCircle} ${styles[`iconCircle${iconVariant.charAt(0).toUpperCase()}${iconVariant.slice(1)}`]}`}>
+        <div className={`${styles.sensorIconCircle} ${iconCircleClass}`}>
           <Icon size={24} />
         </div>
         <div className={styles.sensorInfo}>
@@ -246,81 +372,16 @@ const SensorPanel: React.FC<SensorPanelProps> = ({
             {unit}
           </p>
         </div>
-        <span className={`${styles.badge} ${styles[`badge${badgeClass.charAt(0).toUpperCase()}${badgeClass.slice(1)}`]}`}>
+        <span className={badgeClassName}>
           {displayStatusText}
         </span>
       </div>
       {rangeText && <div className={styles.sensorRange}>{rangeText}</div>}
     </div>
   );
-};
+});
 
-// ========================================
-// LOADING SKELETON
-// ========================================
-
-interface SensorPanelSkeletonProps {
-  variant?: SensorVariant;
-  className?: string;
-}
-
-const SensorPanelSkeleton: React.FC<SensorPanelSkeletonProps> = ({ variant = 'basic', className }) => {
-  if (variant === 'compact') {
-    return (
-      <div className={`${styles.compactCard} ${className || ''}`}>
-        <div className={styles.compactHeader}>
-          <div className={`${styles.skeleton} ${styles.skeletonIcon}`} style={{ width: 20, height: 20, borderRadius: 4 }} />
-          <div className={`${styles.skeleton} ${styles.skeletonBadge}`} />
-        </div>
-        <div className={styles.skeleton} style={{ height: 14, width: '60%', marginBottom: 8 }} />
-        <div className={styles.skeleton} style={{ height: 28, width: '40%' }} />
-      </div>
-    );
-  }
-
-  if (variant === 'detailed') {
-    return (
-      <div className={`${styles.detailedCard} ${className || ''}`}>
-        <div className={styles.cardHeader}>
-          <div className={styles.detailedSensorHeader}>
-            <div className={`${styles.skeleton}`} style={{ width: 40, height: 40, borderRadius: 'var(--radius-lg)' }} />
-            <div style={{ flex: 1 }}>
-              <div className={styles.skeleton} style={{ height: 18, width: '50%', marginBottom: 8 }} />
-              <div className={styles.skeleton} style={{ height: 14, width: '30%' }} />
-            </div>
-          </div>
-          <div className={`${styles.skeleton} ${styles.skeletonBadge}`} />
-        </div>
-        <div className={styles.cardBody}>
-          <div className={styles.skeleton} style={{ height: 40, width: '60%', marginBottom: 24 }} />
-          <div className={styles.sensorStatsBox}>
-            {[1, 2, 3].map((i) => (
-              <div key={i} className={styles.statRow}>
-                <div className={styles.skeleton} style={{ height: 14, width: '40%' }} />
-                <div className={styles.skeleton} style={{ height: 14, width: '30%' }} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Basic skeleton
-  return (
-    <div className={`${styles.basicCard} ${className || ''}`}>
-      <div className={styles.sensorHeader}>
-        <div className={`${styles.skeleton}`} style={{ width: 56, height: 56, borderRadius: 'var(--radius-lg)' }} />
-        <div style={{ flex: 1 }}>
-          <div className={styles.skeleton} style={{ height: 14, width: '60%', marginBottom: 8 }} />
-          <div className={styles.skeleton} style={{ height: 28, width: '40%' }} />
-        </div>
-        <div className={`${styles.skeleton} ${styles.skeletonBadge}`} />
-      </div>
-      <div className={styles.skeleton} style={{ height: 13, width: '70%', marginTop: 16 }} />
-    </div>
-  );
-};
+SensorPanel.displayName = 'SensorPanel';
 
 // ========================================
 // SENSOR PANEL GRID
@@ -332,10 +393,16 @@ interface SensorPanelGridProps {
   className?: string;
 }
 
-const SensorPanelGrid: React.FC<SensorPanelGridProps> = ({ children, variant = 'basic', className }) => {
-  const gridClass = variant === 'compact' ? styles.compactSensorGrid : styles.sensorCardGrid;
-  return <div className={`${gridClass} ${className || ''}`}>{children}</div>;
-};
+const SensorPanelGrid = memo<SensorPanelGridProps>(({ children, variant = 'basic', className }) => {
+  const gridClass = useMemo(() => {
+    const base = variant === 'compact' ? styles.compactSensorGrid : styles.sensorCardGrid;
+    return `${base} ${className || ''}`;
+  }, [variant, className]);
+
+  return <div className={gridClass}>{children}</div>;
+});
+
+SensorPanelGrid.displayName = 'SensorPanel.Grid';
 
 // ========================================
 // EMPTY STATE
@@ -350,7 +417,7 @@ interface SensorPanelEmptyStateProps {
   className?: string;
 }
 
-const SensorPanelEmptyState: React.FC<SensorPanelEmptyStateProps> = ({
+const SensorPanelEmptyState = memo<SensorPanelEmptyStateProps>(({
   title = 'No Sensor Data',
   description = 'No sensors are currently connected. Connect sensors to start monitoring real-time data.',
   actionLabel = 'Add Sensor',
@@ -358,8 +425,13 @@ const SensorPanelEmptyState: React.FC<SensorPanelEmptyStateProps> = ({
   icon: Icon = Activity,
   className,
 }) => {
+  const containerClassName = useMemo(() =>
+    `${styles.emptyState} ${className || ''}`,
+    [className]
+  );
+
   return (
-    <div className={`${styles.emptyState} ${className || ''}`}>
+    <div className={containerClassName}>
       <div className={styles.emptyStateIcon}>
         <Icon size={64} />
       </div>
@@ -372,16 +444,9 @@ const SensorPanelEmptyState: React.FC<SensorPanelEmptyStateProps> = ({
       )}
     </div>
   );
-};
+});
 
-// ========================================
-// EXPORTS
-// ========================================
-
-SensorPanel.displayName = 'SensorPanel';
-SensorPanelGrid.displayName = 'SensorPanel.Grid';
 SensorPanelEmptyState.displayName = 'SensorPanel.EmptyState';
-SensorPanelSkeleton.displayName = 'SensorPanel.Skeleton';
 
 export default SensorPanel;
 export { SensorPanelGrid, SensorPanelEmptyState, SensorPanelSkeleton };

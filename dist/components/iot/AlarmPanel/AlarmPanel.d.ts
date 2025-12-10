@@ -18,7 +18,7 @@ export interface AlarmPanelProps {
     onViewAll?: () => void;
     className?: string;
 }
-export declare const AlarmPanel: React.FC<AlarmPanelProps>;
+export declare const AlarmPanel: React.NamedExoticComponent<AlarmPanelProps>;
 export interface AlarmFilter {
     severity: 'all' | AlarmSeverity;
     label: string;
@@ -33,7 +33,7 @@ export interface AlarmPanelFiltersProps {
     searchPlaceholder?: string;
     className?: string;
 }
-export declare const AlarmPanelFilters: React.FC<AlarmPanelFiltersProps>;
+export declare const AlarmPanelFilters: React.NamedExoticComponent<AlarmPanelFiltersProps>;
 export interface AlarmMetaItem {
     icon: IconType;
     text: string;
@@ -52,7 +52,7 @@ export interface AlarmItemProps {
     onClick?: () => void;
     className?: string;
 }
-export declare const AlarmItem: React.FC<AlarmItemProps>;
+export declare const AlarmItem: React.NamedExoticComponent<AlarmItemProps>;
 export interface AlarmItemCompactProps {
     icon: IconType;
     severity: AlarmSeverity;
@@ -62,11 +62,11 @@ export interface AlarmItemCompactProps {
     onClick?: () => void;
     className?: string;
 }
-export declare const AlarmItemCompact: React.FC<AlarmItemCompactProps>;
+export declare const AlarmItemCompact: React.NamedExoticComponent<AlarmItemCompactProps>;
 declare const _default: {
-    AlarmPanel: React.FC<AlarmPanelProps>;
-    AlarmPanelFilters: React.FC<AlarmPanelFiltersProps>;
-    AlarmItem: React.FC<AlarmItemProps>;
-    AlarmItemCompact: React.FC<AlarmItemCompactProps>;
+    AlarmPanel: React.NamedExoticComponent<AlarmPanelProps>;
+    AlarmPanelFilters: React.NamedExoticComponent<AlarmPanelFiltersProps>;
+    AlarmItem: React.NamedExoticComponent<AlarmItemProps>;
+    AlarmItemCompact: React.NamedExoticComponent<AlarmItemCompactProps>;
 };
 export default _default;

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import styles from './MetricCard.module.css';
 
-// Custom icon type to avoid lucide-react LucideIcon import issue
 type IconType = React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
 
 export interface MetricCardProps {
@@ -17,7 +16,7 @@ export interface MetricCardProps {
   subtext?: string;
   variant?: 'default' | 'compact' | 'live' | 'alert';
   progress?: {
-    value: number; // 0-100
+    value: number;
     color?: 'default' | 'warning' | 'error' | 'success';
   };
   chart?: React.ReactNode;
@@ -32,7 +31,29 @@ export interface MetricCardProps {
   style?: React.CSSProperties;
 }
 
-export const MetricCard: React.FC<MetricCardProps> = ({
+// Comparative Item Component
+interface ComparativeItemProps {
+  label: string;
+  value: string | number;
+  color?: string;
+}
+
+const ComparativeItem = memo<ComparativeItemProps>(({ label, value, color }) => {
+  const valueStyle = useMemo(() => color ? { color } : undefined, [color]);
+
+  return (
+    <div className={styles.comparativeItem}>
+      <div className={styles.comparativeLabel}>{label}</div>
+      <div className={styles.comparativeValue} style={valueStyle}>
+        {value}
+      </div>
+    </div>
+  );
+});
+
+ComparativeItem.displayName = 'MetricCard.ComparativeItem';
+
+export const MetricCard = memo<MetricCardProps>(({
   label,
   value,
   icon: Icon,
@@ -48,17 +69,42 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   className = '',
   style,
 }) => {
-  const cardClassName = [
-    styles.metricCard,
-    variant === 'compact' && styles.compact,
-    variant === 'live' && styles.live,
-    variant === 'alert' && styles.alert,
-    onClick && styles.clickable,
-    loading && styles.loading,
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const cardClassName = useMemo(() =>
+    [
+      styles.metricCard,
+      variant === 'compact' && styles.compact,
+      variant === 'live' && styles.live,
+      variant === 'alert' && styles.alert,
+      onClick && styles.clickable,
+      loading && styles.loading,
+      className,
+    ]
+      .filter(Boolean)
+      .join(' '),
+    [variant, onClick, loading, className]
+  );
+
+  const iconStyle = useMemo(() =>
+    iconColor ? { color: iconColor } : undefined,
+    [iconColor]
+  );
+
+  const changeClassName = useMemo(() =>
+    change ? `${styles.change} ${styles[change.type]}` : '',
+    [change]
+  );
+
+  const progressClassName = useMemo(() =>
+    progress?.color
+      ? `${styles.progressBar} ${styles[progress.color]}`
+      : styles.progressBar,
+    [progress?.color]
+  );
+
+  const progressStyle = useMemo(() =>
+    progress ? { width: `${progress.value}%` } : undefined,
+    [progress]
+  );
 
   if (loading) {
     return (
@@ -93,11 +139,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
             </span>
           )}
           {Icon && (
-            <Icon
-              size={20}
-              className={styles.icon}
-              style={{ color: iconColor }}
-            />
+            <Icon size={20} className={styles.icon} style={iconStyle} />
           )}
         </div>
       </div>
@@ -105,23 +147,20 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       <div className={styles.body}>
         {comparative ? (
           <div className={styles.comparative}>
-            {comparative.map((item, index) => (
-              <div key={index} className={styles.comparativeItem}>
-                <div className={styles.comparativeLabel}>{item.label}</div>
-                <div
-                  className={styles.comparativeValue}
-                  style={{ color: item.color }}
-                >
-                  {item.value}
-                </div>
-              </div>
+            {comparative.map((item) => (
+              <ComparativeItem
+                key={item.label}
+                label={item.label}
+                value={item.value}
+                color={item.color}
+              />
             ))}
           </div>
         ) : (
           <>
             <div className={styles.value}>{value}</div>
             {change && (
-              <div className={`${styles.change} ${styles[change.type]}`}>
+              <div className={changeClassName}>
                 {change.type === 'positive' && <ArrowUp size={12} />}
                 {change.type === 'negative' && <ArrowDown size={12} />}
                 <span>{change.text}</span>
@@ -136,64 +175,90 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 
       {progress && (
         <div className={styles.progressContainer}>
-          <div
-            className={`${styles.progressBar} ${
-              progress.color ? styles[progress.color] : ''
-            }`}
-            style={{ width: `${progress.value}%` }}
-          />
+          <div className={progressClassName} style={progressStyle} />
         </div>
       )}
 
       {chart && <div className={styles.chart}>{chart}</div>}
     </div>
   );
-};
+});
 
-// MetricCardGrid component for layout
+MetricCard.displayName = 'MetricCard';
+
+// MetricCardGrid component
 export interface MetricCardGridProps {
   children: React.ReactNode;
   columns?: number;
   className?: string;
 }
 
-export const MetricCardGrid: React.FC<MetricCardGridProps> = ({
+export const MetricCardGrid = memo<MetricCardGridProps>(({
   children,
   columns = 4,
   className = '',
 }) => {
+  const gridStyle = useMemo(() => ({
+    gridTemplateColumns: `repeat(auto-fill, minmax(${
+      columns === 2 ? '300px' : columns === 3 ? '250px' : '200px'
+    }, 1fr))`,
+  }), [columns]);
+
+  const gridClassName = useMemo(() =>
+    `${styles.grid} ${className}`,
+    [className]
+  );
+
   return (
-    <div
-      className={`${styles.grid} ${className}`}
-      style={{
-        gridTemplateColumns: `repeat(auto-fill, minmax(${
-          columns === 2 ? '300px' : columns === 3 ? '250px' : '200px'
-        }, 1fr))`,
-      }}
-    >
+    <div className={gridClassName} style={gridStyle}>
       {children}
     </div>
   );
-};
+});
 
-// MiniChart component for sparkline visualization
+MetricCardGrid.displayName = 'MetricCard.Grid';
+
+// MiniChart Bar Component
+interface ChartBarProps {
+  value: number;
+  min: number;
+  range: number;
+  color: string;
+}
+
+const ChartBar = memo<ChartBarProps>(({ value, min, range, color }) => {
+  const percentage = range === 0 ? 100 : ((value - min) / range) * 100;
+  const style = useMemo(() => ({
+    height: `${percentage}%`,
+    backgroundColor: color,
+  }), [percentage, color]);
+
+  return <div className={styles.chartBar} style={style} />;
+});
+
+ChartBar.displayName = 'MetricCard.ChartBar';
+
+// MiniChart component
 export interface MiniChartProps {
-  data: number[]; // Array of values
+  data: number[];
   color?: 'primary' | 'success' | 'warning' | 'error';
   height?: number;
 }
 
-export const MiniChart: React.FC<MiniChartProps> = ({
+export const MiniChart = memo<MiniChartProps>(({
   data,
   color = 'primary',
   height = 40,
 }) => {
-  const max = Math.max(...data);
-  const min = Math.min(...data);
-  const range = max - min;
+  const { min, range } = useMemo(() => {
+    const max = Math.max(...data);
+    const min = Math.min(...data);
+    return { min, range: max - min };
+  }, [data]);
+
+  const containerStyle = useMemo(() => ({ height: `${height}px` }), [height]);
 
   const getColor = (index: number, total: number) => {
-    // Gradient effect - darker towards the end
     const intensity = Math.floor(((index + 1) / total) * 5) * 100 + 200;
     return `var(--color-${color}-${intensity})`;
   };
@@ -201,25 +266,23 @@ export const MiniChart: React.FC<MiniChartProps> = ({
   return (
     <div
       className={styles.miniChart}
-      style={{ height: `${height}px` }}
+      style={containerStyle}
       role="img"
       aria-label="Metric trend visualization"
     >
-      {data.map((value, index) => {
-        const percentage = range === 0 ? 100 : ((value - min) / range) * 100;
-        return (
-          <div
-            key={index}
-            className={styles.chartBar}
-            style={{
-              height: `${percentage}%`,
-              backgroundColor: getColor(index, data.length),
-            }}
-          />
-        );
-      })}
+      {data.map((value, index) => (
+        <ChartBar
+          key={`bar-${index}`}
+          value={value}
+          min={min}
+          range={range}
+          color={getColor(index, data.length)}
+        />
+      ))}
     </div>
   );
-};
+});
+
+MiniChart.displayName = 'MetricCard.MiniChart';
 
 export default MetricCard;

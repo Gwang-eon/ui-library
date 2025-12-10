@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import type { ReactNode, ButtonHTMLAttributes } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Pagination.module.css';
@@ -9,37 +9,29 @@ const generatePageNumbers = (
   totalPages: number,
   siblings: number = 1
 ): (number | 'ellipsis')[] => {
-  // Always show first page, last page, current page, and siblings
   const pages: (number | 'ellipsis')[] = [];
 
-  // Always include first page
   pages.push(1);
 
-  // Calculate range around current page
   const leftSibling = Math.max(2, currentPage - siblings);
   const rightSibling = Math.min(totalPages - 1, currentPage + siblings);
 
-  // Add left ellipsis if needed
   if (leftSibling > 2) {
     pages.push('ellipsis');
   }
 
-  // Add pages around current
   for (let i = leftSibling; i <= rightSibling; i++) {
     pages.push(i);
   }
 
-  // Add right ellipsis if needed
   if (rightSibling < totalPages - 1) {
     pages.push('ellipsis');
   }
 
-  // Always include last page (if more than 1 page)
   if (totalPages > 1) {
     pages.push(totalPages);
   }
 
-  // Remove duplicates while preserving order
   const result: (number | 'ellipsis')[] = [];
   let prev: number | 'ellipsis' | null = null;
 
@@ -52,6 +44,60 @@ const generatePageNumbers = (
 
   return result;
 };
+
+// PaginationButton Component
+export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+  children: ReactNode;
+}
+
+export const PaginationButton = memo<PaginationButtonProps>(({
+  active = false,
+  children,
+  className = '',
+  ...props
+}) => {
+  const buttonClass = useMemo(() =>
+    [styles['pagination-btn'], active && styles.active, className]
+      .filter(Boolean)
+      .join(' '),
+    [active, className]
+  );
+
+  return (
+    <button className={buttonClass} {...props}>
+      {children}
+    </button>
+  );
+});
+
+PaginationButton.displayName = 'PaginationButton';
+
+// Page number button with memoized click handler
+interface PageButtonProps {
+  page: number;
+  isActive: boolean;
+  onPageChange: (page: number) => void;
+}
+
+const PageButton = memo<PageButtonProps>(({ page, isActive, onPageChange }) => {
+  const handleClick = useCallback(() => {
+    onPageChange(page);
+  }, [page, onPageChange]);
+
+  return (
+    <PaginationButton
+      onClick={handleClick}
+      active={isActive}
+      aria-label={`Go to page ${page}`}
+      aria-current={isActive ? 'page' : undefined}
+    >
+      {page}
+    </PaginationButton>
+  );
+});
+
+PageButton.displayName = 'PageButton';
 
 // Main Pagination Component
 export interface PaginationProps {
@@ -69,7 +115,7 @@ export interface PaginationProps {
   'aria-label'?: string;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({
+export const Pagination = memo<PaginationProps>(({
   currentPage,
   totalPages,
   onPageChange,
@@ -83,19 +129,42 @@ export const Pagination: React.FC<PaginationProps> = ({
   className = '',
   'aria-label': ariaLabel = 'Pagination',
 }) => {
-  const pages = generatePageNumbers(currentPage, totalPages, siblings);
+  const pages = useMemo(() =>
+    generatePageNumbers(currentPage, totalPages, siblings),
+    [currentPage, totalPages, siblings]
+  );
 
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
-  const paginationClass = [styles.pagination, className].filter(Boolean).join(' ');
+  const paginationClass = useMemo(() =>
+    [styles.pagination, className].filter(Boolean).join(' '),
+    [className]
+  );
+
+  // Memoized handlers
+  const goToFirst = useCallback(() => {
+    onPageChange(1);
+  }, [onPageChange]);
+
+  const goToPrev = useCallback(() => {
+    onPageChange(currentPage - 1);
+  }, [currentPage, onPageChange]);
+
+  const goToNext = useCallback(() => {
+    onPageChange(currentPage + 1);
+  }, [currentPage, onPageChange]);
+
+  const goToLast = useCallback(() => {
+    onPageChange(totalPages);
+  }, [totalPages, onPageChange]);
 
   return (
     <nav className={paginationClass} aria-label={ariaLabel}>
       {/* First Page Button */}
       {showFirstLast && (
         <PaginationButton
-          onClick={() => onPageChange(1)}
+          onClick={goToFirst}
           disabled={!canGoPrev}
           aria-label="Go to first page"
         >
@@ -106,7 +175,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       {/* Previous Button */}
       {showPrevNext && (
         <PaginationButton
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={goToPrev}
           disabled={!canGoPrev}
           aria-label="Go to previous page"
         >
@@ -125,22 +194,19 @@ export const Pagination: React.FC<PaginationProps> = ({
         }
 
         return (
-          <PaginationButton
+          <PageButton
             key={page}
-            onClick={() => onPageChange(page)}
-            active={page === currentPage}
-            aria-label={`Go to page ${page}`}
-            aria-current={page === currentPage ? 'page' : undefined}
-          >
-            {page}
-          </PaginationButton>
+            page={page}
+            isActive={page === currentPage}
+            onPageChange={onPageChange}
+          />
         );
       })}
 
       {/* Next Button */}
       {showPrevNext && (
         <PaginationButton
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={goToNext}
           disabled={!canGoNext}
           aria-label="Go to next page"
         >
@@ -151,7 +217,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       {/* Last Page Button */}
       {showFirstLast && (
         <PaginationButton
-          onClick={() => onPageChange(totalPages)}
+          onClick={goToLast}
           disabled={!canGoNext}
           aria-label="Go to last page"
         >
@@ -160,30 +226,9 @@ export const Pagination: React.FC<PaginationProps> = ({
       )}
     </nav>
   );
-};
+});
 
-// PaginationButton Component
-export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  active?: boolean;
-  children: ReactNode;
-}
-
-export const PaginationButton: React.FC<PaginationButtonProps> = ({
-  active = false,
-  children,
-  className = '',
-  ...props
-}) => {
-  const buttonClass = [styles['pagination-btn'], active && styles.active, className]
-    .filter(Boolean)
-    .join(' ');
-
-  return (
-    <button className={buttonClass} {...props}>
-      {children}
-    </button>
-  );
-};
+Pagination.displayName = 'Pagination';
 
 // PaginationInfo Component
 export interface PaginationInfoProps {
@@ -194,22 +239,31 @@ export interface PaginationInfoProps {
   className?: string;
 }
 
-export const PaginationInfo: React.FC<PaginationInfoProps> = ({
+export const PaginationInfo = memo<PaginationInfoProps>(({
   currentPage,
   totalPages,
   totalItems,
   pageSize,
   className = '',
 }) => {
-  const infoClass = [styles['pagination-info'], className].filter(Boolean).join(' ');
+  const infoClass = useMemo(() =>
+    [styles['pagination-info'], className].filter(Boolean).join(' '),
+    [className]
+  );
 
-  if (totalItems && pageSize) {
-    const start = (currentPage - 1) * pageSize + 1;
-    const end = Math.min(currentPage * pageSize, totalItems);
+  const rangeInfo = useMemo(() => {
+    if (totalItems && pageSize) {
+      const start = (currentPage - 1) * pageSize + 1;
+      const end = Math.min(currentPage * pageSize, totalItems);
+      return { start, end, totalItems };
+    }
+    return null;
+  }, [currentPage, totalItems, pageSize]);
 
+  if (rangeInfo) {
     return (
       <span className={infoClass}>
-        Showing <strong>{start}-{end}</strong> of <strong>{totalItems}</strong>
+        Showing <strong>{rangeInfo.start}-{rangeInfo.end}</strong> of <strong>{rangeInfo.totalItems}</strong>
       </span>
     );
   }
@@ -219,7 +273,9 @@ export const PaginationInfo: React.FC<PaginationInfoProps> = ({
       Page {currentPage} of {totalPages}
     </span>
   );
-};
+});
+
+PaginationInfo.displayName = 'PaginationInfo';
 
 // SimplePagination Component (Mobile-friendly)
 export interface SimplePaginationProps {
@@ -233,7 +289,7 @@ export interface SimplePaginationProps {
   'aria-label'?: string;
 }
 
-export const SimplePagination: React.FC<SimplePaginationProps> = ({
+export const SimplePagination = memo<SimplePaginationProps>(({
   currentPage,
   totalPages,
   onPageChange,
@@ -246,12 +302,23 @@ export const SimplePagination: React.FC<SimplePaginationProps> = ({
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
-  const paginationClass = [styles.pagination, className].filter(Boolean).join(' ');
+  const paginationClass = useMemo(() =>
+    [styles.pagination, className].filter(Boolean).join(' '),
+    [className]
+  );
+
+  const goToPrev = useCallback(() => {
+    onPageChange(currentPage - 1);
+  }, [currentPage, onPageChange]);
+
+  const goToNext = useCallback(() => {
+    onPageChange(currentPage + 1);
+  }, [currentPage, onPageChange]);
 
   return (
     <nav className={paginationClass} aria-label={ariaLabel}>
       <PaginationButton
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={goToPrev}
         disabled={!canGoPrev}
         aria-label="Go to previous page"
       >
@@ -261,7 +328,7 @@ export const SimplePagination: React.FC<SimplePaginationProps> = ({
       {showInfo && <PaginationInfo currentPage={currentPage} totalPages={totalPages} />}
 
       <PaginationButton
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={goToNext}
         disabled={!canGoNext}
         aria-label="Go to next page"
       >
@@ -269,10 +336,6 @@ export const SimplePagination: React.FC<SimplePaginationProps> = ({
       </PaginationButton>
     </nav>
   );
-};
+});
 
-// Display names
-Pagination.displayName = 'Pagination';
-PaginationButton.displayName = 'PaginationButton';
-PaginationInfo.displayName = 'PaginationInfo';
 SimplePagination.displayName = 'SimplePagination';

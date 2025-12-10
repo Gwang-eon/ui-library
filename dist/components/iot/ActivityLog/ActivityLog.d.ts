@@ -10,7 +10,7 @@ export interface LogContainerProps {
     maxHeight?: number | string;
     className?: string;
 }
-export declare const LogContainer: React.FC<LogContainerProps>;
+export declare const LogContainer: React.NamedExoticComponent<LogContainerProps>;
 export interface LogEntryProps {
     icon: IconType;
     level: LogLevel;
@@ -20,7 +20,7 @@ export interface LogEntryProps {
     onClick?: () => void;
     className?: string;
 }
-export declare const LogEntry: React.FC<LogEntryProps>;
+export declare const LogEntry: React.NamedExoticComponent<LogEntryProps>;
 export interface TimelineMetaItem {
     icon: IconType;
     text: string;
@@ -33,12 +33,12 @@ export interface ActivityLogItemProps {
     meta?: TimelineMetaItem[];
     className?: string;
 }
-export declare const ActivityLogItem: React.FC<ActivityLogItemProps>;
+export declare const ActivityLogItem: React.NamedExoticComponent<ActivityLogItemProps>;
 export interface TimelineContainerProps {
     children: React.ReactNode;
     className?: string;
 }
-export declare const TimelineContainer: React.FC<TimelineContainerProps>;
+export declare const TimelineContainer: React.NamedExoticComponent<TimelineContainerProps>;
 export interface LogGroupProps {
     title: string;
     icon?: IconType;
@@ -46,34 +46,34 @@ export interface LogGroupProps {
     children: React.ReactNode;
     className?: string;
 }
-export declare const LogGroup: React.FC<LogGroupProps>;
+export declare const LogGroup: React.NamedExoticComponent<LogGroupProps>;
 export interface GroupedLogContainerProps {
     children: React.ReactNode;
     className?: string;
 }
-export declare const GroupedLogContainer: React.FC<GroupedLogContainerProps>;
+export declare const GroupedLogContainer: React.NamedExoticComponent<GroupedLogContainerProps>;
 export interface LogStatProps {
     value: string | number;
     label: string;
     level?: LogLevel;
     className?: string;
 }
-export declare const LogStat: React.FC<LogStatProps>;
+export declare const LogStat: React.NamedExoticComponent<LogStatProps>;
 export interface LogStatsProps {
     children: React.ReactNode;
     columns?: number;
     className?: string;
     style?: React.CSSProperties;
 }
-export declare const LogStats: React.FC<LogStatsProps>;
+export declare const LogStats: React.NamedExoticComponent<LogStatsProps>;
 declare const _default: {
-    LogContainer: React.FC<LogContainerProps>;
-    LogEntry: React.FC<LogEntryProps>;
-    TimelineContainer: React.FC<TimelineContainerProps>;
-    ActivityLogItem: React.FC<ActivityLogItemProps>;
-    LogGroup: React.FC<LogGroupProps>;
-    GroupedLogContainer: React.FC<GroupedLogContainerProps>;
-    LogStat: React.FC<LogStatProps>;
-    LogStats: React.FC<LogStatsProps>;
+    LogContainer: React.NamedExoticComponent<LogContainerProps>;
+    LogEntry: React.NamedExoticComponent<LogEntryProps>;
+    TimelineContainer: React.NamedExoticComponent<TimelineContainerProps>;
+    ActivityLogItem: React.NamedExoticComponent<ActivityLogItemProps>;
+    LogGroup: React.NamedExoticComponent<LogGroupProps>;
+    GroupedLogContainer: React.NamedExoticComponent<GroupedLogContainerProps>;
+    LogStat: React.NamedExoticComponent<LogStatProps>;
+    LogStats: React.NamedExoticComponent<LogStatsProps>;
 };
 export default _default;

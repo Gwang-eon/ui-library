@@ -76,6 +76,7 @@ export const Anchor = ({
 
   // Flatten items to get all keys and hrefs
   const flattenItems = useCallback((items: AnchorItem[]): AnchorItem[] => {
+    if (!items || !Array.isArray(items)) return [];
     return items.reduce((acc: AnchorItem[], item) => {
       acc.push(item);
       if (item.children) {

@@ -30,11 +30,11 @@ export interface StatusCardProps {
     loading?: boolean;
     className?: string;
 }
-export declare const StatusCard: React.FC<StatusCardProps>;
+export declare const StatusCard: React.NamedExoticComponent<StatusCardProps>;
 export interface StatusCardGridProps {
     children: React.ReactNode;
     columns?: number;
     className?: string;
 }
-export declare const StatusCardGrid: React.FC<StatusCardGridProps>;
+export declare const StatusCardGrid: React.NamedExoticComponent<StatusCardGridProps>;
 export default StatusCard;

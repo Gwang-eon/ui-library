@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, type ReactNode } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, memo, type ReactNode } from 'react';
 import { ChevronDown } from 'lucide-react';
 import styles from './Select.module.css';
 
@@ -37,6 +37,40 @@ export interface SelectProps {
   id?: string;
 }
 
+// Memoized Option component
+interface OptionItemProps {
+  option: SelectOption;
+  isSelected: boolean;
+  isFocused: boolean;
+  onSelect: (option: SelectOption) => void;
+}
+
+const OptionItem = memo<OptionItemProps>(({ option, isSelected, isFocused, onSelect }) => {
+  const handleClick = useCallback(() => {
+    onSelect(option);
+  }, [option, onSelect]);
+
+  const className = useMemo(() =>
+    `${styles['custom-select-option']} ${isSelected ? styles.selected : ''} ${isFocused ? styles.focused : ''} ${option.disabled ? styles.disabled : ''}`,
+    [isSelected, isFocused, option.disabled]
+  );
+
+  return (
+    <div
+      className={className}
+      onClick={handleClick}
+      role="option"
+      aria-selected={isSelected}
+      data-value={option.value}
+    >
+      {option.icon && <span className={styles['option-icon']}>{option.icon}</span>}
+      <span>{option.label}</span>
+    </div>
+  );
+});
+
+OptionItem.displayName = 'Select.OptionItem';
+
 export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
   (
     {
@@ -73,7 +107,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     const currentValue = isControlled ? controlledValue : selectedValue;
 
     // Flatten all options (from both options and groups)
-    const allOptions = React.useMemo(() => {
+    const allOptions = useMemo(() => {
       const opts: SelectOption[] = [...options];
       groups.forEach((group) => {
         opts.push(...group.options);
@@ -82,36 +116,36 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     }, [options, groups]);
 
     // Find selected option
-    const selectedOption = allOptions.find((opt) => opt.value === currentValue);
+    const selectedOption = useMemo(() =>
+      allOptions.find((opt) => opt.value === currentValue),
+      [allOptions, currentValue]
+    );
 
-    // Handle value change
-    const handleValueChange = (newValue: string) => {
-      if (!isControlled) {
-        setSelectedValue(newValue);
+    // Handle option click
+    const handleOptionClick = useCallback((option: SelectOption) => {
+      if (!option.disabled) {
+        if (!isControlled) {
+          setSelectedValue(option.value);
+        }
+        const foundOption = allOptions.find((opt) => opt.value === option.value) || null;
+        onChange?.(option.value, foundOption);
+        setIsOpen(false);
+        triggerRef.current?.focus();
       }
-      const option = allOptions.find((opt) => opt.value === newValue) || null;
-      onChange?.(newValue, option);
-    };
+    }, [isControlled, allOptions, onChange]);
 
     // Toggle dropdown
-    const toggleDropdown = () => {
+    const toggleDropdown = useCallback(() => {
       if (!disabled) {
         setIsOpen((prev) => !prev);
         setFocusedIndex(-1);
       }
-    };
-
-    // Handle option click
-    const handleOptionClick = (option: SelectOption) => {
-      if (!option.disabled) {
-        handleValueChange(option.value);
-        setIsOpen(false);
-        triggerRef.current?.focus();
-      }
-    };
+    }, [disabled]);
 
     // Close dropdown when clicking outside
     useEffect(() => {
+      if (!isOpen) return;
+
       const handleClickOutside = (event: MouseEvent) => {
         if (
           containerRef.current &&
@@ -121,16 +155,14 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         }
       };
 
-      if (isOpen) {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-          document.removeEventListener('mousedown', handleClickOutside);
-        };
-      }
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
     }, [isOpen]);
 
     // Keyboard navigation
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
       if (disabled) return;
 
       switch (event.key) {
@@ -170,7 +202,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
           }
           break;
       }
-    };
+    }, [disabled, isOpen, focusedIndex, allOptions, handleOptionClick]);
 
     // Auto-scroll focused option into view
     useEffect(() => {
@@ -182,35 +214,53 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       }
     }, [focusedIndex, isOpen]);
 
+    // Memoized ref callback
+    const setRefs = useCallback((node: HTMLDivElement | null) => {
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+      (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+    }, [ref]);
+
+    // Memoized class names
+    const containerClassName = useMemo(() =>
+      `${styles['input-group']} ${fullWidth ? styles['input-full-width'] : ''} ${className}`,
+      [fullWidth, className]
+    );
+
+    const selectClassName = useMemo(() =>
+      `${styles['custom-select']} ${isOpen ? styles.open : ''} ${state === 'error' ? styles.error : ''} ${disabled ? styles.disabled : ''} ${styles[`select-${size}`] || ''}`,
+      [isOpen, state, disabled, size]
+    );
+
+    const triggerClassName = useMemo(() =>
+      `${styles['custom-select-trigger']} ${!selectedOption ? styles.placeholder : ''}`,
+      [selectedOption]
+    );
+
     // Render options from array
-    const renderOptions = (opts: SelectOption[]) => {
+    const renderOptions = useCallback((opts: SelectOption[]) => {
       return opts.map((option) => {
         const globalIndex = allOptions.indexOf(option);
         const isSelected = option.value === currentValue;
         const isFocused = globalIndex === focusedIndex;
 
         return (
-          <div
+          <OptionItem
             key={option.value}
-            className={`${styles['custom-select-option']} ${
-              isSelected ? styles.selected : ''
-            } ${isFocused ? styles.focused : ''} ${
-              option.disabled ? styles.disabled : ''
-            }`}
-            onClick={() => handleOptionClick(option)}
-            role="option"
-            aria-selected={isSelected}
-            data-value={option.value}
-          >
-            {option.icon && <span className={styles['option-icon']}>{option.icon}</span>}
-            <span>{option.label}</span>
-          </div>
+            option={option}
+            isSelected={isSelected}
+            isFocused={isFocused}
+            onSelect={handleOptionClick}
+          />
         );
       });
-    };
+    }, [allOptions, currentValue, focusedIndex, handleOptionClick]);
 
     // Render dropdown content
-    const renderDropdown = () => {
+    const dropdownContent = useMemo(() => {
       if (groups.length > 0) {
         return groups.map((group) => (
           <React.Fragment key={group.label}>
@@ -220,20 +270,23 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         ));
       }
       return renderOptions(options);
-    };
+    }, [groups, options, renderOptions]);
+
+    // Native select options
+    const nativeOptions = useMemo(() =>
+      allOptions.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      )),
+      [allOptions]
+    );
+
+    // Noop handler for native select
+    const noop = useCallback(() => {}, []);
 
     return (
-      <div
-        ref={(node) => {
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref) {
-            ref.current = node;
-          }
-          (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-        }}
-        className={`${styles['input-group']} ${fullWidth ? styles['input-full-width'] : ''} ${className}`}
-      >
+      <div ref={setRefs} className={containerClassName}>
         {label && (
           <label htmlFor={selectId} className={styles['input-label']}>
             {label}
@@ -241,19 +294,13 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
           </label>
         )}
 
-        <div
-          className={`${styles['custom-select']} ${
-            isOpen ? styles.open : ''
-          } ${state === 'error' ? styles.error : ''} ${
-            disabled ? styles.disabled : ''
-          } ${styles[`select-${size}`] || ''}`}
-        >
+        <div className={selectClassName}>
           {/* Hidden native select for form submission */}
           <select
             id={selectId}
             name={name}
             value={currentValue}
-            onChange={() => {}}
+            onChange={noop}
             className={styles['native-select']}
             disabled={disabled}
             required={required}
@@ -261,19 +308,13 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
             aria-hidden="true"
           >
             <option value="">{placeholder}</option>
-            {allOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {nativeOptions}
           </select>
 
           {/* Custom trigger */}
           <div
             ref={triggerRef}
-            className={`${styles['custom-select-trigger']} ${
-              !selectedOption ? styles.placeholder : ''
-            }`}
+            className={triggerClassName}
             onClick={toggleDropdown}
             onKeyDown={handleKeyDown}
             tabIndex={disabled ? -1 : 0}
@@ -301,7 +342,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
             id={`${selectId}-listbox`}
             aria-labelledby={label ? `${selectId}-label` : undefined}
           >
-            {renderDropdown()}
+            {dropdownContent}
           </div>
         </div>
 
