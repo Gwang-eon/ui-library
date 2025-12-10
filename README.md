@@ -172,9 +172,14 @@ import '@gractor/ui/styles';
 | `ActionSheet` | 액션 시트 |
 | `BottomSheet` | 바텀 시트 |
 | `FAB` | 플로팅 액션 버튼 |
+| `InfiniteScroll` | 무한 스크롤 |
 | `MobileNavBar` | 모바일 내비게이션 |
+| `Picker` | 휠 선택기 (iOS/Android 스타일) |
 | `PullToRefresh` | 당겨서 새로고침 |
+| `SearchBar` | 모바일 검색바 |
+| `Stepper` | 숫자 증감 입력 |
 | `SwipeActions` | 스와이프 액션 |
+| `VirtualList` | 가상화 리스트 (대용량 데이터) |
 
 ## 다크모드 지원
 

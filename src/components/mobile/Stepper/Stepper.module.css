@@ -1,0 +1,277 @@
+/**
+ * Stepper Component Styles
+ * Category: Mobile
+ * Numeric input with increment/decrement buttons
+ */
+
+/* ==================== Container ==================== */
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ==================== Button ==================== */
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-primary-600);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--surface-tertiary);
+}
+
+.button:active:not(:disabled) {
+  background: var(--border-default);
+}
+
+.button:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+/* ==================== Icon ==================== */
+
+.icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5px;
+}
+
+/* ==================== Value Display ==================== */
+
+.value {
+  min-width: 48px;
+  padding: 0 var(--spacing-2);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.value.editable {
+  cursor: text;
+}
+
+.value.editable:hover {
+  background: var(--surface-tertiary);
+  border-radius: var(--radius-sm);
+}
+
+/* ==================== Input ==================== */
+
+.input {
+  width: 56px;
+  height: 32px;
+  padding: 0 var(--spacing-1);
+  background: var(--surface-primary);
+  border: 2px solid var(--color-primary-500);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  text-align: center;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ==================== Size Variants ==================== */
+
+/* Small */
+.sizeSm .button {
+  width: 32px;
+  height: 32px;
+}
+
+.sizeSm .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.sizeSm .value {
+  min-width: 40px;
+  font-size: var(--font-size-body-small);
+}
+
+.sizeSm .input {
+  width: 48px;
+  height: 28px;
+  font-size: var(--font-size-body-small);
+}
+
+/* Large */
+.sizeLg .button {
+  width: 48px;
+  height: 48px;
+}
+
+.sizeLg .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.sizeLg .value {
+  min-width: 64px;
+  font-size: var(--font-size-body-large);
+}
+
+.sizeLg .input {
+  width: 72px;
+  height: 40px;
+  font-size: var(--font-size-body-large);
+}
+
+/* ==================== Variant: Filled ==================== */
+
+.variantFilled {
+  background: var(--color-primary-50);
+}
+
+.variantFilled .button:hover:not(:disabled) {
+  background: var(--color-primary-100);
+}
+
+.variantFilled .button:active:not(:disabled) {
+  background: var(--color-primary-200);
+}
+
+/* ==================== Variant: Outlined ==================== */
+
+.variantOutlined {
+  background: transparent;
+  border: 1px solid var(--border-default);
+}
+
+.variantOutlined .button {
+  border-left: 1px solid var(--border-default);
+}
+
+.variantOutlined .decrementBtn {
+  border-left: none;
+  border-right: 1px solid var(--border-default);
+}
+
+/* ==================== Disabled State ==================== */
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .stepper {
+    background: var(--palette-gray-800);
+  }
+
+  .button {
+    color: var(--color-primary-400);
+  }
+
+  .button:hover:not(:disabled) {
+    background: var(--palette-gray-700);
+  }
+
+  .button:active:not(:disabled) {
+    background: var(--palette-gray-600);
+  }
+
+  .button:disabled {
+    color: var(--palette-gray-600);
+  }
+
+  .value {
+    color: var(--palette-gray-100);
+  }
+
+  .value.editable:hover {
+    background: var(--palette-gray-700);
+  }
+
+  .input {
+    background: var(--palette-gray-900);
+    border-color: var(--color-primary-400);
+    color: var(--palette-gray-100);
+  }
+
+  .variantFilled {
+    background: rgba(59, 130, 246, 0.2);
+  }
+
+  .variantFilled .button:hover:not(:disabled) {
+    background: rgba(59, 130, 246, 0.3);
+  }
+
+  .variantOutlined {
+    border-color: var(--palette-gray-700);
+  }
+
+  .variantOutlined .button {
+    border-color: var(--palette-gray-700);
+  }
+}
+
+/* Manual dark mode */
+body.dark-mode .stepper,
+body[data-theme='dark'] .stepper {
+  background: var(--palette-gray-800);
+}
+
+body.dark-mode .button,
+body[data-theme='dark'] .button {
+  color: var(--color-primary-400);
+}
+
+body.dark-mode .value,
+body[data-theme='dark'] .value {
+  color: var(--palette-gray-100);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}
+
+/* ==================== Touch Optimization ==================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .sizeSm .button {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
