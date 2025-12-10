@@ -492,152 +492,189 @@
    DARK MODE
    ======================================== */
 
-@media (prefers-color-scheme: dark) {
-  /* Device Card (Grid View) */
-  .deviceCard,
-  .listItem,
-  .compactCard {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-  }
+/* Device Card (Grid View) */
+:global([data-theme="dark"]) .deviceCard,
+:global([data-theme="dark"]) .listItem,
+:global([data-theme="dark"]) .compactCard,
+:global(.dark) .deviceCard,
+:global(.dark) .listItem,
+:global(.dark) .compactCard {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
 
-  .deviceCard:hover,
-  .listItem:hover,
-  .compactCard:hover {
-    border-color: var(--palette-gray-600);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
+:global([data-theme="dark"]) .deviceCard:hover,
+:global([data-theme="dark"]) .listItem:hover,
+:global([data-theme="dark"]) .compactCard:hover,
+:global(.dark) .deviceCard:hover,
+:global(.dark) .listItem:hover,
+:global(.dark) .compactCard:hover {
+  border-color: var(--palette-gray-600);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
 
-  .deviceCard:focus-visible,
-  .actionButton:focus-visible,
-  .compactActionButton:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .deviceCard:focus-visible,
+:global([data-theme="dark"]) .actionButton:focus-visible,
+:global([data-theme="dark"]) .compactActionButton:focus-visible,
+:global(.dark) .deviceCard:focus-visible,
+:global(.dark) .actionButton:focus-visible,
+:global(.dark) .compactActionButton:focus-visible {
+  outline-color: var(--color-primary-400);
+}
 
-  /* Device Info */
-  .deviceName,
-  .listItemTitle,
-  .compactName {
-    color: var(--palette-gray-100);
-  }
+/* Device Info */
+:global([data-theme="dark"]) .deviceName,
+:global([data-theme="dark"]) .listItemTitle,
+:global([data-theme="dark"]) .compactName,
+:global(.dark) .deviceName,
+:global(.dark) .listItemTitle,
+:global(.dark) .compactName {
+  color: var(--palette-gray-100);
+}
 
-  .deviceType {
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .deviceType,
+:global(.dark) .deviceType {
+  color: var(--palette-gray-400);
+}
 
-  /* Device Stats */
-  .deviceStats {
-    border-top-color: var(--palette-gray-700);
-  }
+/* Device Stats */
+:global([data-theme="dark"]) .deviceStats,
+:global(.dark) .deviceStats {
+  border-top-color: var(--palette-gray-700);
+}
 
-  .deviceStatLabel,
-  .listItemMeta {
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .deviceStatLabel,
+:global([data-theme="dark"]) .listItemMeta,
+:global(.dark) .deviceStatLabel,
+:global(.dark) .listItemMeta {
+  color: var(--palette-gray-400);
+}
 
-  .deviceStatValue {
-    color: var(--palette-gray-100);
-  }
+:global([data-theme="dark"]) .deviceStatValue,
+:global(.dark) .deviceStatValue {
+  color: var(--palette-gray-100);
+}
 
-  /* Status Badges */
-  .statusOnline {
-    background: rgba(34, 197, 94, 0.2);
-    color: var(--color-success-400);
-  }
+/* Status Badges */
+:global([data-theme="dark"]) .statusOnline,
+:global(.dark) .statusOnline {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-400);
+}
 
-  .statusOffline {
-    background: rgba(107, 114, 128, 0.3);
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .statusOffline,
+:global(.dark) .statusOffline {
+  background: rgba(107, 114, 128, 0.3);
+  color: var(--palette-gray-400);
+}
 
-  .statusWarning {
-    background: rgba(245, 158, 11, 0.2);
-    color: var(--color-warning-400);
-  }
+:global([data-theme="dark"]) .statusWarning,
+:global(.dark) .statusWarning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-warning-400);
+}
 
-  .statusError {
-    background: rgba(239, 68, 68, 0.2);
-    color: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .statusError,
+:global(.dark) .statusError {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
 
-  /* Badges (Compact View) */
-  .badgeSuccess {
-    background: rgba(34, 197, 94, 0.2);
-    color: var(--color-success-400);
-  }
+/* Badges (Compact View) */
+:global([data-theme="dark"]) .badgeSuccess,
+:global(.dark) .badgeSuccess {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-400);
+}
 
-  .badgeError {
-    background: rgba(239, 68, 68, 0.2);
-    color: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .badgeError,
+:global(.dark) .badgeError {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
 
-  .badgeWarning {
-    background: rgba(245, 158, 11, 0.2);
-    color: var(--color-warning-400);
-  }
+:global([data-theme="dark"]) .badgeWarning,
+:global(.dark) .badgeWarning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-warning-400);
+}
 
-  /* List Icon Circle */
-  .listIconCircle,
-  .compactContent {
-    color: var(--palette-gray-100);
-  }
+/* List Icon Circle */
+:global([data-theme="dark"]) .listIconCircle,
+:global([data-theme="dark"]) .compactContent,
+:global(.dark) .listIconCircle,
+:global(.dark) .compactContent {
+  color: var(--palette-gray-100);
+}
 
-  .compactStatus {
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .compactStatus,
+:global(.dark) .compactStatus {
+  color: var(--palette-gray-400);
+}
 
-  .separator {
-    color: var(--palette-gray-600);
-  }
+:global([data-theme="dark"]) .separator,
+:global(.dark) .separator {
+  color: var(--palette-gray-600);
+}
 
-  /* Action Buttons */
-  .actionButton,
-  .compactActionButton {
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-400);
-  }
+/* Action Buttons */
+:global([data-theme="dark"]) .actionButton,
+:global([data-theme="dark"]) .compactActionButton,
+:global(.dark) .actionButton,
+:global(.dark) .compactActionButton {
+  border-color: var(--palette-gray-700);
+  color: var(--palette-gray-400);
+}
 
-  .actionButton:hover,
-  .compactActionButton:hover {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-100);
-    border-color: var(--palette-gray-600);
-  }
+:global([data-theme="dark"]) .actionButton:hover,
+:global([data-theme="dark"]) .compactActionButton:hover,
+:global(.dark) .actionButton:hover,
+:global(.dark) .compactActionButton:hover {
+  background: var(--palette-gray-750);
+  color: var(--palette-gray-100);
+  border-color: var(--palette-gray-600);
+}
 
-  /* Empty State */
-  .emptyStateIcon {
-    color: var(--palette-gray-600);
-  }
+/* Empty State */
+:global([data-theme="dark"]) .emptyStateIcon,
+:global(.dark) .emptyStateIcon {
+  color: var(--palette-gray-600);
+}
 
-  .emptyStateTitle {
-    color: var(--palette-gray-100);
-  }
+:global([data-theme="dark"]) .emptyStateTitle,
+:global(.dark) .emptyStateTitle {
+  color: var(--palette-gray-100);
+}
 
-  .emptyStateDescription {
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .emptyStateDescription,
+:global(.dark) .emptyStateDescription {
+  color: var(--palette-gray-400);
+}
 
-  .emptyStateButton {
-    background: var(--color-primary-500);
-  }
+:global([data-theme="dark"]) .emptyStateButton,
+:global(.dark) .emptyStateButton {
+  background: var(--color-primary-500);
+}
 
-  .emptyStateButton:hover {
-    background: var(--color-primary-600);
-  }
+:global([data-theme="dark"]) .emptyStateButton:hover,
+:global(.dark) .emptyStateButton:hover {
+  background: var(--color-primary-600);
+}
 
-  .emptyStateButton:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .emptyStateButton:focus-visible,
+:global(.dark) .emptyStateButton:focus-visible {
+  outline-color: var(--color-primary-400);
+}
 
-  /* Skeleton Loading */
-  .skeleton {
-    background: linear-gradient(
-      90deg,
-      var(--palette-gray-750) 25%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 75%
-    );
-  }
+/* Skeleton Loading */
+:global([data-theme="dark"]) .skeleton,
+:global(.dark) .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--palette-gray-750) 25%,
+    var(--palette-gray-700) 50%,
+    var(--palette-gray-750) 75%
+  );
 }
 
 /* ========================================

@@ -287,57 +287,67 @@
    DARK MODE
    ======================================== */
 
-@media (prefers-color-scheme: dark) {
-  .carousel {
-    background: var(--palette-gray-800);
-    box-shadow: var(--shadow-lg);
-  }
+:global([data-theme="dark"]) .carousel,
+:global(.dark) .carousel {
+  background: var(--palette-gray-800);
+  box-shadow: var(--shadow-lg);
+}
 
-  .carousel:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .carousel:focus-visible,
+:global(.dark) .carousel:focus-visible {
+  outline-color: var(--color-primary-400);
+}
 
-  .carouselControl {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
+:global([data-theme="dark"]) .carouselControl,
+:global(.dark) .carouselControl {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
 
-  .carouselControl:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
+:global([data-theme="dark"]) .carouselControl:hover,
+:global(.dark) .carouselControl:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+}
 
-  .carouselControl:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .carouselControl:focus-visible,
+:global(.dark) .carouselControl:focus-visible {
+  outline-color: var(--color-primary-400);
+}
 
-  .carouselIndicator {
-    background: rgba(255, 255, 255, 0.3);
-  }
+:global([data-theme="dark"]) .carouselIndicator,
+:global(.dark) .carouselIndicator {
+  background: rgba(255, 255, 255, 0.3);
+}
 
-  .carouselIndicator:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
+:global([data-theme="dark"]) .carouselIndicator:hover,
+:global(.dark) .carouselIndicator:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
 
-  .carouselIndicator.active {
-    background: var(--color-primary-500);
-  }
+:global([data-theme="dark"]) .carouselIndicator.active,
+:global(.dark) .carouselIndicator.active {
+  background: var(--color-primary-500);
+}
 
-  .carouselIndicator:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .carouselIndicator:focus-visible,
+:global(.dark) .carouselIndicator:focus-visible {
+  outline-color: var(--color-primary-400);
+}
 
-  .carouselThumbnail {
-    border-color: transparent;
-  }
+:global([data-theme="dark"]) .carouselThumbnail,
+:global(.dark) .carouselThumbnail {
+  border-color: transparent;
+}
 
-  .carouselThumbnail.active {
-    border-color: var(--color-primary-500);
-  }
+:global([data-theme="dark"]) .carouselThumbnail.active,
+:global(.dark) .carouselThumbnail.active {
+  border-color: var(--color-primary-500);
+}
 
-  .carouselThumbnail:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .carouselThumbnail:focus-visible,
+:global(.dark) .carouselThumbnail:focus-visible {
+  outline-color: var(--color-primary-400);
 }
 
 /* ========================================
