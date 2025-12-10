@@ -13,7 +13,11 @@
       "require": "./dist/index.cjs"
     },
     "./styles": "./dist/ui.css",
+    "./styles/all": "./dist/styles/index.css",
+    "./styles/tokens": "./dist/styles/design-tokens.css",
+    "./styles/base": "./dist/styles/base.css",
     "./dist/ui.css": "./dist/ui.css",
+    "./dist/styles/*": "./dist/styles/*",
     "./tokens": {
       "types": "./dist/tokens/index.d.ts",
       "import": "./dist/tokens/index.js",

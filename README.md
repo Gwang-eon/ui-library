@@ -54,11 +54,15 @@ const padding = spacing.spacing[4]; // '16px'
 ### CSS 스타일
 
 ```tsx
-// 번들된 전체 스타일 (권장)
+// 컴포넌트 스타일 (CSS Modules 번들)
 import '@gractor/ui/styles';
 
-// 또는 직접 경로
-import '@gractor/ui/dist/ui.css';
+// 개별 스타일 임포트
+import '@gractor/ui/styles/tokens';  // CSS 변수 (design-tokens)
+import '@gractor/ui/styles/base';    // 기본 스타일
+
+// 모든 스타일 (tokens + base + atomic)
+import '@gractor/ui/styles/all';
 ```
 
 ## 컴포넌트 목록
