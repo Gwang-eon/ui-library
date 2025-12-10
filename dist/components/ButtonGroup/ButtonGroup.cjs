@@ -1,0 +1,2 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const s=require("react/jsx-runtime"),n=require("./ButtonGroup.module.css.cjs"),e=({children:o,className:t="",...u})=>{const r=[n["btn-group"],t].filter(Boolean).join(" ");return s.jsx("div",{className:r,role:"group",...u,children:o})};e.displayName="ButtonGroup";exports.ButtonGroup=e;exports.default=e;
+//# sourceMappingURL=ButtonGroup.cjs.map

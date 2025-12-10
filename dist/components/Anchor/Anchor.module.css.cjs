@@ -1,0 +1,2 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const c="_anchor_v31j5_7",n="_anchorItem_v31j5_15",o="_anchorLink_v31j5_23",t="_active_v31j5_51",a="_anchorIcon_v31j5_62",e="_anchorSubmenu_v31j5_78",r="_sticky_v31j5_99",_={anchor:c,anchorItem:n,anchorLink:o,active:t,anchorIcon:a,anchorSubmenu:e,sticky:r};exports.active=t;exports.anchor=c;exports.anchorIcon=a;exports.anchorItem=n;exports.anchorLink=o;exports.anchorSubmenu=e;exports.default=_;exports.sticky=r;
+//# sourceMappingURL=Anchor.module.css.cjs.map

@@ -1,0 +1,2 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const e="_watermarkContainer_pex28_7",r="_watermark_pex28_7",a="_watermarkText_pex28_26",t="_watermarkFullscreen_pex28_42",n={watermarkContainer:e,watermark:r,watermarkText:a,watermarkFullscreen:t};exports.default=n;exports.watermark=r;exports.watermarkContainer=e;exports.watermarkFullscreen=t;exports.watermarkText=a;
+//# sourceMappingURL=Watermark.module.css.cjs.map

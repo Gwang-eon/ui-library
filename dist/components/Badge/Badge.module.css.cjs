@@ -1,0 +1,2 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const e="_badge_1vabs_11",a={badge:e,"badge-sm":"_badge-sm_1vabs_26","badge-lg":"_badge-lg_1vabs_35","badge-default":"_badge-default_1vabs_45","badge-primary":"_badge-primary_1vabs_50","badge-success":"_badge-success_1vabs_55","badge-warning":"_badge-warning_1vabs_60","badge-error":"_badge-error_1vabs_65"};exports.badge=e;exports.default=a;
+//# sourceMappingURL=Badge.module.css.cjs.map

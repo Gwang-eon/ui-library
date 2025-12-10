@@ -1,0 +1,2 @@
+"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const r="_breadcrumb_z6u3r_6",e={breadcrumb:r,"breadcrumb-item":"_breadcrumb-item_z6u3r_14","breadcrumb-icon":"_breadcrumb-icon_z6u3r_21","breadcrumb-separator":"_breadcrumb-separator_z6u3r_36","breadcrumb-link":"_breadcrumb-link_z6u3r_51","breadcrumb-current":"_breadcrumb-current_z6u3r_68"};exports.breadcrumb=r;exports.default=e;
+//# sourceMappingURL=Breadcrumb.module.css.cjs.map
