@@ -4,12 +4,17 @@ IoT Platform UI Component Library
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18%20%7C%2019-61dafb.svg)](https://reactjs.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![CI](https://github.com/Gwang-eon/ui-library/actions/workflows/ci.yml/badge.svg)](https://github.com/Gwang-eon/ui-library/actions/workflows/ci.yml)
 
 ## 설치
 
 ```bash
-# npm
-npm install @gractor/ui
+# GitHub에서 직접 설치
+npm install github:Gwang-eon/ui-library
+
+# 또는 HTTPS URL
+npm install git+https://github.com/Gwang-eon/ui-library.git
 
 # 로컬 경로로 설치 (개발용)
 npm install ../ui-library
@@ -265,6 +270,14 @@ WCAG 2.1 AA 수준의 접근성을 지원합니다:
 />
 ```
 
+## 기여하기
+
+기여를 환영합니다! [CONTRIBUTING.md](./CONTRIBUTING.md)를 참고해 주세요.
+
+## 보안
+
+보안 취약점을 발견하셨다면 [SECURITY.md](./SECURITY.md)를 참고해 주세요.
+
 ## 라이선스
 
-MIT
+[MIT](./LICENSE)
