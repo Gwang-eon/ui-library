@@ -55,19 +55,28 @@ export default defineConfig({
         tokens: resolve(__dirname, 'src/tokens/index.ts'),
       },
       formats: ['es', 'cjs'],
+      fileName: (format, entryName) => {
+        const ext = format === 'es' ? 'js' : 'cjs';
+        return `${entryName}.${ext}`;
+      },
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime', 'react-datepicker', 'lucide-react'],
       output: {
-        preserveModules: true,
-        preserveModulesRoot: 'src',
+        preserveModules: false,
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
         },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') {
+            return 'styles/gractor-ui.css';
+          }
+          return assetInfo.name || 'assets/[name][extname]';
+        },
       },
     },
-    cssCodeSplit: true,
+    cssCodeSplit: false,
     sourcemap: true,
   },
 });

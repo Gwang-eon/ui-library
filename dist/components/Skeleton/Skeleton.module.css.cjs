@@ -1,2 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const e="_skeleton_m2xly_13",l="_skeletonShimmer_m2xly_1",t="_skeletonLine_m2xly_29",s="_skeletonRect_m2xly_35",n="_skeletonCircle_m2xly_40",o="_skeletonPulse_m2xly_60",k={skeleton:e,skeletonShimmer:l,skeletonLine:t,skeletonRect:s,skeletonCircle:n,skeletonPulse:o};exports.default=k;exports.skeleton=e;exports.skeletonCircle=n;exports.skeletonLine=t;exports.skeletonPulse=o;exports.skeletonRect=s;exports.skeletonShimmer=l;
-//# sourceMappingURL=Skeleton.module.css.cjs.map

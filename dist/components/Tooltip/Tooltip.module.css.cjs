@@ -1,2 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const t="_tooltip_12ioy_12",o="_tooltipTop_12ioy_35",i="_tooltipBottom_12ioy_39",l="_tooltipLeft_12ioy_43",p="_tooltipRight_12ioy_47",_="_tooltipRich_12ioy_55",e={tooltip:t,tooltipTop:o,tooltipBottom:i,tooltipLeft:l,tooltipRight:p,tooltipRich:_};exports.default=e;exports.tooltip=t;exports.tooltipBottom=i;exports.tooltipLeft=l;exports.tooltipRich=_;exports.tooltipRight=p;exports.tooltipTop=o;
-//# sourceMappingURL=Tooltip.module.css.cjs.map

@@ -1,2 +1,0 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const n=require("react/jsx-runtime"),e=require("./Badge.module.css.cjs"),d=({variant:t="default",size:a="md",children:s,className:l="",style:o})=>{const u=[e.default.badge,e.default[`badge-${t}`],a!=="md"&&e.default[`badge-${a}`],l].filter(Boolean).join(" ");return n.jsx("span",{className:u,style:o,children:s})};d.displayName="Badge";exports.Badge=d;
-//# sourceMappingURL=Badge.cjs.map

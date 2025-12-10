@@ -1,2 +1,0 @@
-"use strict";Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:"Module"}});const i="_pagination_1yj91_6",n="_active_1yj91_43",a={pagination:i,"pagination-ellipsis":"_pagination-ellipsis_1yj91_19","pagination-btn":"_pagination-btn_1yj91_26",active:n,"pagination-info":"_pagination-info_1yj91_100"};exports.active=n;exports.default=a;exports.pagination=i;
-//# sourceMappingURL=Pagination.module.css.cjs.map
