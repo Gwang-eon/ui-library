@@ -1,0 +1,102 @@
+/**
+ * InfiniteScroll Component Styles
+ * Category: Mobile
+ * Infinite scrolling container for mobile-optimized data loading
+ */
+
+/* ==================== Container ==================== */
+
+.infiniteScroll {
+  position: relative;
+  width: 100%;
+}
+
+.scrollContainer {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+/* ==================== Loader ==================== */
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--color-primary-500);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderText {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+/* ==================== End Message ==================== */
+
+.endMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* ==================== Dark Mode ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .spinner {
+    border-color: var(--palette-gray-700);
+    border-top-color: var(--color-primary-400);
+  }
+
+  .loaderText,
+  .endMessage {
+    color: var(--palette-gray-500);
+  }
+}
+
+/* Manual dark mode class */
+body.dark-mode .spinner,
+body[data-theme='dark'] .spinner {
+  border-color: var(--palette-gray-700);
+  border-top-color: var(--color-primary-400);
+}
+
+body.dark-mode .loaderText,
+body.dark-mode .endMessage,
+body[data-theme='dark'] .loaderText,
+body[data-theme='dark'] .endMessage {
+  color: var(--palette-gray-500);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border-top-color: var(--color-primary-500);
+    opacity: 0.7;
+  }
+
+  .scrollContainer {
+    scroll-behavior: auto;
+  }
+}
