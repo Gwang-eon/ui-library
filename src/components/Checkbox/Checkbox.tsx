@@ -30,6 +30,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     ref
   ) => {
     const checkboxId = id || `checkbox-${React.useId()}`;
+    const messageId = `${checkboxId}-message`;
+    const hasMessage = (error && errorMessage) || helperText;
     const internalRef = useRef<HTMLInputElement>(null);
     const checkboxRef = (ref as React.RefObject<HTMLInputElement>) || internalRef;
 
@@ -57,6 +59,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             id={checkboxId}
             disabled={disabled}
             className={styles['checkbox-input']}
+            aria-invalid={error || undefined}
+            aria-describedby={hasMessage ? messageId : undefined}
             {...props}
           />
           {label && <span className={styles['checkbox-label']}>{label}</span>}
@@ -64,12 +68,16 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
         {/* Helper text or error message */}
         {error && errorMessage && (
-          <span className={`${styles['checkbox-message']} ${styles['checkbox-error']}`}>
+          <span
+            id={messageId}
+            className={`${styles['checkbox-message']} ${styles['checkbox-error']}`}
+            role="alert"
+          >
             {errorMessage}
           </span>
         )}
         {!error && helperText && (
-          <span className={styles['checkbox-message']}>{helperText}</span>
+          <span id={messageId} className={styles['checkbox-message']}>{helperText}</span>
         )}
       </div>
     );

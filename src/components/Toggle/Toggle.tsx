@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Toggle.module.css';
 
-export type ToggleSize = 'small' | 'medium' | 'large';
+export type ToggleSize = 'sm' | 'md' | 'lg';
 
 export interface ToggleProps {
   /**
@@ -54,7 +54,7 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
   (
     {
       label,
-      size = 'medium',
+      size = 'md',
       checked,
       defaultChecked,
       disabled = false,
@@ -78,9 +78,9 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
 
     // Determine size class
     const sizeClass = {
-      small: styles['switch-sm'],
-      medium: '',
-      large: styles['switch-lg'],
+      sm: styles['switch-sm'],
+      md: '',
+      lg: styles['switch-lg'],
     }[size];
 
     return (

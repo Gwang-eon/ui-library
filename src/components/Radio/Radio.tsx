@@ -28,6 +28,8 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     ref
   ) => {
     const radioId = id || `radio-${React.useId()}`;
+    const messageId = `${radioId}-message`;
+    const hasMessage = (error && errorMessage) || helperText;
 
     // Size class mapping
     const sizeClass = size === 'sm' ? styles['radio-sm'] : size === 'lg' ? styles['radio-lg'] : '';
@@ -46,6 +48,8 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             id={radioId}
             disabled={disabled}
             className={styles['radio-input']}
+            aria-invalid={error || undefined}
+            aria-describedby={hasMessage ? messageId : undefined}
             {...props}
           />
           {label && <span className={styles['radio-label']}>{label}</span>}
@@ -53,12 +57,16 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
 
         {/* Helper text or error message */}
         {error && errorMessage && (
-          <span className={`${styles['radio-message']} ${styles['radio-error']}`}>
+          <span
+            id={messageId}
+            className={`${styles['radio-message']} ${styles['radio-error']}`}
+            role="alert"
+          >
             {errorMessage}
           </span>
         )}
         {!error && helperText && (
-          <span className={styles['radio-message']}>{helperText}</span>
+          <span id={messageId} className={styles['radio-message']}>{helperText}</span>
         )}
       </div>
     );

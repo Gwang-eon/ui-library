@@ -1,6 +1,7 @@
 import type { ReactNode, MouseEvent } from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from '../Button';
 import styles from './SplitButton.module.css';
 
 export interface SplitButtonMenuItem {
@@ -157,10 +158,6 @@ export const SplitButton = ({
     setIsOpen(false);
   };
 
-  const buttonClass = `btn btn-${variant}${size !== 'md' ? ` btn-${size}` : ''}${
-    loading ? ' btn--loading' : ''
-  }`;
-
   const containerClasses = [
     styles.splitButton,
     size === 'sm' && styles.splitButtonSm,
@@ -172,27 +169,32 @@ export const SplitButton = ({
 
   return (
     <div className={containerClasses} ref={containerRef}>
-      <button
-        className={`${styles.splitButtonAction} ${buttonClass}`}
+      <Button
+        className={styles.splitButtonAction}
+        variant={variant}
+        size={size}
         onClick={handleActionClick}
-        disabled={disabled || loading}
+        disabled={disabled}
+        loading={loading}
+        icon={icon}
         aria-label={ariaLabel}
       >
-        {loading && <span className="btn__spinner" />}
-        {!loading && icon && icon}
-        {label && <span>{label}</span>}
-      </button>
+        {label}
+      </Button>
 
-      <button
-        className={`${styles.splitButtonToggle} ${buttonClass}`}
+      <Button
+        className={styles.splitButtonToggle}
+        variant={variant}
+        size={size}
         onClick={handleToggleClick}
         disabled={disabled || loading}
         aria-label="More options"
         aria-haspopup="menu"
         aria-expanded={isOpen}
+        iconOnly
       >
         {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-      </button>
+      </Button>
 
       <ul
         ref={menuRef}

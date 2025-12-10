@@ -1,5 +1,6 @@
 import type { ReactNode, MouseEvent } from 'react';
 import { useState, useRef, useEffect, cloneElement, isValidElement } from 'react';
+import { Button } from '../Button';
 import styles from './Popconfirm.module.css';
 
 export type PopconfirmPlacement = 'top' | 'bottom' | 'left' | 'right';
@@ -218,22 +219,24 @@ export const Popconfirm = ({
             </div>
           </div>
           <div className={styles.popconfirmActions}>
-            <button
-              className="btn btn-sm btn-secondary"
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={handleCancel}
               disabled={loading}
             >
               {cancelText}
-            </button>
-            <button
-              className={`btn btn-sm btn-${okType}${loading ? ' btn--loading' : ''}`}
+            </Button>
+            <Button
+              variant={okType}
+              size="sm"
               onClick={handleConfirm}
               disabled={loading}
+              loading={loading}
               autoFocus
             >
-              {loading && <span className="btn__spinner" />}
               {okText}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

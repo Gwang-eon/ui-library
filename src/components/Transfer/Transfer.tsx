@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { ChevronRight, ChevronsRight, ChevronLeft, ChevronsLeft, Search, Inbox } from 'lucide-react';
+import { Button } from '../Button';
 import styles from './Transfer.module.css';
 
 export interface TransferItem {
@@ -333,38 +334,46 @@ export const Transfer = ({
 
       {/* Controls */}
       <div className={`${styles.transferControls} ${compact ? styles.transferControlsCompact : ''}`}>
-        <button
-          className="btn btn-sm btn-primary"
+        <Button
+          variant="primary"
+          size="sm"
           onClick={moveToTarget}
           disabled={disabled || sourceSelected.size === 0}
           aria-label="Move selected to target"
+          iconOnly
         >
           <ChevronRight size={16} />
-        </button>
-        <button
-          className="btn btn-sm btn-ghost"
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={moveAllToTarget}
           disabled={disabled || filteredSourceItems.length === 0}
           aria-label="Move all to target"
+          iconOnly
         >
           <ChevronsRight size={16} />
-        </button>
-        <button
-          className="btn btn-sm btn-primary"
+        </Button>
+        <Button
+          variant="primary"
+          size="sm"
           onClick={moveToSource}
           disabled={disabled || targetSelected.size === 0}
           aria-label="Move selected to source"
+          iconOnly
         >
           <ChevronLeft size={16} />
-        </button>
-        <button
-          className="btn btn-sm btn-ghost"
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={moveAllToSource}
           disabled={disabled || filteredTargetItems.length === 0}
           aria-label="Move all to source"
+          iconOnly
         >
           <ChevronsLeft size={16} />
-        </button>
+        </Button>
       </div>
 
       {/* Target Panel */}

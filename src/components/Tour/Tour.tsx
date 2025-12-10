@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
-import { Button } from '../Button/Button';
+import { Button } from '../Button';
 import styles from './Tour.module.css';
 
 export type TourPlacement = 'top' | 'bottom' | 'left' | 'right';
