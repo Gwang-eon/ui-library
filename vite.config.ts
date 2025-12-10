@@ -2,9 +2,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
-import { copyFileSync, mkdirSync, readdirSync, statSync } from 'fs';
+import { copyFileSync, mkdirSync, readdirSync, statSync, readFileSync, writeFileSync } from 'fs';
 
-// Plugin to copy styles folder to dist
+// Plugin to copy and bundle styles
 function copyStylesPlugin() {
   return {
     name: 'copy-styles',
@@ -15,16 +15,25 @@ function copyStylesPlugin() {
       // Create dest directory
       mkdirSync(destDir, { recursive: true });
 
-      // Copy all CSS files
+      // Copy individual CSS files (tokens, base, atomic)
       const files = readdirSync(srcDir);
       for (const file of files) {
         const srcPath = resolve(srcDir, file);
         const destPath = resolve(destDir, file);
-        if (statSync(srcPath).isFile() && file.endsWith('.css')) {
+        if (statSync(srcPath).isFile() && file.endsWith('.css') && file !== 'index.css') {
           copyFileSync(srcPath, destPath);
         }
       }
-      console.log('✓ Styles copied to dist/styles/');
+
+      // Bundle all.css (design-tokens + base + atomic)
+      const designTokens = readFileSync(resolve(srcDir, 'design-tokens.css'), 'utf-8');
+      const base = readFileSync(resolve(srcDir, 'base.css'), 'utf-8');
+      const atomic = readFileSync(resolve(srcDir, 'atomic.css'), 'utf-8');
+
+      const bundledAll = `/* @gractor/ui - Bundled Styles (tokens + base + atomic) */\n${designTokens}\n${base}\n${atomic}`;
+      writeFileSync(resolve(destDir, 'all.css'), bundledAll);
+
+      console.log('✓ Styles copied and bundled to dist/styles/');
     }
   };
 }

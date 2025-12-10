@@ -13,7 +13,7 @@
       "require": "./dist/index.cjs"
     },
     "./styles": "./dist/ui.css",
-    "./styles/all": "./dist/styles/index.css",
+    "./styles/all": "./dist/styles/all.css",
     "./styles/tokens": "./dist/styles/design-tokens.css",
     "./styles/base": "./dist/styles/base.css",
     "./dist/ui.css": "./dist/ui.css",
