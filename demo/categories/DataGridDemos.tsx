@@ -1,8 +1,8 @@
 import React from 'react';
-import { Download } from 'lucide-react';
+import { Download, FileJson, FileSpreadsheet } from 'lucide-react';
 import { Button } from '../../src/components/Button';
 import { Badge } from '../../src/components/Badge';
-import { DataGrid, DataGridColumn } from '../../src/components/DataGrid';
+import { DataGrid, DataGridColumn, DataGridRef } from '../../src/components/DataGrid';
 
 // DataGrid sample data
 interface DeviceData {
@@ -859,6 +859,9 @@ export default function DataGridDemos() {
 
       {/* Clipboard Demo */}
       <ClipboardDemo />
+
+      {/* Export Demo */}
+      <ExportDemo />
     </section>
   );
 }
@@ -984,6 +987,75 @@ function ClipboardDemo() {
           alert(`Paste ${data.length} row(s) x ${data[0]?.length || 0} column(s) starting at row ${rowIndex}`);
         }}
         enableKeyboardNavigation
+        enableSorting={false}
+        enableFiltering={false}
+        enablePagination={false}
+        height={280}
+        showToolbar={false}
+      />
+    </div>
+  );
+}
+
+function ExportDemo() {
+  const gridRef = React.useRef<DataGridRef<DeviceData>>(null);
+
+  return (
+    <div className="demo-item full-width">
+      <h3>Export Functionality</h3>
+      <p className="demo-note">
+        Export data to various formats: CSV, TSV, JSON. Excel export requires xlsx package.
+      </p>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => gridRef.current?.exportToCSV('devices.csv')}
+        >
+          <Download size={14} /> CSV
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => gridRef.current?.exportToTSV('devices.tsv')}
+        >
+          <FileSpreadsheet size={14} /> TSV
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => gridRef.current?.exportToJSON('devices.json')}
+        >
+          <FileJson size={14} /> JSON
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => gridRef.current?.exportToCSV('devices-custom.csv', {
+            headerMap: {
+              name: 'Device Name',
+              type: 'Device Type',
+              status: 'Status',
+              location: 'Location',
+            },
+            excludeColumns: ['id', 'lastUpdate', 'uptime'],
+          })}
+        >
+          <Download size={14} /> CSV (Custom)
+        </Button>
+      </div>
+      <DataGrid
+        ref={gridRef}
+        data={dataGridData.slice(0, 6)}
+        columns={[
+          { id: 'name', header: 'Device Name', accessorKey: 'name' },
+          { id: 'type', header: 'Type', accessorKey: 'type' },
+          { id: 'status', header: 'Status', accessorKey: 'status' },
+          { id: 'location', header: 'Location', accessorKey: 'location' },
+          { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
+          { id: 'humidity', header: 'Humidity (%)', accessorKey: 'humidity', align: 'right' },
+        ]}
+        enableRowSelection
         enableSorting={false}
         enableFiltering={false}
         enablePagination={false}

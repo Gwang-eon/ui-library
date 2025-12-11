@@ -265,6 +265,16 @@ export interface DataGridProps<TData> {
     /** Inline styles */
     style?: React.CSSProperties;
 }
+export interface ExportOptions {
+    /** Export only selected rows (if any selected) or all rows */
+    selectedOnly?: boolean;
+    /** Include headers in export */
+    includeHeaders?: boolean;
+    /** Custom column headers map */
+    headerMap?: Record<string, string>;
+    /** Columns to exclude from export */
+    excludeColumns?: string[];
+}
 export interface DataGridRef<TData> {
     /** Get table instance */
     getTable: () => TanStackTable<TData>;
@@ -277,7 +287,18 @@ export interface DataGridRef<TData> {
     /** Reset sorting */
     resetSorting: () => void;
     /** Export to CSV */
-    exportToCSV: (filename?: string) => void;
+    exportToCSV: (filename?: string, options?: ExportOptions) => void;
+    /** Export to TSV (tab-separated) */
+    exportToTSV: (filename?: string, options?: ExportOptions) => void;
+    /** Export to JSON */
+    exportToJSON: (filename?: string, options?: ExportOptions) => void;
+    /** Export to Excel (requires xlsx library) */
+    exportToExcel: (filename?: string, options?: ExportOptions) => Promise<void>;
+    /** Get export data as 2D array */
+    getExportData: (options?: ExportOptions) => {
+        headers: string[];
+        data: unknown[][];
+    };
     /** Scroll to row */
     scrollToRow: (index: number) => void;
     /** Copy selected cells/rows to clipboard */

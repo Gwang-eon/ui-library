@@ -391,6 +391,17 @@ export interface DataGridProps<TData> {
   style?: React.CSSProperties;
 }
 
+export interface ExportOptions {
+  /** Export only selected rows (if any selected) or all rows */
+  selectedOnly?: boolean;
+  /** Include headers in export */
+  includeHeaders?: boolean;
+  /** Custom column headers map */
+  headerMap?: Record<string, string>;
+  /** Columns to exclude from export */
+  excludeColumns?: string[];
+}
+
 export interface DataGridRef<TData> {
   /** Get table instance */
   getTable: () => TanStackTable<TData>;
@@ -403,7 +414,15 @@ export interface DataGridRef<TData> {
   /** Reset sorting */
   resetSorting: () => void;
   /** Export to CSV */
-  exportToCSV: (filename?: string) => void;
+  exportToCSV: (filename?: string, options?: ExportOptions) => void;
+  /** Export to TSV (tab-separated) */
+  exportToTSV: (filename?: string, options?: ExportOptions) => void;
+  /** Export to JSON */
+  exportToJSON: (filename?: string, options?: ExportOptions) => void;
+  /** Export to Excel (requires xlsx library) */
+  exportToExcel: (filename?: string, options?: ExportOptions) => Promise<void>;
+  /** Get export data as 2D array */
+  getExportData: (options?: ExportOptions) => { headers: string[]; data: unknown[][] };
   /** Scroll to row */
   scrollToRow: (index: number) => void;
   /** Copy selected cells/rows to clipboard */
@@ -2336,6 +2355,65 @@ function DataGridInner<TData>(
     }
   }, [enableKeyboardNavigation, focusedCell, table, rows, enableCellEditing, enableRowSelection]);
 
+  // Helper function to get export data
+  const getExportDataFn = useCallback((options: ExportOptions = {}) => {
+    const {
+      selectedOnly = false,
+      includeHeaders = true,
+      headerMap = {},
+      excludeColumns = [],
+    } = options;
+
+    // Get columns (exclude internal columns and specified exclusions)
+    const exportColumns = table
+      .getAllLeafColumns()
+      .filter((col) =>
+        col.id !== '_select' &&
+        col.id !== '_expand' &&
+        col.id !== '_dragHandle' &&
+        !excludeColumns.includes(col.id)
+      );
+
+    // Get headers
+    const headers = exportColumns.map((col) => headerMap[col.id] || col.id);
+
+    // Get rows
+    const rowsToExport = selectedOnly && Object.keys(table.getState().rowSelection).length > 0
+      ? table.getSelectedRowModel().rows
+      : table.getFilteredRowModel().rows;
+
+    // Get data
+    const data = rowsToExport.map((row) =>
+      exportColumns.map((col) => {
+        const value = row.getValue(col.id);
+        return value;
+      })
+    );
+
+    return { headers, data };
+  }, [table]);
+
+  // Helper function to download file
+  const downloadFile = useCallback((content: string, filename: string, mimeType: string) => {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  // Escape CSV value
+  const escapeCSV = useCallback((value: unknown): string => {
+    const str = value === null || value === undefined ? '' : String(value);
+    // Escape if contains comma, quote, or newline
+    if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  }, []);
+
   // Ref methods
   useImperativeHandle(ref, () => ({
     getTable: () => table,
@@ -2346,34 +2424,99 @@ function DataGridInner<TData>(
       table.resetGlobalFilter();
     },
     resetSorting: () => table.resetSorting(),
-    exportToCSV: (filename = 'export.csv') => {
-      const headers = table
-        .getAllLeafColumns()
-        .filter((col) => col.id !== '_select' && col.id !== '_expand')
-        .map((col) => col.id);
 
-      const csvRows = [
-        headers.join(','),
-        ...table.getFilteredRowModel().rows.map((row) =>
-          headers
-            .map((header) => {
-              const value = row.getValue(header);
-              return typeof value === 'string' && value.includes(',')
-                ? `"${value}"`
-                : String(value ?? '');
-            })
-            .join(',')
-        ),
-      ];
+    // Get export data
+    getExportData: (options?: ExportOptions) => getExportDataFn(options || {}),
 
-      const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
+    // Export to CSV
+    exportToCSV: (filename = 'export.csv', options?: ExportOptions) => {
+      const { headers, data } = getExportDataFn(options || {});
+      const includeHeaders = options?.includeHeaders !== false;
+
+      const csvRows: string[] = [];
+      if (includeHeaders) {
+        csvRows.push(headers.map(h => escapeCSV(h)).join(','));
+      }
+      data.forEach(row => {
+        csvRows.push(row.map(cell => escapeCSV(cell)).join(','));
+      });
+
+      downloadFile(csvRows.join('\n'), filename, 'text/csv;charset=utf-8');
     },
+
+    // Export to TSV
+    exportToTSV: (filename = 'export.tsv', options?: ExportOptions) => {
+      const { headers, data } = getExportDataFn(options || {});
+      const includeHeaders = options?.includeHeaders !== false;
+
+      const tsvRows: string[] = [];
+      if (includeHeaders) {
+        tsvRows.push(headers.join('\t'));
+      }
+      data.forEach(row => {
+        tsvRows.push(row.map(cell =>
+          cell === null || cell === undefined ? '' : String(cell).replace(/\t/g, ' ')
+        ).join('\t'));
+      });
+
+      downloadFile(tsvRows.join('\n'), filename, 'text/tab-separated-values;charset=utf-8');
+    },
+
+    // Export to JSON
+    exportToJSON: (filename = 'export.json', options?: ExportOptions) => {
+      const { headers, data } = getExportDataFn(options || {});
+
+      // Convert to array of objects
+      const jsonData = data.map(row => {
+        const obj: Record<string, unknown> = {};
+        headers.forEach((header, index) => {
+          obj[header] = row[index];
+        });
+        return obj;
+      });
+
+      downloadFile(JSON.stringify(jsonData, null, 2), filename, 'application/json;charset=utf-8');
+    },
+
+    // Export to Excel (requires xlsx library to be installed)
+    exportToExcel: async (filename = 'export.xlsx', options?: ExportOptions) => {
+      const { headers, data } = getExportDataFn(options || {});
+      const includeHeaders = options?.includeHeaders !== false;
+
+      try {
+        // Dynamic import of xlsx - eslint-disable to allow dynamic require
+        // @ts-expect-error xlsx is an optional dependency
+        const XLSX = await import(/* @vite-ignore */ 'xlsx') as {
+          utils: {
+            aoa_to_sheet: (data: unknown[][]) => unknown;
+            book_new: () => unknown;
+            book_append_sheet: (wb: unknown, ws: unknown, name: string) => void;
+          };
+          writeFile: (wb: unknown, filename: string) => void;
+        };
+
+        // Create worksheet data
+        const wsData: unknown[][] = [];
+        if (includeHeaders) {
+          wsData.push(headers);
+        }
+        wsData.push(...data);
+
+        // Create worksheet
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+        // Create workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Data');
+
+        // Write file
+        XLSX.writeFile(wb, filename);
+      } catch (err) {
+        console.error('Excel export failed. Make sure xlsx package is installed:', err);
+        throw new Error('Excel export requires xlsx package. Install it with: npm install xlsx');
+      }
+    },
+
     scrollToRow: (index: number) => {
       if (enableVirtualization) {
         rowVirtualizer.scrollToIndex(index);
