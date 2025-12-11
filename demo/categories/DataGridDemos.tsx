@@ -288,7 +288,10 @@ export default function DataGridDemos() {
       {/* Virtualization Demo */}
       <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
         <h3>Virtualization (10,000 Rows)</h3>
-        <p className="demo-note">Efficient rendering of large datasets using virtual scrolling. Only visible rows are rendered.</p>
+        <p className="demo-note">
+          Efficient rendering of large datasets using virtual scrolling. Only ~50-100 visible rows are rendered at a time,
+          allowing smooth scrolling through all 10,000 rows without performance issues. Scroll down to see more data load dynamically.
+        </p>
         <DataGrid
           data={largeDataGridData}
           columns={[
@@ -312,12 +315,58 @@ export default function DataGridDemos() {
           ]}
           enableVirtualization
           estimateRowHeight={40}
-          overscan={5}
+          overscan={10}
           enableSorting
           enableGlobalFilter
           enableFiltering={false}
           enablePagination={false}
+          autoFillColumns={false}
           height={400}
+        />
+      </div>
+
+      {/* Horizontal Scroll Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Horizontal Scroll (Many Columns)</h3>
+        <p className="demo-note">
+          DataGrid with many columns showing horizontal scroll capability. Useful for data with many fields.
+        </p>
+        <DataGrid
+          data={dataGridData}
+          columns={[
+            { id: 'id', header: 'ID', accessorKey: 'id', size: 60 },
+            { id: 'name', header: 'Device Name', accessorKey: 'name', size: 180 },
+            { id: 'type', header: 'Type', accessorKey: 'type', size: 100 },
+            { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const variant = status === 'online' ? 'success' : status === 'warning' ? 'warning' : 'error';
+                return <Badge variant={variant}>{status}</Badge>;
+              }
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
+            { id: 'temperature', header: 'Temperature (°C)', accessorKey: 'temperature', size: 140, align: 'right',
+              cell: ({ getValue }) => `${getValue()}°C`
+            },
+            { id: 'humidity', header: 'Humidity (%)', accessorKey: 'humidity', size: 120, align: 'right',
+              cell: ({ getValue }) => `${getValue()}%`
+            },
+            { id: 'uptime', header: 'Uptime (%)', accessorKey: 'uptime', size: 120, align: 'right',
+              cell: ({ getValue }) => {
+                const value = getValue() as number;
+                const color = value >= 99 ? 'var(--color-success-500)' : value >= 90 ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{value.toFixed(1)}%</span>;
+              }
+            },
+            { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 160 },
+            { id: 'extra1', header: 'Extra Field 1', accessorFn: () => 'Value 1', size: 120 },
+            { id: 'extra2', header: 'Extra Field 2', accessorFn: () => 'Value 2', size: 120 },
+          ]}
+          enableSorting
+          enableFiltering={false}
+          enablePagination={false}
+          autoFillColumns={false}
+          height={350}
         />
       </div>
 
