@@ -29,6 +29,7 @@ export * from './components/Knob';
 export * from './components/Card';
 export * from './components/List';
 export * from './components/Table';
+export * from './components/DataGrid';
 export * from './components/Tree';
 export * from './components/Badge';
 export * from './components/Avatar';

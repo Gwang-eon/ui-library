@@ -2,6 +2,7 @@
 node_modules/
 
 # Build output
+demo-dist/
 
 # IDE
 .idea/

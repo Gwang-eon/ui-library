@@ -1,0 +1,1096 @@
+/**
+ * DataGrid Component Styles
+ * Enterprise-grade data grid with full dark mode support
+ */
+
+/* ========================================
+   BASE STRUCTURE
+   ======================================== */
+
+.dataGrid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--surface-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-medium);
+}
+
+.dataGrid.bordered {
+  border: 1px solid var(--border-default);
+}
+
+.dataGrid.compact .td,
+.dataGrid.compact .th {
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+/* ========================================
+   TOOLBAR
+   ======================================== */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-secondary);
+}
+
+.globalSearch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--spacing-3);
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.globalSearchInput {
+  width: 100%;
+  height: 36px;
+  padding: var(--spacing-2) var(--spacing-3);
+  padding-left: 36px;
+  padding-right: 36px;
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.globalSearchInput:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.globalSearchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+.clearSearch {
+  position: absolute;
+  right: var(--spacing-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.clearSearch:hover {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.toolbarButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--text-secondary);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.toolbarButton:hover {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+  border-color: var(--border-hover);
+}
+
+/* ========================================
+   DROPDOWN
+   ======================================== */
+
+.dropdown {
+  position: relative;
+}
+
+.dropdownBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dropdown);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: calc(var(--z-dropdown) + 1);
+  min-width: 200px;
+  max-height: 300px;
+  margin-top: var(--spacing-1);
+  padding: var(--spacing-2) 0;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+}
+
+.dropdownHeader {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-label-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.dropdownItem:hover {
+  background: var(--surface-secondary);
+}
+
+.dropdownItem input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary-500);
+}
+
+.dropdownDivider {
+  height: 1px;
+  margin: var(--spacing-2) 0;
+  background: var(--border-default);
+}
+
+/* ========================================
+   TABLE CONTAINER
+   ======================================== */
+
+.tableContainer {
+  position: relative;
+  flex: 1;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+.thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-secondary);
+}
+
+.headerRow {
+  height: 48px;
+}
+
+.th {
+  position: relative;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  text-align: left;
+  background: var(--surface-secondary);
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.th.alignCenter {
+  text-align: center;
+}
+
+.th.alignRight {
+  text-align: right;
+}
+
+.thContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.thLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thLabel.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.thLabel.sortable:hover {
+  color: var(--text-primary);
+}
+
+.sortIcon {
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.thLabel.sortable:hover .sortIcon {
+  color: var(--text-secondary);
+}
+
+.pinButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1);
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.th:hover .pinButton {
+  opacity: 1;
+}
+
+.pinButton:hover {
+  color: var(--color-primary-500);
+  background: var(--color-primary-50);
+}
+
+/* Column Resizer */
+.resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.resizer:hover,
+.resizer.resizing {
+  background: var(--color-primary-500);
+}
+
+/* Column Pinning */
+.pinnedLeft {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: inherit;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.pinnedRight {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  background: inherit;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   FILTER
+   ======================================== */
+
+.thFilter {
+  margin-top: var(--spacing-2);
+}
+
+.filterWrapper {
+  position: relative;
+}
+
+.filterInput {
+  width: 100%;
+  height: 28px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.filterInput:focus {
+  border-color: var(--color-primary-500);
+}
+
+.filterInput::placeholder {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-small);
+}
+
+.filterRange {
+  display: flex;
+  gap: var(--spacing-1);
+}
+
+.filterRange .filterInput {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ========================================
+   BODY
+   ======================================== */
+
+.tbody {
+  background: var(--surface-primary);
+}
+
+.tr {
+  height: 48px;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.tr.hoverable:hover {
+  background: var(--surface-secondary);
+}
+
+.tr.selected {
+  background: var(--color-primary-50);
+}
+
+.tr.selected:hover {
+  background: var(--color-primary-100);
+}
+
+.tr.grouped {
+  background: var(--surface-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.tr.striped:nth-child(even) {
+  background: var(--surface-secondary);
+}
+
+.td {
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.td.alignCenter {
+  text-align: center;
+}
+
+.td.alignRight {
+  text-align: right;
+}
+
+/* ========================================
+   ROW EXPANSION
+   ======================================== */
+
+.expandButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.expandButton:hover {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+}
+
+.expandedRow {
+  background: var(--surface-tertiary);
+}
+
+.expandedCell {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ========================================
+   GROUPING
+   ======================================== */
+
+.groupToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 0;
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.groupToggle:hover {
+  color: var(--color-primary-600);
+}
+
+/* ========================================
+   CHECKBOX
+   ======================================== */
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkboxMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--surface-primary);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.checkboxInput:checked + .checkboxMark,
+.checkboxInput:indeterminate + .checkboxMark {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: var(--palette-white);
+}
+
+.checkboxInput:focus-visible + .checkboxMark {
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.checkboxInput:disabled + .checkboxMark {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   CELL EDITING
+   ======================================== */
+
+.editableCell {
+  cursor: pointer;
+  padding: var(--spacing-1);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.editableCell:hover {
+  background: var(--surface-secondary);
+}
+
+.editInput {
+  width: 100%;
+  height: 32px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font: inherit;
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 2px solid var(--color-primary-500);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.tfoot {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: var(--surface-secondary);
+}
+
+.footerRow {
+  height: 48px;
+}
+
+.footerCell {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  background: var(--surface-secondary);
+  border-top: 1px solid var(--border-default);
+}
+
+/* ========================================
+   PAGINATION
+   ======================================== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-top: 1px solid var(--border-default);
+  background: var(--surface-secondary);
+}
+
+.paginationInfo {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+.selectionInfo {
+  margin-left: var(--spacing-2);
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-medium);
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.pageSizeSelect {
+  height: 32px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+}
+
+.paginationButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.paginationButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--text-secondary);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.paginationButton:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+  border-color: var(--border-hover);
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.emptyRow {
+  height: 200px;
+}
+
+.emptyCell {
+  padding: var(--spacing-8);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+  color: var(--text-tertiary);
+}
+
+.emptyIcon {
+  opacity: 0.5;
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-default);
+  border-top-color: var(--color-primary-500);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .dataGrid,
+:global(.dark) .dataGrid {
+  background: var(--palette-gray-900);
+}
+
+:global([data-theme="dark"]) .dataGrid.bordered,
+:global(.dark) .dataGrid.bordered {
+  border-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .toolbar,
+:global(.dark) .toolbar {
+  background: var(--palette-gray-850);
+  border-bottom-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .globalSearchInput,
+:global(.dark) .globalSearchInput {
+  color: var(--palette-gray-100);
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .globalSearchInput:focus,
+:global(.dark) .globalSearchInput:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+:global([data-theme="dark"]) .globalSearchInput::placeholder,
+:global(.dark) .globalSearchInput::placeholder {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .searchIcon,
+:global(.dark) .searchIcon {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .clearSearch,
+:global(.dark) .clearSearch {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .clearSearch:hover,
+:global(.dark) .clearSearch:hover {
+  color: var(--palette-gray-200);
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .toolbarButton,
+:global(.dark) .toolbarButton {
+  color: var(--palette-gray-400);
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .toolbarButton:hover,
+:global(.dark) .toolbarButton:hover {
+  color: var(--palette-gray-200);
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .dropdownMenu,
+:global(.dark) .dropdownMenu {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+:global([data-theme="dark"]) .dropdownHeader,
+:global(.dark) .dropdownHeader {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .dropdownItem,
+:global(.dark) .dropdownItem {
+  color: var(--palette-gray-200);
+}
+
+:global([data-theme="dark"]) .dropdownItem:hover,
+:global(.dark) .dropdownItem:hover {
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .dropdownDivider,
+:global(.dark) .dropdownDivider {
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .thead,
+:global(.dark) .thead {
+  background: var(--palette-gray-850);
+}
+
+:global([data-theme="dark"]) .th,
+:global(.dark) .th {
+  color: var(--palette-gray-400);
+  background: var(--palette-gray-850);
+  border-bottom-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .thLabel.sortable:hover,
+:global(.dark) .thLabel.sortable:hover {
+  color: var(--palette-gray-200);
+}
+
+:global([data-theme="dark"]) .sortIcon,
+:global(.dark) .sortIcon {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .pinButton,
+:global(.dark) .pinButton {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .pinButton:hover,
+:global(.dark) .pinButton:hover {
+  color: var(--color-primary-400);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+:global([data-theme="dark"]) .resizer:hover,
+:global([data-theme="dark"]) .resizer.resizing,
+:global(.dark) .resizer:hover,
+:global(.dark) .resizer.resizing {
+  background: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .pinnedLeft,
+:global(.dark) .pinnedLeft {
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .pinnedRight,
+:global(.dark) .pinnedRight {
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .filterInput,
+:global(.dark) .filterInput {
+  color: var(--palette-gray-200);
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-600);
+}
+
+:global([data-theme="dark"]) .filterInput:focus,
+:global(.dark) .filterInput:focus {
+  border-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .filterInput::placeholder,
+:global(.dark) .filterInput::placeholder {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .tbody,
+:global(.dark) .tbody {
+  background: var(--palette-gray-900);
+}
+
+:global([data-theme="dark"]) .tr.hoverable:hover,
+:global(.dark) .tr.hoverable:hover {
+  background: var(--palette-gray-800);
+}
+
+:global([data-theme="dark"]) .tr.selected,
+:global(.dark) .tr.selected {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+:global([data-theme="dark"]) .tr.selected:hover,
+:global(.dark) .tr.selected:hover {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+:global([data-theme="dark"]) .tr.grouped,
+:global(.dark) .tr.grouped {
+  background: var(--palette-gray-850);
+}
+
+:global([data-theme="dark"]) .tr.striped:nth-child(even),
+:global(.dark) .tr.striped:nth-child(even) {
+  background: var(--palette-gray-850);
+}
+
+:global([data-theme="dark"]) .td,
+:global(.dark) .td {
+  color: var(--palette-gray-200);
+  border-bottom-color: var(--palette-gray-800);
+}
+
+:global([data-theme="dark"]) .expandButton,
+:global(.dark) .expandButton {
+  color: var(--palette-gray-400);
+}
+
+:global([data-theme="dark"]) .expandButton:hover,
+:global(.dark) .expandButton:hover {
+  color: var(--palette-gray-200);
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .expandedRow,
+:global(.dark) .expandedRow {
+  background: var(--palette-gray-850);
+}
+
+:global([data-theme="dark"]) .expandedCell,
+:global(.dark) .expandedCell {
+  border-bottom-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .groupToggle,
+:global(.dark) .groupToggle {
+  color: var(--palette-gray-100);
+}
+
+:global([data-theme="dark"]) .groupToggle:hover,
+:global(.dark) .groupToggle:hover {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .checkboxMark,
+:global(.dark) .checkboxMark {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-600);
+}
+
+:global([data-theme="dark"]) .checkboxInput:checked + .checkboxMark,
+:global([data-theme="dark"]) .checkboxInput:indeterminate + .checkboxMark,
+:global(.dark) .checkboxInput:checked + .checkboxMark,
+:global(.dark) .checkboxInput:indeterminate + .checkboxMark {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .checkboxInput:focus-visible + .checkboxMark,
+:global(.dark) .checkboxInput:focus-visible + .checkboxMark {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+:global([data-theme="dark"]) .editableCell:hover,
+:global(.dark) .editableCell:hover {
+  background: var(--palette-gray-800);
+}
+
+:global([data-theme="dark"]) .editInput,
+:global(.dark) .editInput {
+  color: var(--palette-gray-100);
+  background: var(--palette-gray-800);
+}
+
+:global([data-theme="dark"]) .tfoot,
+:global(.dark) .tfoot {
+  background: var(--palette-gray-850);
+}
+
+:global([data-theme="dark"]) .footerCell,
+:global(.dark) .footerCell {
+  color: var(--palette-gray-400);
+  background: var(--palette-gray-850);
+  border-top-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .pagination,
+:global(.dark) .pagination {
+  background: var(--palette-gray-850);
+  border-top-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .paginationInfo,
+:global(.dark) .paginationInfo {
+  color: var(--palette-gray-400);
+}
+
+:global([data-theme="dark"]) .selectionInfo,
+:global(.dark) .selectionInfo {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .pageSizeSelect,
+:global(.dark) .pageSizeSelect {
+  color: var(--palette-gray-200);
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .paginationButton,
+:global(.dark) .paginationButton {
+  color: var(--palette-gray-400);
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .paginationButton:hover:not(:disabled),
+:global(.dark) .paginationButton:hover:not(:disabled) {
+  color: var(--palette-gray-200);
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .pageInfo,
+:global(.dark) .pageInfo {
+  color: var(--palette-gray-400);
+}
+
+:global([data-theme="dark"]) .emptyState,
+:global(.dark) .emptyState {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .loadingOverlay,
+:global(.dark) .loadingOverlay {
+  background: rgba(17, 24, 39, 0.8);
+}
+
+:global([data-theme="dark"]) .spinner,
+:global(.dark) .spinner {
+  border-color: var(--palette-gray-700);
+  border-top-color: var(--color-primary-400);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 767px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-2);
+  }
+
+  .globalSearch {
+    max-width: none;
+  }
+
+  .toolbarActions {
+    justify-content: flex-end;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: var(--spacing-3);
+    align-items: stretch;
+  }
+
+  .paginationInfo {
+    text-align: center;
+  }
+
+  .paginationControls {
+    justify-content: center;
+  }
+
+  .th,
+  .td {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  .filterInput {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}

@@ -29,6 +29,8 @@
   ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
+    "build:demo": "vite build --config vite.demo.config.ts",
+    "build:all": "npm run build && npm run build:demo",
     "build:types": "tsc --emitDeclarationOnly",
     "dev": "vite build --watch",
     "preview": "vite --config vite.demo.config.ts",
@@ -47,6 +49,8 @@
     }
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.13.13",
     "lucide-react": "^0.546.0"
   },
   "devDependencies": {
