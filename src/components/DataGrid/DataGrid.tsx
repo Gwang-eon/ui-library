@@ -1514,6 +1514,7 @@ function DataGridInner<TData>(
     rowIndex: number;
     columnIndex: number;
   } | null>(null);
+  const focusedCellRef = useRef<{ rowIndex: number; columnIndex: number } | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
 
@@ -2415,6 +2416,36 @@ function DataGridInner<TData>(
     }
   }, [enableKeyboardNavigation, focusedCell, table, rows, enableCellEditing, enableRowSelection]);
 
+  // Update focus styling via DOM manipulation (avoids re-rendering all rows)
+  useEffect(() => {
+    const container = tableContainerRef.current;
+    if (!container) return;
+
+    // Remove focus from previous cell
+    const prevFocused = focusedCellRef.current;
+    if (prevFocused) {
+      const prevCell = container.querySelector(
+        `td[data-row-index="${prevFocused.rowIndex}"][data-column-index="${prevFocused.columnIndex}"]`
+      );
+      if (prevCell) {
+        prevCell.classList.remove(styles.focusedCell);
+      }
+    }
+
+    // Add focus to new cell
+    if (focusedCell) {
+      const newCell = container.querySelector(
+        `td[data-row-index="${focusedCell.rowIndex}"][data-column-index="${focusedCell.columnIndex}"]`
+      );
+      if (newCell) {
+        newCell.classList.add(styles.focusedCell);
+      }
+    }
+
+    // Update ref
+    focusedCellRef.current = focusedCell;
+  }, [focusedCell]);
+
   // Helper function to get export data
   const getExportDataFn = useCallback((options: ExportOptions = {}) => {
     const {
@@ -2700,9 +2731,7 @@ function DataGridInner<TData>(
         {row.getVisibleCells().map((cell, cellIndex) => {
           const isPinned = cell.column.getIsPinned();
           const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
-          const isFocused = enableKeyboardNavigation &&
-            focusedCell?.rowIndex === row.index &&
-            focusedCell?.columnIndex === cellIndex;
+          // Focus styling is handled via DOM manipulation in useEffect (performance optimization)
           const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
 
           return (
@@ -2710,7 +2739,7 @@ function DataGridInner<TData>(
               key={cell.id}
               className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
                 isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-              } ${isFocused ? styles.focusedCell : ''} ${isCellInRange ? styles.selectedCell : ''}`}
+              } ${isCellInRange ? styles.selectedCell : ''}`}
               style={{
                 width: cell.column.getSize(),
                 left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
@@ -2820,9 +2849,7 @@ function DataGridInner<TData>(
           {row.getVisibleCells().map((cell, cellIndex) => {
             const isPinned = cell.column.getIsPinned();
             const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
-            const isFocused = enableKeyboardNavigation &&
-              focusedCell?.rowIndex === row.index &&
-              focusedCell?.columnIndex === cellIndex;
+            // Focus styling is handled via DOM manipulation in useEffect (performance optimization)
             const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
 
             return (
@@ -2830,7 +2857,7 @@ function DataGridInner<TData>(
                 key={cell.id}
                 className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
                   isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-                } ${isFocused ? styles.focusedCell : ''} ${isCellInRange ? styles.selectedCell : ''}`}
+                } ${isCellInRange ? styles.selectedCell : ''}`}
                 style={{
                   width: cell.column.getSize(),
                   left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
@@ -2870,7 +2897,7 @@ function DataGridInner<TData>(
         )}
       </React.Fragment>
     );
-  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableKeyboardNavigation, focusedCell, enableRangeSelection, isCellSelected, handleCellMouseDown, handleCellMouseEnter, enableRowOrdering, handleContextMenu]);
+  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableRangeSelection, isCellSelected, handleCellMouseDown, handleCellMouseEnter, enableRowOrdering, handleContextMenu]);
 
   // Render pagination
   const renderPagination = useCallback(() => {
