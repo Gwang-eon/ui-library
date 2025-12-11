@@ -47,6 +47,26 @@ import {
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  horizontalListSortingStrategy,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import {
   ChevronDown,
   ChevronUp,
   ChevronsUpDown,
@@ -64,6 +84,7 @@ import {
   Minus,
   Expand,
   Shrink,
+  GripVertical,
 } from 'lucide-react';
 import styles from './DataGrid.module.css';
 
@@ -267,6 +288,14 @@ export interface DataGridProps<TData> {
   /** Keep pinned rows visible when scrolling */
   keepPinnedRows?: boolean;
 
+  // Drag & Drop
+  /** Enable row drag and drop reordering */
+  enableRowOrdering?: boolean;
+  /** Row order change handler - receives new data array after reorder */
+  onRowOrderChange?: (fromIndex: number, toIndex: number, newData: TData[]) => void;
+  /** Enable column drag and drop reordering (UI enhancement for existing enableColumnOrdering) */
+  enableColumnDrag?: boolean;
+
   // Virtualization
   /** Enable virtualization for large datasets */
   enableVirtualization?: boolean;
@@ -405,6 +434,154 @@ const RadioButton = memo(({
 });
 
 RadioButton.displayName = 'RadioButton';
+
+// Draggable Header Cell for column reordering
+interface DraggableHeaderCellProps {
+  id: string;
+  children: React.ReactNode;
+  disabled?: boolean;
+}
+
+const DraggableHeaderCell = memo(({ id, children, disabled = false }: DraggableHeaderCellProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id, disabled });
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    cursor: disabled ? 'default' : 'grab',
+    position: 'relative',
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`${styles.draggableHeader} ${isDragging ? styles.dragging : ''}`}
+      {...attributes}
+      {...listeners}
+    >
+      {!disabled && (
+        <span className={styles.dragHandle}>
+          <GripVertical size={14} />
+        </span>
+      )}
+      {children}
+    </div>
+  );
+});
+
+DraggableHeaderCell.displayName = 'DraggableHeaderCell';
+
+// Draggable Row for row reordering
+interface DraggableRowProps {
+  id: string;
+  children: React.ReactNode;
+  disabled?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const DraggableRow = memo(({ id, children, disabled = false, className = '', style: rowStyle = {} }: DraggableRowProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id, disabled });
+
+  const style: React.CSSProperties = {
+    ...rowStyle,
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    position: 'relative',
+    zIndex: isDragging ? 1 : 0,
+  };
+
+  return (
+    <tr
+      ref={setNodeRef}
+      style={style}
+      className={`${className} ${isDragging ? styles.draggingRow : ''}`}
+      {...attributes}
+    >
+      {/* Drag handle cell */}
+      <td className={styles.dragHandleCell} {...listeners}>
+        <GripVertical size={16} className={styles.rowDragHandle} />
+      </td>
+      {children}
+    </tr>
+  );
+});
+
+DraggableRow.displayName = 'DraggableRow';
+
+// Sortable Row component using useSortable hook
+interface SortableRowProps {
+  id: string;
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  'data-row-index'?: number;
+  onClick?: () => void;
+  onDoubleClick?: () => void;
+}
+
+const SortableRow = memo(({ id, children, className = '', style: rowStyle = {}, ...props }: SortableRowProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style: React.CSSProperties = {
+    ...rowStyle,
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    backgroundColor: isDragging ? 'var(--color-background-subtle)' : undefined,
+  };
+
+  return (
+    <tr
+      ref={setNodeRef}
+      style={style}
+      className={`${className} ${isDragging ? styles.draggingRow : ''}`}
+      {...attributes}
+      {...props}
+    >
+      {children}
+    </tr>
+  );
+});
+
+SortableRow.displayName = 'SortableRow';
+
+// Row Drag Handle component - just the handle cell
+const RowDragHandle = memo(({ rowId }: { rowId: string }) => {
+  const { attributes, listeners } = useSortable({ id: rowId });
+
+  return (
+    <td className={styles.dragHandleCell} {...attributes} {...listeners}>
+      <GripVertical size={16} className={styles.rowDragHandle} />
+    </td>
+  );
+});
+
+RowDragHandle.displayName = 'RowDragHandle';
 
 // Select filter component for single/multi select
 const SelectFilter = memo(({
@@ -1031,6 +1208,11 @@ function DataGridInner<TData>(
     onRowPinningChange,
     keepPinnedRows = true,
 
+    // Drag & Drop
+    enableRowOrdering = false,
+    onRowOrderChange,
+    enableColumnDrag = false,
+
     // Virtualization
     enableVirtualization = false,
     estimateRowHeight = 40,
@@ -1082,8 +1264,21 @@ function DataGridInner<TData>(
     rowIndex: number;
     columnIndex: number;
   } | null>(null);
+  const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
+  const [activeRowId, setActiveRowId] = useState<string | null>(null);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
+
+  // Drag & Drop sensors
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: { distance: 10 },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 250, tolerance: 5 },
+    }),
+    useSensor(KeyboardSensor)
+  );
 
   // Convert columns to TanStack format
   const columns = useMemo<ColumnDef<TData, unknown>[]>(() => {
@@ -1425,6 +1620,61 @@ function DataGridInner<TData>(
   const virtualRows = enableVirtualization ? rowVirtualizer.getVirtualItems() : null;
   const totalSize = enableVirtualization ? rowVirtualizer.getTotalSize() : 0;
 
+  // Drag & Drop handlers for columns
+  const handleColumnDragStart = useCallback((event: DragStartEvent) => {
+    setActiveColumnId(event.active.id as string);
+  }, []);
+
+  const handleColumnDragEnd = useCallback((event: DragEndEvent) => {
+    const { active, over } = event;
+    setActiveColumnId(null);
+
+    if (over && active.id !== over.id) {
+      const oldIndex = columnOrder.indexOf(active.id as string);
+      const newIndex = columnOrder.indexOf(over.id as string);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newOrder = arrayMove(columnOrder, oldIndex, newIndex);
+        setColumnOrder(newOrder);
+        onColumnOrderChange?.(newOrder);
+      }
+    }
+  }, [columnOrder, onColumnOrderChange]);
+
+  // Drag & Drop handlers for rows
+  const handleRowDragStart = useCallback((event: DragStartEvent) => {
+    setActiveRowId(event.active.id as string);
+  }, []);
+
+  const handleRowDragEnd = useCallback((event: DragEndEvent) => {
+    const { active, over } = event;
+    setActiveRowId(null);
+
+    if (over && active.id !== over.id) {
+      const oldIndex = rows.findIndex(row => row.id === active.id);
+      const newIndex = rows.findIndex(row => row.id === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1 && onRowOrderChange) {
+        const newData = arrayMove([...data], oldIndex, newIndex);
+        onRowOrderChange(oldIndex, newIndex, newData);
+      }
+    }
+  }, [rows, data, onRowOrderChange]);
+
+  // Get column IDs for sortable context
+  const columnIds = useMemo(() => {
+    if (!enableColumnDrag) return [];
+    return table.getVisibleLeafColumns()
+      .filter(col => !col.id.startsWith('_')) // Exclude special columns
+      .map(col => col.id);
+  }, [enableColumnDrag, table]);
+
+  // Get row IDs for sortable context
+  const rowIds = useMemo(() => {
+    if (!enableRowOrdering) return [];
+    return rows.map(row => row.id);
+  }, [enableRowOrdering, rows]);
+
   // Keyboard navigation handler
   const handleTableKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (!enableKeyboardNavigation || !focusedCell) return;
@@ -1661,6 +1911,96 @@ function DataGridInner<TData>(
     const isGrouped = row.getIsGrouped();
     const isPinnedRow = row.getIsPinned();
 
+    const rowContent = (
+      <>
+        {/* Drag handle cell for row ordering */}
+        {enableRowOrdering && (
+          <RowDragHandle rowId={row.id} />
+        )}
+        {row.getVisibleCells().map((cell, cellIndex) => {
+          const isPinned = cell.column.getIsPinned();
+          const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
+          const isFocused = enableKeyboardNavigation &&
+            focusedCell?.rowIndex === row.index &&
+            focusedCell?.columnIndex === cellIndex;
+
+          return (
+            <td
+              key={cell.id}
+              className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
+                isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
+              } ${isFocused ? styles.focusedCell : ''}`}
+              style={{
+                width: cell.column.getSize(),
+                left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
+                right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
+              }}
+              data-row-index={row.index}
+              data-column-index={cellIndex}
+            >
+              {cell.getIsGrouped() ? (
+                <button
+                  className={styles.groupToggle}
+                  onClick={row.getToggleExpandedHandler()}
+                >
+                  {row.getIsExpanded() ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
+                </button>
+              ) : cell.getIsAggregated() ? (
+                flexRender(
+                  cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+                  cell.getContext()
+                )
+              ) : cell.getIsPlaceholder() ? null : (
+                flexRender(cell.column.columnDef.cell, cell.getContext())
+              )}
+            </td>
+          );
+        })}
+      </>
+    );
+
+    // Use SortableRow if row ordering is enabled
+    if (enableRowOrdering) {
+      return (
+        <React.Fragment key={row.id}>
+          <SortableRow
+            id={row.id}
+            className={`${styles.tr} ${styles.row} ${isSelected ? styles.selected : ''} ${
+              isGrouped ? styles.grouped : ''
+            } ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''} ${
+              isPinnedRow ? styles.pinnedRow : ''
+            } ${isPinnedRow === 'top' ? styles.pinnedRowTop : ''} ${isPinnedRow === 'bottom' ? styles.pinnedRowBottom : ''}`}
+            data-row-index={row.index}
+            onClick={() => onRowClick?.(row.original)}
+            onDoubleClick={() => onRowDoubleClick?.(row.original)}
+            style={
+              virtualRow
+                ? {
+                    height: `${virtualRow.size}px`,
+                    transform: `translateY(${virtualRow.start}px)`,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                  }
+                : undefined
+            }
+          >
+            {rowContent}
+          </SortableRow>
+          {/* Expanded content */}
+          {isExpanded && renderExpandedRow && !isGrouped && (
+            <tr className={styles.expandedRow}>
+              <td colSpan={row.getVisibleCells().length + (enableRowOrdering ? 1 : 0)}>
+                {renderExpandedRow(row.original)}
+              </td>
+            </tr>
+          )}
+        </React.Fragment>
+      );
+    }
+
     return (
       <React.Fragment key={row.id}>
         <tr
@@ -1892,58 +2232,131 @@ function DataGridInner<TData>(
           </div>
         )}
 
-        <table className={styles.table}>
-          {showHeader && (
-            <thead className={styles.thead}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className={styles.headerRow}>
-                  {headerGroup.headers.map(renderHeaderCell)}
-                </tr>
-              ))}
-            </thead>
-          )}
-
-          <tbody
-            className={styles.tbody}
-            style={enableVirtualization ? { height: `${totalSize}px`, position: 'relative' } : undefined}
+        {/* Column Drag Context */}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={enableColumnDrag ? handleColumnDragStart : undefined}
+          onDragEnd={enableColumnDrag ? handleColumnDragEnd : undefined}
+        >
+          {/* Row Drag Context - nested inside Column context */}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={enableRowOrdering ? handleRowDragStart : undefined}
+            onDragEnd={enableRowOrdering ? handleRowDragEnd : undefined}
           >
-            {rows.length === 0 ? (
-              <tr className={styles.emptyRow}>
-                <td colSpan={table.getAllLeafColumns().length} className={styles.emptyCell}>
-                  {renderEmpty ? renderEmpty() : (
-                    <div className={styles.emptyState}>
-                      <Filter size={48} className={styles.emptyIcon} />
-                      <p>{emptyMessage}</p>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ) : enableVirtualization && virtualRows ? (
-              virtualRows.map((virtualRow) => {
-                const row = rows[virtualRow.index];
-                return renderRow(row, virtualRow);
-              })
-            ) : (
-              rows.map((row) => renderRow(row))
-            )}
-          </tbody>
-
-          {showFooter && (
-            <tfoot className={styles.tfoot}>
-              {table.getFooterGroups().map((footerGroup) => (
-                <tr key={footerGroup.id} className={styles.footerRow}>
-                  {footerGroup.headers.map((header) => (
-                    <th key={header.id} className={styles.footerCell}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.footer, header.getContext())}
-                    </th>
+            <table className={styles.table}>
+              {showHeader && (
+                <thead className={styles.thead}>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id} className={styles.headerRow}>
+                      {/* Drag handle column header for row ordering */}
+                      {enableRowOrdering && (
+                        <th className={`${styles.th} ${styles.dragHandleHeader}`} style={{ width: 40 }}>
+                          <GripVertical size={16} />
+                        </th>
+                      )}
+                      <SortableContext items={columnIds} strategy={horizontalListSortingStrategy}>
+                        {headerGroup.headers.map((header) => {
+                          const isSpecialColumn = header.id.startsWith('_');
+                          return enableColumnDrag && !isSpecialColumn ? (
+                            <th
+                              key={header.id}
+                              className={styles.th}
+                              style={{ width: header.getSize() }}
+                            >
+                              <DraggableHeaderCell id={header.id}>
+                                {renderHeaderCell(header)}
+                              </DraggableHeaderCell>
+                            </th>
+                          ) : (
+                            renderHeaderCell(header)
+                          );
+                        })}
+                      </SortableContext>
+                    </tr>
                   ))}
-                </tr>
-              ))}
-            </tfoot>
+                </thead>
+              )}
+
+              <tbody
+                className={styles.tbody}
+                style={enableVirtualization ? { height: `${totalSize}px`, position: 'relative' } : undefined}
+              >
+                {rows.length === 0 ? (
+                  <tr className={styles.emptyRow}>
+                    <td colSpan={table.getAllLeafColumns().length + (enableRowOrdering ? 1 : 0)} className={styles.emptyCell}>
+                      {renderEmpty ? renderEmpty() : (
+                        <div className={styles.emptyState}>
+                          <Filter size={48} className={styles.emptyIcon} />
+                          <p>{emptyMessage}</p>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ) : enableRowOrdering ? (
+                  <SortableContext items={rowIds} strategy={verticalListSortingStrategy}>
+                    {enableVirtualization && virtualRows ? (
+                      virtualRows.map((virtualRow) => {
+                        const row = rows[virtualRow.index];
+                        return renderRow(row, virtualRow);
+                      })
+                    ) : (
+                      rows.map((row) => renderRow(row))
+                    )}
+                  </SortableContext>
+                ) : enableVirtualization && virtualRows ? (
+                  virtualRows.map((virtualRow) => {
+                    const row = rows[virtualRow.index];
+                    return renderRow(row, virtualRow);
+                  })
+                ) : (
+                  rows.map((row) => renderRow(row))
+                )}
+              </tbody>
+
+              {showFooter && (
+                <tfoot className={styles.tfoot}>
+                  {table.getFooterGroups().map((footerGroup) => (
+                    <tr key={footerGroup.id} className={styles.footerRow}>
+                      {enableRowOrdering && <th className={styles.footerCell} style={{ width: 40 }} />}
+                      {footerGroup.headers.map((header) => (
+                        <th key={header.id} className={styles.footerCell}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(header.column.columnDef.footer, header.getContext())}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </tfoot>
+              )}
+            </table>
+
+            {/* Row Drag Overlay */}
+            {enableRowOrdering && (
+              <DragOverlay>
+                {activeRowId && (
+                  <div className={styles.dragOverlay}>
+                    Row {activeRowId}
+                  </div>
+                )}
+              </DragOverlay>
+            )}
+          </DndContext>
+
+          {/* Column Drag Overlay */}
+          {enableColumnDrag && (
+            <DragOverlay>
+              {activeColumnId && (
+                <div className={styles.dragOverlay}>
+                  {activeColumnId}
+                </div>
+              )}
+            </DragOverlay>
           )}
-        </table>
+        </DndContext>
       </div>
 
       {/* Pagination */}

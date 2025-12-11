@@ -1,3 +1,4 @@
+import React from 'react';
 import { Download } from 'lucide-react';
 import { Button } from '../../src/components/Button';
 import { Badge } from '../../src/components/Badge';
@@ -849,6 +850,55 @@ export default function DataGridDemos() {
           height={320}
         />
       </div>
+
+      {/* Row Drag & Drop Demo */}
+      <RowDragDemo />
     </section>
+  );
+}
+
+// Separate component for Row Drag Demo to manage local state
+function RowDragDemo() {
+  const [dragData, setDragData] = React.useState<DeviceData[]>(() => dataGridData.slice(0, 6));
+
+  return (
+    <div className="demo-item full-width">
+      <h3>Row Drag & Drop Reordering</h3>
+      <p className="demo-note">
+        Drag the grip handle (⋮⋮) on the left of each row to reorder.
+        The order is saved locally and logged to console.
+      </p>
+      <DataGrid
+        data={dragData}
+        columns={[
+          { id: 'name', header: 'Device Name', accessorKey: 'name' },
+          { id: 'type', header: 'Type', accessorKey: 'type' },
+          { id: 'status', header: 'Status', accessorKey: 'status',
+            cell: ({ getValue }) => {
+              const status = getValue() as string;
+              return (
+                <Badge
+                  variant={status === 'online' ? 'success' : status === 'warning' ? 'warning' : 'error'}
+                >
+                  {status}
+                </Badge>
+              );
+            }
+          },
+          { id: 'location', header: 'Location', accessorKey: 'location' },
+          { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
+        ]}
+        enableRowOrdering
+        onRowOrderChange={(fromIndex, toIndex, newData) => {
+          console.log(`Row moved from index ${fromIndex} to ${toIndex}`);
+          setDragData(newData);
+        }}
+        enableSorting={false}
+        enableFiltering={false}
+        enablePagination={false}
+        height={320}
+        showToolbar={false}
+      />
+    </div>
   );
 }
