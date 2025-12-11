@@ -208,15 +208,9 @@
 
 .table {
   width: 100%;
-  min-width: 100%;
+  min-width: max-content;
   border-collapse: separate;
   border-spacing: 0;
-  table-layout: fixed;
-}
-
-/* Auto-fill remaining space */
-.dataGrid.autoFill .table {
-  table-layout: auto;
 }
 
 /* ========================================
@@ -244,6 +238,7 @@
   background: var(--surface-secondary);
   border-bottom: 1px solid var(--border-default);
   vertical-align: top;
+  white-space: nowrap;
 }
 
 .th.alignCenter {
@@ -396,7 +391,8 @@
 
 .filterRange .filterInput {
   flex: 1;
-  min-width: 0;
+  min-width: 40px;
+  width: auto;
 }
 
 /* ========================================

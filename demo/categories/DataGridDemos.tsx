@@ -45,28 +45,28 @@ const largeDataGridData: DeviceData[] = Array.from({ length: 10000 }, (_, i) => 
 }));
 
 const dataGridColumns: DataGridColumn<DeviceData>[] = [
-  { id: 'name', header: 'Device Name', accessorKey: 'name', size: 180, enablePinning: true },
-  { id: 'type', header: 'Type', accessorKey: 'type', size: 100 },
+  { id: 'name', header: 'Device Name', accessorKey: 'name', size: 200, minSize: 150, enablePinning: true },
+  { id: 'type', header: 'Type', accessorKey: 'type', size: 120, minSize: 80 },
   {
-    id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+    id: 'status', header: 'Status', accessorKey: 'status', size: 100, minSize: 80,
     cell: ({ getValue }) => {
       const status = getValue() as string;
       const variant = status === 'online' ? 'success' : status === 'warning' ? 'warning' : 'error';
       return <Badge variant={variant}>{status}</Badge>;
     },
   },
-  { id: 'location', header: 'Location', accessorKey: 'location', size: 160 },
-  { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', size: 100, align: 'right', cell: ({ getValue }) => `${getValue()}°C` },
-  { id: 'humidity', header: 'Humidity (%)', accessorKey: 'humidity', size: 110, align: 'right', cell: ({ getValue }) => `${getValue()}%` },
+  { id: 'location', header: 'Location', accessorKey: 'location', size: 180, minSize: 120 },
+  { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', size: 120, minSize: 100, align: 'right', cell: ({ getValue }) => `${getValue()}°C` },
+  { id: 'humidity', header: 'Humidity', accessorKey: 'humidity', size: 120, minSize: 100, align: 'right', cell: ({ getValue }) => `${getValue()}%` },
   {
-    id: 'uptime', header: 'Uptime (%)', accessorKey: 'uptime', size: 100, align: 'right',
+    id: 'uptime', header: 'Uptime', accessorKey: 'uptime', size: 120, minSize: 100, align: 'right',
     cell: ({ getValue }) => {
       const value = getValue() as number;
       const color = value >= 99 ? 'var(--color-success-500)' : value >= 90 ? 'var(--color-warning-500)' : 'var(--color-error-500)';
       return <span style={{ color, fontWeight: 500 }}>{value.toFixed(1)}%</span>;
     },
   },
-  { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 150 },
+  { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 160, minSize: 130 },
 ];
 
 export default function DataGridDemos() {
@@ -320,7 +320,6 @@ export default function DataGridDemos() {
           enableGlobalFilter
           enableFiltering={false}
           enablePagination={false}
-          autoFillColumns={false}
           height={400}
         />
       </div>
@@ -365,7 +364,6 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
-          autoFillColumns={false}
           height={350}
         />
       </div>

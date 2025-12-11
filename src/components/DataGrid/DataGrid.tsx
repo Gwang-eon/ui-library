@@ -227,8 +227,6 @@ export interface DataGridProps<TData> {
   bordered?: boolean;
   /** Compact mode */
   compact?: boolean;
-  /** Auto-fill columns to container width */
-  autoFillColumns?: boolean;
   /** Show header */
   showHeader?: boolean;
   /** Show footer */
@@ -607,7 +605,6 @@ function DataGridInner<TData>(
     hoverable = true,
     bordered = true,
     compact = false,
-    autoFillColumns = true,
     showHeader = true,
     showFooter = false,
     loading = false,
@@ -1095,12 +1092,11 @@ function DataGridInner<TData>(
       styles.dataGrid,
       bordered && styles.bordered,
       compact && styles.compact,
-      autoFillColumns && styles.autoFill,
       className,
     ]
       .filter(Boolean)
       .join(' ');
-  }, [bordered, compact, autoFillColumns, className]);
+  }, [bordered, compact, className]);
 
   return (
     <div className={containerClass} style={style}>
@@ -1146,7 +1142,7 @@ function DataGridInner<TData>(
           </div>
         )}
 
-        <table className={styles.table} style={{ width: autoFillColumns ? '100%' : table.getTotalSize() }}>
+        <table className={styles.table}>
           {showHeader && (
             <thead className={styles.thead}>
               {table.getHeaderGroups().map((headerGroup) => (
