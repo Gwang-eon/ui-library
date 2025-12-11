@@ -25,14 +25,16 @@ import {
   NavigationDemos,
   IoTDemos,
   MobileDemos,
+  TokensDemos,
 } from './categories';
 
 // ============================================
 // Types & Data
 // ============================================
-type Category = 'form' | 'display' | 'datagrid' | 'feedback' | 'navigation' | 'iot' | 'mobile';
+type Category = 'tokens' | 'form' | 'display' | 'datagrid' | 'feedback' | 'navigation' | 'iot' | 'mobile';
 
 const categories: { id: Category; label: string }[] = [
+  { id: 'tokens', label: 'Design Tokens' },
   { id: 'form', label: 'Form' },
   { id: 'display', label: 'Data Display' },
   { id: 'datagrid', label: 'DataGrid' },
@@ -61,7 +63,7 @@ const tourSteps = [
 // Main App Component
 // ============================================
 function App() {
-  const [activeCategory, setActiveCategory] = useState<Category>('form');
+  const [activeCategory, setActiveCategory] = useState<Category>('tokens');
   const [darkMode, setDarkMode] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const [baseFontSize, setBaseFontSize] = useState(14);
@@ -84,6 +86,8 @@ function App() {
 
   const renderCategory = () => {
     switch (activeCategory) {
+      case 'tokens':
+        return <CategoryLoader><TokensDemos /></CategoryLoader>;
       case 'form':
         return <CategoryLoader><FormDemos /></CategoryLoader>;
       case 'display':
@@ -99,7 +103,7 @@ function App() {
       case 'mobile':
         return <CategoryLoader><MobileDemos /></CategoryLoader>;
       default:
-        return <CategoryLoader><FormDemos /></CategoryLoader>;
+        return <CategoryLoader><TokensDemos /></CategoryLoader>;
     }
   };
 

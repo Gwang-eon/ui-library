@@ -7,3 +7,4 @@ export const FeedbackDemos = lazy(() => import('./FeedbackDemos'));
 export const NavigationDemos = lazy(() => import('./NavigationDemos'));
 export const IoTDemos = lazy(() => import('./IoTDemos'));
 export const MobileDemos = lazy(() => import('./MobileDemos'));
+export const TokensDemos = lazy(() => import('./TokensDemos'));
