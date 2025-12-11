@@ -98,6 +98,17 @@ import {
 import styles from './DataGrid.module.css';
 
 // ============================================
+// Constants - Default Props
+// ============================================
+
+const DEFAULT_PAGE_SIZE_OPTIONS = [10, 25, 50, 100] as const;
+const DEFAULT_ESTIMATE_ROW_HEIGHT = 40;
+const DEFAULT_ESTIMATE_COLUMN_WIDTH = 150;
+const DEFAULT_OVERSCAN = 10;
+const DEFAULT_HEIGHT = 600;
+const DEFAULT_EMPTY_MESSAGE = 'No data available';
+
+// ============================================
 // Types
 // ============================================
 
@@ -788,7 +799,7 @@ const getDefaultRowMenuItems = (isSelected: boolean): ContextMenuItem[] => [
   { id: 'delete', label: 'Delete row', icon: <Trash2 size={14} /> },
 ];
 
-const getDefaultHeaderMenuItems = (isPinned: string | false, isVisible: boolean): ContextMenuItem[] => [
+const getDefaultHeaderMenuItems = (isPinned: string | false): ContextMenuItem[] => [
   { id: 'sort-asc', label: 'Sort ascending', icon: <ChevronUp size={14} /> },
   { id: 'sort-desc', label: 'Sort descending', icon: <ChevronDown size={14} /> },
   { id: 'sort-clear', label: 'Clear sort', icon: <X size={14} /> },
@@ -813,13 +824,14 @@ const SelectFilter = memo(({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const columnFilterValue = column.getFilterValue();
+  const facetedValues = column.getFacetedUniqueValues();
 
   // Get options from faceted values or custom options
   const options = useMemo(() => {
     if (customOptions && customOptions.length > 0) {
       return customOptions;
     }
-    const uniqueValues = Array.from(column.getFacetedUniqueValues().keys());
+    const uniqueValues = Array.from(facetedValues.keys());
     return uniqueValues
       .filter((v): v is string | number => v != null)
       .map((value) => ({
@@ -827,7 +839,8 @@ const SelectFilter = memo(({
         label: String(value),
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
-  }, [column, customOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [facetedValues.size, column.id, customOptions]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -1065,9 +1078,11 @@ NumberRangeFilter.displayName = 'NumberRangeFilter';
 // Text filter component
 const TextFilter = memo(({ column }: { column: any }) => {
   const columnFilterValue = column.getFilterValue();
+  const facetedValues = column.getFacetedUniqueValues();
   const sortedUniqueValues = useMemo(
-    () => Array.from(column.getFacetedUniqueValues().keys()).sort(),
-    [column]
+    () => Array.from(facetedValues.keys()).sort(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [facetedValues.size, column.id]
   );
 
   return (
@@ -1076,13 +1091,13 @@ const TextFilter = memo(({ column }: { column: any }) => {
         type="text"
         value={(columnFilterValue ?? '') as string}
         onChange={(e) => column.setFilterValue(e.target.value)}
-        placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
+        placeholder={`Search... (${facetedValues.size})`}
         className={styles.filterInput}
         list={column.id + 'list'}
       />
       <datalist id={column.id + 'list'}>
-        {sortedUniqueValues.slice(0, 5000).map((value: any, i: number) => (
-          <option value={value} key={i} />
+        {sortedUniqueValues.slice(0, 5000).map((value: unknown) => (
+          <option value={String(value)} key={String(value)} />
         ))}
       </datalist>
     </div>
@@ -1370,7 +1385,7 @@ function DataGridInner<TData>(
 
     // Pagination
     enablePagination = true,
-    pageSizeOptions = [10, 25, 50, 100],
+    pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS as unknown as number[],
     pagination: paginationProp,
     onPaginationChange,
     rowCount,
@@ -1449,12 +1464,12 @@ function DataGridInner<TData>(
     // Virtualization
     enableVirtualization = false,
     enableColumnVirtualization = false,
-    estimateRowHeight = 40,
-    estimateColumnWidth = 150,
-    overscan = 10,
+    estimateRowHeight = DEFAULT_ESTIMATE_ROW_HEIGHT,
+    estimateColumnWidth = DEFAULT_ESTIMATE_COLUMN_WIDTH,
+    overscan = DEFAULT_OVERSCAN,
 
     // Appearance
-    height = 600,
+    height = DEFAULT_HEIGHT,
     striped = false,
     hoverable = true,
     bordered = true,
@@ -1462,7 +1477,7 @@ function DataGridInner<TData>(
     showHeader = true,
     showFooter = false,
     loading = false,
-    emptyMessage = 'No data available',
+    emptyMessage = DEFAULT_EMPTY_MESSAGE,
     renderEmpty,
 
     // Toolbar
@@ -1896,8 +1911,8 @@ function DataGridInner<TData>(
     enabled: enableColumnVirtualization,
   });
 
-  const virtualColumns = enableColumnVirtualization ? columnVirtualizer.getVirtualItems() : null;
-  const totalColumnSize = enableColumnVirtualization ? columnVirtualizer.getTotalSize() : 0;
+  // Note: Column virtualization is prepared but rendering integration is deferred
+  // Use columnVirtualizer.getVirtualItems() and columnVirtualizer.getTotalSize() when implementing column virtualized rendering
 
   // Drag & Drop handlers for columns
   const handleColumnDragStart = useCallback((event: DragStartEvent) => {
@@ -2196,7 +2211,7 @@ function DataGridInner<TData>(
     } else {
       const column = table.getColumn(context.columnId || '');
       const isPinned = column?.getIsPinned() || false;
-      items = headerContextMenuItems || getDefaultHeaderMenuItems(isPinned, true);
+      items = headerContextMenuItems || getDefaultHeaderMenuItems(isPinned);
     }
 
     setContextMenu({
@@ -2557,8 +2572,18 @@ function DataGridInner<TData>(
         // Write file
         XLSX.writeFile(wb, filename);
       } catch (err) {
-        console.error('Excel export failed. Make sure xlsx package is installed:', err);
-        throw new Error('Excel export requires xlsx package. Install it with: npm install xlsx');
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        const isModuleNotFound = errorMessage.includes('Cannot find module') ||
+                                  errorMessage.includes('Failed to resolve') ||
+                                  errorMessage.includes('is not defined');
+
+        if (isModuleNotFound) {
+          console.error('Excel export failed: xlsx package is not installed');
+          throw new Error('Excel export requires xlsx package. Install it with: npm install xlsx');
+        }
+
+        console.error('Excel export failed:', err);
+        throw new Error(`Excel export failed: ${errorMessage}`);
       }
     },
 
