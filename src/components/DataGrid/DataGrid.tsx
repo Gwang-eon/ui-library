@@ -85,6 +85,14 @@ import {
   Expand,
   Shrink,
   GripVertical,
+  Copy,
+  Trash2,
+  ArrowUpDown,
+  Eye,
+  EyeOff,
+  CheckSquare,
+  Square,
+  MoreHorizontal,
 } from 'lucide-react';
 import styles from './DataGrid.module.css';
 
@@ -104,6 +112,24 @@ export type EditorType = 'text' | 'number' | 'select' | 'date';
 export interface EditorOption {
   value: string;
   label: string;
+}
+
+// Context Menu Types
+export interface ContextMenuItem {
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  divider?: boolean;
+  shortcut?: string;
+}
+
+export interface ContextMenuContext<TData = unknown> {
+  type: 'cell' | 'row' | 'header';
+  rowData?: TData;
+  rowIndex?: number;
+  columnId?: string;
+  cellValue?: unknown;
 }
 
 export interface DataGridColumn<TData> {
@@ -295,6 +321,18 @@ export interface DataGridProps<TData> {
   onRowOrderChange?: (fromIndex: number, toIndex: number, newData: TData[]) => void;
   /** Enable column drag and drop reordering (UI enhancement for existing enableColumnOrdering) */
   enableColumnDrag?: boolean;
+
+  // Context Menu
+  /** Enable context menu on right-click */
+  enableContextMenu?: boolean;
+  /** Custom cell context menu items (overrides default) */
+  cellContextMenuItems?: ContextMenuItem[];
+  /** Custom row context menu items (overrides default) */
+  rowContextMenuItems?: ContextMenuItem[];
+  /** Custom header context menu items (overrides default) */
+  headerContextMenuItems?: ContextMenuItem[];
+  /** Context menu action handler */
+  onContextMenuAction?: (actionId: string, context: ContextMenuContext<TData>) => void;
 
   // Virtualization
   /** Enable virtualization for large datasets */
@@ -582,6 +620,133 @@ const RowDragHandle = memo(({ rowId }: { rowId: string }) => {
 });
 
 RowDragHandle.displayName = 'RowDragHandle';
+
+// Context Menu Component
+interface ContextMenuProps {
+  x: number;
+  y: number;
+  items: ContextMenuItem[];
+  onAction: (actionId: string) => void;
+  onClose: () => void;
+}
+
+const ContextMenu = memo(({ x, y, items, onAction, onClose }: ContextMenuProps) => {
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [onClose]);
+
+  // Adjust position to stay within viewport
+  const [position, setPosition] = useState({ x, y });
+
+  useEffect(() => {
+    if (menuRef.current) {
+      const rect = menuRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      let newX = x;
+      let newY = y;
+
+      if (x + rect.width > viewportWidth) {
+        newX = viewportWidth - rect.width - 10;
+      }
+      if (y + rect.height > viewportHeight) {
+        newY = viewportHeight - rect.height - 10;
+      }
+
+      setPosition({ x: newX, y: newY });
+    }
+  }, [x, y]);
+
+  return (
+    <div
+      ref={menuRef}
+      className={styles.contextMenu}
+      style={{
+        position: 'fixed',
+        left: position.x,
+        top: position.y,
+        zIndex: 1000,
+      }}
+    >
+      {items.map((item, index) => (
+        item.divider ? (
+          <div key={`divider-${index}`} className={styles.contextMenuDivider} />
+        ) : (
+          <button
+            key={item.id}
+            className={`${styles.contextMenuItem} ${item.disabled ? styles.contextMenuItemDisabled : ''}`}
+            onClick={() => {
+              if (!item.disabled) {
+                onAction(item.id);
+                onClose();
+              }
+            }}
+            disabled={item.disabled}
+          >
+            {item.icon && <span className={styles.contextMenuIcon}>{item.icon}</span>}
+            <span className={styles.contextMenuLabel}>{item.label}</span>
+            {item.shortcut && <span className={styles.contextMenuShortcut}>{item.shortcut}</span>}
+          </button>
+        )
+      ))}
+    </div>
+  );
+});
+
+ContextMenu.displayName = 'ContextMenu';
+
+// Default context menu items
+const getDefaultCellMenuItems = (): ContextMenuItem[] => [
+  { id: 'copy', label: 'Copy', icon: <Copy size={14} />, shortcut: 'Ctrl+C' },
+  { id: 'divider1', label: '', divider: true },
+  { id: 'filter', label: 'Filter by value', icon: <Filter size={14} /> },
+  { id: 'sort-asc', label: 'Sort A to Z', icon: <ArrowUpDown size={14} /> },
+  { id: 'sort-desc', label: 'Sort Z to A', icon: <ArrowUpDown size={14} /> },
+];
+
+const getDefaultRowMenuItems = (isSelected: boolean): ContextMenuItem[] => [
+  { id: 'select', label: isSelected ? 'Deselect row' : 'Select row', icon: isSelected ? <Square size={14} /> : <CheckSquare size={14} /> },
+  { id: 'divider1', label: '', divider: true },
+  { id: 'expand', label: 'Expand row', icon: <Expand size={14} /> },
+  { id: 'pin-top', label: 'Pin to top', icon: <Pin size={14} /> },
+  { id: 'pin-bottom', label: 'Pin to bottom', icon: <Pin size={14} /> },
+  { id: 'unpin', label: 'Unpin row', icon: <PinOff size={14} /> },
+  { id: 'divider2', label: '', divider: true },
+  { id: 'delete', label: 'Delete row', icon: <Trash2 size={14} /> },
+];
+
+const getDefaultHeaderMenuItems = (isPinned: string | false, isVisible: boolean): ContextMenuItem[] => [
+  { id: 'sort-asc', label: 'Sort ascending', icon: <ChevronUp size={14} /> },
+  { id: 'sort-desc', label: 'Sort descending', icon: <ChevronDown size={14} /> },
+  { id: 'sort-clear', label: 'Clear sort', icon: <X size={14} /> },
+  { id: 'divider1', label: '', divider: true },
+  { id: 'pin-left', label: 'Pin to left', icon: <Pin size={14} />, disabled: isPinned === 'left' },
+  { id: 'pin-right', label: 'Pin to right', icon: <Pin size={14} />, disabled: isPinned === 'right' },
+  { id: 'unpin', label: 'Unpin column', icon: <PinOff size={14} />, disabled: !isPinned },
+  { id: 'divider2', label: '', divider: true },
+  { id: 'hide', label: 'Hide column', icon: <EyeOff size={14} /> },
+];
 
 // Select filter component for single/multi select
 const SelectFilter = memo(({
@@ -1213,6 +1378,13 @@ function DataGridInner<TData>(
     onRowOrderChange,
     enableColumnDrag = false,
 
+    // Context Menu
+    enableContextMenu = false,
+    cellContextMenuItems,
+    rowContextMenuItems,
+    headerContextMenuItems,
+    onContextMenuAction,
+
     // Virtualization
     enableVirtualization = false,
     estimateRowHeight = 40,
@@ -1266,6 +1438,15 @@ function DataGridInner<TData>(
   } | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
+
+  // Context menu state
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    type: 'cell' | 'row' | 'header';
+    context: ContextMenuContext<TData>;
+    items: ContextMenuItem[];
+  } | null>(null);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -1675,6 +1856,128 @@ function DataGridInner<TData>(
     return rows.map(row => row.id);
   }, [enableRowOrdering, rows]);
 
+  // Context menu handlers
+  const handleContextMenu = useCallback((
+    e: React.MouseEvent,
+    type: 'cell' | 'row' | 'header',
+    context: ContextMenuContext<TData>
+  ) => {
+    if (!enableContextMenu) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    let items: ContextMenuItem[];
+
+    if (type === 'cell') {
+      items = cellContextMenuItems || getDefaultCellMenuItems();
+    } else if (type === 'row') {
+      const row = rows.find(r => r.original === context.rowData);
+      const isSelected = row?.getIsSelected() || false;
+      items = rowContextMenuItems || getDefaultRowMenuItems(isSelected);
+    } else {
+      const column = table.getColumn(context.columnId || '');
+      const isPinned = column?.getIsPinned() || false;
+      items = headerContextMenuItems || getDefaultHeaderMenuItems(isPinned, true);
+    }
+
+    setContextMenu({
+      x: e.clientX,
+      y: e.clientY,
+      type,
+      context,
+      items,
+    });
+  }, [enableContextMenu, cellContextMenuItems, rowContextMenuItems, headerContextMenuItems, rows, table]);
+
+  const handleContextMenuAction = useCallback((actionId: string) => {
+    if (!contextMenu) return;
+
+    const { context, type } = contextMenu;
+
+    // Handle default actions
+    switch (actionId) {
+      case 'copy':
+        if (context.cellValue !== undefined) {
+          navigator.clipboard.writeText(String(context.cellValue));
+        }
+        break;
+      case 'select':
+        if (context.rowData) {
+          const row = rows.find(r => r.original === context.rowData);
+          row?.toggleSelected();
+        }
+        break;
+      case 'expand':
+        if (context.rowData) {
+          const row = rows.find(r => r.original === context.rowData);
+          row?.toggleExpanded();
+        }
+        break;
+      case 'pin-top':
+        if (context.rowData) {
+          const row = rows.find(r => r.original === context.rowData);
+          row?.pin('top');
+        }
+        break;
+      case 'pin-bottom':
+        if (context.rowData) {
+          const row = rows.find(r => r.original === context.rowData);
+          row?.pin('bottom');
+        }
+        break;
+      case 'unpin':
+        if (context.rowData) {
+          const row = rows.find(r => r.original === context.rowData);
+          row?.pin(false);
+        }
+        break;
+      case 'sort-asc':
+        if (context.columnId) {
+          const column = table.getColumn(context.columnId);
+          column?.toggleSorting(false);
+        }
+        break;
+      case 'sort-desc':
+        if (context.columnId) {
+          const column = table.getColumn(context.columnId);
+          column?.toggleSorting(true);
+        }
+        break;
+      case 'sort-clear':
+        if (context.columnId) {
+          const column = table.getColumn(context.columnId);
+          column?.clearSorting();
+        }
+        break;
+      case 'pin-left':
+        if (context.columnId) {
+          const column = table.getColumn(context.columnId);
+          column?.pin('left');
+        }
+        break;
+      case 'pin-right':
+        if (context.columnId) {
+          const column = table.getColumn(context.columnId);
+          column?.pin('right');
+        }
+        break;
+      case 'hide':
+        if (context.columnId) {
+          const column = table.getColumn(context.columnId);
+          column?.toggleVisibility(false);
+        }
+        break;
+    }
+
+    // Call custom handler
+    onContextMenuAction?.(actionId, context);
+  }, [contextMenu, rows, table, onContextMenuAction]);
+
+  const closeContextMenu = useCallback(() => {
+    setContextMenu(null);
+  }, []);
+
   // Keyboard navigation handler
   const handleTableKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (!enableKeyboardNavigation || !focusedCell) return;
@@ -1849,6 +2152,7 @@ function DataGridInner<TData>(
           left: isPinned === 'left' ? header.getStart('left') : undefined,
           right: isPinned === 'right' ? header.getStart('right') : undefined,
         }}
+        onContextMenu={(e) => handleContextMenu(e, 'header', { type: 'header', columnId: header.id })}
       >
         {header.isPlaceholder ? null : (
           <div className={styles.thContent}>
@@ -1937,6 +2241,13 @@ function DataGridInner<TData>(
               }}
               data-row-index={row.index}
               data-column-index={cellIndex}
+              onContextMenu={(e) => handleContextMenu(e, 'cell', {
+                type: 'cell',
+                rowData: row.original,
+                rowIndex: row.index,
+                columnId: cell.column.id,
+                cellValue: cell.getValue(),
+              })}
             >
               {cell.getIsGrouped() ? (
                 <button
@@ -2361,6 +2672,17 @@ function DataGridInner<TData>(
 
       {/* Pagination */}
       {enablePagination && renderPagination()}
+
+      {/* Context Menu */}
+      {contextMenu && (
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          items={contextMenu.items}
+          onAction={handleContextMenuAction}
+          onClose={closeContextMenu}
+        />
+      )}
     </div>
   );
 }

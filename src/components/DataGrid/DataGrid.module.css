@@ -1658,3 +1658,128 @@
 :global(.dark) .dragHandleHeader {
   color: var(--palette-gray-500);
 }
+
+/* ========================================
+   CONTEXT MENU
+   ======================================== */
+
+.contextMenu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 180px;
+  max-width: 280px;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-1) 0;
+  animation: contextMenuFadeIn 0.15s ease-out;
+}
+
+@keyframes contextMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.contextMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.contextMenuItem:hover {
+  background-color: var(--surface-secondary);
+}
+
+.contextMenuItem:active {
+  background-color: var(--surface-tertiary);
+}
+
+.contextMenuItemDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.contextMenuIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.contextMenuLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contextMenuShortcut {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  margin-left: auto;
+  padding-left: var(--spacing-4);
+}
+
+.contextMenuDivider {
+  height: 1px;
+  background-color: var(--border-default);
+  margin: var(--spacing-1) 0;
+}
+
+/* ========================================
+   DARK MODE - CONTEXT MENU
+   ======================================== */
+
+:global([data-theme="dark"]) .contextMenu,
+:global(.dark) .contextMenu {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+:global([data-theme="dark"]) .contextMenuItem,
+:global(.dark) .contextMenuItem {
+  color: var(--palette-gray-100);
+}
+
+:global([data-theme="dark"]) .contextMenuItem:hover,
+:global(.dark) .contextMenuItem:hover {
+  background-color: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .contextMenuItem:active,
+:global(.dark) .contextMenuItem:active {
+  background-color: var(--palette-gray-600);
+}
+
+:global([data-theme="dark"]) .contextMenuIcon,
+:global(.dark) .contextMenuIcon {
+  color: var(--palette-gray-400);
+}
+
+:global([data-theme="dark"]) .contextMenuShortcut,
+:global(.dark) .contextMenuShortcut {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .contextMenuDivider,
+:global(.dark) .contextMenuDivider {
+  background-color: var(--palette-gray-700);
+}

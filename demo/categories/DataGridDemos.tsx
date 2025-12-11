@@ -853,11 +853,57 @@ export default function DataGridDemos() {
 
       {/* Row Drag & Drop Demo */}
       <RowDragDemo />
+
+      {/* Context Menu Demo */}
+      <ContextMenuDemo />
     </section>
   );
 }
 
 // Separate component for Row Drag Demo to manage local state
+function ContextMenuDemo() {
+  return (
+    <div className="demo-item full-width">
+      <h3>Context Menu (Right-Click)</h3>
+      <p className="demo-note">
+        Right-click on cells, rows, or headers to see context menu options.
+        Actions are logged to console.
+      </p>
+      <DataGrid
+        data={dataGridData.slice(0, 6)}
+        columns={[
+          { id: 'name', header: 'Device Name', accessorKey: 'name' },
+          { id: 'type', header: 'Type', accessorKey: 'type' },
+          { id: 'status', header: 'Status', accessorKey: 'status',
+            cell: ({ getValue }) => {
+              const status = getValue() as string;
+              return (
+                <Badge
+                  variant={status === 'online' ? 'success' : status === 'warning' ? 'warning' : 'error'}
+                >
+                  {status}
+                </Badge>
+              );
+            }
+          },
+          { id: 'location', header: 'Location', accessorKey: 'location' },
+          { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
+        ]}
+        enableContextMenu
+        onContextMenuAction={(actionId, context) => {
+          console.log('Context menu action:', actionId, context);
+          alert(`Action: ${actionId}\nType: ${context.type}\nColumn: ${context.columnId || '-'}\nValue: ${context.cellValue ?? '-'}`);
+        }}
+        enableSorting
+        enableFiltering={false}
+        enablePagination={false}
+        height={280}
+        showToolbar={false}
+      />
+    </div>
+  );
+}
+
 function RowDragDemo() {
   const [dragData, setDragData] = React.useState<DeviceData[]>(() => dataGridData.slice(0, 6));
 
