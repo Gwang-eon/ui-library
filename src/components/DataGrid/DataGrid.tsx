@@ -46,6 +46,7 @@ import {
   Updater,
 } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { rankItem } from '@tanstack/match-sorter-utils';
 import {
   DndContext,
   DragEndEvent,
@@ -211,6 +212,8 @@ export interface DataGridProps<TData> {
   onColumnFiltersChange?: (updater: Updater<ColumnFiltersState>) => void;
   /** Manual filtering mode - disable client-side filtering, handle in server */
   manualFiltering?: boolean;
+  /** Enable fuzzy filtering for global search (uses match-sorter-utils) */
+  enableFuzzyFilter?: boolean;
 
   // Pagination
   /** Enable pagination */
@@ -349,10 +352,14 @@ export interface DataGridProps<TData> {
   onCopy?: (data: string[][], selectedCells: { rowIndex: number; columnId: string }[]) => void;
 
   // Virtualization
-  /** Enable virtualization for large datasets */
+  /** Enable row virtualization for large datasets */
   enableVirtualization?: boolean;
+  /** Enable column virtualization for many columns */
+  enableColumnVirtualization?: boolean;
   /** Estimated row height for virtualization */
   estimateRowHeight?: number;
+  /** Estimated column width for column virtualization */
+  estimateColumnWidth?: number;
   /** Overscan count for virtualization */
   overscan?: number;
 
@@ -1359,6 +1366,7 @@ function DataGridInner<TData>(
     columnFilters: columnFiltersProp,
     onColumnFiltersChange,
     manualFiltering = false,
+    enableFuzzyFilter = false,
 
     // Pagination
     enablePagination = true,
@@ -1440,7 +1448,9 @@ function DataGridInner<TData>(
 
     // Virtualization
     enableVirtualization = false,
+    enableColumnVirtualization = false,
     estimateRowHeight = 40,
+    estimateColumnWidth = 150,
     overscan = 10,
 
     // Appearance
@@ -1794,6 +1804,12 @@ function DataGridInner<TData>(
     getFacetedUniqueValues: enableFiltering ? getFacetedUniqueValues() : undefined,
     getFacetedMinMaxValues: enableFiltering ? getFacetedMinMaxValues() : undefined,
     filterFns: {
+      // Fuzzy filter function using match-sorter-utils
+      fuzzy: (row, columnId, filterValue, addMeta) => {
+        const itemRank = rankItem(String(row.getValue(columnId)), String(filterValue));
+        addMeta({ itemRank });
+        return itemRank.passed;
+      },
       // Custom filter function for multi-select
       multiSelect: (row, columnId, filterValue: string[]) => {
         if (!filterValue || filterValue.length === 0) return true;
@@ -1827,6 +1843,13 @@ function DataGridInner<TData>(
         return dateValue === filterValue;
       },
     },
+    globalFilterFn: enableFuzzyFilter
+      ? (row, columnId, filterValue, addMeta) => {
+          const itemRank = rankItem(String(row.getValue(columnId)), String(filterValue));
+          addMeta({ itemRank });
+          return itemRank.passed;
+        }
+      : 'includesString',
     enableRowSelection: getRowCanSelect
       ? (row: Row<TData>) => getRowCanSelect(row.original)
       : enableRowSelection,
@@ -1861,6 +1884,20 @@ function DataGridInner<TData>(
 
   const virtualRows = enableVirtualization ? rowVirtualizer.getVirtualItems() : null;
   const totalSize = enableVirtualization ? rowVirtualizer.getTotalSize() : 0;
+
+  // Column virtualization
+  const visibleColumns = table.getVisibleLeafColumns();
+  const columnVirtualizer = useVirtualizer({
+    count: visibleColumns.length,
+    getScrollElement: () => tableContainerRef.current,
+    estimateSize: (index) => visibleColumns[index]?.getSize() ?? estimateColumnWidth,
+    horizontal: true,
+    overscan,
+    enabled: enableColumnVirtualization,
+  });
+
+  const virtualColumns = enableColumnVirtualization ? columnVirtualizer.getVirtualItems() : null;
+  const totalColumnSize = enableColumnVirtualization ? columnVirtualizer.getTotalSize() : 0;
 
   // Drag & Drop handlers for columns
   const handleColumnDragStart = useCallback((event: DragStartEvent) => {
