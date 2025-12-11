@@ -205,8 +205,8 @@
 @media (prefers-color-scheme: dark) {
   /* Base Card */
   .card {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--border-default);
   }
 
   /* Elevated Card - enhanced shadow for dark mode */
@@ -216,7 +216,7 @@
 
   /* Outlined Card */
   .cardOutlined {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-default);
   }
 
   /* Interactive States */
@@ -242,26 +242,26 @@
 
   /* Header */
   .cardHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--border-default);
   }
 
   .cardTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Content */
   .cardContent p {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Footer */
   .cardFooter {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--border-default);
   }
 
   /* Loading Spinner */
   .card .loadingSpinner {
-    border-color: var(--palette-gray-700);
+    border-color: var(--border-default);
     border-top-color: var(--color-primary-400);
   }
 }
@@ -270,8 +270,8 @@
 :global(.dark-mode) .card,
 :global(.dark) .card,
 :global([data-theme="dark"]) .card {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--border-default);
 }
 
 :global(.dark-mode) .cardElevated,
@@ -283,7 +283,7 @@
 :global(.dark-mode) .cardOutlined,
 :global(.dark) .cardOutlined,
 :global([data-theme="dark"]) .cardOutlined {
-  border-color: var(--palette-gray-600);
+  border-color: var(--border-default);
 }
 
 :global(.dark-mode) .cardHoverable:hover,
@@ -319,30 +319,30 @@
 :global(.dark-mode) .cardHeader,
 :global(.dark) .cardHeader,
 :global([data-theme="dark"]) .cardHeader {
-  border-bottom-color: var(--palette-gray-700);
+  border-bottom-color: var(--border-default);
 }
 
 :global(.dark-mode) .cardTitle,
 :global(.dark) .cardTitle,
 :global([data-theme="dark"]) .cardTitle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global(.dark-mode) .cardContent p,
 :global(.dark) .cardContent p,
 :global([data-theme="dark"]) .cardContent p {
-  color: var(--palette-gray-300);
+  color: var(--text-secondary);
 }
 
 :global(.dark-mode) .cardFooter,
 :global(.dark) .cardFooter,
 :global([data-theme="dark"]) .cardFooter {
-  border-top-color: var(--palette-gray-700);
+  border-top-color: var(--border-default);
 }
 
 :global(.dark-mode) .card .loadingSpinner,
 :global(.dark) .card .loadingSpinner,
 :global([data-theme="dark"]) .card .loadingSpinner {
-  border-color: var(--palette-gray-700);
+  border-color: var(--border-default);
   border-top-color: var(--color-primary-400);
 }

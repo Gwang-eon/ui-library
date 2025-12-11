@@ -149,13 +149,23 @@ export default function DisplayDemos() {
         {/* DeviceCard */}
         <div className="demo-item">
           <h3>DeviceCard</h3>
-          <DeviceCard
-            icon={<Thermometer />}
-            name="Temperature Sensor"
-            status="online"
-            value="23.5°C"
-            subtitle="Building A, Floor 1"
-          />
+          <DeviceCard>
+            <DeviceCard.Header>
+              <DeviceCard.Icon background="linear-gradient(135deg, #3b82f6, #1d4ed8)">
+                <Thermometer size={20} />
+              </DeviceCard.Icon>
+              <DeviceCard.TitleSection
+                title="Temperature Sensor"
+                subtitle="Building A, Floor 1"
+              />
+            </DeviceCard.Header>
+            <DeviceCard.Body>
+              <DeviceCard.Metrics>
+                <DeviceCard.Metric label="Temperature" value="23.5°C" />
+                <DeviceCard.Metric label="Status" value="Online" />
+              </DeviceCard.Metrics>
+            </DeviceCard.Body>
+          </DeviceCard>
         </div>
 
         {/* Divider */}
