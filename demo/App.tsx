@@ -330,6 +330,19 @@ const dataGridData: DeviceData[] = [
   { id: '12', name: 'Security Camera F2', type: 'Camera', status: 'offline', location: 'Building F, Floor 2', lastUpdate: '2024-12-11 08:00', temperature: 20.5, humidity: 58, uptime: 0 },
 ];
 
+// Pre-generate large dataset for virtualization demo (avoid creating in render)
+const largeDataGridData: DeviceData[] = Array.from({ length: 10000 }, (_, i) => ({
+  id: String(i + 1),
+  name: `Device ${String(i + 1).padStart(5, '0')}`,
+  type: ['Sensor', 'Controller', 'Monitor', 'Detector', 'Alarm'][i % 5],
+  status: ['online', 'offline', 'warning'][i % 3] as 'online' | 'offline' | 'warning',
+  location: `Building ${String.fromCharCode(65 + (i % 6))}, Floor ${(i % 10) + 1}`,
+  lastUpdate: `2024-12-${String((i % 28) + 1).padStart(2, '0')} ${String((i % 24)).padStart(2, '0')}:${String((i % 60)).padStart(2, '0')}`,
+  temperature: 20 + (i % 100) / 10,
+  humidity: 40 + (i % 30),
+  uptime: 85 + (i % 15),
+}));
+
 const dataGridColumns: DataGridColumn<DeviceData>[] = [
   {
     id: 'name',
@@ -1272,17 +1285,7 @@ function App() {
               <h3>Virtualization (10,000 Rows)</h3>
               <p className="demo-note">Efficient rendering of large datasets using virtual scrolling. Only visible rows are rendered.</p>
               <DataGrid
-                data={Array.from({ length: 10000 }, (_, i) => ({
-                  id: String(i + 1),
-                  name: `Device ${String(i + 1).padStart(5, '0')}`,
-                  type: ['Sensor', 'Controller', 'Monitor', 'Detector', 'Alarm'][i % 5],
-                  status: ['online', 'offline', 'warning'][i % 3] as 'online' | 'offline' | 'warning',
-                  location: `Building ${String.fromCharCode(65 + (i % 6))}, Floor ${(i % 10) + 1}`,
-                  lastUpdate: `2024-12-${String((i % 28) + 1).padStart(2, '0')} ${String((i % 24)).padStart(2, '0')}:${String((i % 60)).padStart(2, '0')}`,
-                  temperature: 20 + Math.random() * 10,
-                  humidity: 40 + Math.random() * 30,
-                  uptime: 85 + Math.random() * 15,
-                }))}
+                data={largeDataGridData}
                 columns={[
                   { id: 'id', header: 'ID', accessorKey: 'id', size: 80 },
                   { id: 'name', header: 'Device Name', accessorKey: 'name', size: 150 },
