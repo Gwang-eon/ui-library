@@ -395,6 +395,108 @@
   width: auto;
 }
 
+/* Select Filter */
+.selectFilter {
+  position: relative;
+  width: 100%;
+}
+
+.selectFilterTrigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-1) var(--spacing-2);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  cursor: pointer;
+  gap: var(--spacing-1);
+  min-height: 28px;
+}
+
+.selectFilterTrigger:hover {
+  border-color: var(--color-primary-500);
+}
+
+.selectFilterText {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selectFilterClear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: var(--radius-xs);
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+
+.selectFilterClear:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.selectFilterIcon {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+.selectFilterDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: var(--spacing-1);
+  padding: var(--spacing-1);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.selectFilterOption {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+}
+
+.selectFilterOption:hover {
+  background: var(--surface-secondary);
+}
+
+.selectFilterOption.selected {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+
+.selectFilterCheckbox {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--color-primary-500);
+}
+
+.selectFilterEmpty {
+  padding: var(--spacing-2);
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-small);
+}
+
 /* ========================================
    BODY
    ======================================== */
@@ -406,6 +508,10 @@
 .tr {
   height: 48px;
   transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.row {
+  /* Used for hover effects on row actions */
 }
 
 .tr.hoverable:hover {
@@ -469,6 +575,16 @@
 .expandButton:hover {
   color: var(--text-primary);
   background: var(--surface-secondary);
+}
+
+.expandCell {
+  display: flex;
+  align-items: center;
+}
+
+.expandSpacer {
+  width: 24px;
+  height: 24px;
 }
 
 .expandedRow {
@@ -548,6 +664,144 @@
 }
 
 /* ========================================
+   RADIO BUTTON
+   ======================================== */
+
+.radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radioMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--surface-primary);
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.radioInner {
+  width: 8px;
+  height: 8px;
+  background: var(--palette-white);
+  border-radius: 50%;
+}
+
+.radioInput:checked + .radioMark {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+
+.radioInput:focus-visible + .radioMark {
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.radioInput:disabled + .radioMark {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Disabled row styles for conditional selection */
+.tr.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tr.disabled .td {
+  pointer-events: none;
+}
+
+/* ========================================
+   KEYBOARD NAVIGATION
+   ======================================== */
+
+.focusedCell {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
+  background: var(--color-primary-50);
+}
+
+/* ========================================
+   ROW PINNING
+   ======================================== */
+
+.pinHeaderIcon {
+  color: var(--text-tertiary);
+}
+
+.pinCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pinActions {
+  display: flex;
+  gap: var(--spacing-1);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.row:hover .pinActions {
+  opacity: 1;
+}
+
+.pinButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.pinButton:hover {
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+}
+
+.pinButtonActive {
+  color: var(--color-primary-500);
+  opacity: 1;
+}
+
+.pinButtonActive:hover {
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
+}
+
+.pinnedRow {
+  background: var(--color-primary-50);
+}
+
+.pinnedRowTop {
+  border-bottom: 2px solid var(--color-primary-300);
+}
+
+.pinnedRowBottom {
+  border-top: 2px solid var(--color-primary-300);
+}
+
+/* ========================================
    CELL EDITING
    ======================================== */
 
@@ -572,6 +826,43 @@
   border: 2px solid var(--color-primary-500);
   border-radius: var(--radius-sm);
   outline: none;
+}
+
+.editSelect {
+  width: 100%;
+  height: 32px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font: inherit;
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 2px solid var(--color-primary-500);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+}
+
+.editInputError {
+  border-color: var(--color-error-500);
+}
+
+.editorWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.editorError {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  margin-top: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-error-600);
+  background: var(--color-error-50);
+  border: 1px solid var(--color-error-200);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
 }
 
 /* ========================================
@@ -978,6 +1269,64 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
+/* Radio button dark mode */
+:global([data-theme="dark"]) .radioMark,
+:global(.dark) .radioMark {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-600);
+}
+
+:global([data-theme="dark"]) .radioInput:checked + .radioMark,
+:global(.dark) .radioInput:checked + .radioMark {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .radioInput:focus-visible + .radioMark,
+:global(.dark) .radioInput:focus-visible + .radioMark {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Row pinning dark mode */
+:global([data-theme="dark"]) .pinButton:hover,
+:global(.dark) .pinButton:hover {
+  color: var(--palette-gray-100);
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .pinButtonActive,
+:global(.dark) .pinButtonActive {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .pinButtonActive:hover,
+:global(.dark) .pinButtonActive:hover {
+  color: var(--color-primary-300);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+:global([data-theme="dark"]) .pinnedRow,
+:global(.dark) .pinnedRow {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+:global([data-theme="dark"]) .pinnedRowTop,
+:global(.dark) .pinnedRowTop {
+  border-bottom-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .pinnedRowBottom,
+:global(.dark) .pinnedRowBottom {
+  border-top-color: var(--color-primary-500);
+}
+
+/* Keyboard navigation dark mode */
+:global([data-theme="dark"]) .focusedCell,
+:global(.dark) .focusedCell {
+  outline-color: var(--color-primary-400);
+  background: rgba(59, 130, 246, 0.15);
+}
+
 :global([data-theme="dark"]) .editableCell:hover,
 :global(.dark) .editableCell:hover {
   background: var(--palette-gray-800);
@@ -987,6 +1336,24 @@
 :global(.dark) .editInput {
   color: var(--palette-gray-100);
   background: var(--palette-gray-800);
+}
+
+:global([data-theme="dark"]) .editSelect,
+:global(.dark) .editSelect {
+  color: var(--palette-gray-100);
+  background: var(--palette-gray-800);
+}
+
+:global([data-theme="dark"]) .editInputError,
+:global(.dark) .editInputError {
+  border-color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .editorError,
+:global(.dark) .editorError {
+  color: var(--color-error-300);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-error-500);
 }
 
 :global([data-theme="dark"]) .tfoot,
@@ -1056,6 +1423,68 @@
 :global(.dark) .spinner {
   border-color: var(--palette-gray-700);
   border-top-color: var(--color-primary-400);
+}
+
+/* Select Filter Dark Mode */
+:global([data-theme="dark"]) .selectFilterTrigger,
+:global(.dark) .selectFilterTrigger {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+  color: var(--palette-gray-200);
+}
+
+:global([data-theme="dark"]) .selectFilterTrigger:hover,
+:global(.dark) .selectFilterTrigger:hover {
+  border-color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .selectFilterText,
+:global(.dark) .selectFilterText {
+  color: var(--palette-gray-200);
+}
+
+:global([data-theme="dark"]) .selectFilterIcon,
+:global(.dark) .selectFilterIcon {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .selectFilterClear,
+:global(.dark) .selectFilterClear {
+  color: var(--palette-gray-500);
+}
+
+:global([data-theme="dark"]) .selectFilterClear:hover,
+:global(.dark) .selectFilterClear:hover {
+  background: var(--palette-gray-700);
+  color: var(--palette-gray-200);
+}
+
+:global([data-theme="dark"]) .selectFilterDropdown,
+:global(.dark) .selectFilterDropdown {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+}
+
+:global([data-theme="dark"]) .selectFilterOption,
+:global(.dark) .selectFilterOption {
+  color: var(--palette-gray-200);
+}
+
+:global([data-theme="dark"]) .selectFilterOption:hover,
+:global(.dark) .selectFilterOption:hover {
+  background: var(--palette-gray-700);
+}
+
+:global([data-theme="dark"]) .selectFilterOption.selected,
+:global(.dark) .selectFilterOption.selected {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .selectFilterEmpty,
+:global(.dark) .selectFilterEmpty {
+  color: var(--palette-gray-500);
 }
 
 /* ========================================

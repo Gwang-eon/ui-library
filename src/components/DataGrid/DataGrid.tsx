@@ -38,6 +38,7 @@ import {
   ColumnPinningState,
   ColumnSizingState,
   PaginationState,
+  RowPinningState,
   Row,
   Header,
   Table as TanStackTable,
@@ -61,12 +62,28 @@ import {
   PinOff,
   Check,
   Minus,
+  Expand,
+  Shrink,
 } from 'lucide-react';
 import styles from './DataGrid.module.css';
 
 // ============================================
 // Types
 // ============================================
+
+export type FilterType = 'text' | 'number' | 'select' | 'multi-select' | 'date' | 'date-range';
+
+export interface FilterOption {
+  value: string;
+  label: string;
+}
+
+export type EditorType = 'text' | 'number' | 'select' | 'date';
+
+export interface EditorOption {
+  value: string;
+  label: string;
+}
 
 export interface DataGridColumn<TData> {
   id: string;
@@ -88,11 +105,27 @@ export interface DataGridColumn<TData> {
   maxSize?: number;
   align?: 'left' | 'center' | 'right';
   editable?: boolean;
+  /** Custom edit component - takes precedence over editorType */
   editComponent?: React.ComponentType<{
     value: unknown;
     onChange: (value: unknown) => void;
     onBlur: () => void;
     onKeyDown: (e: React.KeyboardEvent) => void;
+  }>;
+  /** Editor type for built-in editors */
+  editorType?: EditorType;
+  /** Options for select editor */
+  editorOptions?: EditorOption[];
+  /** Validation function - returns error message or null if valid */
+  validateCell?: (value: unknown, row: TData) => string | null;
+  /** Filter type for this column */
+  filterType?: FilterType;
+  /** Custom filter options for select/multi-select filters */
+  filterOptions?: FilterOption[];
+  /** Custom filter component */
+  filterComponent?: React.ComponentType<{
+    column: any;
+    table: TanStackTable<any>;
   }>;
 }
 
@@ -147,6 +180,14 @@ export interface DataGridProps<TData> {
   enableRowSelection?: boolean;
   /** Enable multi-row selection */
   enableMultiRowSelection?: boolean;
+  /** Selection mode: 'single' uses radio buttons, 'multiple' uses checkboxes */
+  selectionMode?: 'single' | 'multiple';
+  /** Function to determine if a row can be selected */
+  getRowCanSelect?: (row: TData) => boolean;
+  /** Enable sub-row selection (when parent is selected, children are also selected) */
+  enableSubRowSelection?: boolean;
+  /** Select all mode: 'all' selects all rows, 'page' selects current page only */
+  selectAllMode?: 'all' | 'page';
   /** Controlled selection state */
   rowSelection?: RowSelectionState;
   /** Selection change handler */
@@ -161,6 +202,12 @@ export interface DataGridProps<TData> {
   enableExpanding?: boolean;
   /** Render expanded row content */
   renderExpandedRow?: (row: TData) => React.ReactNode;
+  /** Get sub-rows for hierarchical data (tree structure) */
+  getSubRows?: (row: TData) => TData[] | undefined;
+  /** Initial expanded state - true expands all, object for specific rows */
+  defaultExpanded?: ExpandedState | true;
+  /** Show expand/collapse all button in toolbar */
+  enableExpandAll?: boolean;
   /** Controlled expansion state */
   expanded?: ExpandedState;
   /** Expansion change handler */
@@ -169,6 +216,8 @@ export interface DataGridProps<TData> {
   // Grouping
   /** Enable row grouping */
   enableGrouping?: boolean;
+  /** Grouped column display mode: 'reorder' moves to first, 'remove' hides column, false keeps in place */
+  groupedColumnMode?: 'reorder' | 'remove' | false;
   /** Controlled grouping state */
   grouping?: GroupingState;
   /** Grouping change handler */
@@ -208,6 +257,16 @@ export interface DataGridProps<TData> {
   /** Cell edit handler */
   onCellEdit?: (rowId: string, columnId: string, value: unknown) => void;
 
+  // Row Pinning
+  /** Enable row pinning */
+  enableRowPinning?: boolean;
+  /** Controlled row pinning state */
+  rowPinning?: RowPinningState;
+  /** Row pinning change handler */
+  onRowPinningChange?: (updater: Updater<RowPinningState>) => void;
+  /** Keep pinned rows visible when scrolling */
+  keepPinnedRows?: boolean;
+
   // Virtualization
   /** Enable virtualization for large datasets */
   enableVirtualization?: boolean;
@@ -243,6 +302,10 @@ export interface DataGridProps<TData> {
   showToolbar?: boolean;
   /** Custom toolbar content */
   toolbarContent?: React.ReactNode;
+
+  // Keyboard Navigation
+  /** Enable keyboard navigation between cells */
+  enableKeyboardNavigation?: boolean;
 
   // Additional
   /** CSS class name */
@@ -313,7 +376,211 @@ const IndeterminateCheckbox = memo(({
 
 IndeterminateCheckbox.displayName = 'IndeterminateCheckbox';
 
-// Column filter component
+// Radio button component for single selection
+const RadioButton = memo(({
+  checked,
+  onChange,
+  disabled,
+  className,
+}: {
+  checked?: boolean;
+  onChange?: () => void;
+  disabled?: boolean;
+  className?: string;
+}) => {
+  return (
+    <label className={`${styles.radio} ${className || ''}`}>
+      <input
+        type="radio"
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+        className={styles.radioInput}
+      />
+      <span className={styles.radioMark}>
+        {checked && <span className={styles.radioInner} />}
+      </span>
+    </label>
+  );
+});
+
+RadioButton.displayName = 'RadioButton';
+
+// Select filter component for single/multi select
+const SelectFilter = memo(({
+  column,
+  isMulti = false,
+  options: customOptions,
+}: {
+  column: any;
+  isMulti?: boolean;
+  options?: FilterOption[];
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const columnFilterValue = column.getFilterValue();
+
+  // Get options from faceted values or custom options
+  const options = useMemo(() => {
+    if (customOptions && customOptions.length > 0) {
+      return customOptions;
+    }
+    const uniqueValues = Array.from(column.getFacetedUniqueValues().keys());
+    return uniqueValues
+      .filter((v): v is string | number => v != null)
+      .map((value) => ({
+        value: String(value),
+        label: String(value),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [column, customOptions]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const selectedValues = useMemo(() => {
+    if (!columnFilterValue) return [];
+    if (Array.isArray(columnFilterValue)) return columnFilterValue;
+    return [columnFilterValue];
+  }, [columnFilterValue]);
+
+  const handleSelect = useCallback((value: string) => {
+    if (isMulti) {
+      const newValues = selectedValues.includes(value)
+        ? selectedValues.filter((v) => v !== value)
+        : [...selectedValues, value];
+      column.setFilterValue(newValues.length > 0 ? newValues : undefined);
+    } else {
+      column.setFilterValue(selectedValues.includes(value) ? undefined : value);
+      setIsOpen(false);
+    }
+  }, [column, isMulti, selectedValues]);
+
+  const clearFilter = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    column.setFilterValue(undefined);
+  }, [column]);
+
+  const displayText = useMemo(() => {
+    if (selectedValues.length === 0) return isMulti ? 'Select...' : 'All';
+    if (selectedValues.length === 1) {
+      const opt = options.find((o) => o.value === selectedValues[0]);
+      return opt?.label ?? selectedValues[0];
+    }
+    return `${selectedValues.length} selected`;
+  }, [selectedValues, options, isMulti]);
+
+  return (
+    <div className={styles.selectFilter} ref={dropdownRef}>
+      <button
+        type="button"
+        className={styles.selectFilterTrigger}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className={styles.selectFilterText}>{displayText}</span>
+        {selectedValues.length > 0 && (
+          <span className={styles.selectFilterClear} onClick={clearFilter}>
+            <X size={12} />
+          </span>
+        )}
+        <ChevronDown size={14} className={styles.selectFilterIcon} />
+      </button>
+      {isOpen && (
+        <div className={styles.selectFilterDropdown}>
+          {options.length === 0 ? (
+            <div className={styles.selectFilterEmpty}>No options</div>
+          ) : (
+            options.map((option) => (
+              <label
+                key={option.value}
+                className={`${styles.selectFilterOption} ${selectedValues.includes(option.value) ? styles.selected : ''}`}
+              >
+                <input
+                  type={isMulti ? 'checkbox' : 'radio'}
+                  checked={selectedValues.includes(option.value)}
+                  onChange={() => handleSelect(option.value)}
+                  className={styles.selectFilterCheckbox}
+                />
+                <span>{option.label}</span>
+              </label>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+});
+
+SelectFilter.displayName = 'SelectFilter';
+
+// Date filter component
+const DateFilter = memo(({
+  column,
+  isRange = false,
+}: {
+  column: any;
+  isRange?: boolean;
+}) => {
+  const columnFilterValue = column.getFilterValue();
+
+  const handleDateChange = useCallback((value: string, position?: 'start' | 'end') => {
+    if (isRange) {
+      const currentValue = (columnFilterValue as [string, string]) ?? ['', ''];
+      if (position === 'start') {
+        column.setFilterValue([value, currentValue[1]]);
+      } else {
+        column.setFilterValue([currentValue[0], value]);
+      }
+    } else {
+      column.setFilterValue(value || undefined);
+    }
+  }, [column, columnFilterValue, isRange]);
+
+  if (isRange) {
+    const [startDate, endDate] = (columnFilterValue as [string, string]) ?? ['', ''];
+    return (
+      <div className={styles.filterRange}>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => handleDateChange(e.target.value, 'start')}
+          className={styles.filterInput}
+          placeholder="Start"
+        />
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => handleDateChange(e.target.value, 'end')}
+          className={styles.filterInput}
+          placeholder="End"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.filterWrapper}>
+      <input
+        type="date"
+        value={(columnFilterValue as string) ?? ''}
+        onChange={(e) => handleDateChange(e.target.value)}
+        className={styles.filterInput}
+      />
+    </div>
+  );
+});
+
+DateFilter.displayName = 'DateFilter';
+
+// Column filter component - main dispatcher
 const ColumnFilter = memo(({
   column,
   table,
@@ -321,54 +588,93 @@ const ColumnFilter = memo(({
   column: any;
   table: TanStackTable<any>;
 }) => {
-  const firstValue = table
-    .getPreFilteredRowModel()
-    .flatRows[0]?.getValue(column.id);
+  const columnDef = column.columnDef;
+  const filterType: FilterType = columnDef.meta?.filterType ?? columnDef.filterType;
+  const filterOptions: FilterOption[] | undefined = columnDef.meta?.filterOptions ?? columnDef.filterOptions;
+  const FilterComponent = columnDef.meta?.filterComponent ?? columnDef.filterComponent;
 
-  const columnFilterValue = column.getFilterValue();
-
-  const sortedUniqueValues = useMemo(
-    () =>
-      typeof firstValue === 'number'
-        ? []
-        : Array.from(column.getFacetedUniqueValues().keys()).sort(),
-    [column, firstValue]
-  );
-
-  if (typeof firstValue === 'number') {
-    return (
-      <div className={styles.filterRange}>
-        <input
-          type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-          value={(columnFilterValue as [number, number])?.[0] ?? ''}
-          onChange={(e) =>
-            column.setFilterValue((old: [number, number]) => [
-              e.target.value,
-              old?.[1],
-            ])
-          }
-          placeholder="Min"
-          className={styles.filterInput}
-        />
-        <input
-          type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-          value={(columnFilterValue as [number, number])?.[1] ?? ''}
-          onChange={(e) =>
-            column.setFilterValue((old: [number, number]) => [
-              old?.[0],
-              e.target.value,
-            ])
-          }
-          placeholder="Max"
-          className={styles.filterInput}
-        />
-      </div>
-    );
+  // Custom filter component takes precedence
+  if (FilterComponent) {
+    return <FilterComponent column={column} table={table} />;
   }
+
+  // Route to appropriate filter based on filterType
+  switch (filterType) {
+    case 'select':
+      return <SelectFilter column={column} isMulti={false} options={filterOptions} />;
+    case 'multi-select':
+      return <SelectFilter column={column} isMulti={true} options={filterOptions} />;
+    case 'date':
+      return <DateFilter column={column} isRange={false} />;
+    case 'date-range':
+      return <DateFilter column={column} isRange={true} />;
+    case 'number':
+      return <NumberRangeFilter column={column} />;
+    case 'text':
+    default:
+      // Auto-detect based on data type
+      const firstValue = table
+        .getPreFilteredRowModel()
+        .flatRows[0]?.getValue(column.id);
+
+      if (typeof firstValue === 'number') {
+        return <NumberRangeFilter column={column} />;
+      }
+
+      return <TextFilter column={column} />;
+  }
+});
+
+ColumnFilter.displayName = 'ColumnFilter';
+
+// Number range filter component
+const NumberRangeFilter = memo(({ column }: { column: any }) => {
+  const columnFilterValue = column.getFilterValue();
+  const [min, max] = column.getFacetedMinMaxValues() ?? [0, 0];
+
+  return (
+    <div className={styles.filterRange}>
+      <input
+        type="number"
+        min={Number(min ?? '')}
+        max={Number(max ?? '')}
+        value={(columnFilterValue as [number, number])?.[0] ?? ''}
+        onChange={(e) =>
+          column.setFilterValue((old: [number, number]) => [
+            e.target.value,
+            old?.[1],
+          ])
+        }
+        placeholder="Min"
+        className={styles.filterInput}
+      />
+      <input
+        type="number"
+        min={Number(min ?? '')}
+        max={Number(max ?? '')}
+        value={(columnFilterValue as [number, number])?.[1] ?? ''}
+        onChange={(e) =>
+          column.setFilterValue((old: [number, number]) => [
+            old?.[0],
+            e.target.value,
+          ])
+        }
+        placeholder="Max"
+        className={styles.filterInput}
+      />
+    </div>
+  );
+});
+
+NumberRangeFilter.displayName = 'NumberRangeFilter';
+
+// Text filter component
+const TextFilter = memo(({ column }: { column: any }) => {
+  const columnFilterValue = column.getFilterValue();
+  const sortedUniqueValues = useMemo(
+    () => Array.from(column.getFacetedUniqueValues().keys()).sort(),
+    [column]
+  );
 
   return (
     <div className={styles.filterWrapper}>
@@ -389,52 +695,107 @@ const ColumnFilter = memo(({
   );
 });
 
-ColumnFilter.displayName = 'ColumnFilter';
+TextFilter.displayName = 'TextFilter';
 
-// Editable cell component
+// Editable cell component with validation and multiple editor types
 const EditableCell = memo(({
   value: initialValue,
   row,
   column,
   onEdit,
   editComponent: EditComponent,
+  editorType = 'text',
+  editorOptions,
+  validateCell,
 }: {
   value: unknown;
   row: Row<any>;
   column: any;
   onEdit?: (rowId: string, columnId: string, value: unknown) => void;
   editComponent?: React.ComponentType<any>;
+  editorType?: EditorType;
+  editorOptions?: EditorOption[];
+  validateCell?: (value: unknown, row: any) => string | null;
 }) => {
   const [value, setValue] = useState(initialValue);
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
     setValue(initialValue);
+    setError(null);
   }, [initialValue]);
 
   useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
+    if (isEditing) {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        if (editorType === 'text' || editorType === 'number') {
+          inputRef.current.select();
+        }
+      } else if (selectRef.current) {
+        selectRef.current.focus();
+      }
     }
-  }, [isEditing]);
+  }, [isEditing, editorType]);
 
-  const handleBlur = useCallback(() => {
+  const validate = useCallback((val: unknown): string | null => {
+    if (!validateCell) return null;
+    return validateCell(val, row.original);
+  }, [validateCell, row.original]);
+
+  const handleSave = useCallback(() => {
+    const validationError = validate(value);
+    if (validationError) {
+      setError(validationError);
+      return false;
+    }
     setIsEditing(false);
+    setError(null);
     if (value !== initialValue) {
       onEdit?.(row.id, column.id, value);
     }
-  }, [value, initialValue, row.id, column.id, onEdit]);
+    return true;
+  }, [value, initialValue, row.id, column.id, onEdit, validate]);
+
+  const handleBlur = useCallback(() => {
+    handleSave();
+  }, [handleSave]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleBlur();
+      e.preventDefault();
+      handleSave();
     } else if (e.key === 'Escape') {
       setValue(initialValue);
+      setError(null);
       setIsEditing(false);
     }
-  }, [handleBlur, initialValue]);
+  }, [handleSave, initialValue]);
+
+  const handleChange = useCallback((newValue: unknown) => {
+    setValue(newValue);
+    // Clear error on change
+    if (error) {
+      const validationError = validate(newValue);
+      setError(validationError);
+    }
+  }, [error, validate]);
+
+  // Format display value based on editor type
+  const formatDisplayValue = (val: unknown): string => {
+    if (val == null) return '';
+    if (editorType === 'select' && editorOptions) {
+      const option = editorOptions.find(opt => opt.value === val);
+      return option?.label ?? String(val);
+    }
+    if (editorType === 'date' && val instanceof Date) {
+      return val.toLocaleDateString();
+    }
+    return String(val);
+  };
 
   if (!isEditing) {
     return (
@@ -442,32 +803,94 @@ const EditableCell = memo(({
         className={styles.editableCell}
         onDoubleClick={() => setIsEditing(true)}
       >
-        {String(value ?? '')}
+        {formatDisplayValue(value)}
       </div>
     );
   }
 
+  // Custom edit component takes precedence
   if (EditComponent) {
     return (
-      <EditComponent
-        value={value}
-        onChange={setValue}
-        onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
-      />
+      <div className={styles.editorWrapper}>
+        <EditComponent
+          value={value}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+        {error && <div className={styles.editorError}>{error}</div>}
+      </div>
     );
   }
 
+  // Built-in editor types
+  const renderEditor = () => {
+    switch (editorType) {
+      case 'number':
+        return (
+          <input
+            ref={inputRef}
+            type="number"
+            value={value != null ? String(value) : ''}
+            onChange={(e) => handleChange(e.target.value === '' ? null : Number(e.target.value))}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className={`${styles.editInput} ${error ? styles.editInputError : ''}`}
+          />
+        );
+
+      case 'select':
+        return (
+          <select
+            ref={selectRef}
+            value={String(value ?? '')}
+            onChange={(e) => handleChange(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className={`${styles.editSelect} ${error ? styles.editInputError : ''}`}
+          >
+            {editorOptions?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        );
+
+      case 'date':
+        return (
+          <input
+            ref={inputRef}
+            type="date"
+            value={value instanceof Date ? value.toISOString().split('T')[0] : String(value ?? '')}
+            onChange={(e) => handleChange(e.target.value ? new Date(e.target.value) : null)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className={`${styles.editInput} ${error ? styles.editInputError : ''}`}
+          />
+        );
+
+      case 'text':
+      default:
+        return (
+          <input
+            ref={inputRef}
+            type="text"
+            value={String(value ?? '')}
+            onChange={(e) => handleChange(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className={`${styles.editInput} ${error ? styles.editInputError : ''}`}
+          />
+        );
+    }
+  };
+
   return (
-    <input
-      ref={inputRef}
-      type="text"
-      value={String(value ?? '')}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
-      className={styles.editInput}
-    />
+    <div className={styles.editorWrapper}>
+      {renderEditor()}
+      {error && <div className={styles.editorError}>{error}</div>}
+    </div>
   );
 });
 
@@ -559,6 +982,10 @@ function DataGridInner<TData>(
     // Row Selection
     enableRowSelection = false,
     enableMultiRowSelection = true,
+    selectionMode = 'multiple',
+    getRowCanSelect,
+    enableSubRowSelection = true,
+    selectAllMode = 'all',
     rowSelection: rowSelectionProp,
     onRowSelectionChange,
     onRowClick,
@@ -567,11 +994,15 @@ function DataGridInner<TData>(
     // Row Expansion
     enableExpanding = false,
     renderExpandedRow,
+    getSubRows,
+    defaultExpanded,
+    enableExpandAll = false,
     expanded: expandedProp,
     onExpandedChange,
 
     // Grouping
     enableGrouping = false,
+    groupedColumnMode = 'reorder',
     grouping: groupingProp,
     onGroupingChange,
 
@@ -594,6 +1025,12 @@ function DataGridInner<TData>(
     enableCellEditing = false,
     onCellEdit,
 
+    // Row Pinning
+    enableRowPinning = false,
+    rowPinning: rowPinningProp,
+    onRowPinningChange,
+    keepPinnedRows = true,
+
     // Virtualization
     enableVirtualization = false,
     estimateRowHeight = 40,
@@ -615,6 +1052,9 @@ function DataGridInner<TData>(
     showToolbar = true,
     toolbarContent,
 
+    // Keyboard Navigation
+    enableKeyboardNavigation = false,
+
     // Additional
     className,
     style,
@@ -626,15 +1066,22 @@ function DataGridInner<TData>(
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(columnFiltersProp ?? []);
   const [globalFilter, setGlobalFilter] = useState<string>(globalFilterProp ?? '');
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(rowSelectionProp ?? {});
-  const [expanded, setExpanded] = useState<ExpandedState>(expandedProp ?? {});
+  const [expanded, setExpanded] = useState<ExpandedState>(
+    expandedProp ?? (defaultExpanded === true ? true : defaultExpanded ?? {})
+  );
   const [grouping, setGrouping] = useState<GroupingState>(groupingProp ?? []);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(columnVisibilityProp ?? {});
   const [columnOrder, setColumnOrder] = useState<ColumnOrderState>(columnOrderProp ?? []);
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>(columnPinningProp ?? {});
   const [columnSizing, setColumnSizing] = useState<ColumnSizingState>(columnSizingProp ?? {});
+  const [rowPinning, setRowPinning] = useState<RowPinningState>(rowPinningProp ?? { top: [], bottom: [] });
   const [pagination, setPagination] = useState<PaginationState>(
     paginationProp ?? { pageIndex: 0, pageSize: pageSizeOptions[0] }
   );
+  const [focusedCell, setFocusedCell] = useState<{
+    rowIndex: number;
+    columnIndex: number;
+  } | null>(null);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -644,57 +1091,162 @@ function DataGridInner<TData>(
 
     // Selection column
     if (enableRowSelection) {
+      const isSingleSelection = selectionMode === 'single';
       cols.push({
         id: '_select',
         size: 50,
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
-        header: ({ table }) => (
-          <IndeterminateCheckbox
-            checked={table.getIsAllRowsSelected()}
-            indeterminate={table.getIsSomeRowsSelected()}
-            onChange={table.getToggleAllRowsSelectedHandler()}
-          />
-        ),
-        cell: ({ row }) => (
-          <IndeterminateCheckbox
-            checked={row.getIsSelected()}
-            indeterminate={row.getIsSomeSelected()}
-            onChange={row.getToggleSelectedHandler()}
-            disabled={!row.getCanSelect()}
-          />
-        ),
+        header: ({ table }) => {
+          // Single selection mode - no header checkbox/radio
+          if (isSingleSelection) {
+            return null;
+          }
+          // Multiple selection mode
+          const isAllSelected = selectAllMode === 'page'
+            ? table.getIsAllPageRowsSelected()
+            : table.getIsAllRowsSelected();
+          const isSomeSelected = selectAllMode === 'page'
+            ? table.getIsSomePageRowsSelected()
+            : table.getIsSomeRowsSelected();
+          const toggleHandler = selectAllMode === 'page'
+            ? table.getToggleAllPageRowsSelectedHandler()
+            : table.getToggleAllRowsSelectedHandler();
+
+          return (
+            <IndeterminateCheckbox
+              checked={isAllSelected}
+              indeterminate={isSomeSelected}
+              onChange={toggleHandler}
+            />
+          );
+        },
+        cell: ({ row, table }) => {
+          if (isSingleSelection) {
+            return (
+              <RadioButton
+                checked={row.getIsSelected()}
+                onChange={() => {
+                  // Clear all selections first, then select this row
+                  table.resetRowSelection();
+                  row.toggleSelected(true);
+                }}
+                disabled={!row.getCanSelect()}
+              />
+            );
+          }
+          return (
+            <IndeterminateCheckbox
+              checked={row.getIsSelected()}
+              indeterminate={row.getIsSomeSelected()}
+              onChange={row.getToggleSelectedHandler()}
+              disabled={!row.getCanSelect()}
+            />
+          );
+        },
       });
     }
 
-    // Expansion column
-    if (enableExpanding) {
+    // Row pinning column
+    if (enableRowPinning) {
       cols.push({
-        id: '_expand',
+        id: '_pin',
         size: 50,
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
-        header: () => null,
-        cell: ({ row }) =>
-          row.getCanExpand() ? (
-            <button
-              className={styles.expandButton}
-              onClick={row.getToggleExpandedHandler()}
-            >
-              {row.getIsExpanded() ? (
-                <ChevronDown size={16} />
+        header: () => <Pin size={14} className={styles.pinHeaderIcon} />,
+        cell: ({ row }) => {
+          const isPinned = row.getIsPinned();
+          return (
+            <div className={styles.pinCell}>
+              {isPinned ? (
+                <button
+                  className={`${styles.pinButton} ${styles.pinButtonActive}`}
+                  onClick={() => row.pin(false)}
+                  title="Unpin row"
+                >
+                  <PinOff size={14} />
+                </button>
               ) : (
-                <ChevronRight size={16} />
+                <div className={styles.pinActions}>
+                  <button
+                    className={styles.pinButton}
+                    onClick={() => row.pin('top')}
+                    title="Pin to top"
+                  >
+                    <Pin size={14} style={{ transform: 'rotate(0deg)' }} />
+                  </button>
+                  <button
+                    className={styles.pinButton}
+                    onClick={() => row.pin('bottom')}
+                    title="Pin to bottom"
+                  >
+                    <Pin size={14} style={{ transform: 'rotate(180deg)' }} />
+                  </button>
+                </div>
               )}
-            </button>
-          ) : null,
+            </div>
+          );
+        },
+      });
+    }
+
+    // Expansion column (for both expandable rows and tree structure)
+    if (enableExpanding || getSubRows) {
+      cols.push({
+        id: '_expand',
+        size: getSubRows ? 80 : 50,
+        enableResizing: false,
+        enableSorting: false,
+        enableColumnFilter: false,
+        header: () => null,
+        cell: ({ row }) => {
+          const depth = row.depth;
+          const canExpand = row.getCanExpand();
+
+          return (
+            <div
+              className={styles.expandCell}
+              style={{ paddingLeft: getSubRows ? `${depth * 20}px` : 0 }}
+            >
+              {canExpand ? (
+                <button
+                  className={styles.expandButton}
+                  onClick={row.getToggleExpandedHandler()}
+                >
+                  {row.getIsExpanded() ? (
+                    <ChevronDown size={16} />
+                  ) : (
+                    <ChevronRight size={16} />
+                  )}
+                </button>
+              ) : getSubRows ? (
+                <span className={styles.expandSpacer} />
+              ) : null}
+            </div>
+          );
+        },
       });
     }
 
     // Data columns
     columnsProp.forEach((col) => {
+      // Determine filter function based on filterType
+      let filterFn: string | undefined;
+      if (col.filterType === 'multi-select') {
+        filterFn = 'multiSelect';
+      } else if (col.filterType === 'select') {
+        filterFn = 'equals';
+      } else if (col.filterType === 'date-range') {
+        filterFn = 'dateRange';
+      } else if (col.filterType === 'date') {
+        filterFn = 'dateExact';
+      } else if (col.filterType === 'number') {
+        filterFn = 'inNumberRange';
+      }
+
       const colDef: ColumnDef<TData, unknown> = {
         id: col.id,
         header: col.header,
@@ -709,6 +1261,7 @@ function DataGridInner<TData>(
         enableHiding: col.enableHiding ?? true,
         aggregationFn: col.aggregationFn,
         aggregatedCell: col.aggregatedCell as any,
+        filterFn: filterFn as any,
         cell: enableCellEditing && col.editable
           ? (info) => (
               <EditableCell
@@ -717,6 +1270,9 @@ function DataGridInner<TData>(
                 column={info.column}
                 onEdit={onCellEdit}
                 editComponent={col.editComponent}
+                editorType={col.editorType}
+                editorOptions={col.editorOptions}
+                validateCell={col.validateCell as any}
               />
             )
           : col.cell
@@ -727,6 +1283,9 @@ function DataGridInner<TData>(
             },
         meta: {
           align: col.align,
+          filterType: col.filterType,
+          filterOptions: col.filterOptions,
+          filterComponent: col.filterComponent,
         },
       };
 
@@ -744,7 +1303,11 @@ function DataGridInner<TData>(
   }, [
     columnsProp,
     enableRowSelection,
+    selectionMode,
+    selectAllMode,
+    enableRowPinning,
     enableExpanding,
+    getSubRows,
     enableSorting,
     enableFiltering,
     enableColumnResizing,
@@ -770,6 +1333,7 @@ function DataGridInner<TData>(
       columnOrder: columnOrderProp ?? columnOrder,
       columnPinning: columnPinningProp ?? columnPinning,
       columnSizing: columnSizingProp ?? columnSizing,
+      rowPinning: rowPinningProp ?? rowPinning,
       pagination: paginationProp ?? pagination,
     },
     onSortingChange: onSortingChange ?? setSorting,
@@ -782,25 +1346,69 @@ function DataGridInner<TData>(
     onColumnOrderChange: onColumnOrderChange ?? setColumnOrder,
     onColumnPinningChange: onColumnPinningChange ?? setColumnPinning,
     onColumnSizingChange: onColumnSizingChange ?? setColumnSizing,
+    onRowPinningChange: onRowPinningChange ?? setRowPinning,
     onPaginationChange: onPaginationChange ?? setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
     getFilteredRowModel: enableFiltering || enableGlobalFilter ? getFilteredRowModel() : undefined,
     getPaginationRowModel: enablePagination && !manualPagination ? getPaginationRowModel() : undefined,
-    getExpandedRowModel: enableExpanding || enableGrouping ? getExpandedRowModel() : undefined,
+    getExpandedRowModel: enableExpanding || enableGrouping || getSubRows ? getExpandedRowModel() : undefined,
     getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
+    groupedColumnMode: enableGrouping ? groupedColumnMode : undefined,
     getFacetedRowModel: enableFiltering ? getFacetedRowModel() : undefined,
     getFacetedUniqueValues: enableFiltering ? getFacetedUniqueValues() : undefined,
     getFacetedMinMaxValues: enableFiltering ? getFacetedMinMaxValues() : undefined,
-    enableRowSelection,
-    enableMultiRowSelection,
+    filterFns: {
+      // Custom filter function for multi-select
+      multiSelect: (row, columnId, filterValue: string[]) => {
+        if (!filterValue || filterValue.length === 0) return true;
+        const value = String(row.getValue(columnId));
+        return filterValue.includes(value);
+      },
+      // Custom filter function for date range
+      dateRange: (row, columnId, filterValue: [string, string]) => {
+        if (!filterValue || (!filterValue[0] && !filterValue[1])) return true;
+        const value = row.getValue(columnId);
+        if (!value) return false;
+        const dateValue = new Date(value as string | number | Date);
+        const [startStr, endStr] = filterValue;
+        if (startStr) {
+          const startDate = new Date(startStr);
+          if (dateValue < startDate) return false;
+        }
+        if (endStr) {
+          const endDate = new Date(endStr);
+          endDate.setHours(23, 59, 59, 999);
+          if (dateValue > endDate) return false;
+        }
+        return true;
+      },
+      // Custom filter function for exact date match
+      dateExact: (row, columnId, filterValue: string) => {
+        if (!filterValue) return true;
+        const value = row.getValue(columnId);
+        if (!value) return false;
+        const dateValue = new Date(value as string | number | Date).toISOString().split('T')[0];
+        return dateValue === filterValue;
+      },
+    },
+    enableRowSelection: getRowCanSelect
+      ? (row: Row<TData>) => getRowCanSelect(row.original)
+      : enableRowSelection,
+    enableMultiRowSelection: selectionMode === 'single' ? false : enableMultiRowSelection,
+    enableSubRowSelection,
     enableSorting,
     enableMultiSort,
     enableColumnResizing,
     columnResizeMode,
+    enableRowPinning,
+    keepPinnedRows,
     manualPagination,
     rowCount,
-    getRowCanExpand: enableExpanding ? () => true : undefined,
+    getSubRows: getSubRows as any,
+    getRowCanExpand: (enableExpanding || getSubRows)
+      ? (row: Row<TData>) => (getSubRows ? (getSubRows(row.original)?.length ?? 0) > 0 : true)
+      : undefined,
   });
 
   // Virtualization
@@ -816,6 +1424,110 @@ function DataGridInner<TData>(
 
   const virtualRows = enableVirtualization ? rowVirtualizer.getVirtualItems() : null;
   const totalSize = enableVirtualization ? rowVirtualizer.getTotalSize() : 0;
+
+  // Keyboard navigation handler
+  const handleTableKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (!enableKeyboardNavigation || !focusedCell) return;
+
+    const visibleColumns = table.getVisibleLeafColumns();
+    const totalColumns = visibleColumns.length;
+    const totalRows = rows.length;
+
+    let { rowIndex, columnIndex } = focusedCell;
+    let handled = false;
+
+    switch (e.key) {
+      case 'ArrowUp':
+        if (rowIndex > 0) {
+          rowIndex--;
+          handled = true;
+        }
+        break;
+      case 'ArrowDown':
+        if (rowIndex < totalRows - 1) {
+          rowIndex++;
+          handled = true;
+        }
+        break;
+      case 'ArrowLeft':
+        if (columnIndex > 0) {
+          columnIndex--;
+          handled = true;
+        }
+        break;
+      case 'ArrowRight':
+        if (columnIndex < totalColumns - 1) {
+          columnIndex++;
+          handled = true;
+        }
+        break;
+      case 'Tab':
+        if (e.shiftKey) {
+          if (columnIndex > 0) {
+            columnIndex--;
+          } else if (rowIndex > 0) {
+            rowIndex--;
+            columnIndex = totalColumns - 1;
+          }
+        } else {
+          if (columnIndex < totalColumns - 1) {
+            columnIndex++;
+          } else if (rowIndex < totalRows - 1) {
+            rowIndex++;
+            columnIndex = 0;
+          }
+        }
+        handled = true;
+        break;
+      case 'Home':
+        if (e.ctrlKey) {
+          rowIndex = 0;
+          columnIndex = 0;
+        } else {
+          columnIndex = 0;
+        }
+        handled = true;
+        break;
+      case 'End':
+        if (e.ctrlKey) {
+          rowIndex = totalRows - 1;
+          columnIndex = totalColumns - 1;
+        } else {
+          columnIndex = totalColumns - 1;
+        }
+        handled = true;
+        break;
+      case 'Enter':
+        if (enableCellEditing) {
+          // Focus the editable cell
+          const cell = tableContainerRef.current?.querySelector(
+            `[data-row-index="${rowIndex}"][data-column-index="${columnIndex}"]`
+          );
+          if (cell) {
+            const editable = cell.querySelector('.editableCell') as HTMLElement;
+            if (editable) {
+              editable.dispatchEvent(new MouseEvent('dblclick', { bubbles: true }));
+              handled = true;
+            }
+          }
+        }
+        break;
+      case ' ':
+        if (enableRowSelection) {
+          const row = rows[rowIndex];
+          if (row && row.getCanSelect()) {
+            row.toggleSelected();
+            handled = true;
+          }
+        }
+        break;
+    }
+
+    if (handled) {
+      e.preventDefault();
+      setFocusedCell({ rowIndex, columnIndex });
+    }
+  }, [enableKeyboardNavigation, focusedCell, table, rows, enableCellEditing, enableRowSelection]);
 
   // Ref methods
   useImperativeHandle(ref, () => ({
@@ -947,13 +1659,16 @@ function DataGridInner<TData>(
     const isSelected = row.getIsSelected();
     const isExpanded = row.getIsExpanded();
     const isGrouped = row.getIsGrouped();
+    const isPinnedRow = row.getIsPinned();
 
     return (
       <React.Fragment key={row.id}>
         <tr
-          className={`${styles.tr} ${isSelected ? styles.selected : ''} ${
+          className={`${styles.tr} ${styles.row} ${isSelected ? styles.selected : ''} ${
             isGrouped ? styles.grouped : ''
-          } ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''}`}
+          } ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''} ${
+            isPinnedRow ? styles.pinnedRow : ''
+          } ${isPinnedRow === 'top' ? styles.pinnedRowTop : ''} ${isPinnedRow === 'bottom' ? styles.pinnedRowBottom : ''}`}
           data-row-index={row.index}
           onClick={() => onRowClick?.(row.original)}
           onDoubleClick={() => onRowDoubleClick?.(row.original)}
@@ -970,21 +1685,26 @@ function DataGridInner<TData>(
               : undefined
           }
         >
-          {row.getVisibleCells().map((cell) => {
+          {row.getVisibleCells().map((cell, cellIndex) => {
             const isPinned = cell.column.getIsPinned();
             const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
+            const isFocused = enableKeyboardNavigation &&
+              focusedCell?.rowIndex === row.index &&
+              focusedCell?.columnIndex === cellIndex;
 
             return (
               <td
                 key={cell.id}
                 className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
                   isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-                }`}
+                } ${isFocused ? styles.focusedCell : ''}`}
                 style={{
                   width: cell.column.getSize(),
                   left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
                   right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
                 }}
+                data-row-index={row.index}
+                data-column-index={cellIndex}
               >
                 {cell.getIsGrouped() ? (
                   <button
@@ -1015,7 +1735,7 @@ function DataGridInner<TData>(
         )}
       </React.Fragment>
     );
-  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow]);
+  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableKeyboardNavigation, focusedCell]);
 
   // Render pagination
   const renderPagination = useCallback(() => {
@@ -1125,6 +1845,24 @@ function DataGridInner<TData>(
           )}
           <div className={styles.toolbarActions}>
             {toolbarContent}
+            {enableExpandAll && (enableExpanding || getSubRows) && (
+              <>
+                <button
+                  className={styles.toolbarButton}
+                  onClick={() => table.toggleAllRowsExpanded(true)}
+                  title="Expand all rows"
+                >
+                  <Expand size={16} />
+                </button>
+                <button
+                  className={styles.toolbarButton}
+                  onClick={() => table.toggleAllRowsExpanded(false)}
+                  title="Collapse all rows"
+                >
+                  <Shrink size={16} />
+                </button>
+              </>
+            )}
             {enableColumnVisibility && <ColumnVisibilityDropdown table={table} />}
           </div>
         </div>
@@ -1135,6 +1873,18 @@ function DataGridInner<TData>(
         ref={tableContainerRef}
         className={styles.tableContainer}
         style={{ height: typeof height === 'number' ? `${height}px` : height }}
+        tabIndex={enableKeyboardNavigation ? 0 : undefined}
+        onKeyDown={enableKeyboardNavigation ? handleTableKeyDown : undefined}
+        onClick={(e) => {
+          if (!enableKeyboardNavigation) return;
+          const target = e.target as HTMLElement;
+          const cell = target.closest('td');
+          if (cell) {
+            const rowIndex = parseInt(cell.getAttribute('data-row-index') || '0', 10);
+            const columnIndex = parseInt(cell.getAttribute('data-column-index') || '0', 10);
+            setFocusedCell({ rowIndex, columnIndex });
+          }
+        }}
       >
         {loading && (
           <div className={styles.loadingOverlay}>

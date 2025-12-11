@@ -31,6 +31,88 @@ const dataGridData: DeviceData[] = [
   { id: '12', name: 'Security Camera F2', type: 'Camera', status: 'offline', location: 'Building F, Floor 2', lastUpdate: '2024-12-11 08:00', temperature: 20.5, humidity: 58, uptime: 0 },
 ];
 
+// Tree structure data for hierarchical demo
+interface TreeNode {
+  id: string;
+  name: string;
+  type: string;
+  status: 'online' | 'offline' | 'warning';
+  children?: TreeNode[];
+}
+
+const treeData: TreeNode[] = [
+  {
+    id: '1',
+    name: 'Building A',
+    type: 'Building',
+    status: 'online',
+    children: [
+      {
+        id: '1-1',
+        name: 'Floor 1',
+        type: 'Floor',
+        status: 'online',
+        children: [
+          { id: '1-1-1', name: 'Sensor A1-1', type: 'Sensor', status: 'online' },
+          { id: '1-1-2', name: 'Sensor A1-2', type: 'Sensor', status: 'warning' },
+          { id: '1-1-3', name: 'Controller A1-3', type: 'Controller', status: 'online' },
+        ],
+      },
+      {
+        id: '1-2',
+        name: 'Floor 2',
+        type: 'Floor',
+        status: 'warning',
+        children: [
+          { id: '1-2-1', name: 'Sensor A2-1', type: 'Sensor', status: 'warning' },
+          { id: '1-2-2', name: 'Monitor A2-2', type: 'Monitor', status: 'online' },
+        ],
+      },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Building B',
+    type: 'Building',
+    status: 'warning',
+    children: [
+      {
+        id: '2-1',
+        name: 'Floor 1',
+        type: 'Floor',
+        status: 'offline',
+        children: [
+          { id: '2-1-1', name: 'Sensor B1-1', type: 'Sensor', status: 'offline' },
+          { id: '2-1-2', name: 'Alarm B1-2', type: 'Alarm', status: 'online' },
+        ],
+      },
+    ],
+  },
+  {
+    id: '3',
+    name: 'Building C',
+    type: 'Building',
+    status: 'online',
+    children: [
+      { id: '3-1', name: 'Sensor C-1', type: 'Sensor', status: 'online' },
+      { id: '3-2', name: 'Controller C-2', type: 'Controller', status: 'online' },
+    ],
+  },
+];
+
+const treeColumns: DataGridColumn<TreeNode>[] = [
+  { id: 'name', header: 'Name', accessorKey: 'name', size: 250 },
+  { id: 'type', header: 'Type', accessorKey: 'type', size: 120 },
+  {
+    id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+    cell: ({ getValue }) => {
+      const status = getValue() as string;
+      const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+      return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+    },
+  },
+];
+
 // Pre-generate large dataset for virtualization demo
 const largeDataGridData: DeviceData[] = Array.from({ length: 10000 }, (_, i) => ({
   id: String(i + 1),
@@ -67,6 +149,41 @@ const dataGridColumns: DataGridColumn<DeviceData>[] = [
     },
   },
   { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 160, minSize: 130 },
+];
+
+// Columns with advanced filter types
+const advancedFilterColumns: DataGridColumn<DeviceData>[] = [
+  { id: 'name', header: 'Device Name', accessorKey: 'name', size: 200, minSize: 150, filterType: 'text' },
+  {
+    id: 'type', header: 'Type', accessorKey: 'type', size: 130, minSize: 100,
+    filterType: 'select',
+    filterOptions: [
+      { value: 'Sensor', label: 'Sensor' },
+      { value: 'Controller', label: 'Controller' },
+      { value: 'Monitor', label: 'Monitor' },
+      { value: 'Detector', label: 'Detector' },
+      { value: 'Alarm', label: 'Alarm' },
+      { value: 'Camera', label: 'Camera' },
+    ],
+  },
+  {
+    id: 'status', header: 'Status', accessorKey: 'status', size: 120, minSize: 100,
+    filterType: 'multi-select',
+    filterOptions: [
+      { value: 'online', label: 'Online' },
+      { value: 'offline', label: 'Offline' },
+      { value: 'warning', label: 'Warning' },
+    ],
+    cell: ({ getValue }) => {
+      const status = getValue() as string;
+      const variant = status === 'online' ? 'success' : status === 'warning' ? 'warning' : 'error';
+      return <Badge variant={variant}>{status}</Badge>;
+    },
+  },
+  { id: 'location', header: 'Location', accessorKey: 'location', size: 180, minSize: 120, filterType: 'select' },
+  { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', size: 130, minSize: 110, filterType: 'number', align: 'right', cell: ({ getValue }) => `${getValue()}°C` },
+  { id: 'humidity', header: 'Humidity', accessorKey: 'humidity', size: 120, minSize: 100, filterType: 'number', align: 'right', cell: ({ getValue }) => `${getValue()}%` },
+  { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 180, minSize: 150, filterType: 'date-range' },
 ];
 
 export default function DataGridDemos() {
@@ -160,6 +277,120 @@ export default function DataGridDemos() {
         />
       </div>
 
+      {/* Single Selection (Radio) Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Single Selection (Radio Style)</h3>
+        <p className="demo-note">Use radio buttons for single row selection. Only one row can be selected at a time.</p>
+        <DataGrid
+          data={dataGridData}
+          columns={[
+            { id: 'name', header: 'Device Name', accessorKey: 'name', size: 200 },
+            { id: 'type', header: 'Type', accessorKey: 'type', size: 100 },
+            { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+              }
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
+          ]}
+          enableRowSelection
+          selectionMode="single"
+          enableSorting
+          enableGlobalFilter
+          enableFiltering={false}
+          enablePagination
+          pageSizeOptions={[5, 10]}
+          height={320}
+          hoverable
+        />
+      </div>
+
+      {/* Conditional Selection Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Conditional Selection</h3>
+        <p className="demo-note">Only <strong>online</strong> devices can be selected. Offline and warning devices are disabled.</p>
+        <DataGrid
+          data={dataGridData}
+          columns={[
+            { id: 'name', header: 'Device Name', accessorKey: 'name', size: 200 },
+            { id: 'type', header: 'Type', accessorKey: 'type', size: 100 },
+            { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+              }
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
+          ]}
+          enableRowSelection
+          enableMultiRowSelection
+          getRowCanSelect={(row) => row.status === 'online'}
+          enableSorting
+          enableGlobalFilter
+          enableFiltering={false}
+          enablePagination
+          pageSizeOptions={[5, 10]}
+          height={320}
+          hoverable
+        />
+      </div>
+
+      {/* Page Selection Mode Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Page-Only Selection</h3>
+        <p className="demo-note">Header checkbox toggles only the current page rows. Change pages and use header checkbox to see the difference.</p>
+        <DataGrid
+          data={dataGridData}
+          columns={[
+            { id: 'name', header: 'Device Name', accessorKey: 'name', size: 200 },
+            { id: 'type', header: 'Type', accessorKey: 'type', size: 100 },
+            { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+              }
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
+          ]}
+          enableRowSelection
+          enableMultiRowSelection
+          selectAllMode="page"
+          enableSorting
+          enableFiltering={false}
+          enablePagination
+          pageSizeOptions={[3, 5, 10]}
+          height={280}
+          hoverable
+        />
+      </div>
+
+      {/* Advanced Filters Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Advanced Filters (Select, Multi-Select, Date Range)</h3>
+        <p className="demo-note">
+          <strong>Type:</strong> Single select dropdown &nbsp;|&nbsp;
+          <strong>Status:</strong> Multi-select checkboxes &nbsp;|&nbsp;
+          <strong>Location:</strong> Auto-generated select from data &nbsp;|&nbsp;
+          <strong>Temp/Humidity:</strong> Number range (min-max) &nbsp;|&nbsp;
+          <strong>Last Update:</strong> Date range picker
+        </p>
+        <DataGrid
+          data={dataGridData}
+          columns={advancedFilterColumns}
+          enableSorting
+          enableFiltering
+          enablePagination
+          pageSizeOptions={[5, 10, 20]}
+          height={400}
+          striped
+          hoverable
+        />
+      </div>
+
       {/* Column Pinning Demo */}
       <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
         <h3>Column Pinning & Resizing</h3>
@@ -175,6 +406,72 @@ export default function DataGridDemos() {
           enablePagination={false}
           height={350}
           columnPinning={{ left: ['name'] }}
+        />
+      </div>
+
+      {/* Tree Structure Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Tree Structure (Hierarchical Data)</h3>
+        <p className="demo-note">
+          Display hierarchical data with <code>getSubRows</code>. Click expand icons to show child rows.
+          Use expand/collapse buttons in toolbar to toggle all rows.
+        </p>
+        <DataGrid
+          data={treeData}
+          columns={treeColumns}
+          getSubRows={(row) => row.children}
+          enableExpandAll
+          defaultExpanded={true}
+          enableSorting={false}
+          enableFiltering={false}
+          enablePagination={false}
+          height={400}
+          hoverable
+        />
+      </div>
+
+      {/* Keyboard Navigation Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Keyboard Navigation</h3>
+        <p className="demo-note">
+          Click on any cell to focus it, then use keyboard to navigate:
+          <br />
+          • <strong>Arrow keys:</strong> Move between cells
+          <br />
+          • <strong>Tab / Shift+Tab:</strong> Move to next/previous cell
+          <br />
+          • <strong>Home / End:</strong> Jump to first/last cell in row
+          <br />
+          • <strong>Enter:</strong> Edit cell (if editable) or toggle selection
+          <br />
+          • <strong>Space:</strong> Toggle row selection
+        </p>
+        <DataGrid
+          data={dataGridData.slice(0, 6)}
+          columns={[
+            { id: 'name', header: 'Device Name', accessorKey: 'name', editable: true },
+            { id: 'type', header: 'Type', accessorKey: 'type' },
+            { id: 'status', header: 'Status', accessorKey: 'status',
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+              }
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location', editable: true },
+            { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
+          ]}
+          enableKeyboardNavigation
+          enableCellEditing
+          enableRowSelection
+          onCellEdit={(rowId, columnId, value) => {
+            console.log(`Edited: Row ${rowId}, Column ${columnId}, Value: ${value}`);
+          }}
+          enableSorting={false}
+          enableFiltering={false}
+          enablePagination={false}
+          height={280}
+          hoverable
         />
       </div>
 
@@ -282,6 +579,110 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination={false}
           height={300}
+        />
+      </div>
+
+      {/* Advanced Cell Editing Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Advanced Cell Editing (Validation & Editor Types)</h3>
+        <p className="demo-note">
+          Double-click to edit. Different editor types: Text (with validation), Number, Select dropdown.
+          <br />
+          • <strong>Name:</strong> Must be at least 3 characters
+          <br />
+          • <strong>Temperature:</strong> Number editor, must be between -50 and 100
+          <br />
+          • <strong>Status:</strong> Select dropdown editor
+        </p>
+        <DataGrid
+          data={dataGridData.slice(0, 6)}
+          columns={[
+            {
+              id: 'name',
+              header: 'Device Name',
+              accessorKey: 'name',
+              editable: true,
+              editorType: 'text',
+              validateCell: (value) => {
+                if (typeof value !== 'string' || value.length < 3) {
+                  return 'Name must be at least 3 characters';
+                }
+                return null;
+              },
+            },
+            { id: 'type', header: 'Type', accessorKey: 'type' },
+            {
+              id: 'status',
+              header: 'Status',
+              accessorKey: 'status',
+              editable: true,
+              editorType: 'select',
+              editorOptions: [
+                { value: 'online', label: 'Online' },
+                { value: 'offline', label: 'Offline' },
+                { value: 'warning', label: 'Warning' },
+              ],
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+              },
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location' },
+            {
+              id: 'temperature',
+              header: 'Temp (°C)',
+              accessorKey: 'temperature',
+              align: 'right',
+              editable: true,
+              editorType: 'number',
+              validateCell: (value) => {
+                const num = Number(value);
+                if (isNaN(num)) return 'Must be a number';
+                if (num < -50 || num > 100) return 'Must be between -50 and 100';
+                return null;
+              },
+            },
+          ]}
+          enableCellEditing
+          onCellEdit={(rowId, columnId, value) => {
+            console.log(`Advanced edit - Row: ${rowId}, Column: ${columnId}, Value: ${value}`);
+          }}
+          enableSorting={false}
+          enableFiltering={false}
+          enablePagination={false}
+          height={300}
+        />
+      </div>
+
+      {/* Row Pinning Demo */}
+      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+        <h3>Row Pinning</h3>
+        <p className="demo-note">
+          Hover over a row to see pin buttons. Pin rows to top or bottom to keep them visible while scrolling.
+          Click the pin icon on a pinned row to unpin it.
+        </p>
+        <DataGrid
+          data={dataGridData}
+          columns={[
+            { id: 'name', header: 'Device Name', accessorKey: 'name' },
+            { id: 'type', header: 'Type', accessorKey: 'type' },
+            { id: 'status', header: 'Status', accessorKey: 'status',
+              cell: ({ getValue }) => {
+                const status = getValue() as string;
+                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
+                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+              }
+            },
+            { id: 'location', header: 'Location', accessorKey: 'location' },
+            { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
+          ]}
+          enableRowPinning
+          enableSorting
+          enableFiltering={false}
+          enablePagination={false}
+          height={350}
+          hoverable
         />
       </div>
 

@@ -5,7 +5,17 @@
  *           row selection, expansion, grouping, cell editing, virtualization
  */
 import React from 'react';
-import { SortingState, ColumnFiltersState, VisibilityState, RowSelectionState, ExpandedState, GroupingState, ColumnOrderState, ColumnPinningState, ColumnSizingState, PaginationState, Row, Table as TanStackTable, ColumnResizeMode, Updater } from '@tanstack/react-table';
+import { SortingState, ColumnFiltersState, VisibilityState, RowSelectionState, ExpandedState, GroupingState, ColumnOrderState, ColumnPinningState, ColumnSizingState, PaginationState, RowPinningState, Row, Table as TanStackTable, ColumnResizeMode, Updater } from '@tanstack/react-table';
+export type FilterType = 'text' | 'number' | 'select' | 'multi-select' | 'date' | 'date-range';
+export interface FilterOption {
+    value: string;
+    label: string;
+}
+export type EditorType = 'text' | 'number' | 'select' | 'date';
+export interface EditorOption {
+    value: string;
+    label: string;
+}
 export interface DataGridColumn<TData> {
     id: string;
     header: string;
@@ -34,11 +44,27 @@ export interface DataGridColumn<TData> {
     maxSize?: number;
     align?: 'left' | 'center' | 'right';
     editable?: boolean;
+    /** Custom edit component - takes precedence over editorType */
     editComponent?: React.ComponentType<{
         value: unknown;
         onChange: (value: unknown) => void;
         onBlur: () => void;
         onKeyDown: (e: React.KeyboardEvent) => void;
+    }>;
+    /** Editor type for built-in editors */
+    editorType?: EditorType;
+    /** Options for select editor */
+    editorOptions?: EditorOption[];
+    /** Validation function - returns error message or null if valid */
+    validateCell?: (value: unknown, row: TData) => string | null;
+    /** Filter type for this column */
+    filterType?: FilterType;
+    /** Custom filter options for select/multi-select filters */
+    filterOptions?: FilterOption[];
+    /** Custom filter component */
+    filterComponent?: React.ComponentType<{
+        column: any;
+        table: TanStackTable<any>;
     }>;
 }
 export interface DataGridProps<TData> {
@@ -84,6 +110,14 @@ export interface DataGridProps<TData> {
     enableRowSelection?: boolean;
     /** Enable multi-row selection */
     enableMultiRowSelection?: boolean;
+    /** Selection mode: 'single' uses radio buttons, 'multiple' uses checkboxes */
+    selectionMode?: 'single' | 'multiple';
+    /** Function to determine if a row can be selected */
+    getRowCanSelect?: (row: TData) => boolean;
+    /** Enable sub-row selection (when parent is selected, children are also selected) */
+    enableSubRowSelection?: boolean;
+    /** Select all mode: 'all' selects all rows, 'page' selects current page only */
+    selectAllMode?: 'all' | 'page';
     /** Controlled selection state */
     rowSelection?: RowSelectionState;
     /** Selection change handler */
@@ -96,12 +130,20 @@ export interface DataGridProps<TData> {
     enableExpanding?: boolean;
     /** Render expanded row content */
     renderExpandedRow?: (row: TData) => React.ReactNode;
+    /** Get sub-rows for hierarchical data (tree structure) */
+    getSubRows?: (row: TData) => TData[] | undefined;
+    /** Initial expanded state - true expands all, object for specific rows */
+    defaultExpanded?: ExpandedState | true;
+    /** Show expand/collapse all button in toolbar */
+    enableExpandAll?: boolean;
     /** Controlled expansion state */
     expanded?: ExpandedState;
     /** Expansion change handler */
     onExpandedChange?: (updater: Updater<ExpandedState>) => void;
     /** Enable row grouping */
     enableGrouping?: boolean;
+    /** Grouped column display mode: 'reorder' moves to first, 'remove' hides column, false keeps in place */
+    groupedColumnMode?: 'reorder' | 'remove' | false;
     /** Controlled grouping state */
     grouping?: GroupingState;
     /** Grouping change handler */
@@ -136,6 +178,14 @@ export interface DataGridProps<TData> {
     enableCellEditing?: boolean;
     /** Cell edit handler */
     onCellEdit?: (rowId: string, columnId: string, value: unknown) => void;
+    /** Enable row pinning */
+    enableRowPinning?: boolean;
+    /** Controlled row pinning state */
+    rowPinning?: RowPinningState;
+    /** Row pinning change handler */
+    onRowPinningChange?: (updater: Updater<RowPinningState>) => void;
+    /** Keep pinned rows visible when scrolling */
+    keepPinnedRows?: boolean;
     /** Enable virtualization for large datasets */
     enableVirtualization?: boolean;
     /** Estimated row height for virtualization */
@@ -166,6 +216,8 @@ export interface DataGridProps<TData> {
     showToolbar?: boolean;
     /** Custom toolbar content */
     toolbarContent?: React.ReactNode;
+    /** Enable keyboard navigation between cells */
+    enableKeyboardNavigation?: boolean;
     /** CSS class name */
     className?: string;
     /** Inline styles */
@@ -187,7 +239,7 @@ export interface DataGridRef<TData> {
     /** Scroll to row */
     scrollToRow: (index: number) => void;
 }
-declare function DataGridInner<TData>({ data, columns: columnsProp, getRowId, enableSorting, enableMultiSort, sorting: sortingProp, onSortingChange, enableFiltering, enableGlobalFilter, globalFilter: globalFilterProp, onGlobalFilterChange, columnFilters: columnFiltersProp, onColumnFiltersChange, enablePagination, pageSizeOptions, pagination: paginationProp, onPaginationChange, rowCount, manualPagination, enableRowSelection, enableMultiRowSelection, rowSelection: rowSelectionProp, onRowSelectionChange, onRowClick, onRowDoubleClick, enableExpanding, renderExpandedRow, expanded: expandedProp, onExpandedChange, enableGrouping, grouping: groupingProp, onGroupingChange, enableColumnResizing, columnResizeMode, enableColumnPinning, enableColumnOrdering, enableColumnVisibility, columnVisibility: columnVisibilityProp, onColumnVisibilityChange, columnOrder: columnOrderProp, onColumnOrderChange, columnPinning: columnPinningProp, onColumnPinningChange, columnSizing: columnSizingProp, onColumnSizingChange, enableCellEditing, onCellEdit, enableVirtualization, estimateRowHeight, overscan, height, striped, hoverable, bordered, compact, showHeader, showFooter, loading, emptyMessage, renderEmpty, showToolbar, toolbarContent, className, style, }: DataGridProps<TData>, ref: React.ForwardedRef<DataGridRef<TData>>): import("react/jsx-runtime").JSX.Element;
+declare function DataGridInner<TData>({ data, columns: columnsProp, getRowId, enableSorting, enableMultiSort, sorting: sortingProp, onSortingChange, enableFiltering, enableGlobalFilter, globalFilter: globalFilterProp, onGlobalFilterChange, columnFilters: columnFiltersProp, onColumnFiltersChange, enablePagination, pageSizeOptions, pagination: paginationProp, onPaginationChange, rowCount, manualPagination, enableRowSelection, enableMultiRowSelection, selectionMode, getRowCanSelect, enableSubRowSelection, selectAllMode, rowSelection: rowSelectionProp, onRowSelectionChange, onRowClick, onRowDoubleClick, enableExpanding, renderExpandedRow, getSubRows, defaultExpanded, enableExpandAll, expanded: expandedProp, onExpandedChange, enableGrouping, groupedColumnMode, grouping: groupingProp, onGroupingChange, enableColumnResizing, columnResizeMode, enableColumnPinning, enableColumnOrdering, enableColumnVisibility, columnVisibility: columnVisibilityProp, onColumnVisibilityChange, columnOrder: columnOrderProp, onColumnOrderChange, columnPinning: columnPinningProp, onColumnPinningChange, columnSizing: columnSizingProp, onColumnSizingChange, enableCellEditing, onCellEdit, enableRowPinning, rowPinning: rowPinningProp, onRowPinningChange, keepPinnedRows, enableVirtualization, estimateRowHeight, overscan, height, striped, hoverable, bordered, compact, showHeader, showFooter, loading, emptyMessage, renderEmpty, showToolbar, toolbarContent, enableKeyboardNavigation, className, style, }: DataGridProps<TData>, ref: React.ForwardedRef<DataGridRef<TData>>): import("react/jsx-runtime").JSX.Element;
 export declare const DataGrid: <TData>(props: DataGridProps<TData> & {
     ref?: React.ForwardedRef<DataGridRef<TData>>;
 }) => ReturnType<typeof DataGridInner>;
