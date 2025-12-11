@@ -193,6 +193,8 @@ export interface DataGridProps<TData> {
   sorting?: SortingState;
   /** Sorting change handler */
   onSortingChange?: (updater: Updater<SortingState>) => void;
+  /** Manual sorting mode - disable client-side sorting, handle in server */
+  manualSorting?: boolean;
 
   // Filtering
   /** Enable column filtering */
@@ -207,6 +209,8 @@ export interface DataGridProps<TData> {
   columnFilters?: ColumnFiltersState;
   /** Column filters change handler */
   onColumnFiltersChange?: (updater: Updater<ColumnFiltersState>) => void;
+  /** Manual filtering mode - disable client-side filtering, handle in server */
+  manualFiltering?: boolean;
 
   // Pagination
   /** Enable pagination */
@@ -1345,6 +1349,7 @@ function DataGridInner<TData>(
     enableMultiSort = true,
     sorting: sortingProp,
     onSortingChange,
+    manualSorting = false,
 
     // Filtering
     enableFiltering = true,
@@ -1353,6 +1358,7 @@ function DataGridInner<TData>(
     onGlobalFilterChange,
     columnFilters: columnFiltersProp,
     onColumnFiltersChange,
+    manualFiltering = false,
 
     // Pagination
     enablePagination = true,
@@ -1778,8 +1784,8 @@ function DataGridInner<TData>(
     onRowPinningChange: onRowPinningChange ?? setRowPinning,
     onPaginationChange: onPaginationChange ?? setPagination,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
-    getFilteredRowModel: enableFiltering || enableGlobalFilter ? getFilteredRowModel() : undefined,
+    getSortedRowModel: enableSorting && !manualSorting ? getSortedRowModel() : undefined,
+    getFilteredRowModel: (enableFiltering || enableGlobalFilter) && !manualFiltering ? getFilteredRowModel() : undefined,
     getPaginationRowModel: enablePagination && !manualPagination ? getPaginationRowModel() : undefined,
     getExpandedRowModel: enableExpanding || enableGrouping || getSubRows ? getExpandedRowModel() : undefined,
     getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
@@ -1832,6 +1838,8 @@ function DataGridInner<TData>(
     columnResizeMode,
     enableRowPinning,
     keepPinnedRows,
+    manualSorting,
+    manualFiltering,
     manualPagination,
     rowCount,
     getSubRows: getSubRows as any,

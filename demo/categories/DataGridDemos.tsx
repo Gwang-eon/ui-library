@@ -862,6 +862,9 @@ export default function DataGridDemos() {
 
       {/* Export Demo */}
       <ExportDemo />
+
+      {/* Server-Side Demo */}
+      <ServerSideDemo />
     </section>
   );
 }
@@ -1061,6 +1064,115 @@ function ExportDemo() {
         enablePagination={false}
         height={280}
         showToolbar={false}
+      />
+    </div>
+  );
+}
+
+// Server-Side Operations Demo with simulated API
+function ServerSideDemo() {
+  // Simulate server data
+  const allData = React.useMemo(() => dataGridData, []);
+  const totalRows = allData.length;
+
+  // Server-side state
+  const [data, setData] = React.useState<DeviceData[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [sorting, setSorting] = React.useState<{ id: string; desc: boolean }[]>([]);
+  const [columnFilters, setColumnFilters] = React.useState<{ id: string; value: unknown }[]>([]);
+  const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 5 });
+
+  // Simulate server-side fetch
+  const fetchData = React.useCallback(() => {
+    setLoading(true);
+
+    // Simulate API delay
+    setTimeout(() => {
+      let result = [...allData];
+
+      // Apply filters (server-side)
+      columnFilters.forEach(filter => {
+        if (filter.value) {
+          result = result.filter(row => {
+            const value = String((row as Record<string, unknown>)[filter.id] ?? '').toLowerCase();
+            return value.includes(String(filter.value).toLowerCase());
+          });
+        }
+      });
+
+      // Apply sorting (server-side)
+      if (sorting.length > 0) {
+        const { id, desc } = sorting[0];
+        result.sort((a, b) => {
+          const aVal = (a as Record<string, unknown>)[id];
+          const bVal = (b as Record<string, unknown>)[id];
+          if (aVal === bVal) return 0;
+          const comparison = aVal! > bVal! ? 1 : -1;
+          return desc ? -comparison : comparison;
+        });
+      }
+
+      // Apply pagination (server-side)
+      const start = pagination.pageIndex * pagination.pageSize;
+      const paginatedData = result.slice(start, start + pagination.pageSize);
+
+      setData(paginatedData);
+      setLoading(false);
+    }, 500);
+  }, [allData, sorting, columnFilters, pagination]);
+
+  // Fetch data on state changes
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return (
+    <div className="demo-item full-width">
+      <h3>Server-Side Operations</h3>
+      <p className="demo-note">
+        Data is fetched from a simulated server with sorting, filtering, and pagination handled server-side.
+        Uses <code>manualSorting</code>, <code>manualFiltering</code>, and <code>manualPagination</code> props.
+        Watch the loading state when changing sort, filter, or page.
+      </p>
+      <DataGrid
+        data={data}
+        columns={[
+          { id: 'name', header: 'Device Name', accessorKey: 'name' },
+          { id: 'type', header: 'Type', accessorKey: 'type' },
+          { id: 'status', header: 'Status', accessorKey: 'status' },
+          { id: 'location', header: 'Location', accessorKey: 'location' },
+          { id: 'temperature', header: 'Temp', accessorKey: 'temperature', align: 'right' },
+        ]}
+        // Server-side operations
+        manualSorting
+        manualFiltering
+        manualPagination
+        // State
+        sorting={sorting}
+        onSortingChange={(updater) => {
+          const newState = typeof updater === 'function' ? updater(sorting) : updater;
+          setSorting(newState);
+        }}
+        columnFilters={columnFilters}
+        onColumnFiltersChange={(updater) => {
+          const newState = typeof updater === 'function' ? updater(columnFilters) : updater;
+          setColumnFilters(newState);
+          setPagination(prev => ({ ...prev, pageIndex: 0 })); // Reset to first page on filter
+        }}
+        pagination={pagination}
+        onPaginationChange={(updater) => {
+          const newState = typeof updater === 'function' ? updater(pagination) : updater;
+          setPagination(newState);
+        }}
+        rowCount={totalRows}
+        // Features
+        enableSorting
+        enableFiltering
+        enablePagination
+        pageSizeOptions={[5, 10]}
+        loading={loading}
+        height={350}
+        showToolbar
       />
     </div>
   );
