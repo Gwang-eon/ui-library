@@ -52,6 +52,9 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             aria-describedby={hasMessage ? messageId : undefined}
             {...props}
           />
+          <span className={styles['radio-circle']}>
+            <span className={styles['radio-dot']} />
+          </span>
           {label && <span className={styles['radio-label']}>{label}</span>}
         </label>
 

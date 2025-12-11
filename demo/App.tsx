@@ -877,7 +877,7 @@ function App() {
                 <div className="demo-row">
                   <Avatar size="sm" initials="AB" color="primary" />
                   <Avatar size="md" initials="JD" color="success" />
-                  <Avatar size="lg" src="https://api.dicebear.com/7.x/avataaars/svg?seed=1" />
+                  <Avatar size="lg" src="https://api.dicebear.com/7.x/notionists/svg?seed=felix" />
                   <Avatar size="xl" initials="JS" color="warning" />
                 </div>
               </div>

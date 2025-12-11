@@ -229,52 +229,68 @@
    DARK MODE
    ======================================== */
 
-@media (prefers-color-scheme: dark) {
-  .knob-track {
-    stroke: var(--border-default);
-  }
+:global([data-theme="dark"]) .knob-track,
+:global(.dark) .knob-track {
+  stroke: var(--palette-gray-600);
+}
 
-  .knob-value {
-    fill: var(--text-primary);
-  }
+:global([data-theme="dark"]) .knob-value,
+:global(.dark) .knob-value {
+  fill: var(--text-primary);
+}
 
-  .knob-label,
-  .knob-min-label,
-  .knob-max-label {
-    fill: var(--text-tertiary);
-  }
+:global([data-theme="dark"]) .knob-label,
+:global(.dark) .knob-label,
+:global([data-theme="dark"]) .knob-min-label,
+:global(.dark) .knob-min-label,
+:global([data-theme="dark"]) .knob-max-label,
+:global(.dark) .knob-max-label {
+  fill: var(--text-tertiary);
+}
 
-  .knob--primary .knob-progress {
-    stroke: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .knob--primary .knob-progress,
+:global(.dark) .knob--primary .knob-progress {
+  stroke: var(--color-primary-400);
+}
 
-  .knob--primary .knob-handle {
-    fill: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .knob--primary .knob-handle,
+:global(.dark) .knob--primary .knob-handle {
+  fill: var(--color-primary-400);
+}
 
-  .knob--success .knob-progress {
-    stroke: var(--color-success-400);
-  }
+:global([data-theme="dark"]) .knob--success .knob-progress,
+:global(.dark) .knob--success .knob-progress {
+  stroke: var(--color-success-400);
+}
 
-  .knob--success .knob-handle {
-    fill: var(--color-success-400);
-  }
+:global([data-theme="dark"]) .knob--success .knob-handle,
+:global(.dark) .knob--success .knob-handle {
+  fill: var(--color-success-400);
+}
 
-  .knob--warning .knob-progress {
-    stroke: var(--color-warning-400);
-  }
+:global([data-theme="dark"]) .knob--warning .knob-progress,
+:global(.dark) .knob--warning .knob-progress {
+  stroke: var(--color-warning-400);
+}
 
-  .knob--warning .knob-handle {
-    fill: var(--color-warning-400);
-  }
+:global([data-theme="dark"]) .knob--warning .knob-handle,
+:global(.dark) .knob--warning .knob-handle {
+  fill: var(--color-warning-400);
+}
 
-  .knob--error .knob-progress {
-    stroke: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .knob--error .knob-progress,
+:global(.dark) .knob--error .knob-progress {
+  stroke: var(--color-error-400);
+}
 
-  .knob--error .knob-handle {
-    fill: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .knob--error .knob-handle,
+:global(.dark) .knob--error .knob-handle {
+  fill: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .knob-handle,
+:global(.dark) .knob-handle {
+  stroke: var(--palette-gray-800);
 }
 
 /* ========================================

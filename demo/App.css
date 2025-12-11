@@ -188,9 +188,44 @@ body.dark-mode .demo-nav-item.active {
   border-left: 3px solid var(--color-info-500);
 }
 
-body.dark-mode .demo-note {
+body.dark-mode .demo-note,
+[data-theme="dark"] .demo-note {
   background: var(--color-info-900);
   border-left-color: var(--color-info-400);
+}
+
+/* Demo item dark mode */
+body.dark-mode .demo-item,
+[data-theme="dark"] .demo-item {
+  background: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
+
+/* Demo header dark mode */
+body.dark-mode .demo-header,
+[data-theme="dark"] .demo-header {
+  background: var(--palette-gray-900);
+  border-bottom-color: var(--palette-gray-700);
+}
+
+/* Demo nav dark mode */
+body.dark-mode .demo-nav,
+[data-theme="dark"] .demo-nav {
+  background: var(--palette-gray-900);
+  border-bottom-color: var(--palette-gray-700);
+}
+
+/* Demo section heading dark mode */
+body.dark-mode .demo-section h2,
+[data-theme="dark"] .demo-section h2 {
+  border-bottom-color: var(--palette-gray-700);
+}
+
+/* Demo footer dark mode */
+body.dark-mode .demo-footer,
+[data-theme="dark"] .demo-footer {
+  background: var(--palette-gray-900);
+  border-top-color: var(--palette-gray-700);
 }
 
 /* Responsive */

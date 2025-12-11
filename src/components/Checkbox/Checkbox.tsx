@@ -1,4 +1,5 @@
 import React, { type InputHTMLAttributes, useEffect, useRef } from 'react';
+import { Check } from 'lucide-react';
 import styles from './Checkbox.module.css';
 
 export type CheckboxSize = 'sm' | 'md' | 'lg';
@@ -45,6 +46,9 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     // Size class mapping
     const sizeClass = size === 'sm' ? styles['checkbox-sm'] : size === 'lg' ? styles['checkbox-lg'] : '';
 
+    // Icon size based on checkbox size
+    const iconSize = size === 'sm' ? 10 : size === 'lg' ? 16 : 12;
+
     return (
       <div className={`${styles['checkbox-wrapper']} ${className}`}>
         <label
@@ -63,6 +67,10 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             aria-describedby={hasMessage ? messageId : undefined}
             {...props}
           />
+          <span className={styles['checkbox-box']}>
+            <Check size={iconSize} strokeWidth={3} className={styles['checkbox-icon']} />
+            <span className={styles['checkbox-indeterminate-icon']} />
+          </span>
           {label && <span className={styles['checkbox-label']}>{label}</span>}
         </label>
 

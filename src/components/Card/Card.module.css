@@ -268,22 +268,26 @@
 
 /* Manual dark mode class support */
 :global(.dark-mode) .card,
+:global(.dark) .card,
 :global([data-theme="dark"]) .card {
   background: var(--palette-gray-800);
   border-color: var(--palette-gray-700);
 }
 
 :global(.dark-mode) .cardElevated,
+:global(.dark) .cardElevated,
 :global([data-theme="dark"]) .cardElevated {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 :global(.dark-mode) .cardOutlined,
+:global(.dark) .cardOutlined,
 :global([data-theme="dark"]) .cardOutlined {
   border-color: var(--palette-gray-600);
 }
 
 :global(.dark-mode) .cardHoverable:hover,
+:global(.dark) .cardHoverable:hover,
 :global([data-theme="dark"]) .cardHoverable:hover {
   border-color: var(--color-primary-400);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
@@ -291,17 +295,21 @@
 
 :global(.dark-mode) .cardHoverable:focus-visible,
 :global(.dark-mode) .cardSelectable:focus-visible,
+:global(.dark) .cardHoverable:focus-visible,
+:global(.dark) .cardSelectable:focus-visible,
 :global([data-theme="dark"]) .cardHoverable:focus-visible,
 :global([data-theme="dark"]) .cardSelectable:focus-visible {
   outline-color: var(--color-primary-400);
 }
 
 :global(.dark-mode) .cardSelectable:hover,
+:global(.dark) .cardSelectable:hover,
 :global([data-theme="dark"]) .cardSelectable:hover {
   border-color: var(--color-primary-400);
 }
 
 :global(.dark-mode) .cardSelected,
+:global(.dark) .cardSelected,
 :global([data-theme="dark"]) .cardSelected {
   background: rgba(59, 130, 246, 0.15);
   border-color: var(--color-primary-400);
@@ -309,26 +317,31 @@
 }
 
 :global(.dark-mode) .cardHeader,
+:global(.dark) .cardHeader,
 :global([data-theme="dark"]) .cardHeader {
   border-bottom-color: var(--palette-gray-700);
 }
 
 :global(.dark-mode) .cardTitle,
+:global(.dark) .cardTitle,
 :global([data-theme="dark"]) .cardTitle {
   color: var(--palette-gray-100);
 }
 
 :global(.dark-mode) .cardContent p,
+:global(.dark) .cardContent p,
 :global([data-theme="dark"]) .cardContent p {
   color: var(--palette-gray-300);
 }
 
 :global(.dark-mode) .cardFooter,
+:global(.dark) .cardFooter,
 :global([data-theme="dark"]) .cardFooter {
   border-top-color: var(--palette-gray-700);
 }
 
 :global(.dark-mode) .card .loadingSpinner,
+:global(.dark) .card .loadingSpinner,
 :global([data-theme="dark"]) .card .loadingSpinner {
   border-color: var(--palette-gray-700);
   border-top-color: var(--color-primary-400);
