@@ -467,8 +467,13 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.body.classList.toggle('dark-mode');
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    // 기존 데모 스타일용
+    document.body.classList.toggle('dark-mode', newDarkMode);
+    // 컴포넌트 다크 테마용
+    document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', newDarkMode);
   };
 
   const showCategory = (cat: Category) => activeCategory === 'all' || activeCategory === cat;
