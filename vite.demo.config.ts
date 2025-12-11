@@ -11,6 +11,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'demo-dist',
+    rollupOptions: {
+      // xlsx is an optional dependency for Excel export
+      external: ['xlsx'],
+      output: {
+        globals: {
+          xlsx: 'XLSX',
+        },
+      },
+    },
   },
   server: {
     port: 3000,
