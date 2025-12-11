@@ -217,6 +217,17 @@ export interface DataGridProps<TData> {
     headerContextMenuItems?: ContextMenuItem[];
     /** Context menu action handler */
     onContextMenuAction?: (actionId: string, context: ContextMenuContext<TData>) => void;
+    /** Enable clipboard operations (Ctrl+C to copy, Ctrl+V to paste) */
+    enableClipboard?: boolean;
+    /** Enable range selection for clipboard operations */
+    enableRangeSelection?: boolean;
+    /** Paste handler - receives parsed data and start position */
+    onPaste?: (data: string[][], startRowIndex: number, startColumnId: string) => void;
+    /** Copy handler - called when data is copied */
+    onCopy?: (data: string[][], selectedCells: {
+        rowIndex: number;
+        columnId: string;
+    }[]) => void;
     /** Enable virtualization for large datasets */
     enableVirtualization?: boolean;
     /** Estimated row height for virtualization */
@@ -269,8 +280,21 @@ export interface DataGridRef<TData> {
     exportToCSV: (filename?: string) => void;
     /** Scroll to row */
     scrollToRow: (index: number) => void;
+    /** Copy selected cells/rows to clipboard */
+    copyToClipboard: () => void;
+    /** Get selected cell range */
+    getSelectedRange: () => {
+        rowIndex: number;
+        columnId: string;
+    }[];
+    /** Clear cell selection */
+    clearCellSelection: () => void;
 }
-declare function DataGridInner<TData>({ data, columns: columnsProp, getRowId, enableSorting, enableMultiSort, sorting: sortingProp, onSortingChange, enableFiltering, enableGlobalFilter, globalFilter: globalFilterProp, onGlobalFilterChange, columnFilters: columnFiltersProp, onColumnFiltersChange, enablePagination, pageSizeOptions, pagination: paginationProp, onPaginationChange, rowCount, manualPagination, enableRowSelection, enableMultiRowSelection, selectionMode, getRowCanSelect, enableSubRowSelection, selectAllMode, rowSelection: rowSelectionProp, onRowSelectionChange, onRowClick, onRowDoubleClick, enableExpanding, renderExpandedRow, getSubRows, defaultExpanded, enableExpandAll, expanded: expandedProp, onExpandedChange, enableGrouping, groupedColumnMode, grouping: groupingProp, onGroupingChange, enableColumnResizing, columnResizeMode, enableColumnPinning, enableColumnOrdering, enableColumnVisibility, columnVisibility: columnVisibilityProp, onColumnVisibilityChange, columnOrder: columnOrderProp, onColumnOrderChange, columnPinning: columnPinningProp, onColumnPinningChange, columnSizing: columnSizingProp, onColumnSizingChange, enableCellEditing, onCellEdit, enableRowPinning, rowPinning: rowPinningProp, onRowPinningChange, keepPinnedRows, enableRowOrdering, onRowOrderChange, enableColumnDrag, enableContextMenu, cellContextMenuItems, rowContextMenuItems, headerContextMenuItems, onContextMenuAction, enableVirtualization, estimateRowHeight, overscan, height, striped, hoverable, bordered, compact, showHeader, showFooter, loading, emptyMessage, renderEmpty, showToolbar, toolbarContent, enableKeyboardNavigation, className, style, }: DataGridProps<TData>, ref: React.ForwardedRef<DataGridRef<TData>>): import("react/jsx-runtime").JSX.Element;
+export interface CellPosition {
+    rowIndex: number;
+    columnId: string;
+}
+declare function DataGridInner<TData>({ data, columns: columnsProp, getRowId, enableSorting, enableMultiSort, sorting: sortingProp, onSortingChange, enableFiltering, enableGlobalFilter, globalFilter: globalFilterProp, onGlobalFilterChange, columnFilters: columnFiltersProp, onColumnFiltersChange, enablePagination, pageSizeOptions, pagination: paginationProp, onPaginationChange, rowCount, manualPagination, enableRowSelection, enableMultiRowSelection, selectionMode, getRowCanSelect, enableSubRowSelection, selectAllMode, rowSelection: rowSelectionProp, onRowSelectionChange, onRowClick, onRowDoubleClick, enableExpanding, renderExpandedRow, getSubRows, defaultExpanded, enableExpandAll, expanded: expandedProp, onExpandedChange, enableGrouping, groupedColumnMode, grouping: groupingProp, onGroupingChange, enableColumnResizing, columnResizeMode, enableColumnPinning, enableColumnOrdering, enableColumnVisibility, columnVisibility: columnVisibilityProp, onColumnVisibilityChange, columnOrder: columnOrderProp, onColumnOrderChange, columnPinning: columnPinningProp, onColumnPinningChange, columnSizing: columnSizingProp, onColumnSizingChange, enableCellEditing, onCellEdit, enableRowPinning, rowPinning: rowPinningProp, onRowPinningChange, keepPinnedRows, enableRowOrdering, onRowOrderChange, enableColumnDrag, enableContextMenu, cellContextMenuItems, rowContextMenuItems, headerContextMenuItems, onContextMenuAction, enableClipboard, enableRangeSelection, onPaste, onCopy, enableVirtualization, estimateRowHeight, overscan, height, striped, hoverable, bordered, compact, showHeader, showFooter, loading, emptyMessage, renderEmpty, showToolbar, toolbarContent, enableKeyboardNavigation, className, style, }: DataGridProps<TData>, ref: React.ForwardedRef<DataGridRef<TData>>): import("react/jsx-runtime").JSX.Element;
 export declare const DataGrid: <TData>(props: DataGridProps<TData> & {
     ref?: React.ForwardedRef<DataGridRef<TData>>;
 }) => ReturnType<typeof DataGridInner>;

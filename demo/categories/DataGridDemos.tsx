@@ -856,6 +856,9 @@ export default function DataGridDemos() {
 
       {/* Context Menu Demo */}
       <ContextMenuDemo />
+
+      {/* Clipboard Demo */}
+      <ClipboardDemo />
     </section>
   );
 }
@@ -943,6 +946,48 @@ function RowDragDemo() {
         enableFiltering={false}
         enablePagination={false}
         height={320}
+        showToolbar={false}
+      />
+    </div>
+  );
+}
+
+function ClipboardDemo() {
+  const [clipboardData, setClipboardData] = React.useState<DeviceData[]>(() => dataGridData.slice(0, 6));
+
+  return (
+    <div className="demo-item full-width">
+      <h3>Clipboard & Range Selection</h3>
+      <p className="demo-note">
+        Click and drag to select a range of cells. Use Ctrl+C (Cmd+C on Mac) to copy selected cells.
+        Data is copied in tab-separated format, compatible with Excel. Press Escape to clear selection.
+      </p>
+      <DataGrid
+        data={clipboardData}
+        columns={[
+          { id: 'name', header: 'Device Name', accessorKey: 'name' },
+          { id: 'type', header: 'Type', accessorKey: 'type' },
+          { id: 'status', header: 'Status', accessorKey: 'status' },
+          { id: 'location', header: 'Location', accessorKey: 'location' },
+          { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
+          { id: 'humidity', header: 'Humidity (%)', accessorKey: 'humidity', align: 'right' },
+        ]}
+        enableClipboard
+        enableRangeSelection
+        onCopy={(data, cells) => {
+          console.log('Copied:', data, 'Cells:', cells);
+          alert(`Copied ${cells.length} cell(s) to clipboard!`);
+        }}
+        onPaste={(data, rowIndex, columnId) => {
+          console.log('Paste data:', data, 'at row', rowIndex, 'column', columnId);
+          // Handle paste - in real app, you would update the data here
+          alert(`Paste ${data.length} row(s) x ${data[0]?.length || 0} column(s) starting at row ${rowIndex}`);
+        }}
+        enableKeyboardNavigation
+        enableSorting={false}
+        enableFiltering={false}
+        enablePagination={false}
+        height={280}
         showToolbar={false}
       />
     </div>

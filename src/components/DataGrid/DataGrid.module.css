@@ -1783,3 +1783,28 @@
 :global(.dark) .contextMenuDivider {
   background-color: var(--palette-gray-700);
 }
+
+/* ========================================
+   RANGE SELECTION / CLIPBOARD
+   ======================================== */
+
+.selectedCell {
+  background-color: var(--color-primary-50) !important;
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
+}
+
+/* Prevent text selection during range drag */
+.container.selecting {
+  user-select: none;
+}
+
+/* ========================================
+   DARK MODE - RANGE SELECTION
+   ======================================== */
+
+:global([data-theme="dark"]) .selectedCell,
+:global(.dark) .selectedCell {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  outline-color: var(--color-primary-400);
+}

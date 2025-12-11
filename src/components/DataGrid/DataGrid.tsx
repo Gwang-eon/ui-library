@@ -334,6 +334,16 @@ export interface DataGridProps<TData> {
   /** Context menu action handler */
   onContextMenuAction?: (actionId: string, context: ContextMenuContext<TData>) => void;
 
+  // Clipboard
+  /** Enable clipboard operations (Ctrl+C to copy, Ctrl+V to paste) */
+  enableClipboard?: boolean;
+  /** Enable range selection for clipboard operations */
+  enableRangeSelection?: boolean;
+  /** Paste handler - receives parsed data and start position */
+  onPaste?: (data: string[][], startRowIndex: number, startColumnId: string) => void;
+  /** Copy handler - called when data is copied */
+  onCopy?: (data: string[][], selectedCells: { rowIndex: number; columnId: string }[]) => void;
+
   // Virtualization
   /** Enable virtualization for large datasets */
   enableVirtualization?: boolean;
@@ -396,6 +406,18 @@ export interface DataGridRef<TData> {
   exportToCSV: (filename?: string) => void;
   /** Scroll to row */
   scrollToRow: (index: number) => void;
+  /** Copy selected cells/rows to clipboard */
+  copyToClipboard: () => void;
+  /** Get selected cell range */
+  getSelectedRange: () => { rowIndex: number; columnId: string }[];
+  /** Clear cell selection */
+  clearCellSelection: () => void;
+}
+
+// Cell position for range selection
+export interface CellPosition {
+  rowIndex: number;
+  columnId: string;
 }
 
 // ============================================
@@ -1385,6 +1407,12 @@ function DataGridInner<TData>(
     headerContextMenuItems,
     onContextMenuAction,
 
+    // Clipboard
+    enableClipboard = false,
+    enableRangeSelection = false,
+    onPaste,
+    onCopy,
+
     // Virtualization
     enableVirtualization = false,
     estimateRowHeight = 40,
@@ -1447,6 +1475,12 @@ function DataGridInner<TData>(
     context: ContextMenuContext<TData>;
     items: ContextMenuItem[];
   } | null>(null);
+
+  // Range selection state for clipboard
+  const [rangeSelectionStart, setRangeSelectionStart] = useState<CellPosition | null>(null);
+  const [rangeSelectionEnd, setRangeSelectionEnd] = useState<CellPosition | null>(null);
+  const [selectedCells, setSelectedCells] = useState<CellPosition[]>([]);
+  const [isSelecting, setIsSelecting] = useState(false);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -1856,6 +1890,226 @@ function DataGridInner<TData>(
     return rows.map(row => row.id);
   }, [enableRowOrdering, rows]);
 
+  // Get visible column IDs for clipboard operations
+  const visibleColumnIds = useMemo(() => {
+    return table.getVisibleLeafColumns()
+      .filter(col => !col.id.startsWith('_'))
+      .map(col => col.id);
+  }, [table]);
+
+  // Calculate selected cells from range
+  const calculateSelectedCells = useCallback((start: CellPosition | null, end: CellPosition | null): CellPosition[] => {
+    if (!start || !end) return [];
+
+    const minRowIndex = Math.min(start.rowIndex, end.rowIndex);
+    const maxRowIndex = Math.max(start.rowIndex, end.rowIndex);
+    const startColIndex = visibleColumnIds.indexOf(start.columnId);
+    const endColIndex = visibleColumnIds.indexOf(end.columnId);
+    const minColIndex = Math.min(startColIndex, endColIndex);
+    const maxColIndex = Math.max(startColIndex, endColIndex);
+
+    const cells: CellPosition[] = [];
+    for (let rowIndex = minRowIndex; rowIndex <= maxRowIndex; rowIndex++) {
+      for (let colIndex = minColIndex; colIndex <= maxColIndex; colIndex++) {
+        cells.push({
+          rowIndex,
+          columnId: visibleColumnIds[colIndex],
+        });
+      }
+    }
+    return cells;
+  }, [visibleColumnIds]);
+
+  // Check if a cell is selected
+  const isCellSelected = useCallback((rowIndex: number, columnId: string): boolean => {
+    return selectedCells.some(cell => cell.rowIndex === rowIndex && cell.columnId === columnId);
+  }, [selectedCells]);
+
+  // Handle cell mouse down for range selection
+  const handleCellMouseDown = useCallback((rowIndex: number, columnId: string, e: React.MouseEvent) => {
+    if (!enableRangeSelection || columnId.startsWith('_')) return;
+
+    // Only left click
+    if (e.button !== 0) return;
+
+    // Prevent text selection
+    e.preventDefault();
+
+    const position: CellPosition = { rowIndex, columnId };
+
+    if (e.shiftKey && rangeSelectionStart) {
+      // Extend selection with shift+click
+      setRangeSelectionEnd(position);
+      const cells = calculateSelectedCells(rangeSelectionStart, position);
+      setSelectedCells(cells);
+    } else {
+      // Start new selection
+      setRangeSelectionStart(position);
+      setRangeSelectionEnd(position);
+      setSelectedCells([position]);
+      setIsSelecting(true);
+    }
+  }, [enableRangeSelection, rangeSelectionStart, calculateSelectedCells]);
+
+  // Handle cell mouse enter for drag selection
+  const handleCellMouseEnter = useCallback((rowIndex: number, columnId: string) => {
+    if (!isSelecting || !rangeSelectionStart || columnId.startsWith('_')) return;
+
+    const position: CellPosition = { rowIndex, columnId };
+    setRangeSelectionEnd(position);
+    const cells = calculateSelectedCells(rangeSelectionStart, position);
+    setSelectedCells(cells);
+  }, [isSelecting, rangeSelectionStart, calculateSelectedCells]);
+
+  // Handle mouse up to end selection
+  useEffect(() => {
+    const handleMouseUp = () => {
+      setIsSelecting(false);
+    };
+
+    if (isSelecting) {
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => document.removeEventListener('mouseup', handleMouseUp);
+    }
+  }, [isSelecting]);
+
+  // Get cell value as string
+  const getCellValueAsString = useCallback((rowIndex: number, columnId: string): string => {
+    const row = rows[rowIndex];
+    if (!row) return '';
+    const value = row.getValue(columnId);
+    if (value === null || value === undefined) return '';
+    if (typeof value === 'object') return JSON.stringify(value);
+    return String(value);
+  }, [rows]);
+
+  // Copy selected cells to clipboard
+  const handleCopyToClipboard = useCallback(async () => {
+    if (!enableClipboard) return;
+
+    let cellsToCopy: CellPosition[];
+
+    // If we have range-selected cells, use those
+    if (selectedCells.length > 0) {
+      cellsToCopy = selectedCells;
+    } else if (focusedCell !== null) {
+      // Otherwise use the focused cell
+      const columnId = visibleColumnIds[focusedCell.columnIndex];
+      if (columnId) {
+        cellsToCopy = [{ rowIndex: focusedCell.rowIndex, columnId }];
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+
+    // Group cells by row
+    const rowMap = new Map<number, CellPosition[]>();
+    cellsToCopy.forEach(cell => {
+      const existing = rowMap.get(cell.rowIndex) || [];
+      existing.push(cell);
+      rowMap.set(cell.rowIndex, existing);
+    });
+
+    // Sort rows and columns
+    const sortedRowIndices = [...rowMap.keys()].sort((a, b) => a - b);
+
+    const dataRows: string[][] = [];
+    sortedRowIndices.forEach(rowIndex => {
+      const rowCells = rowMap.get(rowIndex) || [];
+      // Sort by column order
+      rowCells.sort((a, b) => visibleColumnIds.indexOf(a.columnId) - visibleColumnIds.indexOf(b.columnId));
+      dataRows.push(rowCells.map(cell => getCellValueAsString(cell.rowIndex, cell.columnId)));
+    });
+
+    // Create tab-separated text (Excel-compatible)
+    const text = dataRows.map(row => row.join('\t')).join('\n');
+
+    try {
+      await navigator.clipboard.writeText(text);
+      onCopy?.(dataRows, cellsToCopy);
+    } catch (err) {
+      console.error('Failed to copy to clipboard:', err);
+    }
+  }, [enableClipboard, selectedCells, focusedCell, visibleColumnIds, getCellValueAsString, onCopy]);
+
+  // Parse clipboard data
+  const parseClipboardData = useCallback((text: string): string[][] => {
+    const lines = text.split(/\r?\n/);
+    // Remove empty last line if exists (common in Excel copy)
+    if (lines.length > 0 && lines[lines.length - 1] === '') {
+      lines.pop();
+    }
+    return lines.map(line => line.split('\t'));
+  }, []);
+
+  // Handle paste from clipboard
+  const handlePasteFromClipboard = useCallback(async () => {
+    if (!enableClipboard || !onPaste) return;
+
+    let startPosition: CellPosition | null = null;
+
+    // Determine start position
+    if (selectedCells.length > 0) {
+      // Use top-left of selection
+      const minRow = Math.min(...selectedCells.map(c => c.rowIndex));
+      const cellsInMinRow = selectedCells.filter(c => c.rowIndex === minRow);
+      const minColIndex = Math.min(...cellsInMinRow.map(c => visibleColumnIds.indexOf(c.columnId)));
+      startPosition = { rowIndex: minRow, columnId: visibleColumnIds[minColIndex] };
+    } else if (focusedCell !== null) {
+      const columnId = visibleColumnIds[focusedCell.columnIndex];
+      if (columnId) {
+        startPosition = { rowIndex: focusedCell.rowIndex, columnId };
+      }
+    }
+
+    if (!startPosition) return;
+
+    try {
+      const text = await navigator.clipboard.readText();
+      const data = parseClipboardData(text);
+      if (data.length > 0 && data[0].length > 0) {
+        onPaste(data, startPosition.rowIndex, startPosition.columnId);
+      }
+    } catch (err) {
+      console.error('Failed to read from clipboard:', err);
+    }
+  }, [enableClipboard, onPaste, selectedCells, focusedCell, visibleColumnIds, parseClipboardData]);
+
+  // Keyboard handler for clipboard
+  useEffect(() => {
+    if (!enableClipboard) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Check if we're inside the grid
+      if (!tableContainerRef.current?.contains(document.activeElement)) return;
+      // Don't intercept if editing
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
+
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const modifier = isMac ? e.metaKey : e.ctrlKey;
+
+      if (modifier && e.key === 'c') {
+        e.preventDefault();
+        handleCopyToClipboard();
+      } else if (modifier && e.key === 'v') {
+        if (onPaste) {
+          e.preventDefault();
+          handlePasteFromClipboard();
+        }
+      } else if (e.key === 'Escape') {
+        // Clear selection on Escape
+        setSelectedCells([]);
+        setRangeSelectionStart(null);
+        setRangeSelectionEnd(null);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [enableClipboard, handleCopyToClipboard, handlePasteFromClipboard, onPaste]);
+
   // Context menu handlers
   const handleContextMenu = useCallback((
     e: React.MouseEvent,
@@ -2128,6 +2382,15 @@ function DataGridInner<TData>(
         row?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     },
+    copyToClipboard: () => {
+      handleCopyToClipboard();
+    },
+    getSelectedRange: () => selectedCells,
+    clearCellSelection: () => {
+      setSelectedCells([]);
+      setRangeSelectionStart(null);
+      setRangeSelectionEnd(null);
+    },
   }));
 
   // Render header cell
@@ -2227,13 +2490,14 @@ function DataGridInner<TData>(
           const isFocused = enableKeyboardNavigation &&
             focusedCell?.rowIndex === row.index &&
             focusedCell?.columnIndex === cellIndex;
+          const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
 
           return (
             <td
               key={cell.id}
               className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
                 isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-              } ${isFocused ? styles.focusedCell : ''}`}
+              } ${isFocused ? styles.focusedCell : ''} ${isCellInRange ? styles.selectedCell : ''}`}
               style={{
                 width: cell.column.getSize(),
                 left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
@@ -2248,6 +2512,8 @@ function DataGridInner<TData>(
                 columnId: cell.column.id,
                 cellValue: cell.getValue(),
               })}
+              onMouseDown={(e) => handleCellMouseDown(row.index, cell.column.id, e)}
+              onMouseEnter={() => handleCellMouseEnter(row.index, cell.column.id)}
             >
               {cell.getIsGrouped() ? (
                 <button
@@ -2342,13 +2608,14 @@ function DataGridInner<TData>(
             const isFocused = enableKeyboardNavigation &&
               focusedCell?.rowIndex === row.index &&
               focusedCell?.columnIndex === cellIndex;
+            const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
 
             return (
               <td
                 key={cell.id}
                 className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
                   isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-                } ${isFocused ? styles.focusedCell : ''}`}
+                } ${isFocused ? styles.focusedCell : ''} ${isCellInRange ? styles.selectedCell : ''}`}
                 style={{
                   width: cell.column.getSize(),
                   left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
@@ -2356,6 +2623,8 @@ function DataGridInner<TData>(
                 }}
                 data-row-index={row.index}
                 data-column-index={cellIndex}
+                onMouseDown={(e) => handleCellMouseDown(row.index, cell.column.id, e)}
+                onMouseEnter={() => handleCellMouseEnter(row.index, cell.column.id)}
               >
                 {cell.getIsGrouped() ? (
                   <button
@@ -2386,7 +2655,7 @@ function DataGridInner<TData>(
         )}
       </React.Fragment>
     );
-  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableKeyboardNavigation, focusedCell]);
+  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableKeyboardNavigation, focusedCell, enableRangeSelection, isCellSelected, handleCellMouseDown, handleCellMouseEnter, enableRowOrdering, handleContextMenu]);
 
   // Render pagination
   const renderPagination = useCallback(() => {
