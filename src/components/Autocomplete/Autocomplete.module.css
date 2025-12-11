@@ -360,13 +360,13 @@
 @media (prefers-color-scheme: dark) {
   /* Input */
   .autocompleteInput {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .autocompleteInput::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .autocompleteInput:focus {
@@ -375,12 +375,12 @@
   }
 
   .autocompleteInput:disabled {
-    background-color: var(--palette-gray-900);
+    background-color: var(--surface-secondary);
   }
 
   /* Icons */
   .autocompleteIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .autocompleteSpinner {
@@ -389,31 +389,31 @@
 
   /* Dropdown */
   .autocompleteDropdown {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 
   /* Scrollbar */
   .autocompleteDropdown::-webkit-scrollbar-track {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
   }
 
   .autocompleteDropdown::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .autocompleteDropdown::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-500);
+    background: var(--surface-quinary);
   }
 
   /* Items */
   .autocompleteItem {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .autocompleteItem:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .autocompleteItemActive {
@@ -423,13 +423,13 @@
 
   /* Empty State */
   .autocompleteEmpty {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Group Title */
   .autocompleteGroupTitle {
-    color: var(--palette-gray-500);
-    background-color: var(--palette-gray-850);
+    color: var(--text-tertiary);
+    background-color: var(--surface-tertiary);
   }
 
   /* Tags (if multiple selection) */

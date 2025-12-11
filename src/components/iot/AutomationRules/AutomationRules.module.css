@@ -325,23 +325,23 @@
 @media (prefers-color-scheme: dark) {
   /* Card */
   .ruleCard {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .ruleCard:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   /* Header */
   .ruleHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .ruleIconWrapper,
   .ruleMetaGroups,
   .ruleFlow {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .ruleCategoryIcon {
@@ -349,11 +349,11 @@
   }
 
   .ruleName {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .ruleDescription {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Badges */
@@ -363,27 +363,27 @@
   }
 
   .badgeDefault {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    background: var(--surface-quaternary);
+    color: var(--text-tertiary);
   }
 
   /* Actions */
   .btnIcon {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .btnIcon:hover {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-quaternary);
+    color: var(--text-primary);
   }
 
   .ruleDivider {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   /* Switch */
   .switchSlider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .switchInput:focus + .switchSlider {
@@ -392,28 +392,28 @@
 
   /* Meta Groups */
   .ruleMetaLabel {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .ruleMetaValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Rule Flow */
   .ruleStep {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .ruleStepLabel {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .ruleStepContent {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .ruleArrow {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 }

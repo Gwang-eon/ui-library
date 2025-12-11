@@ -532,13 +532,13 @@
   .basicCard,
   .detailedCard,
   .compactCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .basicCard:hover,
   .compactCard:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
@@ -549,25 +549,25 @@
 
   /* Card Header */
   .cardHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .cardTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .detailedSensorId {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Card Footer */
   .cardFooter {
-    background-color: var(--palette-gray-850);
-    border-top-color: var(--palette-gray-700);
+    background-color: var(--surface-tertiary);
+    border-top-color: var(--text-secondary);
   }
 
   .sensorFooterTimestamp {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Sensor Icons */
@@ -593,27 +593,27 @@
 
   /* Sensor Info */
   .sensorLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .sensorValue,
   .currentValue,
   .compactValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .sensorRange {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .currentUnit,
   .compactUnit {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Trend Indicators */
   .trendValue {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .trendPositive {
@@ -625,25 +625,25 @@
   }
 
   .trendLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Stats Box */
   .sensorStatsBox {
-    background-color: var(--palette-gray-850);
+    background-color: var(--surface-tertiary);
   }
 
   .statLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .statValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Threshold Section */
   .thresholdLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .thresholdStatus {
@@ -651,20 +651,20 @@
   }
 
   .progress {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .rangeValue {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Compact Header */
   .compactHeader .compactIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .compactLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Badges */
@@ -685,20 +685,20 @@
 
   /* Empty State */
   .emptyState {
-    background-color: var(--palette-gray-850);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-tertiary);
+    border-color: var(--text-secondary);
   }
 
   .emptyStateIcon {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .emptyStateTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .emptyStateDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .emptyStateButton {
@@ -717,9 +717,9 @@
   .skeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 25%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 75%
+      var(--surface-tertiary) 25%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 75%
     );
   }
 }

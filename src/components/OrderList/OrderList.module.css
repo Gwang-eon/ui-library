@@ -324,36 +324,36 @@
 @media (prefers-color-scheme: dark) {
   /* Container */
   .orderList {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Header */
   .orderListHeader {
-    background-color: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
+    background-color: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .orderListHeader h3 {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .orderListTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .orderListSubtitle {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Items */
   .orderListItem {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .orderListItem:hover:not(.orderListItemDragging) {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .orderListItemSelected {
@@ -362,53 +362,53 @@
   }
 
   .orderListItemDragging {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   }
 
   /* Drag Handle */
   .orderListItemDragHandle {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .orderListItemDragHandle:hover {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Content */
   .orderListItemContent {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .orderListItemContent > span {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .orderListItemIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .orderListItemMeta {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Controls */
   .orderListBtn {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
     background-color: transparent;
   }
 
   .orderListBtn:hover:not(:disabled) {
-    background-color: var(--palette-gray-700);
-    color: var(--palette-gray-200);
+    background-color: var(--surface-quaternary);
+    color: var(--text-primary);
   }
 
   .orderListBtn:disabled {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   /* Empty State */
   .orderListEmpty {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 }

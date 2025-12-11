@@ -289,7 +289,7 @@
 
 :global([data-theme="dark"]) .carousel,
 :global(.dark) .carousel {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
   box-shadow: var(--shadow-lg);
 }
 

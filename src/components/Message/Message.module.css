@@ -200,30 +200,30 @@
 
 :global([data-theme="dark"]) .message,
 :global(.dark) .message {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 :global([data-theme="dark"]) .message-title,
 :global(.dark) .message-title {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .message-description,
 :global(.dark) .message-description {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .message-close,
 :global(.dark) .message-close {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .message-close:hover,
 :global(.dark) .message-close:hover {
-  background: var(--palette-gray-750);
-  color: var(--palette-gray-200);
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .message-close:focus-visible,

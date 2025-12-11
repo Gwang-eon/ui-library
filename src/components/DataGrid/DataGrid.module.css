@@ -1115,25 +1115,25 @@
 
 :global([data-theme="dark"]) .dataGrid,
 :global(.dark) .dataGrid {
-  background: var(--palette-gray-900);
+  background: var(--surface-secondary);
 }
 
 :global([data-theme="dark"]) .dataGrid.bordered,
 :global(.dark) .dataGrid.bordered {
-  border-color: var(--palette-gray-700);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .toolbar,
 :global(.dark) .toolbar {
-  background: var(--palette-gray-850);
-  border-bottom-color: var(--palette-gray-700);
+  background: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .globalSearchInput,
 :global(.dark) .globalSearchInput {
-  color: var(--palette-gray-100);
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .globalSearchInput:focus,
@@ -1144,90 +1144,90 @@
 
 :global([data-theme="dark"]) .globalSearchInput::placeholder,
 :global(.dark) .globalSearchInput::placeholder {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .searchIcon,
 :global(.dark) .searchIcon {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .clearSearch,
 :global(.dark) .clearSearch {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .clearSearch:hover,
 :global(.dark) .clearSearch:hover {
-  color: var(--palette-gray-200);
-  background: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .toolbarButton,
 :global(.dark) .toolbarButton {
-  color: var(--palette-gray-400);
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  color: var(--text-tertiary);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .toolbarButton:hover,
 :global(.dark) .toolbarButton:hover {
-  color: var(--palette-gray-200);
-  background: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .dropdownMenu,
 :global(.dark) .dropdownMenu {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 :global([data-theme="dark"]) .dropdownHeader,
 :global(.dark) .dropdownHeader {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .dropdownItem,
 :global(.dark) .dropdownItem {
-  color: var(--palette-gray-200);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .dropdownItem:hover,
 :global(.dark) .dropdownItem:hover {
-  background: var(--palette-gray-700);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .dropdownDivider,
 :global(.dark) .dropdownDivider {
-  background: var(--palette-gray-700);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .thead,
 :global(.dark) .thead {
-  background: var(--palette-gray-850);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .th,
 :global(.dark) .th {
-  color: var(--palette-gray-400);
-  background: var(--palette-gray-850);
-  border-bottom-color: var(--palette-gray-700);
+  color: var(--text-tertiary);
+  background: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .thLabel.sortable:hover,
 :global(.dark) .thLabel.sortable:hover {
-  color: var(--palette-gray-200);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .sortIcon,
 :global(.dark) .sortIcon {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .pinButton,
 :global(.dark) .pinButton {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .pinButton:hover,
@@ -1255,9 +1255,9 @@
 
 :global([data-theme="dark"]) .filterInput,
 :global(.dark) .filterInput {
-  color: var(--palette-gray-200);
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-600);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .filterInput:focus,
@@ -1267,17 +1267,17 @@
 
 :global([data-theme="dark"]) .filterInput::placeholder,
 :global(.dark) .filterInput::placeholder {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .tbody,
 :global(.dark) .tbody {
-  background: var(--palette-gray-900);
+  background: var(--surface-secondary);
 }
 
 :global([data-theme="dark"]) .tr.hoverable:hover,
 :global(.dark) .tr.hoverable:hover {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
 }
 
 :global([data-theme="dark"]) .tr.selected,
@@ -1292,44 +1292,44 @@
 
 :global([data-theme="dark"]) .tr.grouped,
 :global(.dark) .tr.grouped {
-  background: var(--palette-gray-850);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .tr.striped:nth-child(even),
 :global(.dark) .tr.striped:nth-child(even) {
-  background: var(--palette-gray-850);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .td,
 :global(.dark) .td {
-  color: var(--palette-gray-200);
-  border-bottom-color: var(--palette-gray-800);
+  color: var(--text-primary);
+  border-bottom-color: var(--border-subtle);
 }
 
 :global([data-theme="dark"]) .expandButton,
 :global(.dark) .expandButton {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .expandButton:hover,
 :global(.dark) .expandButton:hover {
-  color: var(--palette-gray-200);
-  background: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .expandedRow,
 :global(.dark) .expandedRow {
-  background: var(--palette-gray-850);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .expandedCell,
 :global(.dark) .expandedCell {
-  border-bottom-color: var(--palette-gray-700);
+  border-bottom-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .groupToggle,
 :global(.dark) .groupToggle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .groupToggle:hover,
@@ -1339,8 +1339,8 @@
 
 :global([data-theme="dark"]) .checkboxMark,
 :global(.dark) .checkboxMark {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-600);
+  background: var(--surface-primary);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .checkboxInput:checked + .checkboxMark,
@@ -1359,8 +1359,8 @@
 /* Radio button dark mode */
 :global([data-theme="dark"]) .radioMark,
 :global(.dark) .radioMark {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-600);
+  background: var(--surface-primary);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .radioInput:checked + .radioMark,
@@ -1377,8 +1377,8 @@
 /* Row pinning dark mode */
 :global([data-theme="dark"]) .pinButton:hover,
 :global(.dark) .pinButton:hover {
-  color: var(--palette-gray-100);
-  background: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .pinButtonActive,
@@ -1416,19 +1416,19 @@
 
 :global([data-theme="dark"]) .editableCell:hover,
 :global(.dark) .editableCell:hover {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
 }
 
 :global([data-theme="dark"]) .editInput,
 :global(.dark) .editInput {
-  color: var(--palette-gray-100);
-  background: var(--palette-gray-800);
+  color: var(--text-primary);
+  background: var(--surface-primary);
 }
 
 :global([data-theme="dark"]) .editSelect,
 :global(.dark) .editSelect {
-  color: var(--palette-gray-100);
-  background: var(--palette-gray-800);
+  color: var(--text-primary);
+  background: var(--surface-primary);
 }
 
 :global([data-theme="dark"]) .editInputError,
@@ -1445,25 +1445,25 @@
 
 :global([data-theme="dark"]) .tfoot,
 :global(.dark) .tfoot {
-  background: var(--palette-gray-850);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .footerCell,
 :global(.dark) .footerCell {
-  color: var(--palette-gray-400);
-  background: var(--palette-gray-850);
-  border-top-color: var(--palette-gray-700);
+  color: var(--text-tertiary);
+  background: var(--surface-tertiary);
+  border-top-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .pagination,
 :global(.dark) .pagination {
-  background: var(--palette-gray-850);
-  border-top-color: var(--palette-gray-700);
+  background: var(--surface-tertiary);
+  border-top-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .paginationInfo,
 :global(.dark) .paginationInfo {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .selectionInfo,
@@ -1473,32 +1473,32 @@
 
 :global([data-theme="dark"]) .pageSizeSelect,
 :global(.dark) .pageSizeSelect {
-  color: var(--palette-gray-200);
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .paginationButton,
 :global(.dark) .paginationButton {
-  color: var(--palette-gray-400);
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  color: var(--text-tertiary);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .paginationButton:hover:not(:disabled),
 :global(.dark) .paginationButton:hover:not(:disabled) {
-  color: var(--palette-gray-200);
-  background: var(--palette-gray-700);
+  color: var(--text-primary);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .pageInfo,
 :global(.dark) .pageInfo {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .emptyState,
 :global(.dark) .emptyState {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .loadingOverlay,
@@ -1508,16 +1508,16 @@
 
 :global([data-theme="dark"]) .spinner,
 :global(.dark) .spinner {
-  border-color: var(--palette-gray-700);
+  border-color: var(--text-secondary);
   border-top-color: var(--color-primary-400);
 }
 
 /* Select Filter Dark Mode */
 :global([data-theme="dark"]) .selectFilterTrigger,
 :global(.dark) .selectFilterTrigger {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
-  color: var(--palette-gray-200);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .selectFilterTrigger:hover,
@@ -1527,40 +1527,40 @@
 
 :global([data-theme="dark"]) .selectFilterText,
 :global(.dark) .selectFilterText {
-  color: var(--palette-gray-200);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .selectFilterIcon,
 :global(.dark) .selectFilterIcon {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .selectFilterClear,
 :global(.dark) .selectFilterClear {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .selectFilterClear:hover,
 :global(.dark) .selectFilterClear:hover {
-  background: var(--palette-gray-700);
-  color: var(--palette-gray-200);
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .selectFilterDropdown,
 :global(.dark) .selectFilterDropdown {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
 }
 
 :global([data-theme="dark"]) .selectFilterOption,
 :global(.dark) .selectFilterOption {
-  color: var(--palette-gray-200);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .selectFilterOption:hover,
 :global(.dark) .selectFilterOption:hover {
-  background: var(--palette-gray-700);
+  background: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .selectFilterOption.selected,
@@ -1571,7 +1571,7 @@
 
 :global([data-theme="dark"]) .selectFilterEmpty,
 :global(.dark) .selectFilterEmpty {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 /* ========================================
@@ -1623,13 +1623,13 @@
 
 :global([data-theme="dark"]) .dragHandleCell,
 :global(.dark) .dragHandleCell {
-  background: var(--palette-gray-850);
-  border-right-color: var(--palette-gray-700);
+  background: var(--surface-tertiary);
+  border-right-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .dragHandleCell:hover .rowDragHandle,
 :global(.dark) .dragHandleCell:hover .rowDragHandle {
-  color: var(--palette-gray-300);
+  color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .draggingRow,
@@ -1639,24 +1639,24 @@
 
 :global([data-theme="dark"]) .dragOverlay,
 :global(.dark) .dragOverlay {
-  background: var(--palette-gray-800);
-  color: var(--palette-gray-100);
+  background: var(--surface-primary);
+  color: var(--text-primary);
   border-color: var(--color-primary-400);
 }
 
 :global([data-theme="dark"]) .dragHandle,
 :global(.dark) .dragHandle {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .dragHandle:hover,
 :global(.dark) .dragHandle:hover {
-  color: var(--palette-gray-300);
+  color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .dragHandleHeader,
 :global(.dark) .dragHandleHeader {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 /* ========================================
@@ -1749,39 +1749,39 @@
 
 :global([data-theme="dark"]) .contextMenu,
 :global(.dark) .contextMenu {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 :global([data-theme="dark"]) .contextMenuItem,
 :global(.dark) .contextMenuItem {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .contextMenuItem:hover,
 :global(.dark) .contextMenuItem:hover {
-  background-color: var(--palette-gray-700);
+  background-color: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .contextMenuItem:active,
 :global(.dark) .contextMenuItem:active {
-  background-color: var(--palette-gray-600);
+  background-color: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .contextMenuIcon,
 :global(.dark) .contextMenuIcon {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .contextMenuShortcut,
 :global(.dark) .contextMenuShortcut {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .contextMenuDivider,
 :global(.dark) .contextMenuDivider {
-  background-color: var(--palette-gray-700);
+  background-color: var(--surface-quaternary);
 }
 
 /* ========================================

@@ -240,28 +240,28 @@
 @media (prefers-color-scheme: dark) {
   /* Navbar Wrapper */
   .navbarWrapper {
-    background-color: var(--palette-gray-900);
-    border-bottom-color: var(--palette-gray-700);
+    background-color: var(--surface-secondary);
+    border-bottom-color: var(--text-secondary);
   }
 
   /* Main Navbar */
   .navbar {
-    background-color: var(--palette-gray-900);
+    background-color: var(--surface-secondary);
   }
 
   /* Navbar Brand */
   .navbarBrand {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Navbar Items */
   .navbarItem {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .navbarItem:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .navbarItem.active {
@@ -271,16 +271,16 @@
 
   /* Utility Items */
   .navbarUtility {
-    border-right-color: var(--palette-gray-700);
+    border-right-color: var(--text-secondary);
   }
 
   .navbarUtilityItem {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .navbarUtilityItem:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .navbarUtilityItem:focus-visible {
@@ -289,64 +289,64 @@
 
   /* User Section */
   .navbarUserMessages {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .navbarUserMessages:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .navbarUserName {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .navbarUserLogout {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .navbarUserLogout:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   /* Dropdown Menu */
   .navbarDropdownMenu {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 
   .navbarDropdownItem {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .navbarDropdownItem:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .navbarDropdownDivider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   /* Sidebar */
   .sidebar {
-    background-color: var(--palette-gray-900);
-    border-right-color: var(--palette-gray-700);
+    background-color: var(--surface-secondary);
+    border-right-color: var(--text-secondary);
   }
 
   .sidebarHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .sidebarItem {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .sidebarItem:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .sidebarItem.active {
@@ -355,26 +355,26 @@
   }
 
   .sidebarDivider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .sidebarFooter {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--text-secondary);
   }
 
   .sidebarClose {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .sidebarClose:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   /* Mobile Navbar */
   .navbarNav {
-    background: var(--palette-gray-900);
-    border-right: 1px solid var(--palette-gray-700);
+    background: var(--surface-secondary);
+    border-right: 1px solid var(--surface-quaternary);
   }
 
   /* Mobile Sidebar Gesture Hint */

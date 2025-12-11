@@ -318,22 +318,22 @@
 @media (prefers-color-scheme: dark) {
   /* Label */
   .label {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Helper Text */
   .helperText {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Min/Max Labels */
   .minMaxLabels {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Icons */
   .iconBefore {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .iconAfter {
@@ -342,7 +342,7 @@
 
   /* Slider Track */
   .slider {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .slider::-webkit-slider-thumb {
@@ -366,7 +366,7 @@
   }
 
   .rangeTrack {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .rangeFill {
@@ -375,7 +375,7 @@
 
   .rangeInput::-webkit-slider-thumb {
     background: var(--color-primary-400);
-    border-color: var(--palette-gray-800);
+    border-color: var(--border-subtle);
   }
 
   .rangeInput::-webkit-slider-thumb:hover {
@@ -388,7 +388,7 @@
 
   .rangeInput::-moz-range-thumb {
     background: var(--color-primary-400);
-    border-color: var(--palette-gray-800);
+    border-color: var(--border-subtle);
   }
 
   .rangeInput::-moz-range-thumb:hover {
@@ -408,11 +408,11 @@
   }
 
   .valueDisplay {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .valueInline {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 }
 

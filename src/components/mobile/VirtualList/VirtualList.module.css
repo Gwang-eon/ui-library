@@ -83,22 +83,22 @@
 
 @media (prefers-color-scheme: dark) {
   .virtualList::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .virtualList::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 }
 
 body.dark-mode .virtualList::-webkit-scrollbar-thumb,
 body[data-theme='dark'] .virtualList::-webkit-scrollbar-thumb {
-  background: var(--palette-gray-700);
+  background: var(--surface-quaternary);
 }
 
 body.dark-mode .virtualList::-webkit-scrollbar-thumb:hover,
 body[data-theme='dark'] .virtualList::-webkit-scrollbar-thumb:hover {
-  background: var(--palette-gray-600);
+  background: var(--surface-quaternary);
 }
 
 /* ==================== Reduced Motion ==================== */

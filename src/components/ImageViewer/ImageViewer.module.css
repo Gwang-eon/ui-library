@@ -432,29 +432,29 @@
 
   /* Container */
   .imageViewerContainer {
-    background-color: var(--palette-gray-900);
+    background-color: var(--surface-secondary);
   }
 
   /* Toolbar */
   .imageViewerToolbar {
     background-color: rgba(0, 0, 0, 0.7);
-    border-bottom-color: var(--palette-gray-800);
+    border-bottom-color: var(--border-subtle);
   }
 
   /* Buttons */
   .imageViewerBtn {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
     background-color: rgba(255, 255, 255, 0.1);
   }
 
   .imageViewerBtn:hover:not(:disabled) {
     background-color: rgba(255, 255, 255, 0.2);
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .imageViewerClose {
     background-color: rgba(255, 255, 255, 0.1);
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .imageViewerClose:hover {
@@ -464,7 +464,7 @@
   /* Navigation */
   .imageViewerNav {
     background-color: rgba(0, 0, 0, 0.6);
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .imageViewerNav:hover:not(:disabled) {
@@ -474,11 +474,11 @@
   /* Thumbnails */
   .imageViewerThumbnails {
     background-color: rgba(0, 0, 0, 0.7);
-    border-top-color: var(--palette-gray-800);
+    border-top-color: var(--border-subtle);
   }
 
   .imageViewerThumbnail {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .imageViewerThumbnailActive {
@@ -487,11 +487,11 @@
 
   /* Info */
   .imageViewerInfo {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Counter */
   .imageViewerCounter {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 }

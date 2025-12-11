@@ -300,29 +300,29 @@
 @media (prefers-color-scheme: dark) {
   /* Table Container */
   .tableContainer {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Table Header */
   .table thead {
-    background-color: var(--palette-gray-900);
+    background-color: var(--surface-secondary);
   }
 
   .table th {
-    color: var(--palette-gray-300);
-    border-bottom-color: var(--palette-gray-700);
+    color: var(--text-secondary);
+    border-bottom-color: var(--text-secondary);
   }
 
   /* Table Cells */
   .table td {
-    color: var(--palette-gray-200);
-    border-bottom-color: var(--palette-gray-750);
+    color: var(--text-primary);
+    border-bottom-color: var(--border-subtle);
   }
 
   /* Hover State */
   .table tbody tr:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Selected Row */
@@ -332,7 +332,7 @@
 
   /* Sortable Columns */
   .sortable:hover {
-    background-color: var(--palette-gray-850);
+    background-color: var(--surface-tertiary);
   }
 
   .sortable.asc::after,
@@ -342,27 +342,27 @@
 
   /* Sticky Header */
   .tableSticky thead th {
-    background-color: var(--palette-gray-900);
-    box-shadow: 0 1px 0 var(--palette-gray-700);
+    background-color: var(--surface-secondary);
+    box-shadow: 0 1px 0 var(--surface-quaternary);
   }
 
   /* Striped Rows */
   .tableStriped tbody tr:nth-child(even) {
-    background-color: var(--palette-gray-850);
+    background-color: var(--surface-tertiary);
   }
 
   .tableStriped tbody tr:nth-child(even):hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Expand Button */
   .expandBtn {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .expandBtn:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .expandBtn:focus-visible {
@@ -371,38 +371,38 @@
 
   /* Expanded Content */
   .expandedContent {
-    background-color: var(--palette-gray-850);
+    background-color: var(--surface-tertiary);
   }
 
   .expandedContent td {
-    border-bottom-color: var(--palette-gray-700) !important;
+    border-bottom-color: var(--text-secondary) !important;
   }
 
   /* Loading Skeleton */
   .skeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-800) 25%,
-      var(--palette-gray-750) 50%,
-      var(--palette-gray-800) 75%
+      var(--surface-primary) 25%,
+      var(--surface-tertiary) 50%,
+      var(--surface-primary) 75%
     );
   }
 
   /* Empty State */
   .tableEmptyState {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .emptyStateIcon {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .emptyStateTitle {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .emptyStateDescription {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 }
 

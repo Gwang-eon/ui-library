@@ -357,36 +357,36 @@
 
 @media (prefers-color-scheme: dark) {
   .mapContainer {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .mapHeader,
   .mapFooter {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .mapFooter {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .mapTitle,
   .popupTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .devicePopup {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .popupSubtitle,
   .legendLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .popupInfoValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .badgeOnline {
@@ -405,8 +405,8 @@
   }
 
   .popupClose:hover {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-quaternary);
+    color: var(--text-primary);
   }
 
   .heatmapLegend {
@@ -414,7 +414,7 @@
   }
 
   .heatmapTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .markerStatusOnline .markerIcon {

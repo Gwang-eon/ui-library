@@ -172,16 +172,16 @@
 
 @media (prefers-color-scheme: dark) {
   .inputWrapper {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
   }
 
   .focused .inputWrapper {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
     box-shadow: 0 0 0 2px var(--color-primary-800);
   }
 
   .searchIcon {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .focused .searchIcon {
@@ -189,25 +189,25 @@
   }
 
   .input {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .input::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .clearButton {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    background: var(--surface-quaternary);
+    color: var(--text-tertiary);
   }
 
   .clearButton:active {
-    background: var(--palette-gray-600);
-    color: var(--palette-gray-300);
+    background: var(--surface-quaternary);
+    color: var(--text-secondary);
   }
 
   .spinner {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
     border-top-color: var(--color-primary-400);
   }
 
@@ -219,12 +219,12 @@
 /* Manual dark mode */
 body.dark-mode .inputWrapper,
 body[data-theme='dark'] .inputWrapper {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
 }
 
 body.dark-mode .focused .inputWrapper,
 body[data-theme='dark'] .focused .inputWrapper {
-  background: var(--palette-gray-900);
+  background: var(--surface-secondary);
   box-shadow: 0 0 0 2px var(--color-primary-800);
 }
 

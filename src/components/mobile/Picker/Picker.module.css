@@ -145,19 +145,19 @@
 
 @media (prefers-color-scheme: dark) {
   .picker {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
   }
 
   .toolbar {
-    border-bottom-color: var(--palette-gray-800);
+    border-bottom-color: var(--border-subtle);
   }
 
   .title {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .cancelBtn {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .confirmBtn {
@@ -165,28 +165,28 @@
   }
 
   .wheelItem {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .wheelItem.selected {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .wheelItem.disabled {
-    color: var(--palette-gray-700);
+    color: var(--text-secondary);
   }
 
   .indicator {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
   }
 
   .mask {
     background:
       linear-gradient(to bottom,
-        var(--palette-gray-900) 0%,
+        var(--surface-secondary) 0%,
         transparent 40%,
         transparent 60%,
-        var(--palette-gray-900) 100%
+        var(--surface-secondary) 100%
       );
   }
 }
@@ -194,37 +194,37 @@
 /* Manual dark mode */
 body.dark-mode .picker,
 body[data-theme='dark'] .picker {
-  background: var(--palette-gray-900);
+  background: var(--surface-secondary);
 }
 
 body.dark-mode .toolbar,
 body[data-theme='dark'] .toolbar {
-  border-bottom-color: var(--palette-gray-800);
+  border-bottom-color: var(--border-subtle);
 }
 
 body.dark-mode .wheelItem,
 body[data-theme='dark'] .wheelItem {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 body.dark-mode .wheelItem.selected,
 body[data-theme='dark'] .wheelItem.selected {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 body.dark-mode .indicator,
 body[data-theme='dark'] .indicator {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
 }
 
 body.dark-mode .mask,
 body[data-theme='dark'] .mask {
   background:
     linear-gradient(to bottom,
-      var(--palette-gray-900) 0%,
+      var(--surface-secondary) 0%,
       transparent 40%,
       transparent 60%,
-      var(--palette-gray-900) 100%
+      var(--surface-secondary) 100%
     );
 }
 

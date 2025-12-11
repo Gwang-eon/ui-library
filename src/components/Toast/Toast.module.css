@@ -168,24 +168,24 @@
 
 @media (prefers-color-scheme: dark) {
   .toast {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 
   .toast-title {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .toast-message {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .toast-close {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .toast-close:hover {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 }

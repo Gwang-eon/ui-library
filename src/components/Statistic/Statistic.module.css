@@ -181,20 +181,20 @@
 
 @media (prefers-color-scheme: dark) {
   .value {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .title {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .description {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .prefix,
   .suffix {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .iconPrimary {

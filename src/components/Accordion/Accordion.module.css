@@ -118,17 +118,17 @@
 @media (prefers-color-scheme: dark) {
   /* Accordion Item */
   .accordionItem {
-    border-color: var(--palette-gray-700);
+    border-color: var(--border-default);
   }
 
   /* Accordion Header */
   .accordionHeader {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .accordionHeader:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .accordionHeader:focus-visible {
@@ -136,20 +136,20 @@
   }
 
   .accordionItemOpen .accordionHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--border-default);
   }
 
   /* Accordion Icon */
   .accordionIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Accordion Content */
   .accordionContent {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .accordionBody {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 }

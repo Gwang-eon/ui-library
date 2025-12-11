@@ -214,9 +214,9 @@
 @media (prefers-color-scheme: dark) {
   /* Trigger */
   .cascade-trigger {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .cascade-trigger:hover {
@@ -230,31 +230,31 @@
   }
 
   .cascade-trigger.placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .cascade-trigger:disabled {
-    background-color: var(--palette-gray-900);
-    border-color: var(--palette-gray-800);
-    color: var(--palette-gray-600);
+    background-color: var(--surface-secondary);
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
   }
 
   /* Icon */
   .select-icon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Panel */
   .cascade-panel {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 
   /* Subpanel */
   .cascade-subpanel {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .cascade-subpanel.nested {
@@ -263,28 +263,28 @@
 
   /* Scrollbar */
   .cascade-subpanel::-webkit-scrollbar-track {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
   }
 
   .cascade-subpanel::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .cascade-subpanel::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-500);
+    background: var(--surface-quinary);
   }
 
   /* Options */
   .cascade-option {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .cascade-option:hover:not(.disabled) {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .cascade-option.active {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .cascade-option.selected {
@@ -293,23 +293,23 @@
   }
 
   .cascade-option.disabled {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   /* Option Arrow */
   .option-arrow {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Breadcrumb */
   .cascade-breadcrumb {
-    background-color: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
-    color: var(--palette-gray-300);
+    background-color: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
+    color: var(--text-secondary);
   }
 
   .breadcrumb-item {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .breadcrumb-item:hover {
@@ -317,7 +317,7 @@
   }
 
   .breadcrumb-separator {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 }
 

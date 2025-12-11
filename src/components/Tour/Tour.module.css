@@ -221,8 +221,8 @@
 
   /* Popup */
   .tourPopup {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   }
 
@@ -232,12 +232,12 @@
   }
 
   .tourClose {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .tourClose:hover {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .tourClose:focus-visible {
@@ -246,11 +246,11 @@
 
   /* Content */
   .tourTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .tourDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Focus states */
@@ -262,19 +262,19 @@
 
   /* Arrow colors */
   .tourPopup[data-placement='bottom']::before {
-    border-bottom-color: var(--palette-gray-800);
+    border-bottom-color: var(--border-subtle);
   }
 
   .tourPopup[data-placement='top']::before {
-    border-top-color: var(--palette-gray-800);
+    border-top-color: var(--border-subtle);
   }
 
   .tourPopup[data-placement='right']::before {
-    border-right-color: var(--palette-gray-800);
+    border-right-color: var(--border-subtle);
   }
 
   .tourPopup[data-placement='left']::before {
-    border-left-color: var(--palette-gray-800);
+    border-left-color: var(--border-subtle);
   }
 
   /* Target highlight */

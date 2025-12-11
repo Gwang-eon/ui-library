@@ -479,87 +479,87 @@
 @media (prefers-color-scheme: dark) {
   /* Card */
   .activityCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Header */
   .header {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .title {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Items */
   .item {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .item.clickable:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .itemIcon {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .itemTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .itemDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .itemTime {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Timeline */
   .timelineItem::before {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .timelineMarker {
-    border-color: var(--palette-gray-800);
+    border-color: var(--border-subtle);
   }
 
   .timelineContent .itemTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .timelineContent .itemDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .timelineContent .itemTime {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Compact List */
   .compactItem:hover,
   .compactItem.clickable:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .compactText {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .compactTime {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Group Header */
   .groupHeader {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Footer */
   .footer {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--text-secondary);
   }
 
   /* Loading Skeleton */
@@ -571,9 +571,9 @@
   .timeSkeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 0%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 100%
+      var(--surface-tertiary) 0%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 100%
     );
   }
 }

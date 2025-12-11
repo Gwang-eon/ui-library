@@ -122,24 +122,24 @@
 @media (prefers-color-scheme: dark) {
   /* Menu Container */
   .menu {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 
   /* Menu Header */
   .menu-header {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Menu Items */
   .menu-item {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .menu-item:hover:not(.menu-item-disabled) {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .menu-item:focus-visible {
@@ -157,11 +157,11 @@
 
   /* Divider */
   .menu-divider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   /* Shortcut */
   .menu-shortcut {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 }

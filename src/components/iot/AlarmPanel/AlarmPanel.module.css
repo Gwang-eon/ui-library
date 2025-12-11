@@ -68,12 +68,12 @@
 }
 
 .alarmCountWarning .alarmCountBadge {
-  background: var(--palette-orange-100);
-  color: var(--palette-orange-700);
+  background: var(--color-warning-100);
+  color: var(--color-warning-700);
 }
 
 .alarmCountWarning .alarmCountLabel {
-  color: var(--palette-orange-700);
+  color: var(--color-warning-700);
 }
 
 .alarmCountInfo .alarmCountBadge {
@@ -246,8 +246,8 @@
 }
 
 .alarmItemWarning .alarmSeverity {
-  background: var(--palette-orange-100);
-  color: var(--palette-orange-600);
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
 }
 
 .alarmItemInfo .alarmSeverity {
@@ -406,7 +406,7 @@
 }
 
 .alarmItemCompactWarning .alarmCompactIcon {
-  color: var(--palette-orange-600);
+  color: var(--color-warning-600);
 }
 
 .alarmItemCompactInfo .alarmCompactIcon {
@@ -438,19 +438,19 @@
 
 :global([data-theme="dark"]) .alarmPanel,
 :global(.dark) .alarmPanel {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .alarmPanelHeader,
 :global(.dark) .alarmPanelHeader {
-  background: var(--palette-gray-900);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .alarmPanelTitle,
 :global(.dark) .alarmPanelTitle {
-  color: var(--palette-gray-50);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .alarmCountCritical .alarmCountBadge,
@@ -466,13 +466,13 @@
 
 :global([data-theme="dark"]) .alarmCountWarning .alarmCountBadge,
 :global(.dark) .alarmCountWarning .alarmCountBadge {
-  background: var(--palette-orange-900);
-  color: var(--palette-orange-300);
+  background: var(--color-warning-900);
+  color: var(--color-warning-300);
 }
 
 :global([data-theme="dark"]) .alarmCountWarning .alarmCountLabel,
 :global(.dark) .alarmCountWarning .alarmCountLabel {
-  color: var(--palette-orange-400);
+  color: var(--color-warning-400);
 }
 
 :global([data-theme="dark"]) .alarmCountInfo .alarmCountBadge,
@@ -498,21 +498,21 @@
 
 :global([data-theme="dark"]) .alarmPanelFilters,
 :global(.dark) .alarmPanelFilters {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .alarmFilterBtn,
 :global(.dark) .alarmFilterBtn {
-  background: var(--palette-gray-900);
-  border-color: var(--palette-gray-700);
-  color: var(--palette-gray-400);
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .alarmFilterBtn:hover,
 :global(.dark) .alarmFilterBtn:hover {
-  background: var(--palette-gray-750);
-  border-color: var(--palette-gray-600);
+  background: var(--surface-tertiary);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .alarmFilterBtn.alarmFilterActive,
@@ -524,7 +524,7 @@
 
 :global([data-theme="dark"]) .alarmFilterCount,
 :global(.dark) .alarmFilterCount {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
 }
 
 :global([data-theme="dark"]) .alarmFilterActive .alarmFilterCount,
@@ -535,9 +535,9 @@
 
 :global([data-theme="dark"]) .alarmSearchInput,
 :global(.dark) .alarmSearchInput {
-  background: var(--palette-gray-900);
-  border-color: var(--palette-gray-700);
-  color: var(--palette-gray-100);
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .alarmSearchInput:focus,
@@ -548,12 +548,12 @@
 
 :global([data-theme="dark"]) .alarmItem,
 :global(.dark) .alarmItem {
-  border-color: var(--palette-gray-700);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .alarmItem:hover,
 :global(.dark) .alarmItem:hover {
-  background: var(--palette-gray-750);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .alarmItemCritical .alarmSeverity,
@@ -564,8 +564,8 @@
 
 :global([data-theme="dark"]) .alarmItemWarning .alarmSeverity,
 :global(.dark) .alarmItemWarning .alarmSeverity {
-  background: var(--palette-orange-900);
-  color: var(--palette-orange-400);
+  background: var(--color-warning-900);
+  color: var(--color-warning-400);
 }
 
 :global([data-theme="dark"]) .alarmItemInfo .alarmSeverity,
@@ -576,17 +576,17 @@
 
 :global([data-theme="dark"]) .alarmTitle,
 :global(.dark) .alarmTitle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .alarmDescription,
 :global(.dark) .alarmDescription {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .alarmMetaItem,
 :global(.dark) .alarmMetaItem {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .alarmItemNew,
@@ -603,30 +603,30 @@
 
 :global([data-theme="dark"]) .alarmItemAcknowledged .alarmTitle,
 :global(.dark) .alarmItemAcknowledged .alarmTitle {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .alarmItemResolved,
 :global(.dark) .alarmItemResolved {
-  background: var(--palette-gray-900);
+  background: var(--surface-secondary);
 }
 
 :global([data-theme="dark"]) .alarmItemResolved .alarmSeverity,
 :global(.dark) .alarmItemResolved .alarmSeverity {
-  background: var(--palette-gray-800);
-  color: var(--palette-gray-600);
+  background: var(--surface-primary);
+  color: var(--text-disabled);
 }
 
 :global([data-theme="dark"]) .alarmItemResolved .alarmTitle,
 :global([data-theme="dark"]) .alarmItemResolved .alarmDescription,
 :global(.dark) .alarmItemResolved .alarmTitle,
 :global(.dark) .alarmItemResolved .alarmDescription {
-  color: var(--palette-gray-600);
+  color: var(--text-disabled);
 }
 
 :global([data-theme="dark"]) .alarmItemCompact:hover,
 :global(.dark) .alarmItemCompact:hover {
-  background: var(--palette-gray-750);
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .alarmItemCompactCritical .alarmCompactIcon,
@@ -636,7 +636,7 @@
 
 :global([data-theme="dark"]) .alarmItemCompactWarning .alarmCompactIcon,
 :global(.dark) .alarmItemCompactWarning .alarmCompactIcon {
-  color: var(--palette-orange-400);
+  color: var(--color-warning-400);
 }
 
 :global([data-theme="dark"]) .alarmItemCompactInfo .alarmCompactIcon,
@@ -646,10 +646,10 @@
 
 :global([data-theme="dark"]) .alarmCompactTitle,
 :global(.dark) .alarmCompactTitle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .alarmCompactTime,
 :global(.dark) .alarmCompactTime {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }

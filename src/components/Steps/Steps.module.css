@@ -299,21 +299,21 @@
 
 @media (prefers-color-scheme: dark) {
   .stepIcon {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-tertiary);
   }
 
   .step:not(:last-child)::after {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .stepTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .stepDescription {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .step-completed .stepIcon {
@@ -356,17 +356,17 @@
   }
 
   .step-disabled .stepIcon {
-    background-color: var(--palette-gray-900);
-    border-color: var(--palette-gray-800);
-    color: var(--palette-gray-600);
+    background-color: var(--surface-secondary);
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
   }
 
   .step-disabled .stepTitle {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .step-disabled .stepDescription {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .stepClickable:hover .stepIcon {

@@ -242,7 +242,7 @@
 
 @media (prefers-color-scheme: dark) {
   .star {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .star.filled {
@@ -254,8 +254,8 @@
       90deg,
       var(--color-warning-400) 0%,
       var(--color-warning-400) 50%,
-      var(--palette-gray-600) 50%,
-      var(--palette-gray-600) 100%
+      var(--surface-quaternary) 50%,
+      var(--surface-quaternary) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -360,14 +360,14 @@
 
 @media (prefers-contrast: high) {
   .star.filled {
-    color: var(--palette-yellow-600);
+    color: var(--color-warning-600);
   }
 
   .rating.heart .star.filled {
-    color: var(--palette-red-700);
+    color: var(--color-error-700);
   }
 
   .rating.circle .star.filled {
-    color: var(--palette-blue-700);
+    color: var(--color-primary-700);
   }
 }

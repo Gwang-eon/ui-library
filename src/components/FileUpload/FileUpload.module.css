@@ -304,9 +304,9 @@
 
 :global([data-theme="dark"]) .input-file,
 :global(.dark) .input-file {
-  background-color: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
-  color: var(--palette-gray-100);
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .input-file:hover,
@@ -336,7 +336,7 @@
 :global([data-theme="dark"]) .upload-area,
 :global(.dark) .upload-area {
   background-color: rgba(255, 255, 255, 0.05);
-  border-color: var(--palette-gray-600);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .upload-area:hover:not(.disabled),
@@ -359,28 +359,28 @@
 
 :global([data-theme="dark"]) .upload-icon,
 :global(.dark) .upload-icon {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .upload-text,
 :global(.dark) .upload-text {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .upload-hint,
 :global(.dark) .upload-hint {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .file-item,
 :global(.dark) .file-item {
-  background-color: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .file-item:hover,
 :global(.dark) .file-item:hover {
-  background-color: var(--palette-gray-750);
+  background-color: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .file-success,
@@ -429,22 +429,22 @@
 
 :global([data-theme="dark"]) .file-name,
 :global(.dark) .file-name {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .file-size,
 :global(.dark) .file-size {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .file-icon,
 :global(.dark) .file-icon {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .remove-btn,
 :global(.dark) .remove-btn {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .remove-btn:hover,

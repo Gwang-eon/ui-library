@@ -217,8 +217,8 @@
 }
 
 .notificationIconWarning {
-  background: var(--palette-orange-100);
-  color: var(--palette-orange-600);
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
 }
 
 .notificationIconSuccess {
@@ -385,7 +385,7 @@
 }
 
 .notificationDotWarning {
-  background: var(--palette-orange-500);
+  background: var(--color-warning-500);
 }
 
 .notificationDotSuccess {
@@ -423,15 +423,15 @@
 @media (prefers-color-scheme: dark) {
   /* Notification Trigger */
   .notificationTrigger {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-tertiary);
   }
 
   .notificationTrigger:hover {
-    background: var(--palette-gray-750);
-    border-color: var(--palette-gray-600);
-    color: var(--palette-gray-100);
+    background: var(--surface-tertiary);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
   }
 
   .notificationTrigger:focus-visible {
@@ -445,19 +445,19 @@
 
   /* Notification Center */
   .notificationCenter {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 
   /* Header */
   .notificationCenterHeader {
-    background: var(--palette-gray-850);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-tertiary);
+    border-color: var(--text-secondary);
   }
 
   .notificationCenterTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .notificationCount {
@@ -467,20 +467,20 @@
 
   /* Tabs */
   .notificationTabs {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .notificationTab {
-    background: var(--palette-gray-850);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    background: var(--surface-tertiary);
+    border-color: var(--text-secondary);
+    color: var(--text-tertiary);
   }
 
   .notificationTab:hover {
-    background: var(--palette-gray-750);
-    border-color: var(--palette-gray-600);
-    color: var(--palette-gray-200);
+    background: var(--surface-tertiary);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
   }
 
   .notificationTab:focus-visible {
@@ -496,12 +496,12 @@
   /* Notification Items */
   .notificationItem,
   .notificationItemCompact {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .notificationItem:hover,
   .notificationItemCompact:hover {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .notificationItemUnread {
@@ -511,16 +511,16 @@
   /* Notification Title and Content */
   .notificationTitle,
   .notificationTitleCompact {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .notificationMessage {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .notificationTime,
   .notificationTimeCompact {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Notification Icons */
@@ -531,7 +531,7 @@
 
   .notificationIconWarning {
     background: rgba(249, 115, 22, 0.15);
-    color: var(--palette-orange-400);
+    color: var(--color-warning-400);
   }
 
   .notificationIconSuccess {
@@ -546,12 +546,12 @@
 
   /* Notification Actions */
   .notificationAction {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .notificationAction:hover {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-300);
+    background: var(--surface-quaternary);
+    color: var(--text-secondary);
   }
 
   .notificationAction:focus-visible {
@@ -559,13 +559,13 @@
   }
 
   .notificationArrow {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   /* Footer */
   .notificationCenterFooter {
-    background: var(--palette-gray-850);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-tertiary);
+    border-color: var(--text-secondary);
   }
 
   .notificationViewAll {

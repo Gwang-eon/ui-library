@@ -136,18 +136,18 @@
 @media (prefers-color-scheme: dark) {
   /* Container */
   .segmented {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Item - default state */
   .segmentedItem {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .segmentedItem:hover {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   /* Item - checked state */

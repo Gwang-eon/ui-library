@@ -228,8 +228,8 @@
 @media (prefers-color-scheme: dark) {
   /* Content */
   .popconfirmContent {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 
@@ -238,19 +238,19 @@
   .popconfirmTop::after,
   .popconfirmLeft::after,
   .popconfirmRight::after {
-    border-bottom-color: var(--palette-gray-800);
-    border-top-color: var(--palette-gray-800);
-    border-left-color: var(--palette-gray-800);
-    border-right-color: var(--palette-gray-800);
+    border-bottom-color: var(--border-subtle);
+    border-top-color: var(--border-subtle);
+    border-left-color: var(--border-subtle);
+    border-right-color: var(--border-subtle);
   }
 
   /* Text */
   .popconfirmTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .popconfirmDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Icons */

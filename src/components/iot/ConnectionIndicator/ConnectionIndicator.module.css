@@ -56,11 +56,11 @@
 
 /* Warning */
 .status-warning .connectionDot {
-  background-color: var(--palette-orange-500);
+  background-color: var(--color-warning-500);
 }
 
 .status-warning .connectionLabel {
-  color: var(--palette-orange-700);
+  color: var(--color-warning-700);
 }
 
 /* ==================== Sizes ==================== */
@@ -127,7 +127,7 @@
 }
 
 .dotOnly-warning {
-  background-color: var(--palette-orange-500);
+  background-color: var(--color-warning-500);
 }
 
 /* ==================== Signal Indicator ==================== */
@@ -179,7 +179,7 @@
 /* Fair (2 bars) */
 .signal-fair .signalBar:nth-child(1),
 .signal-fair .signalBar:nth-child(2) {
-  background-color: var(--palette-orange-500);
+  background-color: var(--color-warning-500);
 }
 
 /* Poor (1 bar) */
@@ -220,11 +220,11 @@
   }
 
   .status-disconnected .connectionDot {
-    background-color: var(--palette-gray-600);
+    background-color: var(--surface-quaternary);
   }
 
   .status-disconnected .connectionLabel {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .status-warning .connectionDot {
@@ -244,7 +244,7 @@
   }
 
   .dotOnly-disconnected {
-    background-color: var(--palette-gray-600);
+    background-color: var(--surface-quaternary);
   }
 
   .dotOnly-warning {
@@ -252,7 +252,7 @@
   }
 
   .signalBar {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .signal-excellent .signalBar {
@@ -298,12 +298,12 @@
 
 :global(.dark-mode) .status-disconnected .connectionDot,
 :global([data-theme="dark"]) .status-disconnected .connectionDot {
-  background-color: var(--palette-gray-600);
+  background-color: var(--surface-quaternary);
 }
 
 :global(.dark-mode) .status-disconnected .connectionLabel,
 :global([data-theme="dark"]) .status-disconnected .connectionLabel {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 :global(.dark-mode) .status-warning .connectionDot,
@@ -328,7 +328,7 @@
 
 :global(.dark-mode) .dotOnly-disconnected,
 :global([data-theme="dark"]) .dotOnly-disconnected {
-  background-color: var(--palette-gray-600);
+  background-color: var(--surface-quaternary);
 }
 
 :global(.dark-mode) .dotOnly-warning,
@@ -338,7 +338,7 @@
 
 :global(.dark-mode) .signalBar,
 :global([data-theme="dark"]) .signalBar {
-  background-color: var(--palette-gray-700);
+  background-color: var(--surface-quaternary);
 }
 
 :global(.dark-mode) .signal-excellent .signalBar,

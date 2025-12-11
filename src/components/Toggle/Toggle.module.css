@@ -234,17 +234,17 @@
 @media (prefers-color-scheme: dark) {
   /* Label */
   .switch-label {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Helper Text */
   .switch-message {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Slider */
   .switch-slider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .switch-input:checked + .switch-slider {

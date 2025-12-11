@@ -396,20 +396,20 @@
 @media (prefers-color-scheme: dark) {
   /* Image Wrapper */
   .imageWrapper {
-    background-color: var(--palette-gray-900);
+    background-color: var(--surface-secondary);
   }
 
   /* Placeholder */
   .imagePlaceholder {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-500);
+    background-color: var(--surface-primary);
+    color: var(--text-tertiary);
   }
 
   /* Figure Caption */
   .imageFigcaption {
-    color: var(--palette-gray-400);
-    background-color: var(--palette-gray-800);
-    border-top-color: var(--palette-gray-700);
+    color: var(--text-tertiary);
+    background-color: var(--surface-primary);
+    border-top-color: var(--text-secondary);
   }
 
   /* Preview Overlay */
@@ -419,15 +419,15 @@
 
   /* Lightbox */
   .imageLightboxContainer {
-    background-color: var(--palette-gray-900);
+    background-color: var(--surface-secondary);
   }
 
   .imageLightboxClose {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .imageLightboxClose:hover {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 }

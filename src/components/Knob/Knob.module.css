@@ -231,7 +231,7 @@
 
 :global([data-theme="dark"]) .knob-track,
 :global(.dark) .knob-track {
-  stroke: var(--palette-gray-600);
+  stroke: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .knob-value,
@@ -290,7 +290,7 @@
 
 :global([data-theme="dark"]) .knob-handle,
 :global(.dark) .knob-handle {
-  stroke: var(--palette-gray-800);
+  stroke: var(--surface-primary);
 }
 
 /* ========================================

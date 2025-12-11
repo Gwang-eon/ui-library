@@ -541,8 +541,8 @@
 @media (prefers-color-scheme: dark) {
   /* Card */
   .statusCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .statusCard:hover {
@@ -551,11 +551,11 @@
 
   /* Header */
   .header {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .title {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .total {
@@ -564,11 +564,11 @@
 
   /* Items */
   .item {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .item.clickable:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Item Icons - use subtle transparency for better visual hierarchy */
@@ -593,28 +593,28 @@
   }
 
   .itemLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .itemValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .itemPercent {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .itemArrow {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .item.clickable:hover .itemArrow {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   /* Compact Card */
   .compactLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .compactItem.success .compactValue {
@@ -635,12 +635,12 @@
 
   /* Progress Bar */
   .progressContainer {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Footer */
   .footer {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Mini Card Icons */
@@ -666,11 +666,11 @@
   }
 
   .miniValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .miniLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Loading Skeleton */
@@ -681,9 +681,9 @@
   .valueSkeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 0%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 100%
+      var(--surface-tertiary) 0%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 100%
     );
   }
 }

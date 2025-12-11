@@ -188,7 +188,7 @@
 
 @media (prefers-color-scheme: dark) {
   .stepper {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
   }
 
   .button {
@@ -196,29 +196,29 @@
   }
 
   .button:hover:not(:disabled) {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .button:active:not(:disabled) {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .button:disabled {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .value {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .value.editable:hover {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .input {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
     border-color: var(--color-primary-400);
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .variantFilled {
@@ -230,18 +230,18 @@
   }
 
   .variantOutlined {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .variantOutlined .button {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 }
 
 /* Manual dark mode */
 body.dark-mode .stepper,
 body[data-theme='dark'] .stepper {
-  background: var(--palette-gray-800);
+  background: var(--surface-primary);
 }
 
 body.dark-mode .button,
@@ -251,7 +251,7 @@ body[data-theme='dark'] .button {
 
 body.dark-mode .value,
 body[data-theme='dark'] .value {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 /* ==================== Reduced Motion ==================== */

@@ -262,7 +262,7 @@
 
 @media (prefers-color-scheme: dark) {
   .drawerContent {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   }
 
@@ -271,20 +271,20 @@
   }
 
   .drawerHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .drawerTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .drawerClose {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .drawerClose:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .drawerClose:focus-visible {
@@ -292,12 +292,12 @@
   }
 
   .drawerNavItem {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .drawerNavItem:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .drawerNavItem:focus-visible {
@@ -310,7 +310,7 @@
   }
 
   .drawerFooter {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--text-secondary);
   }
 }
 

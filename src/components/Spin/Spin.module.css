@@ -259,7 +259,7 @@
 
 @media (prefers-color-scheme: dark) {
   .spin {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
     border-top-color: var(--color-primary-400);
   }
 
@@ -272,7 +272,7 @@
   }
 
   .spin-text {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .spin-dot {

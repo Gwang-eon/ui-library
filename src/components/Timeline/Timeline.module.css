@@ -338,33 +338,33 @@
 
 @media (prefers-color-scheme: dark) {
   .timeline::before {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .timelineMarker {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .timelineMarker svg {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .timelineContent {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .timelineTime {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .timelineTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .timelineDescription {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .timelineItem.timelineSuccess .timelineMarker {
@@ -425,7 +425,7 @@
   }
 
   .timelineItem.timelineInteractive:hover {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .timelineItem.timelineInteractive:focus-visible {
@@ -518,8 +518,8 @@
   }
 
   .timelineMarker {
-    border-color: var(--palette-black);
-    background: var(--palette-white);
+    border-color: var(--text-primary);
+    background: var(--surface-primary);
   }
 
   .timelineItem.timelineInteractive:hover {

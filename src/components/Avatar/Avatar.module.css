@@ -104,8 +104,8 @@
 }
 
 .avatarWarning {
-  background-color: var(--palette-orange-100);
-  color: var(--palette-orange-700);
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
 }
 
 .avatarError {
@@ -114,8 +114,8 @@
 }
 
 .avatarGrey {
-  background-color: var(--palette-gray-200);
-  color: var(--palette-gray-700);
+  background-color: var(--surface-tertiary);
+  color: var(--text-secondary);
 }
 
 /* ========================================
@@ -136,7 +136,7 @@
 }
 
 .avatarBadgeOffline {
-  background-color: var(--palette-gray-400);
+  background-color: var(--surface-quaternary);
 }
 
 .avatarBadgeBusy {
@@ -144,7 +144,7 @@
 }
 
 .avatarBadgeAway {
-  background-color: var(--palette-orange-500);
+  background-color: var(--color-warning-500);
 }
 
 /* ========================================
@@ -197,7 +197,7 @@
 
   .avatarWarning {
     background-color: rgba(249, 115, 22, 0.2);
-    color: var(--palette-orange-400);
+    color: var(--color-warning-400);
   }
 
   .avatarError {
@@ -206,12 +206,12 @@
   }
 
   .avatarGrey {
-    background-color: var(--palette-gray-700);
-    color: var(--palette-gray-300);
+    background-color: var(--surface-quaternary);
+    color: var(--text-secondary);
   }
 
   .avatarBadge {
-    border-color: var(--palette-gray-800);
+    border-color: var(--border-subtle);
   }
 }
 
@@ -245,7 +245,7 @@
 :global(.dark-mode) .avatarWarning,
 :global([data-theme="dark"]) .avatarWarning {
   background-color: rgba(249, 115, 22, 0.2);
-  color: var(--palette-orange-400);
+  color: var(--color-warning-400);
 }
 
 :global(.dark-mode) .avatarError,
@@ -256,16 +256,16 @@
 
 :global(.dark-mode) .avatarGrey,
 :global([data-theme="dark"]) .avatarGrey {
-  background-color: var(--palette-gray-700);
-  color: var(--palette-gray-300);
+  background-color: var(--surface-quaternary);
+  color: var(--text-secondary);
 }
 
 :global(.dark-mode) .avatarBadge,
 :global([data-theme="dark"]) .avatarBadge {
-  border-color: var(--palette-gray-800);
+  border-color: var(--border-subtle);
 }
 
 :global(.dark-mode) .avatarGroup .avatar,
 :global([data-theme="dark"]) .avatarGroup .avatar {
-  border-color: var(--palette-gray-800);
+  border-color: var(--border-subtle);
 }

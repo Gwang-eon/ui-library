@@ -499,8 +499,8 @@
 :global(.dark) .deviceCard,
 :global(.dark) .listItem,
 :global(.dark) .compactCard {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .deviceCard:hover,
@@ -509,7 +509,7 @@
 :global(.dark) .deviceCard:hover,
 :global(.dark) .listItem:hover,
 :global(.dark) .compactCard:hover {
-  border-color: var(--palette-gray-600);
+  border-color: var(--border-strong);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -529,30 +529,30 @@
 :global(.dark) .deviceName,
 :global(.dark) .listItemTitle,
 :global(.dark) .compactName {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .deviceType,
 :global(.dark) .deviceType {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 /* Device Stats */
 :global([data-theme="dark"]) .deviceStats,
 :global(.dark) .deviceStats {
-  border-top-color: var(--palette-gray-700);
+  border-top-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .deviceStatLabel,
 :global([data-theme="dark"]) .listItemMeta,
 :global(.dark) .deviceStatLabel,
 :global(.dark) .listItemMeta {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .deviceStatValue,
 :global(.dark) .deviceStatValue {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 /* Status Badges */
@@ -565,7 +565,7 @@
 :global([data-theme="dark"]) .statusOffline,
 :global(.dark) .statusOffline {
   background: rgba(107, 114, 128, 0.3);
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .statusWarning,
@@ -604,17 +604,17 @@
 :global([data-theme="dark"]) .compactContent,
 :global(.dark) .listIconCircle,
 :global(.dark) .compactContent {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .compactStatus,
 :global(.dark) .compactStatus {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .separator,
 :global(.dark) .separator {
-  color: var(--palette-gray-600);
+  color: var(--text-disabled);
 }
 
 /* Action Buttons */
@@ -622,33 +622,33 @@
 :global([data-theme="dark"]) .compactActionButton,
 :global(.dark) .actionButton,
 :global(.dark) .compactActionButton {
-  border-color: var(--palette-gray-700);
-  color: var(--palette-gray-400);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .actionButton:hover,
 :global([data-theme="dark"]) .compactActionButton:hover,
 :global(.dark) .actionButton:hover,
 :global(.dark) .compactActionButton:hover {
-  background: var(--palette-gray-750);
-  color: var(--palette-gray-100);
-  border-color: var(--palette-gray-600);
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
 /* Empty State */
 :global([data-theme="dark"]) .emptyStateIcon,
 :global(.dark) .emptyStateIcon {
-  color: var(--palette-gray-600);
+  color: var(--text-disabled);
 }
 
 :global([data-theme="dark"]) .emptyStateTitle,
 :global(.dark) .emptyStateTitle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .emptyStateDescription,
 :global(.dark) .emptyStateDescription {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .emptyStateButton,
@@ -671,9 +671,9 @@
 :global(.dark) .skeleton {
   background: linear-gradient(
     90deg,
-    var(--palette-gray-750) 25%,
-    var(--palette-gray-700) 50%,
-    var(--palette-gray-750) 75%
+    var(--surface-tertiary) 25%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 75%
   );
 }
 

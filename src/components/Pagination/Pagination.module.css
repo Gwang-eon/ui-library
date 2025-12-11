@@ -68,23 +68,23 @@
 @media (prefers-color-scheme: dark) {
   /* Text elements */
   .pagination > span {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .pagination-ellipsis {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Buttons */
   .pagination-btn {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .pagination-btn:hover:not(:disabled):not(.active) {
-    background-color: var(--palette-gray-750);
-    border-color: var(--palette-gray-600);
+    background-color: var(--surface-tertiary);
+    border-color: var(--border-strong);
   }
 
   .pagination-btn.active {
@@ -98,7 +98,7 @@
   }
 
   .pagination-info {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-300);
+    background-color: var(--surface-primary);
+    color: var(--text-secondary);
   }
 }

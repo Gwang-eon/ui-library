@@ -310,9 +310,9 @@
 @media (prefers-color-scheme: dark) {
   /* Trigger */
   .treeselectTrigger {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .treeselectTrigger:hover {
@@ -331,49 +331,49 @@
   }
 
   .treeselectTrigger.disabled {
-    background: var(--palette-gray-900);
-    border-color: var(--palette-gray-800);
-    color: var(--palette-gray-600);
+    background: var(--surface-secondary);
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
   }
 
   /* Placeholder */
   .placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Clear Button & Icons */
   .treeselectClearBtn {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .treeselectClearBtn:hover {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .treeselectIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Dropdown */
   .treeselectDropdown {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 
   /* Search */
   .treeselectSearch {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .treeselectSearchInput {
-    background: var(--palette-gray-900);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-secondary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .treeselectSearchInput::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .treeselectSearchInput:focus {
@@ -382,20 +382,20 @@
   }
 
   .treeselectSearchIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Tree Nodes */
   .treeNode {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .treeNodeContent {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .treeNodeContent:hover {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .treeNodeSelected {
@@ -404,35 +404,35 @@
   }
 
   .treeNodeDisabled {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   /* Expand Button */
   .treeExpandBtn {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .treeExpandBtn:hover {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-200);
+    background: var(--surface-quaternary);
+    color: var(--text-primary);
   }
 
   /* Empty State */
   .treeselectEmpty {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Scrollbar */
   .treeselectDropdown::-webkit-scrollbar-track {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
   }
 
   .treeselectDropdown::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .treeselectDropdown::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-500);
+    background: var(--surface-quinary);
   }
 }
 

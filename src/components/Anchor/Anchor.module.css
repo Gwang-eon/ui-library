@@ -129,12 +129,12 @@
 @media (prefers-color-scheme: dark) {
   /* Base link */
   .anchorLink {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .anchorLink:hover {
-    color: var(--palette-gray-100);
-    background-color: var(--palette-gray-800);
+    color: var(--text-primary);
+    background-color: var(--surface-primary);
   }
 
   .anchorLink:focus-visible {
@@ -150,7 +150,7 @@
 
   /* Submenu */
   .anchorSubmenu {
-    border-left-color: var(--palette-gray-700);
+    border-left-color: var(--border-default);
   }
 
   .anchorSubmenu .anchorLink.active {
@@ -159,15 +159,15 @@
 
   /* Scrollbar */
   .anchor.sticky::-webkit-scrollbar-track {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
   }
 
   .anchor.sticky::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .anchor.sticky::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-500);
+    background: var(--surface-quinary);
   }
 }
 

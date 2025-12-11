@@ -156,12 +156,12 @@ body[class*="theme-dark"] .kpiCard:focus-visible {
 @media (prefers-color-scheme: dark) {
   /* KPI Card */
   .kpiCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .kpiCard:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
@@ -171,12 +171,12 @@ body[class*="theme-dark"] .kpiCard:focus-visible {
 
   /* KPI Label */
   .kpiLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* KPI Value */
   .kpiValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Trend */
@@ -189,20 +189,20 @@ body[class*="theme-dark"] .kpiCard:focus-visible {
   }
 
   .trendNeutral {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .trendDescription {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Skeleton Loading */
   .skeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 25%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 75%
+      var(--surface-tertiary) 25%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 75%
     );
   }
 }

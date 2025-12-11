@@ -586,24 +586,24 @@
 :global(.dark) .chartWidget,
 :global(.dark) .listWidget,
 :global(.dark) .statusWidget {
-  background: var(--palette-gray-800);
-  border-color: var(--palette-gray-700);
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .statWidget:hover,
 :global(.dark) .statWidget:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  border-color: var(--palette-gray-600);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .statLabel,
 :global(.dark) .statLabel {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .statValue,
 :global(.dark) .statValue {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .statIconCircle,
@@ -626,7 +626,7 @@
 
 :global([data-theme="dark"]) .statPeriod,
 :global(.dark) .statPeriod {
-  color: var(--palette-gray-500);
+  color: var(--text-tertiary);
 }
 
 /* Skeleton Loading */
@@ -650,70 +650,70 @@
 :global(.dark) .statusLabelSkeleton {
   background: linear-gradient(
     90deg,
-    var(--palette-gray-750) 0%,
-    var(--palette-gray-700) 50%,
-    var(--palette-gray-750) 100%
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
   );
 }
 
 /* Chart Widget */
 :global([data-theme="dark"]) .widgetTitle,
 :global(.dark) .widgetTitle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .widgetSubtitle,
 :global(.dark) .widgetSubtitle {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .chartStats,
 :global(.dark) .chartStats {
-  border-bottom-color: var(--palette-gray-700);
+  border-bottom-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .chartStatLabel,
 :global(.dark) .chartStatLabel {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .chartStatValue,
 :global(.dark) .chartStatValue {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .chartPlaceholder,
 :global(.dark) .chartPlaceholder {
-  background-color: var(--palette-gray-850);
-  border-color: var(--palette-gray-700);
-  color: var(--palette-gray-500);
+  background-color: var(--surface-tertiary);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
 }
 
 /* List Widget */
 :global([data-theme="dark"]) .listItem,
 :global(.dark) .listItem {
-  border-bottom-color: var(--palette-gray-700);
+  border-bottom-color: var(--text-secondary);
 }
 
 :global([data-theme="dark"]) .listItem.clickable:hover,
 :global(.dark) .listItem.clickable:hover {
-  background-color: var(--palette-gray-750);
+  background-color: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .listIconCircle,
 :global(.dark) .listIconCircle {
-  background-color: var(--palette-gray-750);
-  color: var(--palette-gray-400);
+  background-color: var(--surface-tertiary);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .listTitle,
 :global(.dark) .listTitle {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .listMeta,
 :global(.dark) .listMeta {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 /* Status Widget */
@@ -725,5 +725,5 @@
 
 :global([data-theme="dark"]) .statusLabel,
 :global(.dark) .statusLabel {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }

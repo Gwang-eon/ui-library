@@ -181,41 +181,41 @@
 @media (prefers-color-scheme: dark) {
   /* Base Card */
   .deviceCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .deviceCard:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 
   /* Title and Text */
   .deviceCardTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .deviceCardSubtitle {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Metrics */
   .deviceMetricLabel {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .deviceMetricValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Device Info */
   .deviceInfo {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Footer */
   .deviceCardFooter {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--text-secondary);
   }
 
   /* State Variants */

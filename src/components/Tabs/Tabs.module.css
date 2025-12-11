@@ -267,16 +267,16 @@
 @media (prefers-color-scheme: dark) {
   /* Base Tabs */
   .tabs {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .tab {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .tab:hover {
-    color: var(--palette-gray-100);
-    background-color: var(--palette-gray-800);
+    color: var(--text-primary);
+    background-color: var(--surface-primary);
   }
 
   .tab:focus-visible {
@@ -290,28 +290,28 @@
 
   /* Tab Content */
   .tab-content {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Contained Tabs */
   .tabs-contained {
-    background-color: var(--palette-gray-850);
+    background-color: var(--surface-tertiary);
   }
 
   .tabs-contained .tab:hover {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .tabs-contained .tab.active {
-    background-color: var(--palette-gray-900);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-secondary);
+    color: var(--text-primary);
   }
 
   /* Pills Tabs */
   .tabs-pills .tab:hover {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .tabs-pills .tab.active {
@@ -322,7 +322,7 @@
 
   /* Icon Bar Tabs */
   .tabs-icon-bar {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .tabs-icon-bar .tab.active {
@@ -331,8 +331,8 @@
 
   /* Tab Counter */
   .tab-counter {
-    color: var(--palette-gray-400);
-    background-color: var(--palette-gray-800);
+    color: var(--text-tertiary);
+    background-color: var(--surface-primary);
   }
 
   .tab.active .tab-counter {
@@ -342,15 +342,15 @@
 
   /* Vertical Tabs */
   .tabs-vertical {
-    border-right-color: var(--palette-gray-700);
+    border-right-color: var(--text-secondary);
   }
 
   .tabs-vertical .tab:hover {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .tabs-vertical .tab.active {
     border-right-color: var(--color-primary-400);
-    background-color: var(--palette-gray-850);
+    background-color: var(--surface-tertiary);
   }
 }

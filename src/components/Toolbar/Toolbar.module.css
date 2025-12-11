@@ -207,47 +207,47 @@
 
 @media (prefers-color-scheme: dark) {
   .toolbar {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .toolbarDivider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .toolbarSearchInput {
-    background: var(--palette-gray-750);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-tertiary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .toolbarSearchInput::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .toolbarSearchInput:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .toolbarSearchInput:focus {
     border-color: var(--color-primary-400);
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   }
 
   .toolbarSearch svg {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .toolbarSelect {
-    background-color: var(--palette-gray-750);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   }
 
   .toolbarSelect:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .toolbarSelect:focus {
@@ -261,7 +261,7 @@
   }
 
   .toolbarBulkCount {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .toolbarBulkCount strong {

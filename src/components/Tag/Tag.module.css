@@ -181,15 +181,15 @@
 
 @media (prefers-color-scheme: dark) {
   .tag {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-100);
-    border-color: var(--palette-gray-600);
+    background: var(--surface-quaternary);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
   }
 
   .default {
-    background: var(--palette-gray-700);
-    color: var(--palette-gray-100);
-    border-color: var(--palette-gray-600);
+    background: var(--surface-quaternary);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
   }
 
   .primary {
@@ -236,16 +236,16 @@
 /* Manual dark mode class support */
 :global(.dark-mode) .tag,
 :global([data-theme="dark"]) .tag {
-  background: var(--palette-gray-700);
-  color: var(--palette-gray-100);
-  border-color: var(--palette-gray-600);
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
 :global(.dark-mode) .default,
 :global([data-theme="dark"]) .default {
-  background: var(--palette-gray-700);
-  color: var(--palette-gray-100);
-  border-color: var(--palette-gray-600);
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
 :global(.dark-mode) .primary,

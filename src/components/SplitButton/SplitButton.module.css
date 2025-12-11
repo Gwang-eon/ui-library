@@ -175,41 +175,41 @@
 @media (prefers-color-scheme: dark) {
   /* Menu */
   .splitButtonMenu {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 
   /* Menu Items */
   .splitButtonMenuItem {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .splitButtonMenuItem:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .splitButtonMenuItem:active {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .splitButtonMenuItem:focus {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Icons */
   .splitButtonMenuItemIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .splitButtonMenuItem:hover .splitButtonMenuItemIcon {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   /* Divider */
   .splitButtonMenuDivider {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   /* Danger Items */

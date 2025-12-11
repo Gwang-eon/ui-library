@@ -306,8 +306,8 @@
 
 @media (prefers-color-scheme: dark) {
   .container {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .containerSpaced {
@@ -315,12 +315,12 @@
   }
 
   .deviceListItem {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .deviceListItem:hover {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .icon {
@@ -329,23 +329,23 @@
   }
 
   .name {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .metaItem {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .metaItem::before {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .metricLabel {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .metricValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .metricValueWarning {
@@ -357,15 +357,15 @@
   }
 
   .value {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .arrow {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .clickable:hover .arrow {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .clickable .name {
@@ -377,7 +377,7 @@
   }
 
   .offline .icon {
-    background: var(--palette-gray-900);
-    color: var(--palette-gray-600);
+    background: var(--surface-secondary);
+    color: var(--text-disabled);
   }
 }

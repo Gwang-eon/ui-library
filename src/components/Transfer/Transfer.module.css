@@ -284,41 +284,41 @@
 @media (prefers-color-scheme: dark) {
   /* Panel */
   .transferPanel {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Header */
   .transferHeader {
-    background: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
+    background: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .transferTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .transferCount {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Search */
   .transferSearch {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .transferSearchIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .transferSearchInput {
-    background: var(--palette-gray-900);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-secondary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .transferSearchInput::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .transferSearchInput:focus {
@@ -328,47 +328,47 @@
 
   /* Select All */
   .transferSelectAll {
-    background: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
+    background: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .transferSelectAllLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* List Items */
   .transferItem {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .transferItem:hover {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .transferItemLabel {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .transferItemDisabled {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   /* Scrollbar */
   .transferBody::-webkit-scrollbar-track {
-    background: var(--palette-gray-900);
+    background: var(--surface-secondary);
   }
 
   .transferBody::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .transferBody::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-500);
+    background: var(--surface-quinary);
   }
 
   /* Empty State */
   .transferEmpty {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 }
 

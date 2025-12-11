@@ -299,8 +299,8 @@
 @media (prefers-color-scheme: dark) {
   /* Card */
   .metricCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .metricCard:hover {
@@ -309,16 +309,16 @@
 
   /* Header */
   .label {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .icon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Body */
   .value {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .change.positive {
@@ -330,25 +330,25 @@
   }
 
   .change.neutral {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .subtext {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Comparative Metrics */
   .comparativeLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .comparativeValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Progress Bar */
   .progressContainer {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Mini Chart */
@@ -387,9 +387,9 @@
   .subtextSkeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 0%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 100%
+      var(--surface-tertiary) 0%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 100%
     );
   }
 }

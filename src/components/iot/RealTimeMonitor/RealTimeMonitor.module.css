@@ -405,44 +405,44 @@
 @media (prefers-color-scheme: dark) {
   /* Monitor Container */
   .monitorContainer {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .monitorHeader {
-    background-color: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
+    background-color: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .monitorTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .monitorUpdate {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Monitor Buttons */
   .btnMonitor {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-300);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
   }
 
   .btnMonitor:hover {
-    background-color: var(--palette-gray-750);
-    border-color: var(--palette-gray-600);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
   }
 
   /* Metric Card */
   .metricCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .metricCard:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .metricIconPrimary {
@@ -466,15 +466,15 @@
   }
 
   .metricLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .metricValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .metricUnit {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .metricChangeIncrease {
@@ -486,30 +486,30 @@
   }
 
   .metricChangeNeutral {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Data Stream */
   .dataStream {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .streamTable thead {
-    background-color: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
+    background-color: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .streamTable th {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .streamTable td {
-    color: var(--palette-gray-100);
-    border-bottom-color: var(--palette-gray-700);
+    color: var(--text-primary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .streamTable tbody tr:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .streamRowNew {
@@ -517,7 +517,7 @@
   }
 
   .streamTimestamp {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Status Badge */
@@ -538,10 +538,10 @@
 
   /* Status Indicator */
   .statusLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .statusInactive {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 }

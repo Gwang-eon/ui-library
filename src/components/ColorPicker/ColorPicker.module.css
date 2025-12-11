@@ -516,23 +516,23 @@
 @media (prefers-color-scheme: dark) {
   /* Label */
   .colorPickerLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Color Swatch */
   .colorSwatch {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .colorSwatch:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   /* Color Input */
   .colorInput {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .colorInput:focus {
@@ -542,58 +542,58 @@
 
   /* Picker Button */
   .colorPickerBtn {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-200);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .colorPickerBtn:hover:not(:disabled) {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
     border-color: var(--color-primary-500);
   }
 
   /* Dropdown */
   .colorPickerDropdown {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 
   /* Panel */
   .colorPickerPanel {
-    background: var(--palette-gray-850);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-tertiary);
+    border-color: var(--text-secondary);
   }
 
   /* Panel Header */
   .colorPickerHeader {
-    background: var(--palette-gray-800);
-    border-bottom-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-bottom-color: var(--text-secondary);
   }
 
   /* Panel Title */
   .colorPickerTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Color Values */
   .colorValueHex {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .colorValueRgb {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Panel Body Inputs */
   .colorInputLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .colorInputText {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .colorInputText:focus {
@@ -602,9 +602,9 @@
   }
 
   .colorInputNumber {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .colorInputNumber:focus {
@@ -615,16 +615,16 @@
   /* Preset and Recent Titles */
   .colorPresetsTitle,
   .colorRecentTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Preset Items */
   .colorPresetItem {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .colorPresetItem:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .colorPresetItem.active {
@@ -634,20 +634,20 @@
 
   /* Recent Colors */
   .colorRecentItem {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .colorRecentItem:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   /* Swatch Buttons */
   .colorSwatchBtn {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .colorSwatchBtn:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .colorSwatchBtn.active {
@@ -655,30 +655,30 @@
   }
 
   .colorSwatchBtnCustom {
-    background: var(--palette-gray-800);
-    color: var(--palette-gray-500);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    color: var(--text-tertiary);
+    border-color: var(--text-secondary);
   }
 
   .colorSwatchBtnCustom:hover:not(:disabled) {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-400);
+    background: var(--surface-tertiary);
+    color: var(--text-tertiary);
   }
 
   /* Footer */
   .colorPickerFooter {
-    background: var(--palette-gray-800);
-    border-top-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-top-color: var(--text-secondary);
   }
 
   /* Section Headers */
   .colorSection h3,
   .colorSection h4 {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Helper Text */
   .colorPickerHelper {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 }

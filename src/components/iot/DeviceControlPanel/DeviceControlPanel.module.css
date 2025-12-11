@@ -189,8 +189,8 @@
 }
 
 .iconVariant-warning {
-  background: var(--palette-orange-100);
-  color: var(--palette-orange-600);
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
 }
 
 .iconVariant-primary {
@@ -560,21 +560,21 @@
 @media (prefers-color-scheme: dark) {
   /* Control Item */
   .controlItem {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .controlLabel {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .controlLabel svg {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Device Control Card */
   .deviceControlCard {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .deviceControlCard:hover {
@@ -584,17 +584,17 @@
 
   /* Device Info */
   .deviceName {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .deviceId {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Icon Variants */
   .iconVariant-warning {
     background: rgba(245, 158, 11, 0.2);
-    color: var(--palette-orange-400);
+    color: var(--color-warning-400);
   }
 
   .iconVariant-primary {
@@ -614,7 +614,7 @@
 
   /* Switch */
   .switchSlider {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .switchInput:checked + .switchSlider {
@@ -627,7 +627,7 @@
 
   /* Slider */
   .slider {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .slider::-webkit-slider-thumb:hover {
@@ -639,16 +639,16 @@
   }
 
   .slider:disabled::-webkit-slider-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .slider:disabled::-moz-range-thumb {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   /* Control Slider */
   .controlSliderLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Skeleton Loading */
@@ -659,30 +659,30 @@
   .sliderSkeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 0%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 100%
+      var(--surface-tertiary) 0%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 100%
     );
   }
 
   /* Mode Selection */
   .modeLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .btnGroup {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .btn {
-    background: var(--palette-gray-800);
-    color: var(--palette-gray-400);
-    border-right-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    color: var(--text-tertiary);
+    border-right-color: var(--text-secondary);
   }
 
   .btn:hover {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .btn.active {
@@ -700,18 +700,18 @@
   }
 
   .sliderRange {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Custom Select */
   .customSelectTrigger {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .customSelectTrigger:hover {
     border-color: var(--color-primary-500);
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .customSelectTrigger:focus {
@@ -719,26 +719,26 @@
   }
 
   .customSelectValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .selectIcon {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .customSelectDropdown {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 
   .customSelectOption {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .customSelectOption:hover {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   .customSelectOption.selected {

@@ -105,11 +105,11 @@
 }
 
 .swipeAction.archive {
-  background: var(--palette-grey-500);
+  background: var(--surface-quinary);
 }
 
 .swipeAction.archive:active {
-  background: var(--palette-grey-600);
+  background: var(--surface-quaternary);
 }
 
 .swipeAction.edit {

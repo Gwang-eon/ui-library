@@ -201,21 +201,21 @@
 @media (prefers-color-scheme: dark) {
   /* Base divider */
   .divider {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--text-secondary);
   }
 
   /* Vertical divider */
   .divider-vertical {
-    border-left-color: var(--palette-gray-700);
+    border-left-color: var(--text-secondary);
   }
 
   /* Divider with text */
   .divider-with-text::before,
   .divider-with-text::after {
-    border-top-color: var(--palette-gray-700);
+    border-top-color: var(--text-secondary);
   }
 
   .divider-text {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 }

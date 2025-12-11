@@ -99,8 +99,8 @@
 }
 
 .logIconWarning {
-  background: var(--palette-orange-100);
-  color: var(--palette-orange-600);
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
 }
 
 .logIconError {
@@ -178,7 +178,7 @@
 }
 
 .timelineMarkerWarning {
-  border-color: var(--palette-orange-500);
+  border-color: var(--color-warning-500);
 }
 
 .timelineMarkerError {
@@ -303,7 +303,7 @@
 }
 
 .logStatValueWarning {
-  color: var(--palette-orange-500);
+  color: var(--color-warning-500);
 }
 
 .logStatValueError {
@@ -346,69 +346,69 @@
   .timelineContent,
   .groupedLog,
   .logStat {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Header */
   .logHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .logTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .logGroupHeader {
-    background: var(--palette-gray-750);
-    color: var(--palette-gray-300);
+    background: var(--surface-tertiary);
+    color: var(--text-secondary);
   }
 
   /* Entry */
   .logEntry {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .logEntry:hover {
-    background: var(--palette-gray-750);
+    background: var(--surface-tertiary);
   }
 
   .logTimestamp {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Log Content */
   .logMessage {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .logDetails {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Timeline */
   .timelineItem::before {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .timelineMarker {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
   }
 
   .timelineTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .timelineTime {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .timelineDescription {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .timelineMeta {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Icons */
@@ -424,7 +424,7 @@
 
   .logIconWarning {
     background: rgba(245, 158, 11, 0.2);
-    color: var(--palette-orange-400);
+    color: var(--color-warning-400);
   }
 
   .logIconError {
@@ -434,7 +434,7 @@
 
   /* Statistics */
   .logStatLabel {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .logStatValueInfo {
@@ -446,7 +446,7 @@
   }
 
   .logStatValueWarning {
-    color: var(--palette-orange-400);
+    color: var(--color-warning-400);
   }
 
   .logStatValueError {

@@ -57,7 +57,7 @@
 
   /* Use lighter color for dark mode */
   .watermarkText {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 }
 

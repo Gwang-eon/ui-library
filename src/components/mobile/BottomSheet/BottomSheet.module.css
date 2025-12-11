@@ -193,41 +193,41 @@
 
 body.dark-mode .bottomSheet,
 body[class*='theme-dark'] .bottomSheet {
-  background: var(--palette-grey-800);
+  background: var(--surface-primary);
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode .dragIndicator,
 body[class*='theme-dark'] .dragIndicator {
-  background: var(--palette-grey-600);
+  background: var(--surface-quaternary);
 }
 
 body.dark-mode .title,
 body[class*='theme-dark'] .title {
-  color: var(--palette-grey-100);
+  color: var(--text-primary);
 }
 
 body.dark-mode .closeButton,
 body[class*='theme-dark'] .closeButton {
-  color: var(--palette-grey-400);
+  color: var(--text-tertiary);
 }
 
 body.dark-mode .closeButton:hover,
 body[class*='theme-dark'] .closeButton:hover {
-  background: var(--palette-grey-700);
-  color: var(--palette-grey-100);
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
 }
 
 body.dark-mode .header,
 body[class*='theme-dark'] .header,
 body.dark-mode .footer,
 body[class*='theme-dark'] .footer {
-  border-color: var(--palette-grey-700);
+  border-color: var(--border-default);
 }
 
 body.dark-mode .footer,
 body[class*='theme-dark'] .footer {
-  background: var(--palette-grey-800);
+  background: var(--surface-primary);
 }
 
 /* ==================== Reduced Motion ==================== */

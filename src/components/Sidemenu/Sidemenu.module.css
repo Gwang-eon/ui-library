@@ -401,13 +401,13 @@
 @media (prefers-color-scheme: dark) {
   /* Base */
   .sidemenu {
-    background-color: var(--palette-gray-900);
-    border-right-color: var(--palette-gray-800);
+    background-color: var(--surface-secondary);
+    border-right-color: var(--border-subtle);
   }
 
   /* Header */
   .sidemenuHeader {
-    border-bottom-color: var(--palette-gray-800);
+    border-bottom-color: var(--border-subtle);
   }
 
   .sidemenuBrandIcon svg {
@@ -415,59 +415,59 @@
   }
 
   .sidemenuBrandText {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .sidemenuCollapseBtn {
     background: transparent;
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    border-color: var(--text-secondary);
+    color: var(--text-tertiary);
   }
 
   .sidemenuCollapseBtn:hover {
-    background: var(--palette-gray-800);
-    color: var(--palette-gray-100);
-    border-color: var(--palette-gray-600);
+    background: var(--surface-primary);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
   }
 
   /* Search */
   .sidemenuSearch {
-    border-bottom-color: var(--palette-gray-800);
+    border-bottom-color: var(--border-subtle);
   }
 
   .sidemenuSearchInput {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .sidemenuSearchInput:focus {
-    background: var(--palette-gray-850);
+    background: var(--surface-tertiary);
     border-color: var(--color-primary-500);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
   }
 
   .sidemenuSearchInput::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Scrollbar */
   .sidemenuNav::-webkit-scrollbar-thumb {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .sidemenuNav::-webkit-scrollbar-thumb:hover {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   /* Menu Items */
   .sidemenuItem {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .sidemenuItem:hover {
-    background-color: var(--palette-gray-800);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
   }
 
   .sidemenuItem.active {
@@ -477,16 +477,16 @@
 
   /* Group Header */
   .sidemenuGroupHeader {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Footer */
   .sidemenuFooter {
-    border-top-color: var(--palette-gray-800);
+    border-top-color: var(--border-subtle);
   }
 
   .sidemenuUser:hover {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
   }
 
   .sidemenuUserAvatar {
@@ -495,18 +495,18 @@
   }
 
   .sidemenuUserName {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .sidemenuUserEmail {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   /* Tooltip in collapsed mode */
   .sidemenu.collapsed .sidemenuItem[data-tooltip]:hover::after {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
   }
 }

@@ -214,17 +214,17 @@
 @media (prefers-color-scheme: dark) {
   /* Tree Container */
   .tree {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Tree Node */
   .treeNodeContent {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .treeNodeContent:hover:not(.treeNodeDisabled) {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   /* Selected Node */
@@ -235,17 +235,17 @@
 
   /* Expand Button */
   .treeExpandBtn {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .treeExpandBtn:hover {
-    background-color: var(--palette-gray-700);
-    color: var(--palette-gray-200);
+    background-color: var(--surface-quaternary);
+    color: var(--text-primary);
   }
 
   /* Icons */
   .treeIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .treeNodeSelected .treeIcon {
@@ -254,7 +254,7 @@
 
   /* Label */
   .treeLabel {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .treeNodeSelected .treeLabel {
@@ -263,22 +263,22 @@
 
   /* Children Border */
   .treeChildren {
-    border-left-color: var(--palette-gray-700);
+    border-left-color: var(--text-secondary);
   }
 
   /* Disabled Node */
   .treeNodeDisabled .treeNodeContent {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .treeNodeDisabled .treeIcon {
-    color: var(--palette-gray-700);
+    color: var(--text-secondary);
   }
 
   /* Badge */
   .treeBadge {
-    color: var(--palette-gray-400);
-    background: var(--palette-gray-700);
+    color: var(--text-tertiary);
+    background: var(--surface-quaternary);
   }
 }
 

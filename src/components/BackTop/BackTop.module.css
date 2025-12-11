@@ -178,9 +178,9 @@
 
 @media (prefers-color-scheme: dark) {
   .backtop {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-300);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
   }
 
   .backtop:hover {
@@ -195,12 +195,12 @@
 
   .backtop.outline {
     background: transparent;
-    border-color: var(--palette-gray-600);
-    color: var(--palette-gray-200);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
   }
 
   .backtop.outline:hover {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
     border-color: var(--color-primary-500);
     color: var(--color-primary-400);
   }

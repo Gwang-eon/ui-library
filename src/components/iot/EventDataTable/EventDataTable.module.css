@@ -325,21 +325,21 @@
 @media (prefers-color-scheme: dark) {
   /* Search Input */
   .searchIcon {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .searchInput {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .searchInput::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .searchInput:hover {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .searchInput:focus {
@@ -350,13 +350,13 @@
   /* Filter Buttons */
   .filterBtn {
     background-color: transparent;
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-300);
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
   }
 
   .filterBtn:hover {
-    background-color: var(--palette-gray-750);
-    border-color: var(--palette-gray-600);
+    background-color: var(--surface-tertiary);
+    border-color: var(--border-strong);
   }
 
   .filterBtnActive {
@@ -367,45 +367,45 @@
 
   /* Export Button */
   .exportBtn {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .exportBtn:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 
   /* Table Container */
   .tableContainer {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   /* Table Header */
   .table thead {
-    background-color: var(--palette-gray-850);
-    border-bottom-color: var(--palette-gray-700);
+    background-color: var(--surface-tertiary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .table thead th {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .sortableHeader:hover {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   /* Table Body */
   .table tbody tr {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .table tbody tr:hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .table tbody td {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Badges */
@@ -426,20 +426,20 @@
 
   /* Device Info */
   .deviceId {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .deviceType {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Actions */
   .actionBtn {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .actionBtn:hover {
-    background-color: var(--palette-gray-750);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-tertiary);
+    color: var(--text-primary);
   }
 }

@@ -48,8 +48,8 @@
 }
 
 .eventItemWarning .eventMarker {
-  border-color: var(--palette-orange-500);
-  background: var(--palette-orange-500);
+  border-color: var(--color-warning-500);
+  background: var(--color-warning-500);
 }
 
 .eventItemError .eventMarker {
@@ -91,8 +91,8 @@
 }
 
 .eventItemWarning .eventMarkerIcon {
-  background: var(--palette-orange-500);
-  border-color: var(--palette-orange-500);
+  background: var(--color-warning-500);
+  border-color: var(--color-warning-500);
 }
 
 .eventItemError .eventMarkerIcon {
@@ -216,7 +216,7 @@
 }
 
 .eventItemCompactWarning .eventMarkerCompact {
-  background: var(--palette-orange-500);
+  background: var(--color-warning-500);
 }
 
 .eventItemCompactError .eventMarkerCompact {
@@ -288,7 +288,7 @@
 }
 
 .eventItemWarning .eventContent {
-  border-left: 3px solid var(--palette-orange-500);
+  border-left: 3px solid var(--color-warning-500);
 }
 
 .eventItemError .eventContent {
@@ -316,8 +316,8 @@
 @media (prefers-color-scheme: dark) {
   /* Event Marker */
   .eventMarker {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-600);
+    background: var(--surface-primary);
+    border-color: var(--border-strong);
   }
 
   .eventItemSuccess .eventMarker {
@@ -341,8 +341,8 @@
   }
 
   .eventItemDefault .eventMarker {
-    border-color: var(--palette-gray-600);
-    background: var(--palette-gray-700);
+    border-color: var(--border-strong);
+    background: var(--surface-quaternary);
   }
 
   /* Event Marker Icon */
@@ -364,38 +364,38 @@
 
   /* Event Line */
   .eventLine {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   /* Event Content */
   .eventContent {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .eventItem:hover .eventContent {
-    border-color: var(--palette-gray-600);
+    border-color: var(--border-strong);
   }
 
   .eventTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .eventTime {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .eventDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .eventMetaItem {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Compact Timeline */
   .eventMarkerCompact {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .eventItemCompactSuccess .eventMarkerCompact {
@@ -415,25 +415,25 @@
   }
 
   .eventItemCompactDefault .eventMarkerCompact {
-    background: var(--palette-gray-600);
+    background: var(--surface-quaternary);
   }
 
   .eventLineCompact {
-    background: var(--palette-gray-700);
+    background: var(--surface-quaternary);
   }
 
   .eventTitleCompact {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .eventTimeCompact {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Group Header */
   .eventGroupHeader {
-    color: var(--palette-gray-300);
-    border-color: var(--palette-gray-700);
+    color: var(--text-secondary);
+    border-color: var(--text-secondary);
   }
 
   /* Event Type Highlighting */

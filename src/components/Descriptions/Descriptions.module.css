@@ -172,41 +172,41 @@
 @media (prefers-color-scheme: dark) {
   /* Container */
   .descriptions {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   /* Header */
   .descriptionsHeader {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .descriptionsTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Items */
   .descriptionsItem:not(:last-child) {
-    border-bottom-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
   }
 
   .descriptionsLabel {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .descriptionsContent {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Bordered variant */
   .descriptionsBordered {
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   /* Column layouts */
   .descriptionsCol2 .descriptionsItem,
   .descriptionsCol3 .descriptionsItem {
-    border-bottom-color: var(--palette-gray-700);
-    border-right-color: var(--palette-gray-700);
+    border-bottom-color: var(--text-secondary);
+    border-right-color: var(--text-secondary);
   }
 }
 

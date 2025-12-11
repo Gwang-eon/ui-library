@@ -230,7 +230,7 @@
 @media (prefers-color-scheme: dark) {
   /* Linear Progress */
   .progress {
-    background-color: var(--palette-gray-700);
+    background-color: var(--surface-quaternary);
   }
 
   .progressBar {
@@ -288,7 +288,7 @@
 
   /* Circular Progress */
   .progressCircularTrack {
-    stroke: var(--palette-gray-700);
+    stroke: var(--surface-quaternary);
   }
 
   /* Spinners */
@@ -316,7 +316,7 @@
 /* Manual dark mode class support */
 :global(.dark-mode) .progress,
 :global([data-theme="dark"]) .progress {
-  background-color: var(--palette-gray-700);
+  background-color: var(--surface-quaternary);
 }
 
 :global(.dark-mode) .progressBar,
@@ -341,7 +341,7 @@
 
 :global(.dark-mode) .progressCircularTrack,
 :global([data-theme="dark"]) .progressCircularTrack {
-  stroke: var(--palette-gray-700);
+  stroke: var(--surface-quaternary);
 }
 
 :global(.dark-mode) .progressSpinnerPrimary .progressSpinnerCircle,

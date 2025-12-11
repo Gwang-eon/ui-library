@@ -263,7 +263,7 @@
 @media (prefers-color-scheme: dark) {
   /* Label */
   .input-label {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   /* Required asterisk */
@@ -273,7 +273,7 @@
 
   /* Helper and Message Text */
   .input-message {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .input-error {
@@ -290,13 +290,13 @@
 
   /* Base Input - Dark Mode */
   .input {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .input::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .input:hover:not(:disabled):not(:focus):not(:read-only) {
@@ -309,21 +309,21 @@
   }
 
   .input:disabled {
-    background-color: var(--palette-gray-900);
-    border-color: var(--palette-gray-800);
-    color: var(--palette-gray-600);
+    background-color: var(--surface-secondary);
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
   }
 
   .input:read-only {
-    background-color: var(--palette-gray-850);
-    border-color: var(--palette-gray-750);
-    color: var(--palette-gray-300);
+    background-color: var(--surface-tertiary);
+    border-color: var(--border-subtle);
+    color: var(--text-secondary);
   }
 
   /* Input Icons */
   .input-icon-left,
   .input-icon-right {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   /* Error State - Dark Mode */
@@ -358,12 +358,12 @@
 
   /* Underline Style - Dark Mode */
   .input-underline {
-    border-bottom-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    border-bottom-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .input-underline::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .input-underline:hover:not(:disabled):not(:read-only) {
@@ -388,32 +388,32 @@
 
   /* Flush Style - Dark Mode */
   .input-flush {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .input-flush::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .input-flush:hover:not(:disabled):not(:read-only) {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .input-flush:focus {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   /* Filled Style - Dark Mode */
   .input-filled {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .input-filled:hover:not(:disabled):not(:read-only) {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .input-filled:focus {
-    background-color: var(--palette-gray-800);
+    background-color: var(--surface-primary);
   }
 
   .input-filled.error {

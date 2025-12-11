@@ -318,18 +318,18 @@
 
 :global([data-theme="dark"]) .checkbox,
 :global(.dark) .checkbox {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .checkbox-label,
 :global(.dark) .checkbox-label {
-  color: var(--palette-gray-100);
+  color: var(--text-primary);
 }
 
 :global([data-theme="dark"]) .checkbox-box,
 :global(.dark) .checkbox-box {
-  background-color: var(--palette-gray-800);
-  border-color: var(--palette-gray-600);
+  background-color: var(--surface-primary);
+  border-color: var(--border-strong);
 }
 
 :global([data-theme="dark"]) .checkbox:hover:not(.disabled) .checkbox-box,
@@ -370,12 +370,12 @@
 
 :global([data-theme="dark"]) .checkbox.disabled .checkbox-box,
 :global(.dark) .checkbox.disabled .checkbox-box {
-  background-color: var(--palette-gray-700);
+  background-color: var(--surface-quaternary);
 }
 
 :global([data-theme="dark"]) .checkbox-message,
 :global(.dark) .checkbox-message {
-  color: var(--palette-gray-400);
+  color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .checkbox.error .checkbox-box,

@@ -304,13 +304,13 @@
 @media (prefers-color-scheme: dark) {
   /* Input Field */
   .date-picker-input {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
   }
 
   .date-picker-input::placeholder {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .date-picker-input:hover:not(:disabled) {
@@ -323,22 +323,22 @@
   }
 
   .date-picker-input:disabled {
-    background-color: var(--palette-gray-900);
-    border-color: var(--palette-gray-800);
-    color: var(--palette-gray-600);
+    background-color: var(--surface-secondary);
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
   }
 
   /* Trigger Button */
   .date-picker-trigger {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .date-picker-trigger:hover {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .date-picker-disabled .date-picker-trigger {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   /* Error State */
@@ -353,34 +353,34 @@
 
   /* Calendar */
   .date-picker-calendar {
-    background: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 
   .date-picker :global(.react-datepicker__header) {
-    background: var(--palette-gray-800);
-    border-bottom-color: var(--palette-gray-700);
+    background: var(--surface-primary);
+    border-bottom-color: var(--text-secondary);
   }
 
   .date-picker :global(.react-datepicker__current-month) {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .date-picker :global(.react-datepicker__navigation):hover {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .date-picker :global(.react-datepicker__day-name) {
-    color: var(--palette-gray-500);
+    color: var(--text-tertiary);
   }
 
   .date-picker :global(.react-datepicker__day) {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .date-picker :global(.react-datepicker__day:hover) {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .date-picker :global(.react-datepicker__day--selected) {
@@ -407,27 +407,27 @@
   }
 
   .date-picker :global(.react-datepicker__day--outside-month) {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .date-picker :global(.react-datepicker__day--disabled) {
-    color: var(--palette-gray-600);
+    color: var(--text-disabled);
   }
 
   .date-picker :global(.react-datepicker__time-container) {
-    border-left-color: var(--palette-gray-700);
+    border-left-color: var(--text-secondary);
   }
 
   .date-picker :global(.react-datepicker__time) {
-    background: var(--palette-gray-800);
+    background: var(--surface-primary);
   }
 
   .date-picker :global(.react-datepicker__time-list-item) {
-    color: var(--palette-gray-200);
+    color: var(--text-primary);
   }
 
   .date-picker :global(.react-datepicker__time-list-item:hover) {
-    background-color: var(--palette-gray-750);
+    background-color: var(--surface-tertiary);
   }
 
   .date-picker :global(.react-datepicker__time-list-item--selected) {

@@ -279,7 +279,7 @@
   /* Outline Button */
   .btn-outline {
     color: var(--color-primary-400);
-    border-color: var(--palette-gray-700);
+    border-color: var(--text-secondary);
   }
 
   .btn-outline:hover:not(:disabled) {
@@ -378,7 +378,7 @@
 :global(.dark-mode) .btn-outline,
 :global([data-theme="dark"]) .btn-outline {
   color: var(--color-primary-400);
-  border-color: var(--palette-gray-700);
+  border-color: var(--text-secondary);
 }
 
 :global(.dark-mode) .btn-outline:hover:not(:disabled),

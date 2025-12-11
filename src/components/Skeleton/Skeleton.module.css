@@ -13,9 +13,9 @@
 .skeleton {
   background: linear-gradient(
     90deg,
-    var(--palette-gray-200) 0%,
-    var(--palette-gray-300) 50%,
-    var(--palette-gray-200) 100%
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
   );
   background-size: 200% 100%;
   animation: skeletonShimmer 1.5s ease-in-out infinite;

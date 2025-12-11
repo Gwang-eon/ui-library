@@ -560,16 +560,16 @@
 @media (prefers-color-scheme: dark) {
   /* Analytics Card */
   .analyticsCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .analyticsLabel {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .analyticsValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .analyticsChange.positive {
@@ -582,28 +582,28 @@
 
   /* Chart Card */
   .chartCard {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .chartTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .chartPlaceholder {
-    background-color: var(--palette-gray-850);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-400);
+    background-color: var(--surface-tertiary);
+    border-color: var(--text-secondary);
+    color: var(--text-tertiary);
   }
 
   /* Device Health Item */
   .deviceHealthItem {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .deviceHealthName {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .healthScore.excellent {
@@ -631,25 +631,25 @@
   }
 
   .healthMetrics {
-    color: var(--palette-gray-400);
+    color: var(--text-tertiary);
   }
 
   .metricValue {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   /* Insight Item */
   .insightItem {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .insightTitle {
-    color: var(--palette-gray-100);
+    color: var(--text-primary);
   }
 
   .insightDescription {
-    color: var(--palette-gray-300);
+    color: var(--text-secondary);
   }
 
   .insightAction {
@@ -681,9 +681,9 @@
   .insightActionSkeleton {
     background: linear-gradient(
       90deg,
-      var(--palette-gray-750) 0%,
-      var(--palette-gray-700) 50%,
-      var(--palette-gray-750) 100%
+      var(--surface-tertiary) 0%,
+      var(--surface-quaternary) 50%,
+      var(--surface-tertiary) 100%
     );
   }
 }

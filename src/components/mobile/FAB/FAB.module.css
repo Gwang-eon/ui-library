@@ -347,13 +347,13 @@ body[class*='theme-dark'] .error {
 
 body.dark-mode .speedDialActionLabel,
 body[class*='theme-dark'] .speedDialActionLabel {
-  background: var(--palette-grey-800);
-  color: var(--palette-grey-100);
+  background: var(--surface-primary);
+  color: var(--text-primary);
 }
 
 body.dark-mode .badge,
 body[class*='theme-dark'] .badge {
-  border-color: var(--palette-grey-900);
+  border-color: var(--border-subtle);
 }
 
 /* ==================== Reduced Motion ==================== */
