@@ -466,6 +466,17 @@ function App() {
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Font Size State
+  const [baseFontSize, setBaseFontSize] = useState(14);
+
+  const handleFontSizeChange = (size: number) => {
+    setBaseFontSize(size);
+    document.documentElement.style.setProperty('--font-size-body-medium', `${size}px`);
+    document.documentElement.style.setProperty('--font-size-body-small', `${size - 2}px`);
+    document.documentElement.style.setProperty('--font-size-body-large', `${size + 2}px`);
+    document.documentElement.style.setProperty('--font-size-body', `${size}px`);
+  };
+
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
@@ -518,6 +529,18 @@ function App() {
             <Button variant="ghost" size="sm" onClick={() => setTourOpen(true)}>
               Tour
             </Button>
+            <Select
+              value={String(baseFontSize)}
+              onChange={(v) => handleFontSizeChange(Number(v))}
+              options={[
+                { value: '12', label: '12px' },
+                { value: '14', label: '14px' },
+                { value: '16', label: '16px' },
+                { value: '18', label: '18px' },
+              ]}
+              size="sm"
+              style={{ width: '85px' }}
+            />
             <Button
               variant={darkMode ? 'primary' : 'outline'}
               size="sm"
