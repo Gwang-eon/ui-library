@@ -10936,7 +10936,8 @@ function Eb({
             position: "absolute",
             top: 0,
             left: 0,
-            width: "100%"
+            width: "100%",
+            display: "flex"
           } : void 0,
           children: _e
         }
@@ -10956,7 +10957,8 @@ function Eb({
             position: "absolute",
             top: 0,
             left: 0,
-            width: "100%"
+            width: "100%",
+            display: "flex"
           } : void 0,
           children: x.getVisibleCells().map((oe, Je) => {
             const Fe = oe.column.getIsPinned(), rn = oe.column.columnDef.meta?.align ?? "left", sr = Et && ft?.rowIndex === x.index && ft?.columnIndex === Je, Zr = kn && qr(x.index, oe.column.id);
@@ -11182,7 +11184,7 @@ function Eb({
                           "tbody",
                           {
                             className: L.tbody,
-                            style: vn ? { height: `${wc}px`, position: "relative" } : void 0,
+                            style: vn ? { height: `${wc}px`, position: "relative", display: "block", width: "100%" } : void 0,
                             children: Oe.length === 0 ? /* @__PURE__ */ r("tr", { className: L.emptyRow, children: /* @__PURE__ */ r("td", { colSpan: be.getAllLeafColumns().length + (Nt ? 1 : 0), className: L.emptyCell, children: Ht ? Ht() : /* @__PURE__ */ u("div", { className: L.emptyState, children: [
                               /* @__PURE__ */ r(Ts, { size: 48, className: L.emptyIcon }),
                               /* @__PURE__ */ r("p", { children: bn })

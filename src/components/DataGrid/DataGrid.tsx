@@ -2773,6 +2773,7 @@ function DataGridInner<TData>(
                     top: 0,
                     left: 0,
                     width: '100%',
+                    display: 'flex',
                   }
                 : undefined
             }
@@ -2811,6 +2812,7 @@ function DataGridInner<TData>(
                   top: 0,
                   left: 0,
                   width: '100%',
+                  display: 'flex',
                 }
               : undefined
           }
@@ -3075,7 +3077,7 @@ function DataGridInner<TData>(
 
               <tbody
                 className={styles.tbody}
-                style={enableVirtualization ? { height: `${totalSize}px`, position: 'relative' } : undefined}
+                style={enableVirtualization ? { height: `${totalSize}px`, position: 'relative', display: 'block', width: '100%' } : undefined}
               >
                 {rows.length === 0 ? (
                   <tr className={styles.emptyRow}>
