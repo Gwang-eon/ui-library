@@ -13,7 +13,7 @@
   gap: var(--spacing-4);
   position: sticky;
   top: 0;
-  z-index: var(--z-sticky);
+  z-index: 1200;
 }
 
 .demo-header-left {
@@ -79,8 +79,8 @@
   border-bottom: 1px solid var(--border-default);
   overflow-x: auto;
   position: sticky;
-  top: 52px;
-  z-index: calc(var(--z-sticky) - 1);
+  top: 56px;
+  z-index: 1100;
 }
 
 .demo-nav-item {
