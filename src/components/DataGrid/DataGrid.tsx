@@ -787,7 +787,7 @@ function DataGridInner<TData>(
     getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
     getFilteredRowModel: enableFiltering || enableGlobalFilter ? getFilteredRowModel() : undefined,
     getPaginationRowModel: enablePagination && !manualPagination ? getPaginationRowModel() : undefined,
-    getExpandedRowModel: enableExpanding ? getExpandedRowModel() : undefined,
+    getExpandedRowModel: enableExpanding || enableGrouping ? getExpandedRowModel() : undefined,
     getGroupedRowModel: enableGrouping ? getGroupedRowModel() : undefined,
     getFacetedRowModel: enableFiltering ? getFacetedRowModel() : undefined,
     getFacetedUniqueValues: enableFiltering ? getFacetedUniqueValues() : undefined,
