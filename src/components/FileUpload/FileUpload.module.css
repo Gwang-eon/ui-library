@@ -302,132 +302,158 @@
    DARK MODE
    ======================================== */
 
-@media (prefers-color-scheme: dark) {
-  .input-file {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-    color: var(--palette-gray-100);
-  }
+:global([data-theme="dark"]) .input-file,
+:global(.dark) .input-file {
+  background-color: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+  color: var(--palette-gray-100);
+}
 
-  .input-file:hover {
-    border-color: var(--color-primary-500);
-  }
+:global([data-theme="dark"]) .input-file:hover,
+:global(.dark) .input-file:hover {
+  border-color: var(--color-primary-500);
+}
 
-  .input-file:focus {
-    outline-color: var(--color-primary-400);
-    border-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .input-file:focus,
+:global(.dark) .input-file:focus {
+  outline-color: var(--color-primary-400);
+  border-color: var(--color-primary-400);
+}
 
-  .input-file::file-selector-button {
-    background-color: rgba(59, 130, 246, 0.15);
-    border-color: var(--color-primary-700);
-    color: var(--color-primary-300);
-  }
+:global([data-theme="dark"]) .input-file::file-selector-button,
+:global(.dark) .input-file::file-selector-button {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--color-primary-700);
+  color: var(--color-primary-300);
+}
 
-  .input-file::file-selector-button:hover {
-    background-color: rgba(59, 130, 246, 0.25);
-    border-color: var(--color-primary-600);
-  }
+:global([data-theme="dark"]) .input-file::file-selector-button:hover,
+:global(.dark) .input-file::file-selector-button:hover {
+  background-color: rgba(59, 130, 246, 0.25);
+  border-color: var(--color-primary-600);
+}
 
-  .upload-area {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-color: var(--palette-gray-600);
-  }
+:global([data-theme="dark"]) .upload-area,
+:global(.dark) .upload-area {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--palette-gray-600);
+}
 
-  .upload-area:hover:not(.disabled) {
-    background-color: rgba(59, 130, 246, 0.15);
-    border-color: var(--color-primary-500);
-  }
+:global([data-theme="dark"]) .upload-area:hover:not(.disabled),
+:global(.dark) .upload-area:hover:not(.disabled) {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--color-primary-500);
+}
 
-  .upload-area:focus-visible {
-    border-color: var(--color-primary-400);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  }
+:global([data-theme="dark"]) .upload-area:focus-visible,
+:global(.dark) .upload-area:focus-visible {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
 
-  .upload-area.dragging {
-    border-color: var(--color-primary-400);
-    background-color: rgba(59, 130, 246, 0.15);
-  }
+:global([data-theme="dark"]) .upload-area.dragging,
+:global(.dark) .upload-area.dragging {
+  border-color: var(--color-primary-400);
+  background-color: rgba(59, 130, 246, 0.15);
+}
 
-  .upload-icon {
-    color: var(--palette-gray-500);
-  }
+:global([data-theme="dark"]) .upload-icon,
+:global(.dark) .upload-icon {
+  color: var(--palette-gray-500);
+}
 
-  .upload-text {
-    color: var(--palette-gray-100);
-  }
+:global([data-theme="dark"]) .upload-text,
+:global(.dark) .upload-text {
+  color: var(--palette-gray-100);
+}
 
-  .upload-hint {
-    color: var(--palette-gray-500);
-  }
+:global([data-theme="dark"]) .upload-hint,
+:global(.dark) .upload-hint {
+  color: var(--palette-gray-500);
+}
 
-  .file-item {
-    background-color: var(--palette-gray-800);
-    border-color: var(--palette-gray-700);
-  }
+:global([data-theme="dark"]) .file-item,
+:global(.dark) .file-item {
+  background-color: var(--palette-gray-800);
+  border-color: var(--palette-gray-700);
+}
 
-  .file-item:hover {
-    background-color: var(--palette-gray-750);
-  }
+:global([data-theme="dark"]) .file-item:hover,
+:global(.dark) .file-item:hover {
+  background-color: var(--palette-gray-750);
+}
 
-  .file-success {
-    background-color: rgba(34, 197, 94, 0.15);
-    border-color: var(--color-success-700);
-  }
+:global([data-theme="dark"]) .file-success,
+:global(.dark) .file-success {
+  background-color: rgba(34, 197, 94, 0.15);
+  border-color: var(--color-success-700);
+}
 
-  .file-success .file-icon {
-    color: var(--color-success-400);
-  }
+:global([data-theme="dark"]) .file-success .file-icon,
+:global(.dark) .file-success .file-icon {
+  color: var(--color-success-400);
+}
 
-  .file-success button {
-    color: var(--color-success-400);
-  }
+:global([data-theme="dark"]) .file-success button,
+:global(.dark) .file-success button {
+  color: var(--color-success-400);
+}
 
-  .file-success button:hover {
-    color: var(--color-success-300);
-    background-color: rgba(34, 197, 94, 0.25);
-  }
+:global([data-theme="dark"]) .file-success button:hover,
+:global(.dark) .file-success button:hover {
+  color: var(--color-success-300);
+  background-color: rgba(34, 197, 94, 0.25);
+}
 
-  .file-error {
-    background-color: rgba(239, 68, 68, 0.15);
-    border-color: var(--color-error-700);
-  }
+:global([data-theme="dark"]) .file-error,
+:global(.dark) .file-error {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-error-700);
+}
 
-  .file-error .file-icon {
-    color: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .file-error .file-icon,
+:global(.dark) .file-error .file-icon {
+  color: var(--color-error-400);
+}
 
-  .file-error button {
-    color: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .file-error button,
+:global(.dark) .file-error button {
+  color: var(--color-error-400);
+}
 
-  .file-error button:hover {
-    color: var(--color-error-300);
-    background-color: rgba(239, 68, 68, 0.25);
-  }
+:global([data-theme="dark"]) .file-error button:hover,
+:global(.dark) .file-error button:hover {
+  color: var(--color-error-300);
+  background-color: rgba(239, 68, 68, 0.25);
+}
 
-  .file-name {
-    color: var(--palette-gray-100);
-  }
+:global([data-theme="dark"]) .file-name,
+:global(.dark) .file-name {
+  color: var(--palette-gray-100);
+}
 
-  .file-size {
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .file-size,
+:global(.dark) .file-size {
+  color: var(--palette-gray-400);
+}
 
-  .file-icon {
-    color: var(--palette-gray-400);
-  }
+:global([data-theme="dark"]) .file-icon,
+:global(.dark) .file-icon {
+  color: var(--palette-gray-400);
+}
 
-  .remove-btn {
-    color: var(--palette-gray-500);
-  }
+:global([data-theme="dark"]) .remove-btn,
+:global(.dark) .remove-btn {
+  color: var(--palette-gray-500);
+}
 
-  .remove-btn:hover {
-    background-color: rgba(239, 68, 68, 0.2);
-    color: var(--color-error-400);
-  }
+:global([data-theme="dark"]) .remove-btn:hover,
+:global(.dark) .remove-btn:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
 
-  .remove-btn:focus-visible {
-    outline-color: var(--color-primary-400);
-  }
+:global([data-theme="dark"]) .remove-btn:focus-visible,
+:global(.dark) .remove-btn:focus-visible {
+  outline-color: var(--color-primary-400);
 }
