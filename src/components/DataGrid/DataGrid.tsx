@@ -1894,10 +1894,10 @@ function DataGridInner<TData>(
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => enableVirtualization ? virtualScrollElement : tableContainerRef.current,
+    getScrollElement: () => virtualScrollElement,
     estimateSize: () => estimateRowHeight,
     overscan,
-    enabled: enableVirtualization,
+    enabled: enableVirtualization && virtualScrollElement !== null,
   });
 
   const virtualRows = enableVirtualization ? rowVirtualizer.getVirtualItems() : null;
@@ -1907,11 +1907,11 @@ function DataGridInner<TData>(
   const visibleColumns = table.getVisibleLeafColumns();
   const columnVirtualizer = useVirtualizer({
     count: visibleColumns.length,
-    getScrollElement: () => enableVirtualization ? virtualScrollElement : tableContainerRef.current,
+    getScrollElement: () => virtualScrollElement,
     estimateSize: (index) => visibleColumns[index]?.getSize() ?? estimateColumnWidth,
     horizontal: true,
     overscan,
-    enabled: enableColumnVirtualization,
+    enabled: enableColumnVirtualization && virtualScrollElement !== null,
   });
 
   // Note: Column virtualization is prepared but rendering integration is deferred
