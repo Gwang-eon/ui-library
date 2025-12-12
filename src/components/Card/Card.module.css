@@ -1,0 +1,283 @@
+/**
+ * Card Component
+ * @category Data Display
+ *
+ * Cards are containers for displaying related information
+ */
+
+/* ========================================
+   CARD GRID LAYOUT
+   ======================================== */
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-6);
+}
+
+/* ========================================
+   BASE CARD
+   ======================================== */
+
+.card {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+/* Allow tooltips and popovers to overflow card boundaries */
+.card:has(.tooltipWrapper),
+.card:has(.popoverContainer) {
+  overflow: visible;
+}
+
+/* ========================================
+   CARD VARIANTS
+   ======================================== */
+
+.cardElevated {
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+.cardOutlined {
+  border: 2px solid var(--border-default);
+  box-shadow: none;
+}
+
+/* ========================================
+   INTERACTIVE STATES
+   ======================================== */
+
+.cardHoverable {
+  cursor: pointer;
+}
+
+.cardHoverable:hover {
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.cardHoverable:focus-visible {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.cardSelectable {
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.cardSelectable:hover {
+  border-color: var(--accent-color);
+}
+
+.cardSelectable:focus-visible {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.cardSelected {
+  border-color: var(--active-border);
+  background: var(--selected-bg);
+  box-shadow: 0 0 0 1px var(--active-border);
+}
+
+/* ========================================
+   CARD HEADER
+   ======================================== */
+
+.cardHeader {
+  padding: var(--spacing-5);
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-3);
+}
+
+.cardTitle {
+  font-size: var(--font-size-heading-5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ========================================
+   CARD MEDIA
+   ======================================== */
+
+.cardMedia {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========================================
+   CARD CONTENT
+   ======================================== */
+
+.cardContent {
+  padding: var(--spacing-5);
+}
+
+.cardContent p {
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.cardContent p:not(:last-child) {
+  margin-bottom: var(--spacing-3);
+}
+
+/* Card Body (alias for cardContent) */
+.cardBody {
+  composes: cardContent;
+}
+
+/* ========================================
+   CARD FOOTER
+   ======================================== */
+
+.cardFooter {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.cardFooter button {
+  flex-shrink: 0;
+}
+
+/* ========================================
+   LOADING SPINNER
+   ======================================== */
+
+.card .loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-default);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .cardHoverable:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global(.dark-mode) .card,
+:global(.dark) .card,
+:global([data-theme="dark"]) .card {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global(.dark-mode) .cardElevated,
+:global(.dark) .cardElevated,
+:global([data-theme="dark"]) .cardElevated {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+:global(.dark-mode) .cardOutlined,
+:global(.dark) .cardOutlined,
+:global([data-theme="dark"]) .cardOutlined {
+  border-color: var(--border-default);
+}
+
+:global(.dark-mode) .cardHoverable:hover,
+:global(.dark) .cardHoverable:hover,
+:global([data-theme="dark"]) .cardHoverable:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+:global(.dark-mode) .cardHoverable:focus-visible,
+:global(.dark-mode) .cardSelectable:focus-visible,
+:global(.dark) .cardHoverable:focus-visible,
+:global(.dark) .cardSelectable:focus-visible,
+:global([data-theme="dark"]) .cardHoverable:focus-visible,
+:global([data-theme="dark"]) .cardSelectable:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .cardSelectable:hover,
+:global(.dark) .cardSelectable:hover,
+:global([data-theme="dark"]) .cardSelectable:hover {
+  border-color: var(--color-primary-400);
+}
+
+:global(.dark-mode) .cardSelected,
+:global(.dark) .cardSelected,
+:global([data-theme="dark"]) .cardSelected {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 1px var(--color-primary-400);
+}
+
+:global(.dark-mode) .cardHeader,
+:global(.dark) .cardHeader,
+:global([data-theme="dark"]) .cardHeader {
+  border-bottom-color: var(--border-default);
+}
+
+:global(.dark-mode) .cardTitle,
+:global(.dark) .cardTitle,
+:global([data-theme="dark"]) .cardTitle {
+  color: var(--text-primary);
+}
+
+:global(.dark-mode) .cardContent p,
+:global(.dark) .cardContent p,
+:global([data-theme="dark"]) .cardContent p {
+  color: var(--text-secondary);
+}
+
+:global(.dark-mode) .cardFooter,
+:global(.dark) .cardFooter,
+:global([data-theme="dark"]) .cardFooter {
+  border-top-color: var(--border-default);
+}
+
+:global(.dark-mode) .card .loadingSpinner,
+:global(.dark) .card .loadingSpinner,
+:global([data-theme="dark"]) .card .loadingSpinner {
+  border-color: var(--border-default);
+  border-top-color: var(--color-primary-400);
+}

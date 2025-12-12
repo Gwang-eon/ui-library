@@ -1,0 +1,655 @@
+/**
+ * Alarm Panel Component
+ * Category: IoT
+ * Real-time alarm monitoring panel with filtering and acknowledgment
+ */
+
+/* ==================== Alarm Panel ==================== */
+
+.alarmPanel {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.alarmPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-5) var(--spacing-6);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-secondary);
+}
+
+.alarmPanelTitle {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.alarmPanelSummary {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: center;
+}
+
+.alarmCount {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.alarmCountBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--spacing-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.alarmCountLabel {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.alarmCountCritical .alarmCountBadge {
+  background: var(--color-error-100);
+  color: var(--color-error-700);
+}
+
+.alarmCountCritical .alarmCountLabel {
+  color: var(--color-error-700);
+}
+
+.alarmCountWarning .alarmCountBadge {
+  background: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.alarmCountWarning .alarmCountLabel {
+  color: var(--color-warning-700);
+}
+
+.alarmCountInfo .alarmCountBadge {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.alarmCountInfo .alarmCountLabel {
+  color: var(--color-primary-700);
+}
+
+.alarmPanelActions {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.alarmPanelLink {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-600);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.alarmPanelLink:hover {
+  color: var(--color-primary-700);
+}
+
+/* ==================== Alarm Filters ==================== */
+
+.alarmPanelFilters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-primary);
+}
+
+.alarmFilterGroup {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.alarmFilterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-secondary);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.alarmFilterBtn:hover {
+  background: var(--surface-secondary);
+  border-color: var(--border-strong);
+}
+
+.alarmFilterBtn.alarmFilterActive {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-700);
+}
+
+.alarmFilterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--spacing-1-5);
+  border-radius: var(--radius-full);
+  background: var(--surface-tertiary);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.alarmFilterActive .alarmFilterCount {
+  background: var(--color-primary-600);
+  color: white;
+}
+
+.alarmSearch {
+  position: relative;
+  width: 280px;
+}
+
+.alarmSearchIcon {
+  position: absolute;
+  left: var(--spacing-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.alarmSearchInput {
+  width: 100%;
+  height: 36px;
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) var(--spacing-10);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+  font-size: var(--font-size-body-small);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.alarmSearchInput:focus {
+  outline: none;
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+/* ==================== Alarm Panel Body ==================== */
+
+.alarmPanelBody {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* ==================== Alarm Item ==================== */
+
+.alarmItem {
+  display: flex;
+  gap: var(--spacing-4);
+  padding: var(--spacing-5) var(--spacing-6);
+  border-bottom: 1px solid var(--border-default);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.alarmItem:last-child {
+  border-bottom: none;
+}
+
+.alarmItem:hover {
+  background: var(--surface-secondary);
+}
+
+/* Alarm Severity Icon */
+.alarmSeverity {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-base);
+}
+
+.alarmIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.alarmItemCritical .alarmSeverity {
+  background: var(--color-error-100);
+  color: var(--color-error-600);
+}
+
+.alarmItemWarning .alarmSeverity {
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
+}
+
+.alarmItemInfo .alarmSeverity {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+/* Alarm Content */
+.alarmContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.alarmHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
+}
+
+.alarmTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.alarmBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-600);
+  color: white;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.alarmDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-2) 0;
+  line-height: 1.5;
+}
+
+.alarmMeta {
+  display: flex;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.alarmMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1-5);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+.alarmMetaItem svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+/* Alarm Actions */
+.alarmActions {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* ==================== Alarm States ==================== */
+
+/* New Alarm */
+.alarmItemNew {
+  background: var(--color-primary-50);
+  border-left: 3px solid var(--color-primary-500);
+}
+
+/* Acknowledged Alarm */
+.alarmItemAcknowledged {
+  opacity: 0.7;
+}
+
+.alarmItemAcknowledged .alarmSeverity {
+  background: var(--color-success-100);
+  color: var(--color-success-600);
+}
+
+.alarmItemAcknowledged .alarmTitle {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+/* Resolved Alarm */
+.alarmItemResolved {
+  opacity: 0.5;
+  background: var(--surface-tertiary);
+}
+
+.alarmItemResolved .alarmSeverity {
+  background: var(--surface-secondary);
+  color: var(--text-tertiary);
+}
+
+.alarmItemResolved .alarmTitle,
+.alarmItemResolved .alarmDescription {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+
+/* ==================== Compact Alarm Panel ==================== */
+
+.alarmPanelCompact .alarmPanelBody {
+  max-height: 400px;
+}
+
+.alarmItemCompact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.alarmItemCompact:last-child {
+  border-bottom: none;
+}
+
+.alarmItemCompact:hover {
+  background: var(--surface-secondary);
+}
+
+.alarmCompactLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.alarmCompactIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.alarmItemCompactCritical .alarmCompactIcon {
+  color: var(--color-error-600);
+}
+
+.alarmItemCompactWarning .alarmCompactIcon {
+  color: var(--color-warning-600);
+}
+
+.alarmItemCompactInfo .alarmCompactIcon {
+  color: var(--color-primary-600);
+}
+
+.alarmCompactContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.alarmCompactTitle {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin: 0 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alarmCompactTime {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .alarmPanel,
+:global(.dark) .alarmPanel {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .alarmPanelHeader,
+:global(.dark) .alarmPanelHeader {
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .alarmPanelTitle,
+:global(.dark) .alarmPanelTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .alarmCountCritical .alarmCountBadge,
+:global(.dark) .alarmCountCritical .alarmCountBadge {
+  background: var(--color-error-900);
+  color: var(--color-error-300);
+}
+
+:global([data-theme="dark"]) .alarmCountCritical .alarmCountLabel,
+:global(.dark) .alarmCountCritical .alarmCountLabel {
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .alarmCountWarning .alarmCountBadge,
+:global(.dark) .alarmCountWarning .alarmCountBadge {
+  background: var(--color-warning-900);
+  color: var(--color-warning-300);
+}
+
+:global([data-theme="dark"]) .alarmCountWarning .alarmCountLabel,
+:global(.dark) .alarmCountWarning .alarmCountLabel {
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .alarmCountInfo .alarmCountBadge,
+:global(.dark) .alarmCountInfo .alarmCountBadge {
+  background: var(--color-primary-900);
+  color: var(--color-primary-300);
+}
+
+:global([data-theme="dark"]) .alarmCountInfo .alarmCountLabel,
+:global(.dark) .alarmCountInfo .alarmCountLabel {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .alarmPanelLink,
+:global(.dark) .alarmPanelLink {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .alarmPanelLink:hover,
+:global(.dark) .alarmPanelLink:hover {
+  color: var(--color-primary-300);
+}
+
+:global([data-theme="dark"]) .alarmPanelFilters,
+:global(.dark) .alarmPanelFilters {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .alarmFilterBtn,
+:global(.dark) .alarmFilterBtn {
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .alarmFilterBtn:hover,
+:global(.dark) .alarmFilterBtn:hover {
+  background: var(--surface-tertiary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .alarmFilterBtn.alarmFilterActive,
+:global(.dark) .alarmFilterBtn.alarmFilterActive {
+  background: var(--color-primary-900);
+  border-color: var(--color-primary-600);
+  color: var(--color-primary-300);
+}
+
+:global([data-theme="dark"]) .alarmFilterCount,
+:global(.dark) .alarmFilterCount {
+  background: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .alarmFilterActive .alarmFilterCount,
+:global(.dark) .alarmFilterActive .alarmFilterCount {
+  background: var(--color-primary-500);
+  color: white;
+}
+
+:global([data-theme="dark"]) .alarmSearchInput,
+:global(.dark) .alarmSearchInput {
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .alarmSearchInput:focus,
+:global(.dark) .alarmSearchInput:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-900);
+}
+
+:global([data-theme="dark"]) .alarmItem,
+:global(.dark) .alarmItem {
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .alarmItem:hover,
+:global(.dark) .alarmItem:hover {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .alarmItemCritical .alarmSeverity,
+:global(.dark) .alarmItemCritical .alarmSeverity {
+  background: var(--color-error-900);
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .alarmItemWarning .alarmSeverity,
+:global(.dark) .alarmItemWarning .alarmSeverity {
+  background: var(--color-warning-900);
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .alarmItemInfo .alarmSeverity,
+:global(.dark) .alarmItemInfo .alarmSeverity {
+  background: var(--color-primary-900);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .alarmTitle,
+:global(.dark) .alarmTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .alarmDescription,
+:global(.dark) .alarmDescription {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .alarmMetaItem,
+:global(.dark) .alarmMetaItem {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .alarmItemNew,
+:global(.dark) .alarmItemNew {
+  background: var(--color-primary-900);
+  border-left-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .alarmItemAcknowledged .alarmSeverity,
+:global(.dark) .alarmItemAcknowledged .alarmSeverity {
+  background: var(--color-success-900);
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .alarmItemAcknowledged .alarmTitle,
+:global(.dark) .alarmItemAcknowledged .alarmTitle {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .alarmItemResolved,
+:global(.dark) .alarmItemResolved {
+  background: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .alarmItemResolved .alarmSeverity,
+:global(.dark) .alarmItemResolved .alarmSeverity {
+  background: var(--surface-primary);
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .alarmItemResolved .alarmTitle,
+:global([data-theme="dark"]) .alarmItemResolved .alarmDescription,
+:global(.dark) .alarmItemResolved .alarmTitle,
+:global(.dark) .alarmItemResolved .alarmDescription {
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .alarmItemCompact:hover,
+:global(.dark) .alarmItemCompact:hover {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .alarmItemCompactCritical .alarmCompactIcon,
+:global(.dark) .alarmItemCompactCritical .alarmCompactIcon {
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .alarmItemCompactWarning .alarmCompactIcon,
+:global(.dark) .alarmItemCompactWarning .alarmCompactIcon {
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .alarmItemCompactInfo .alarmCompactIcon,
+:global(.dark) .alarmItemCompactInfo .alarmCompactIcon {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .alarmCompactTitle,
+:global(.dark) .alarmCompactTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .alarmCompactTime,
+:global(.dark) .alarmCompactTime {
+  color: var(--text-tertiary);
+}

@@ -1,0 +1,161 @@
+/**
+ * List Component
+ * @category Data Display
+ *
+ * Lists display a series of items in a structured, easy-to-scan format.
+ */
+
+/* ========================================
+   LIST CONTAINER
+   ======================================== */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ========================================
+   LIST VARIANTS
+   ======================================== */
+
+.listCompact .listItem {
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.listDivided .listItem {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.listDivided .listItem:last-child {
+  border-bottom: none;
+}
+
+/* ========================================
+   LIST ITEM
+   ======================================== */
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-out);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.listItem:last-child {
+  border-bottom: none;
+}
+
+.listItemInteractive {
+  cursor: pointer;
+}
+
+.listItemInteractive:hover {
+  background-color: var(--surface-secondary);
+}
+
+.listItemInteractive:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: -2px;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) var(--spacing-6);
+  text-align: center;
+}
+
+.emptyStateIcon {
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyStateTitle {
+  font-size: var(--font-size-heading-5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.emptyStateDescription {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-4);
+}
+
+.emptyStateAction {
+  margin-top: var(--spacing-2);
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .listItem {
+    transition: none;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .list,
+:global(.dark) .list {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .listItem,
+:global(.dark) .listItem {
+  color: var(--text-primary);
+  border-bottom-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .listItemInteractive:hover,
+:global(.dark) .listItemInteractive:hover {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .listItemInteractive:focus-visible,
+:global(.dark) .listItemInteractive:focus-visible {
+  outline-color: var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .listDivided .listItem,
+:global(.dark) .listDivided .listItem {
+  border-bottom-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .emptyStateIcon,
+:global(.dark) .emptyStateIcon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .emptyStateTitle,
+:global(.dark) .emptyStateTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .emptyStateDescription,
+:global(.dark) .emptyStateDescription {
+  color: var(--text-tertiary);
+}

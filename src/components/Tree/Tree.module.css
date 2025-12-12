@@ -1,0 +1,275 @@
+/**
+ * Tree Component
+ * @category Data Display
+ *
+ * Hierarchical tree structure for organizing nested data
+ */
+
+/* ========================================
+   TREE CONTAINER
+   ======================================== */
+
+.tree {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* ========================================
+   TREE NODE
+   ======================================== */
+
+.treeNode {
+  display: flex;
+  flex-direction: column;
+}
+
+.treeNodeContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-base);
+  transition: background-color var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  position: relative;
+}
+
+.treeNodeContent:hover {
+  background: var(--surface-secondary);
+}
+
+.treeNodeContent:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: -2px;
+}
+
+.treeNodeSelected .treeNodeContent {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+}
+
+.treeNodeDisabled .treeNodeContent {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.treeNodeDisabled .treeNodeContent:hover {
+  background: transparent;
+}
+
+/* ========================================
+   EXPAND/COLLAPSE BUTTON
+   ======================================== */
+
+.treeExpandBtn {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  padding: 0;
+}
+
+.treeExpandBtn:hover {
+  background: var(--surface-tertiary);
+  color: var(--text-secondary);
+}
+
+.treeExpandBtn:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   TREE ICON
+   ======================================== */
+
+.treeIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.treeNodeSelected .treeIcon {
+  color: var(--accent-color);
+}
+
+/* ========================================
+   TREE LABEL
+   ======================================== */
+
+.treeLabel {
+  flex: 1;
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.treeLabelText {
+  flex: 1;
+}
+
+/* ========================================
+   TREE CHILDREN
+   ======================================== */
+
+.treeChildren {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding-left: var(--spacing-6);
+  margin-top: var(--spacing-1);
+}
+
+/* ========================================
+   TREE LEAF NODE
+   ======================================== */
+
+.treeNodeLeaf .treeExpandBtn {
+  visibility: hidden;
+}
+
+/* ========================================
+   TREE INDENT
+   ======================================== */
+
+.treeIndent {
+  display: inline-block;
+  width: 20px;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   SELECTABLE TREE (WITH CHECKBOXES)
+   ======================================== */
+
+.treeSelectable .treeCheckbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--active-bg);
+}
+
+.treeSelectable .treeNodeContent {
+  cursor: default;
+}
+
+/* ========================================
+   TREE BADGES
+   ======================================== */
+
+.treeBadge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1-5);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+  padding: 2px 8px;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-full);
+}
+
+/* ========================================
+   COMPACT TREE
+   ======================================== */
+
+.treeCompact .treeNodeContent {
+  padding: var(--spacing-1-5) var(--spacing-2);
+  gap: var(--spacing-1-5);
+}
+
+.treeCompact .treeExpandBtn {
+  width: 16px;
+  height: 16px;
+}
+
+.treeCompact .treeLabel {
+  font-size: 13px;
+}
+
+.treeCompact .treeChildren {
+  padding-left: var(--spacing-5);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .tree,
+:global(.dark) .tree {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .treeNodeContent:hover:not(.treeNodeDisabled),
+:global(.dark) .treeNodeContent:hover:not(.treeNodeDisabled) {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .treeNodeSelected .treeNodeContent,
+:global(.dark) .treeNodeSelected .treeNodeContent {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .treeExpandBtn:hover,
+:global(.dark) .treeExpandBtn:hover {
+  background-color: var(--surface-quaternary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .treeNodeSelected .treeIcon,
+:global(.dark) .treeNodeSelected .treeIcon {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .treeNodeSelected .treeLabel,
+:global(.dark) .treeNodeSelected .treeLabel {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .treeChildren,
+:global(.dark) .treeChildren {
+  border-left-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .treeNodeDisabled .treeNodeContent,
+:global(.dark) .treeNodeDisabled .treeNodeContent {
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .treeBadge,
+:global(.dark) .treeBadge {
+  color: var(--text-tertiary);
+  background: var(--surface-quaternary);
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .treeNodeContent {
+    transition: none;
+  }
+
+  .treeExpandBtn {
+    transition: none;
+  }
+}

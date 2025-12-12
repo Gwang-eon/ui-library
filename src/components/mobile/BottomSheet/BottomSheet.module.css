@@ -1,0 +1,243 @@
+/**
+ * Bottom Sheet Component
+ * Category: Mobile
+ * Mobile-native bottom sheet that slides up from the bottom
+ */
+
+/* ==================== Bottom Sheet Container ==================== */
+
+.bottomSheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-primary);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(100%);
+  transition: transform var(--duration-base) var(--ease-mobile);
+  z-index: var(--z-drawer);
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== States ==================== */
+
+.open {
+  transform: translateY(0);
+}
+
+.peek {
+  height: 80px;
+}
+
+.half {
+  height: 50vh;
+}
+
+.full {
+  height: 90vh;
+}
+
+/* ==================== Drag Handle ==================== */
+
+.handle {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-2) 0;
+  cursor: grab;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.handle:active {
+  cursor: grabbing;
+}
+
+.dragIndicator {
+  width: 40px;
+  height: 4px;
+  background: var(--border-strong);
+  border-radius: 2px;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.handle:hover .dragIndicator {
+  background: var(--text-tertiary);
+}
+
+/* ==================== Header ==================== */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-5);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--spacing-2);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-base);
+  transition: all var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.closeButton:hover {
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+.closeButton:active {
+  opacity: 0.7;
+}
+
+.closeIcon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==================== Content ==================== */
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--spacing-5);
+}
+
+/* Prevent content from being covered by iOS safe area */
+.content {
+  padding-bottom: calc(var(--spacing-5) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ==================== Footer ==================== */
+
+.footer {
+  padding: var(--spacing-4) var(--spacing-5);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-primary);
+  flex-shrink: 0;
+  /* iOS safe area */
+  padding-bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ==================== Backdrop ==================== */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-default);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-mobile),
+              visibility var(--duration-base);
+  z-index: calc(var(--z-drawer) - 1);
+}
+
+.backdropShow {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==================== Landscape Orientation ==================== */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .full {
+    height: 95vh;
+  }
+
+  .half {
+    height: 70vh;
+  }
+}
+
+/* ==================== Very Small Screens ==================== */
+
+@media (max-width: 374px) {
+  .header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .content {
+    padding: var(--spacing-4);
+  }
+
+  .footer {
+    padding: var(--spacing-3) var(--spacing-4);
+    padding-bottom: calc(var(--spacing-3) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+body.dark-mode .bottomSheet,
+body[class*='theme-dark'] .bottomSheet {
+  background: var(--surface-primary);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .dragIndicator,
+body[class*='theme-dark'] .dragIndicator {
+  background: var(--surface-quaternary);
+}
+
+body.dark-mode .title,
+body[class*='theme-dark'] .title {
+  color: var(--text-primary);
+}
+
+body.dark-mode .closeButton,
+body[class*='theme-dark'] .closeButton {
+  color: var(--text-tertiary);
+}
+
+body.dark-mode .closeButton:hover,
+body[class*='theme-dark'] .closeButton:hover {
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .header,
+body[class*='theme-dark'] .header,
+body.dark-mode .footer,
+body[class*='theme-dark'] .footer {
+  border-color: var(--border-default);
+}
+
+body.dark-mode .footer,
+body[class*='theme-dark'] .footer {
+  background: var(--surface-primary);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .bottomSheet {
+    transition: none;
+  }
+
+  .backdrop {
+    transition: none;
+  }
+}

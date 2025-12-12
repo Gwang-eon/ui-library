@@ -1,0 +1,513 @@
+/**
+ * Steps Component Styles
+ * Category: Navigation
+ * Display progress through a sequence of steps or stages
+ */
+
+/* ========================================
+   STEPS CONTAINER
+   ======================================== */
+
+.steps {
+  display: flex;
+  width: 100%;
+  padding: var(--spacing-4) 0;
+  position: relative;
+}
+
+/* ========================================
+   INDIVIDUAL STEP
+   ======================================== */
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* ========================================
+   CONNECTING LINE
+   ======================================== */
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20px; /* Center of 40px icon */
+  left: calc(50% + 20px); /* Start from icon center */
+  right: calc(-50% + 20px); /* End at next icon center */
+  height: 2px;
+  background-color: var(--border-default);
+  z-index: 0;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+/* ========================================
+   STEP ICON
+   ======================================== */
+
+.stepIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--surface-primary);
+  border: 2px solid var(--border-default);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  z-index: 1;
+}
+
+.stepIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================================
+   STEP CONTENT
+   ======================================== */
+
+.stepContent {
+  flex: 1;
+  text-align: center;
+  padding-top: var(--spacing-3);
+  max-width: 160px;
+}
+
+.stepTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  line-height: 1.4;
+}
+
+.stepDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ========================================
+   STEP STATES
+   ======================================== */
+
+/* Completed step */
+.step-completed .stepIcon {
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
+  color: white;
+}
+
+.step-completed:not(:last-child)::after {
+  background-color: var(--active-bg);
+}
+
+/* Active step */
+.step-active .stepIcon {
+  background-color: var(--selected-bg);
+  border-color: var(--active-border);
+  color: var(--accent-color);
+  border-width: 3px;
+  box-shadow: 0 0 0 4px var(--focus-ring-color);
+}
+
+.step-active .stepTitle {
+  color: var(--accent-color);
+}
+
+/* Error step */
+.step-error .stepIcon {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+.step-error .stepTitle {
+  color: var(--error-text);
+}
+
+.step-error .stepDescription {
+  color: var(--error-text);
+}
+
+.step-error:not(:last-child)::after {
+  background-color: var(--error-border);
+}
+
+/* Disabled step */
+.step-disabled .stepIcon {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-default);
+  color: var(--text-disabled);
+  opacity: 0.6;
+}
+
+.step-disabled .stepTitle {
+  color: var(--text-disabled);
+}
+
+.step-disabled .stepDescription {
+  color: var(--text-disabled);
+}
+
+/* Wait step (default/upcoming) */
+.step-wait .stepIcon {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   VERTICAL STEPS
+   ======================================== */
+
+.stepsVertical {
+  flex-direction: column;
+  padding: 0;
+}
+
+.stepsVertical .step {
+  flex: none;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-bottom: var(--spacing-6);
+  max-width: none;
+}
+
+.stepsVertical .step:last-child {
+  padding-bottom: 0;
+}
+
+.stepsVertical .stepContent {
+  text-align: left;
+  padding-top: 0;
+  padding-left: var(--spacing-4);
+  max-width: none;
+}
+
+.stepsVertical .step:not(:last-child)::after {
+  top: 48px; /* Below icon */
+  left: 20px; /* Center of icon */
+  right: auto;
+  width: 2px;
+  height: calc(100% - 48px + var(--spacing-6));
+  background-color: var(--border-default);
+}
+
+.stepsVertical .step-completed:not(:last-child)::after {
+  background-color: var(--active-bg);
+}
+
+.stepsVertical .step-error:not(:last-child)::after {
+  background-color: var(--error-border);
+}
+
+/* ========================================
+   CLICKABLE STEPS
+   ======================================== */
+
+.stepClickable {
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.stepClickable:hover .stepIcon {
+  border-color: var(--accent-color);
+  transform: scale(1.08);
+}
+
+.stepClickable:hover .stepTitle {
+  color: var(--accent-color);
+}
+
+.stepClickable:focus {
+  outline: none;
+}
+
+.stepClickable:focus-visible .stepIcon {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 3px;
+}
+
+.step-disabled.stepClickable {
+  cursor: not-allowed;
+}
+
+.step-disabled.stepClickable:hover .stepIcon {
+  transform: none;
+  border-color: var(--border-default);
+}
+
+.step-disabled.stepClickable:hover .stepTitle {
+  color: var(--text-disabled);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small size */
+.stepsSm .stepIcon {
+  width: 32px;
+  height: 32px;
+  font-size: var(--font-size-body-small);
+}
+
+.stepsSm .stepIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.stepsSm .step:not(:last-child)::after {
+  top: 16px; /* Center of 32px icon */
+  left: calc(50% + 16px);
+  right: calc(-50% + 16px);
+}
+
+.stepsSm .stepContent {
+  padding-top: var(--spacing-2);
+}
+
+.stepsSm .stepTitle {
+  font-size: var(--font-size-body-small);
+}
+
+.stepsSm .stepDescription {
+  font-size: var(--font-size-caption);
+}
+
+.stepsSm.stepsVertical .step:not(:last-child)::after {
+  top: 40px;
+  left: 16px;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .stepIcon,
+:global(.dark) .stepIcon {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .step:not(:last-child)::after,
+:global(.dark) .step:not(:last-child)::after {
+  background-color: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .stepTitle,
+:global(.dark) .stepTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .stepDescription,
+:global(.dark) .stepDescription {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .step-completed .stepIcon,
+:global(.dark) .step-completed .stepIcon {
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
+  color: white;
+}
+
+:global([data-theme="dark"]) .step-completed:not(:last-child)::after,
+:global(.dark) .step-completed:not(:last-child)::after {
+  background-color: var(--active-bg);
+}
+
+:global([data-theme="dark"]) .step-active .stepIcon,
+:global(.dark) .step-active .stepIcon {
+  background-color: var(--selected-bg);
+  border-color: var(--active-border);
+  color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .step-active .stepTitle,
+:global(.dark) .step-active .stepTitle {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .step-error .stepIcon,
+:global(.dark) .step-error .stepIcon {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .step-error .stepTitle,
+:global(.dark) .step-error .stepTitle {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .step-error .stepDescription,
+:global(.dark) .step-error .stepDescription {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .step-error:not(:last-child)::after,
+:global(.dark) .step-error:not(:last-child)::after {
+  background-color: var(--error-border);
+}
+
+:global([data-theme="dark"]) .step-disabled .stepIcon,
+:global(.dark) .step-disabled .stepIcon {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-subtle);
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .step-disabled .stepTitle,
+:global(.dark) .step-disabled .stepTitle {
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .step-disabled .stepDescription,
+:global(.dark) .step-disabled .stepDescription {
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .stepClickable:hover .stepIcon,
+:global(.dark) .stepClickable:hover .stepIcon {
+  border-color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .stepClickable:hover .stepTitle,
+:global(.dark) .stepClickable:hover .stepTitle {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .stepClickable:focus-visible .stepIcon,
+:global(.dark) .stepClickable:focus-visible .stepIcon {
+  outline-color: var(--focus-ring-color);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .steps:not(.stepsVertical) {
+    flex-direction: column;
+  }
+
+  .steps:not(.stepsVertical) .step {
+    flex: none;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-bottom: var(--spacing-5);
+    max-width: none;
+  }
+
+  .steps:not(.stepsVertical) .step:last-child {
+    padding-bottom: 0;
+  }
+
+  .steps:not(.stepsVertical) .stepContent {
+    text-align: left;
+    padding-top: 0;
+    padding-left: var(--spacing-3);
+    max-width: none;
+  }
+
+  .steps:not(.stepsVertical) .step:not(:last-child)::after {
+    top: 48px;
+    left: 20px;
+    right: auto;
+    width: 2px;
+    height: calc(100% - 48px + var(--spacing-5));
+  }
+
+  .steps:not(.stepsVertical) .step-completed:not(:last-child)::after {
+    background-color: var(--active-bg);
+  }
+
+  /* Smaller descriptions on mobile */
+  .steps:not(.stepsVertical) .stepDescription {
+    font-size: var(--font-size-caption);
+  }
+}
+
+@media (max-width: 480px) {
+  .stepIcon {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-body-small);
+  }
+
+  .stepIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .stepTitle {
+    font-size: var(--font-size-body-small);
+  }
+
+  .stepDescription {
+    font-size: var(--font-size-caption);
+  }
+
+  .steps:not(.stepsVertical) .step:not(:last-child)::after {
+    top: 40px;
+    left: 16px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .stepIcon,
+  .stepClickable,
+  .step:not(:last-child)::after {
+    transition: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .stepIcon {
+    border-width: 3px;
+  }
+
+  .step-active .stepIcon {
+    border-width: 4px;
+  }
+
+  .step:not(:last-child)::after {
+    height: 3px;
+  }
+
+  .stepsVertical .step:not(:last-child)::after {
+    width: 3px;
+    height: calc(100% - 48px + var(--spacing-6));
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .step:not(:last-child)::after {
+    background-color: var(--border-default) !important;
+  }
+}

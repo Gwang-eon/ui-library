@@ -1,0 +1,729 @@
+/**
+ * Dashboard Widget Component
+ * Category: IoT
+ * Modular dashboard widgets for metrics, charts, lists, and status displays
+ */
+
+/* ==================== Stat Widget ==================== */
+
+.statWidget {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.statWidget:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+}
+
+.statLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-2) 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.statValue {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.statIconCircle {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+.statChange {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-3);
+}
+
+.statTrend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-base);
+}
+
+.statTrend.positive {
+  color: var(--color-success-700);
+  background-color: var(--color-success-100);
+}
+
+.statTrend.negative {
+  color: var(--color-error-700);
+  background-color: var(--color-error-100);
+}
+
+.statPeriod {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* Stat Widget Loading */
+.statWidget.loading {
+  pointer-events: none;
+}
+
+.labelSkeleton,
+.valueSkeleton,
+.trendSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.labelSkeleton {
+  width: 60%;
+  height: 14px;
+  margin-bottom: var(--spacing-2);
+}
+
+.valueSkeleton {
+  width: 80%;
+  height: 32px;
+}
+
+.iconSkeleton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.trendSkeleton {
+  width: 80px;
+  height: 24px;
+  margin-top: var(--spacing-3);
+}
+
+/* ==================== Chart Widget ==================== */
+
+.chartWidget {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+}
+
+.widgetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-5);
+  gap: var(--spacing-4);
+}
+
+.widgetTitle {
+  font-size: var(--font-size-heading-5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.widgetSubtitle {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.widgetBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.chartStats {
+  display: flex;
+  gap: var(--spacing-6);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.chartStatLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.chartStatValue {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chartContainer {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartPlaceholder {
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-secondary);
+  border: 2px dashed var(--border-default);
+  border-radius: var(--radius-base);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Chart Widget Loading */
+.chartWidget.loading {
+  pointer-events: none;
+}
+
+.headerSkeleton {
+  width: 40%;
+  height: 24px;
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+/* ==================== List Widget ==================== */
+
+.listWidget {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.listItem:first-child {
+  padding-top: 0;
+}
+
+.listItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.listItem.clickable {
+  cursor: pointer;
+  margin: 0 calc(var(--spacing-3) * -1);
+  padding-left: var(--spacing-3);
+  padding-right: var(--spacing-3);
+  border-radius: var(--radius-base);
+}
+
+.listItem.clickable:hover {
+  background-color: var(--surface-secondary);
+}
+
+.listIconCircle {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-secondary);
+  color: var(--text-secondary);
+}
+
+.listContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.listTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-1) 0;
+  line-height: 1.4;
+}
+
+.listMeta {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* List Widget Loading */
+.listWidget.loading {
+  pointer-events: none;
+}
+
+.listItemSkeleton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.listItemSkeleton:first-child {
+  padding-top: 0;
+}
+
+.listItemSkeleton:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.contentSkeleton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.titleSkeleton,
+.metaSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.titleSkeleton {
+  width: 60%;
+  height: 16px;
+}
+
+.metaSkeleton {
+  width: 80%;
+  height: 14px;
+}
+
+/* ==================== Status Widget ==================== */
+
+.statusWidget {
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+}
+
+.statusGrid {
+  display: grid;
+  gap: var(--spacing-5);
+}
+
+.statusItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+  text-align: center;
+}
+
+.statusValueCircle {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+.statusLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+/* Status Widget Loading */
+.statusWidget.loading {
+  pointer-events: none;
+}
+
+.statusItemSkeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.statusCircleSkeleton,
+.statusLabelSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.statusCircleSkeleton {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+}
+
+.statusLabelSkeleton {
+  width: 80px;
+  height: 14px;
+}
+
+/* ==================== Animations ==================== */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .statWidget,
+  .chartWidget,
+  .listWidget,
+  .statusWidget {
+    padding: var(--spacing-5);
+  }
+
+  .statValue {
+    font-size: var(--font-size-heading-4);
+  }
+
+  .statIconCircle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .widgetTitle {
+    font-size: var(--font-size-body-large);
+  }
+
+  .chartStatValue {
+    font-size: var(--font-size-heading-5);
+  }
+
+  .chartContainer,
+  .chartPlaceholder {
+    min-height: 250px;
+  }
+
+  .listIconCircle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .listTitle {
+    font-size: var(--font-size-body-small);
+  }
+
+  .statusValueCircle {
+    width: 64px;
+    height: 64px;
+    font-size: var(--font-size-heading-5);
+  }
+
+  .statusGrid {
+    gap: var(--spacing-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .statWidget,
+  .chartWidget,
+  .listWidget,
+  .statusWidget {
+    padding: var(--spacing-4);
+  }
+
+  .chartStats {
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .statusGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ==================== Touch Devices ==================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .listItem.clickable:hover {
+    background-color: transparent;
+  }
+
+  .listItem.clickable:active {
+    background-color: var(--surface-secondary);
+  }
+}
+
+/* ==================== High Contrast Mode ==================== */
+
+@media (prefers-contrast: high) {
+  .statWidget,
+  .chartWidget,
+  .listWidget,
+  .statusWidget {
+    border-width: 2px;
+  }
+
+  .chartPlaceholder {
+    border-width: 3px;
+  }
+
+  .listItem {
+    border-bottom-width: 2px;
+  }
+
+  .chartStats {
+    border-bottom-width: 2px;
+  }
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .statWidget,
+  .listItem {
+    transition: none;
+  }
+
+  .labelSkeleton,
+  .valueSkeleton,
+  .iconSkeleton,
+  .trendSkeleton,
+  .headerSkeleton,
+  .titleSkeleton,
+  .metaSkeleton,
+  .statusCircleSkeleton,
+  .statusLabelSkeleton {
+    animation: none;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+/* Stat Widget */
+:global([data-theme="dark"]) .statWidget,
+:global([data-theme="dark"]) .chartWidget,
+:global([data-theme="dark"]) .listWidget,
+:global([data-theme="dark"]) .statusWidget,
+:global(.dark) .statWidget,
+:global(.dark) .chartWidget,
+:global(.dark) .listWidget,
+:global(.dark) .statusWidget {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .statWidget:hover,
+:global(.dark) .statWidget:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .statLabel,
+:global(.dark) .statLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .statValue,
+:global(.dark) .statValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .statIconCircle,
+:global(.dark) .statIconCircle {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .statTrend.positive,
+:global(.dark) .statTrend.positive {
+  color: var(--color-success-400);
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+:global([data-theme="dark"]) .statTrend.negative,
+:global(.dark) .statTrend.negative {
+  color: var(--color-error-400);
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+:global([data-theme="dark"]) .statPeriod,
+:global(.dark) .statPeriod {
+  color: var(--text-tertiary);
+}
+
+/* Skeleton Loading */
+:global([data-theme="dark"]) .labelSkeleton,
+:global([data-theme="dark"]) .valueSkeleton,
+:global([data-theme="dark"]) .iconSkeleton,
+:global([data-theme="dark"]) .trendSkeleton,
+:global([data-theme="dark"]) .headerSkeleton,
+:global([data-theme="dark"]) .titleSkeleton,
+:global([data-theme="dark"]) .metaSkeleton,
+:global([data-theme="dark"]) .statusCircleSkeleton,
+:global([data-theme="dark"]) .statusLabelSkeleton,
+:global(.dark) .labelSkeleton,
+:global(.dark) .valueSkeleton,
+:global(.dark) .iconSkeleton,
+:global(.dark) .trendSkeleton,
+:global(.dark) .headerSkeleton,
+:global(.dark) .titleSkeleton,
+:global(.dark) .metaSkeleton,
+:global(.dark) .statusCircleSkeleton,
+:global(.dark) .statusLabelSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+}
+
+/* Chart Widget */
+:global([data-theme="dark"]) .widgetTitle,
+:global(.dark) .widgetTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .widgetSubtitle,
+:global(.dark) .widgetSubtitle {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .chartStats,
+:global(.dark) .chartStats {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .chartStatLabel,
+:global(.dark) .chartStatLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .chartStatValue,
+:global(.dark) .chartStatValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .chartPlaceholder,
+:global(.dark) .chartPlaceholder {
+  background-color: var(--surface-tertiary);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
+}
+
+/* List Widget */
+:global([data-theme="dark"]) .listItem,
+:global(.dark) .listItem {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .listItem.clickable:hover,
+:global(.dark) .listItem.clickable:hover {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .listIconCircle,
+:global(.dark) .listIconCircle {
+  background-color: var(--surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .listTitle,
+:global(.dark) .listTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .listMeta,
+:global(.dark) .listMeta {
+  color: var(--text-tertiary);
+}
+
+/* Status Widget */
+:global([data-theme="dark"]) .statusValueCircle,
+:global(.dark) .statusValueCircle {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .statusLabel,
+:global(.dark) .statusLabel {
+  color: var(--text-tertiary);
+}

@@ -1,0 +1,60 @@
+/**
+ * InputBase Component Styles
+ *
+ * Uses atomic CSS classes from atomic.css
+ * This module provides CSS Module bindings
+ */
+
+/* Base input styles - reference atomic.css */
+.inputBase {
+  composes: input-base from global;
+}
+
+/* Variant styles */
+.error {
+  composes: error from global;
+}
+
+.success {
+  composes: success from global;
+}
+
+.warning {
+  composes: warning from global;
+}
+
+.info {
+  composes: info from global;
+}
+
+/* Size variants */
+.size-sm {
+  composes: input-base--sm from global;
+}
+
+.size-lg {
+  composes: input-base--lg from global;
+}
+
+/* Full width */
+.fullWidth {
+  composes: input-base--full from global;
+}
+
+/* Icon positioning */
+.icon-left {
+  composes: input-base--icon-left from global;
+}
+
+.icon-right {
+  composes: input-base--icon-right from global;
+}
+
+.icon-both {
+  composes: input-base--icon-both from global;
+}
+
+/* Borderless variant */
+.borderless {
+  composes: input-base--borderless from global;
+}

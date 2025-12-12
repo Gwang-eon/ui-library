@@ -1,0 +1,289 @@
+/**
+ * Toolbar / Command Bar Component
+ * @category Navigation
+ *
+ * Action bars for common operations in tables, dashboards, and content management
+ */
+
+/* ========================================
+   TOOLBAR CONTAINER
+   ======================================== */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  flex-wrap: wrap;
+}
+
+.toolbarSection {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   TOOLBAR DIVIDER
+   ======================================== */
+
+.toolbarDivider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border-default);
+  margin: 0 var(--spacing-2);
+}
+
+/* ========================================
+   TOOLBAR SEARCH
+   ======================================== */
+
+.toolbarSearch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+}
+
+.toolbarSearch svg {
+  position: absolute;
+  left: var(--spacing-3);
+  width: 16px;
+  height: 16px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.toolbarSearchInput {
+  width: 100%;
+  height: 32px;
+  padding-left: var(--spacing-8);
+  padding-right: var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.toolbarSearchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+.toolbarSearchInput:focus {
+  outline: none;
+  border-color: var(--focus-border-color);
+  background: var(--surface-primary);
+  box-shadow: 0 0 0 3px var(--selected-bg);
+}
+
+/* ========================================
+   TOOLBAR SELECT
+   ======================================== */
+
+.toolbarSelect {
+  height: 32px;
+  padding: 0 var(--spacing-6) 0 var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-2) center;
+  background-size: 16px;
+}
+
+.toolbarSelect:hover {
+  border-color: var(--border-strong);
+}
+
+.toolbarSelect:focus {
+  outline: none;
+  border-color: var(--focus-border-color);
+  box-shadow: 0 0 0 3px var(--selected-bg);
+}
+
+/* ========================================
+   BULK ACTIONS TOOLBAR
+   ======================================== */
+
+.toolbarBulk {
+  background: var(--selected-bg);
+  border-color: var(--active-border);
+}
+
+.toolbarBulkCount {
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+}
+
+.toolbarBulkCount strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--accent-color);
+}
+
+/* ========================================
+   TOOLBAR SIZES
+   ======================================== */
+
+/* Compact */
+.toolbarCompact {
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.toolbarCompact .toolbarSection {
+  gap: var(--spacing-1);
+}
+
+.toolbarCompact .toolbarDivider {
+  height: 20px;
+  margin: 0 var(--spacing-1);
+}
+
+.toolbarCompact .toolbarSearchInput,
+.toolbarCompact .toolbarSelect {
+  height: 28px;
+  font-size: var(--font-size-body-small);
+}
+
+/* Comfortable */
+.toolbarComfortable {
+  padding: var(--spacing-4) var(--spacing-6);
+}
+
+.toolbarComfortable .toolbarSection {
+  gap: var(--spacing-3);
+}
+
+.toolbarComfortable .toolbarDivider {
+  height: 28px;
+  margin: 0 var(--spacing-3);
+}
+
+.toolbarComfortable .toolbarSearchInput,
+.toolbarComfortable .toolbarSelect {
+  height: 40px;
+  font-size: var(--font-size-body-medium);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbarSection {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .toolbarSearch {
+    min-width: 100%;
+  }
+
+  .toolbarDivider {
+    display: none;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .toolbar,
+:global(.dark) .toolbar {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .toolbarDivider,
+:global(.dark) .toolbarDivider {
+  background-color: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .toolbarSearchInput,
+:global(.dark) .toolbarSearchInput {
+  background: var(--surface-tertiary);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .toolbarSearchInput::placeholder,
+:global(.dark) .toolbarSearchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .toolbarSearchInput:hover,
+:global(.dark) .toolbarSearchInput:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .toolbarSearchInput:focus,
+:global(.dark) .toolbarSearchInput:focus {
+  border-color: var(--focus-border-color);
+  background: var(--surface-primary);
+  box-shadow: 0 0 0 3px var(--selected-bg);
+}
+
+:global([data-theme="dark"]) .toolbarSearch svg,
+:global(.dark) .toolbarSearch svg {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .toolbarSelect,
+:global(.dark) .toolbarSelect {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+:global([data-theme="dark"]) .toolbarSelect:hover,
+:global(.dark) .toolbarSelect:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .toolbarSelect:focus,
+:global(.dark) .toolbarSelect:focus {
+  border-color: var(--focus-border-color);
+  box-shadow: 0 0 0 3px var(--selected-bg);
+}
+
+:global([data-theme="dark"]) .toolbarBulk,
+:global(.dark) .toolbarBulk {
+  background: var(--selected-bg);
+  border-color: var(--active-border);
+}
+
+:global([data-theme="dark"]) .toolbarBulkCount,
+:global(.dark) .toolbarBulkCount {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .toolbarBulkCount strong,
+:global(.dark) .toolbarBulkCount strong {
+  color: var(--accent-color);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .toolbarSearchInput,
+  .toolbarSelect {
+    transition: none;
+  }
+}

@@ -1,0 +1,697 @@
+/**
+ * Device List Component Styles
+ * @category IoT
+ *
+ * Flexible device list layouts including grid view, list view, and compact cards
+ */
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+
+.deviceList {
+  width: 100%;
+}
+
+/* ========================================
+   DEVICE GRID
+   ======================================== */
+
+.deviceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-4);
+}
+
+/* ========================================
+   DEVICE CARD (Grid View)
+   ======================================== */
+
+.deviceCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+  cursor: pointer;
+}
+
+.deviceCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.deviceCard:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+.deviceCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-4);
+}
+
+.deviceCardHeaderLeft {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.deviceIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: var(--spacing-3);
+  flex-shrink: 0;
+}
+
+.gradientPrimary {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+}
+
+.gradientWarning {
+  background: linear-gradient(135deg, var(--color-warning-500), var(--color-warning-600));
+}
+
+.gradientSuccess {
+  background: linear-gradient(135deg, var(--color-success-500), var(--color-success-600));
+}
+
+.gradientError {
+  background: linear-gradient(135deg, var(--color-error-500), var(--color-error-600));
+}
+
+.deviceInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.deviceName {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deviceType {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+.deviceStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.deviceStat {
+  text-align: center;
+}
+
+.deviceStatLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.deviceStatValue {
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   STATUS BADGES
+   ======================================== */
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.statusOnline {
+  background: var(--color-success-50);
+  color: var(--color-success-700);
+}
+
+.statusOffline {
+  background: var(--color-error-50);
+  color: var(--color-error-700);
+}
+
+.statusWarning {
+  background: var(--color-warning-50);
+  color: var(--color-warning-700);
+}
+
+.statusError {
+  background: var(--color-error-50);
+  color: var(--color-error-700);
+}
+
+/* ========================================
+   LIST VIEW
+   ======================================== */
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.listItem {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.listItem:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.listItemIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.listItemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.listItemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: 4px;
+}
+
+.listItemTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.listItemMeta {
+  display: flex;
+  gap: var(--spacing-4);
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.listItemMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.listItemActions {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.actionButton:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.actionButton:active {
+  transform: scale(0.98);
+}
+
+.actionButton:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   COMPACT VIEW
+   ======================================== */
+
+.compactContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.compactCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-3);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.compactCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.compactIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.compactContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.compactName {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compactStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+.separator {
+  color: var(--text-tertiary);
+}
+
+.compactActionButton {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+  flex-shrink: 0;
+}
+
+.compactActionButton:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.compactActionButton:active {
+  transform: scale(0.95);
+}
+
+.compactActionButton:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   BADGES (for compact view)
+   ======================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.badgeSuccess {
+  background: var(--color-success-50);
+  color: var(--color-success-700);
+}
+
+.badgeError {
+  background: var(--color-error-50);
+  color: var(--color-error-700);
+}
+
+.badgeWarning {
+  background: var(--color-warning-50);
+  color: var(--color-warning-700);
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12) var(--spacing-6);
+  text-align: center;
+}
+
+.emptyStateIcon {
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-4);
+}
+
+.emptyStateTitle {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.emptyStateDescription {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+  max-width: 400px;
+}
+
+.emptyStateButton {
+  margin-top: var(--spacing-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-5);
+  background: var(--color-primary-500);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.emptyStateButton:hover {
+  background: var(--color-primary-600);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.emptyStateButton:active {
+  transform: translateY(0);
+}
+
+.emptyStateButton:focus-visible {
+  outline: 3px solid var(--color-primary-700);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   LOADING SKELETON
+   ======================================== */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 25%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonCircle {
+  border-radius: 50%;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+/* Device Card (Grid View) */
+:global([data-theme="dark"]) .deviceCard,
+:global([data-theme="dark"]) .listItem,
+:global([data-theme="dark"]) .compactCard,
+:global(.dark) .deviceCard,
+:global(.dark) .listItem,
+:global(.dark) .compactCard {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .deviceCard:hover,
+:global([data-theme="dark"]) .listItem:hover,
+:global([data-theme="dark"]) .compactCard:hover,
+:global(.dark) .deviceCard:hover,
+:global(.dark) .listItem:hover,
+:global(.dark) .compactCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .deviceCard:focus-visible,
+:global([data-theme="dark"]) .actionButton:focus-visible,
+:global([data-theme="dark"]) .compactActionButton:focus-visible,
+:global(.dark) .deviceCard:focus-visible,
+:global(.dark) .actionButton:focus-visible,
+:global(.dark) .compactActionButton:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+/* Device Info */
+:global([data-theme="dark"]) .deviceName,
+:global([data-theme="dark"]) .listItemTitle,
+:global([data-theme="dark"]) .compactName,
+:global(.dark) .deviceName,
+:global(.dark) .listItemTitle,
+:global(.dark) .compactName {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .deviceType,
+:global(.dark) .deviceType {
+  color: var(--text-tertiary);
+}
+
+/* Device Stats */
+:global([data-theme="dark"]) .deviceStats,
+:global(.dark) .deviceStats {
+  border-top-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .deviceStatLabel,
+:global([data-theme="dark"]) .listItemMeta,
+:global(.dark) .deviceStatLabel,
+:global(.dark) .listItemMeta {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .deviceStatValue,
+:global(.dark) .deviceStatValue {
+  color: var(--text-primary);
+}
+
+/* Status Badges */
+:global([data-theme="dark"]) .statusOnline,
+:global(.dark) .statusOnline {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .statusOffline,
+:global(.dark) .statusOffline {
+  background: rgba(107, 114, 128, 0.3);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .statusWarning,
+:global(.dark) .statusWarning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .statusError,
+:global(.dark) .statusError {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
+
+/* Badges (Compact View) */
+:global([data-theme="dark"]) .badgeSuccess,
+:global(.dark) .badgeSuccess {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .badgeError,
+:global(.dark) .badgeError {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .badgeWarning,
+:global(.dark) .badgeWarning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-warning-400);
+}
+
+/* List Icon Circle */
+:global([data-theme="dark"]) .listIconCircle,
+:global([data-theme="dark"]) .compactContent,
+:global(.dark) .listIconCircle,
+:global(.dark) .compactContent {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .compactStatus,
+:global(.dark) .compactStatus {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .separator,
+:global(.dark) .separator {
+  color: var(--text-disabled);
+}
+
+/* Action Buttons */
+:global([data-theme="dark"]) .actionButton,
+:global([data-theme="dark"]) .compactActionButton,
+:global(.dark) .actionButton,
+:global(.dark) .compactActionButton {
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .actionButton:hover,
+:global([data-theme="dark"]) .compactActionButton:hover,
+:global(.dark) .actionButton:hover,
+:global(.dark) .compactActionButton:hover {
+  background: var(--surface-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* Empty State */
+:global([data-theme="dark"]) .emptyStateIcon,
+:global(.dark) .emptyStateIcon {
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .emptyStateTitle,
+:global(.dark) .emptyStateTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .emptyStateDescription,
+:global(.dark) .emptyStateDescription {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .emptyStateButton,
+:global(.dark) .emptyStateButton {
+  background: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .emptyStateButton:hover,
+:global(.dark) .emptyStateButton:hover {
+  background: var(--color-primary-600);
+}
+
+:global([data-theme="dark"]) .emptyStateButton:focus-visible,
+:global(.dark) .emptyStateButton:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+/* Skeleton Loading */
+:global([data-theme="dark"]) .skeleton,
+:global(.dark) .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 25%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 75%
+  );
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .deviceCard,
+  .listItem,
+  .compactCard,
+  .actionButton,
+  .compactActionButton,
+  .emptyStateButton {
+    transition: none;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}

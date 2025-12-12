@@ -1,0 +1,261 @@
+/**
+ * SearchBar Component Styles
+ * Category: Mobile
+ * Mobile-optimized search input with iOS/Android native feel
+ */
+
+/* ==================== Container ==================== */
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+/* ==================== Input Wrapper ==================== */
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 36px;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.focused .inputWrapper {
+  background: var(--surface-primary);
+  box-shadow: 0 0 0 2px var(--selected-bg);
+}
+
+/* ==================== Search Icon ==================== */
+
+.searchIcon {
+  position: absolute;
+  left: var(--spacing-3);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.focused .searchIcon {
+  color: var(--accent-color);
+}
+
+/* ==================== Back Button ==================== */
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.backButton:active {
+  color: var(--accent-color);
+}
+
+/* ==================== Input ==================== */
+
+.input {
+  flex: 1;
+  height: 100%;
+  padding: 0 var(--spacing-10) 0 var(--spacing-10);
+  background: none;
+  border: none;
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Remove search cancel button on WebKit */
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ==================== Clear Button ==================== */
+
+.clearButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: var(--spacing-1);
+  padding: 0;
+  background: var(--surface-tertiary);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.clearButton:active {
+  background: var(--border-default);
+  color: var(--text-secondary);
+}
+
+/* ==================== Spinner ==================== */
+
+.spinner {
+  position: absolute;
+  right: var(--spacing-3);
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--active-bg);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== Cancel Button ==================== */
+
+.cancelButton {
+  flex-shrink: 0;
+  padding: var(--spacing-2) 0;
+  background: none;
+  border: none;
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--accent-color);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  animation: fadeSlideIn 0.2s var(--ease-out);
+}
+
+.cancelButton:active {
+  opacity: 0.7;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .inputWrapper,
+:global(.dark) .inputWrapper {
+  background: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .focused .inputWrapper,
+:global(.dark) .focused .inputWrapper {
+  background: var(--surface-secondary);
+  box-shadow: 0 0 0 2px var(--selected-bg);
+}
+
+:global([data-theme="dark"]) .focused .searchIcon,
+:global(.dark) .focused .searchIcon {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .clearButton,
+:global(.dark) .clearButton {
+  background: var(--surface-quaternary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .spinner,
+:global(.dark) .spinner {
+  border-color: var(--text-secondary);
+  border-top-color: var(--active-bg);
+}
+
+:global([data-theme="dark"]) .cancelButton,
+:global(.dark) .cancelButton {
+  color: var(--accent-color);
+}
+
+/* Manual dark mode */
+body.dark-mode .inputWrapper,
+body[data-theme='dark'] .inputWrapper {
+  background: var(--surface-primary);
+}
+
+body.dark-mode .focused .inputWrapper,
+body[data-theme='dark'] .focused .inputWrapper {
+  background: var(--surface-secondary);
+  box-shadow: 0 0 0 2px var(--color-primary-800);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .inputWrapper,
+  .searchIcon,
+  .clearButton,
+  .cancelButton {
+    transition: none;
+  }
+
+  .cancelButton {
+    animation: none;
+  }
+
+  .spinner {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* ==================== iOS Safe Area ==================== */
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  .searchBar {
+    padding-left: calc(var(--spacing-3) + env(safe-area-inset-left, 0px));
+    padding-right: calc(var(--spacing-3) + env(safe-area-inset-right, 0px));
+  }
+}
+
+/* ==================== Small Screens ==================== */
+
+@media (max-width: 374px) {
+  .inputWrapper {
+    height: 32px;
+  }
+
+  .input {
+    font-size: var(--font-size-body-small);
+  }
+
+  .cancelButton {
+    font-size: var(--font-size-body-small);
+  }
+}

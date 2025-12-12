@@ -1,0 +1,678 @@
+/**
+ * Device Analytics Component
+ * Category: IoT
+ * Comprehensive analytics and insights for IoT device performance
+ */
+
+/* ==================== Analytics Card ==================== */
+
+.analyticsCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+}
+
+.analyticsIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-3);
+  color: white;
+}
+
+.analyticsLabel {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-2);
+}
+
+.analyticsValue {
+  font-size: var(--font-size-heading-1);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+  line-height: 1.2;
+}
+
+.analyticsChange {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.analyticsChange.positive {
+  color: var(--color-success-600);
+}
+
+.analyticsChange.negative {
+  color: var(--color-error-600);
+}
+
+/* Analytics Card Loading */
+.analyticsCard.loading {
+  pointer-events: none;
+}
+
+.iconSkeleton,
+.labelSkeleton,
+.valueSkeleton,
+.changeSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.iconSkeleton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-3);
+}
+
+.labelSkeleton {
+  width: 60%;
+  height: 14px;
+  margin-bottom: var(--spacing-2);
+}
+
+.valueSkeleton {
+  width: 50%;
+  height: 36px;
+  margin-bottom: var(--spacing-2);
+}
+
+.changeSkeleton {
+  width: 70%;
+  height: 16px;
+}
+
+/* ==================== Chart Card ==================== */
+
+.chartCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-4);
+}
+
+.chartTitle {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-size: var(--font-size-heading-5);
+}
+
+.chartFilters {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.chartContainer {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartPlaceholder {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-secondary);
+  border: 2px dashed var(--border-default);
+  border-radius: var(--radius-base);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Chart Card Loading */
+.chartCard.loading {
+  pointer-events: none;
+}
+
+.titleSkeleton {
+  width: 40%;
+  height: 24px;
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.chartSkeleton {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+/* ==================== Device Health Item ==================== */
+
+.deviceHealthItem {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+}
+
+.deviceHealthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-3);
+}
+
+.deviceHealthName {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-body-small);
+}
+
+.healthScore {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-heading-5);
+  margin: 0 auto var(--spacing-3);
+  border: 2px solid;
+}
+
+.healthScore.excellent {
+  background: var(--color-success-100);
+  color: var(--color-success-700);
+  border-color: var(--color-success-500);
+}
+
+.healthScore.good {
+  background: var(--color-info-100);
+  color: var(--color-info-700);
+  border-color: var(--color-info-500);
+}
+
+.healthScore.warning {
+  background: var(--color-warning-100);
+  color: var(--color-warning-700);
+  border-color: var(--color-warning-500);
+}
+
+.healthScore.poor {
+  background: var(--color-error-100);
+  color: var(--color-error-700);
+  border-color: var(--color-error-500);
+}
+
+.healthMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+.healthMetricRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metricValue {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Device Health Loading */
+.deviceHealthItem.loading {
+  pointer-events: none;
+}
+
+.nameSkeleton,
+.badgeSkeleton,
+.scoreSkeleton,
+.metricRowSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.nameSkeleton {
+  width: 60%;
+  height: 14px;
+}
+
+.badgeSkeleton {
+  width: 50px;
+  height: 20px;
+  border-radius: var(--radius-full);
+}
+
+.scoreSkeleton {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--spacing-3);
+}
+
+.metricsSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.metricRowSkeleton {
+  width: 100%;
+  height: 12px;
+}
+
+/* ==================== Insight Item ==================== */
+
+.insightItem {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-left: 4px solid;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.insightItem.info {
+  border-left-color: var(--color-info-500);
+}
+
+.insightItem.success {
+  border-left-color: var(--color-success-500);
+}
+
+.insightItem.warning {
+  border-left-color: var(--color-warning-500);
+}
+
+.insightItem.error {
+  border-left-color: var(--color-error-500);
+}
+
+.insightIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.insightContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.insightTitle {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  font-size: var(--font-size-body-medium);
+}
+
+.insightDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-2);
+  line-height: 1.5;
+}
+
+.insightAction {
+  font-size: var(--font-size-body-small);
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.insightAction:hover {
+  color: var(--color-primary-700);
+}
+
+.insightAction:focus {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Insight Item Loading */
+.insightItem.loading {
+  pointer-events: none;
+}
+
+.insightIconSkeleton,
+.insightTitleSkeleton,
+.insightDescSkeleton,
+.insightActionSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 0%,
+    var(--surface-tertiary) 50%,
+    var(--surface-secondary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-base);
+}
+
+.insightIconSkeleton {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.insightContentSkeleton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.insightTitleSkeleton {
+  width: 70%;
+  height: 16px;
+}
+
+.insightDescSkeleton {
+  width: 100%;
+  height: 14px;
+}
+
+.insightActionSkeleton {
+  width: 40%;
+  height: 14px;
+}
+
+/* ==================== Animations ==================== */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .analyticsCard,
+  .chartCard,
+  .deviceHealthItem {
+    padding: var(--spacing-4);
+  }
+
+  .analyticsValue {
+    font-size: var(--font-size-heading-3);
+  }
+
+  .analyticsIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .chartTitle {
+    font-size: var(--font-size-body-large);
+  }
+
+  .chartContainer,
+  .chartPlaceholder {
+    min-height: 250px;
+  }
+
+  .healthScore {
+    width: 48px;
+    height: 48px;
+    font-size: var(--font-size-body-large);
+  }
+
+  .insightItem {
+    flex-direction: column;
+  }
+
+  .insightIcon {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .analyticsCard,
+  .chartCard,
+  .deviceHealthItem,
+  .insightItem {
+    padding: var(--spacing-3);
+  }
+
+  .analyticsValue {
+    font-size: var(--font-size-heading-4);
+  }
+
+  .chartHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+
+  .chartFilters {
+    width: 100%;
+  }
+}
+
+/* ==================== High Contrast Mode ==================== */
+
+@media (prefers-contrast: high) {
+  .analyticsCard,
+  .chartCard,
+  .deviceHealthItem,
+  .insightItem {
+    border-width: 2px;
+  }
+
+  .insightItem {
+    border-left-width: 5px;
+  }
+
+  .chartPlaceholder {
+    border-width: 3px;
+  }
+
+  .healthScore {
+    border-width: 3px;
+  }
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .insightAction {
+    transition: none;
+  }
+
+  .iconSkeleton,
+  .labelSkeleton,
+  .valueSkeleton,
+  .changeSkeleton,
+  .titleSkeleton,
+  .chartSkeleton,
+  .nameSkeleton,
+  .badgeSkeleton,
+  .scoreSkeleton,
+  .metricRowSkeleton,
+  .insightIconSkeleton,
+  .insightTitleSkeleton,
+  .insightDescSkeleton,
+  .insightActionSkeleton {
+    animation: none;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .analyticsCard,
+:global(.dark) .analyticsCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .analyticsChange.positive,
+:global(.dark) .analyticsChange.positive {
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .analyticsChange.negative,
+:global(.dark) .analyticsChange.negative {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .chartCard,
+:global(.dark) .chartCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .chartPlaceholder,
+:global(.dark) .chartPlaceholder {
+  background-color: var(--surface-tertiary);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .deviceHealthItem,
+:global(.dark) .deviceHealthItem {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .healthScore.excellent,
+:global(.dark) .healthScore.excellent {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border-color: var(--color-success-500);
+}
+
+:global([data-theme="dark"]) .healthScore.good,
+:global(.dark) .healthScore.good {
+  background: var(--info-bg);
+  color: var(--info-text);
+  border-color: var(--active-bg);
+}
+
+:global([data-theme="dark"]) .healthScore.warning,
+:global(.dark) .healthScore.warning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border-color: var(--color-warning-500);
+}
+
+:global([data-theme="dark"]) .healthScore.poor,
+:global(.dark) .healthScore.poor {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border-color: var(--color-error-500);
+}
+
+:global([data-theme="dark"]) .insightItem,
+:global(.dark) .insightItem {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .insightAction,
+:global(.dark) .insightAction {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .insightAction:hover,
+:global(.dark) .insightAction:hover {
+  color: var(--color-primary-300);
+}
+
+:global([data-theme="dark"]) .insightAction:focus,
+:global(.dark) .insightAction:focus {
+  outline-color: var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .iconSkeleton,
+:global([data-theme="dark"]) .labelSkeleton,
+:global([data-theme="dark"]) .valueSkeleton,
+:global([data-theme="dark"]) .changeSkeleton,
+:global([data-theme="dark"]) .titleSkeleton,
+:global([data-theme="dark"]) .chartSkeleton,
+:global([data-theme="dark"]) .nameSkeleton,
+:global([data-theme="dark"]) .badgeSkeleton,
+:global([data-theme="dark"]) .scoreSkeleton,
+:global([data-theme="dark"]) .metricRowSkeleton,
+:global([data-theme="dark"]) .insightIconSkeleton,
+:global([data-theme="dark"]) .insightTitleSkeleton,
+:global([data-theme="dark"]) .insightDescSkeleton,
+:global([data-theme="dark"]) .insightActionSkeleton,
+:global(.dark) .iconSkeleton,
+:global(.dark) .labelSkeleton,
+:global(.dark) .valueSkeleton,
+:global(.dark) .changeSkeleton,
+:global(.dark) .titleSkeleton,
+:global(.dark) .chartSkeleton,
+:global(.dark) .nameSkeleton,
+:global(.dark) .badgeSkeleton,
+:global(.dark) .scoreSkeleton,
+:global(.dark) .metricRowSkeleton,
+:global(.dark) .insightIconSkeleton,
+:global(.dark) .insightTitleSkeleton,
+:global(.dark) .insightDescSkeleton,
+:global(.dark) .insightActionSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+}

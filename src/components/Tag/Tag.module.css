@@ -1,0 +1,257 @@
+/**
+ * Tag Component Styles
+ * Category: Foundation
+ * Tag/chip elements for labels and filters
+ */
+
+/* ========================================
+   BASE TAG
+   ======================================== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 4px 12px;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+  border-radius: var(--radius-base);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: all var(--duration-fast) var(--ease-out);
+
+  /* Default colors */
+  background: var(--surface-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+
+/* ========================================
+   COLOR VARIANTS
+   ======================================== */
+
+.default {
+  background: var(--surface-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+
+.primary {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+  border-color: var(--active-border);
+}
+
+.success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border-color: var(--success-border);
+}
+
+.warning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border-color: var(--warning-border);
+}
+
+.error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border-color: var(--error-border);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.sm {
+  padding: 2px 8px;
+  font-size: var(--font-size-label-small);
+  gap: 2px;
+}
+
+.lg {
+  padding: 6px 16px;
+  font-size: var(--font-size-body-medium);
+  gap: var(--spacing-2);
+}
+
+/* ========================================
+   REMOVABLE TAG
+   ======================================== */
+
+.removable {
+  padding-right: 8px;
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: currentColor;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.remove:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.remove:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.sm .remove {
+  width: 14px;
+  height: 14px;
+}
+
+.lg .remove {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========================================
+   CLICKABLE TAG
+   ======================================== */
+
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.clickable:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.clickable:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   ICON
+   ======================================== */
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.sm .icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ========================================
+   TAG GROUP
+   ======================================== */
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .tag,
+:global(.dark) .tag {
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .default,
+:global(.dark) .default {
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .primary,
+:global(.dark) .primary {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+  border-color: var(--active-border);
+}
+
+:global([data-theme="dark"]) .success,
+:global(.dark) .success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border-color: var(--success-border);
+}
+
+:global([data-theme="dark"]) .warning,
+:global(.dark) .warning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border-color: var(--warning-border);
+}
+
+:global([data-theme="dark"]) .error,
+:global(.dark) .error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border-color: var(--error-border);
+}
+
+:global([data-theme="dark"]) .remove:hover,
+:global(.dark) .remove:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+:global([data-theme="dark"]) .clickable:hover,
+:global(.dark) .clickable:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .clickable:focus-visible,
+:global(.dark) .clickable:focus-visible {
+  outline-color: var(--focus-ring-color);
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .tag,
+  .remove,
+  .clickable {
+    transition-duration: 0.01ms !important;
+  }
+
+  .clickable:hover {
+    transform: none;
+  }
+
+  .clickable:active {
+    transform: none;
+  }
+}

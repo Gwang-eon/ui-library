@@ -1,0 +1,401 @@
+/* Transfer Component Styles */
+
+/* ========================================
+   TRANSFER CONTAINER
+   ======================================== */
+
+.transfer {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: stretch;
+}
+
+/* ========================================
+   TRANSFER PANEL
+   ======================================== */
+
+.transferPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.transferHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-5);
+  background: var(--surface-secondary);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.transferTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.transferCount {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ========================================
+   TRANSFER SEARCH
+   ======================================== */
+
+.transferSearch {
+  position: relative;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.transferSearchIcon {
+  position: absolute;
+  left: calc(var(--spacing-4) + var(--spacing-3));
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.transferSearchInput {
+  width: 100%;
+  height: 32px;
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) calc(var(--spacing-4) + var(--spacing-9));
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.transferSearchInput:focus {
+  outline: none;
+  border-color: var(--focus-border-color);
+  box-shadow: 0 0 0 3px var(--selected-bg);
+}
+
+.transferSearchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+.transferSearchInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   SELECT ALL
+   ======================================== */
+
+.transferSelectAll {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-tertiary);
+}
+
+.transferSelectAllLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========================================
+   TRANSFER BODY & LIST
+   ======================================== */
+
+.transferBody {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 200px;
+  max-height: 400px;
+}
+
+.transferBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transferBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transferBody::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 4px;
+}
+
+.transferList {
+  padding: var(--spacing-2);
+}
+
+.transferItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.transferItem:hover {
+  background: var(--surface-secondary);
+}
+
+.transferItem.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.transferCheckbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.transferCheckbox:disabled {
+  cursor: not-allowed;
+}
+
+.transferItemLabel {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Empty State */
+.transferListEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.transferEmpty {
+  text-align: center;
+  color: var(--text-tertiary);
+}
+
+.transferEmpty svg {
+  margin: 0 auto var(--spacing-3);
+  display: block;
+}
+
+.transferEmpty p {
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+/* ========================================
+   TRANSFER FOOTER
+   ======================================== */
+
+.transferFooter {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-top: 1px solid var(--border-default);
+  background: var(--surface-tertiary);
+}
+
+.transferFooterText {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   TRANSFER CONTROLS
+   ======================================== */
+
+.transferControls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.transferControls button {
+  min-width: 40px;
+}
+
+.transferControlsCompact {
+  gap: var(--spacing-1);
+}
+
+.transferControlsCompact button {
+  min-width: 32px;
+}
+
+/* ========================================
+   COMPACT TRANSFER
+   ======================================== */
+
+.transferCompact .transferPanel {
+  min-width: 180px;
+}
+
+.transferCompact .transferHeader {
+  padding: var(--spacing-3) var(--spacing-4);
+}
+
+.transferCompact .transferTitle {
+  font-size: var(--font-size-sm);
+}
+
+.transferCompact .transferCount {
+  font-size: var(--font-size-xs);
+}
+
+.transferCompact .transferBody {
+  min-height: 150px;
+  max-height: 250px;
+}
+
+.transferCompact .transferItem {
+  padding: var(--spacing-1-5) var(--spacing-2);
+}
+
+.transferCompact .transferItemLabel {
+  font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .transferPanel,
+:global(.dark) .transferPanel {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .transferHeader,
+:global(.dark) .transferHeader {
+  background: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .transferSearch,
+:global(.dark) .transferSearch {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .transferSearchInput,
+:global(.dark) .transferSearchInput {
+  background: var(--surface-secondary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .transferSearchInput:focus,
+:global(.dark) .transferSearchInput:focus {
+  border-color: var(--focus-border-color);
+  box-shadow: 0 0 0 3px var(--selected-bg);
+}
+
+:global([data-theme="dark"]) .transferSelectAll,
+:global(.dark) .transferSelectAll {
+  background: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .transferItem:hover,
+:global(.dark) .transferItem:hover {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .transferBody::-webkit-scrollbar-track,
+:global(.dark) .transferBody::-webkit-scrollbar-track {
+  background: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .transferBody::-webkit-scrollbar-thumb,
+:global(.dark) .transferBody::-webkit-scrollbar-thumb {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .transferBody::-webkit-scrollbar-thumb:hover,
+:global(.dark) .transferBody::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-quinary);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .transfer {
+    flex-direction: column;
+  }
+
+  .transferControls {
+    flex-direction: row;
+    justify-content: center;
+    align-self: stretch;
+  }
+
+  .transferControls button svg {
+    transform: rotate(90deg);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .transferSearchInput,
+  .transferItem {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .transferPanel {
+    border-width: 2px;
+  }
+
+  .transferSearchInput:focus {
+    border-width: 2px;
+  }
+}
+
+/* ========================================
+   PRINT
+   ======================================== */
+
+@media print {
+  .transferControls {
+    display: none;
+  }
+
+  .transferSearch {
+    display: none;
+  }
+
+  .transferCheckbox {
+    display: none;
+  }
+}

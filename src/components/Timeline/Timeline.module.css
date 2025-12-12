@@ -1,0 +1,598 @@
+/**
+ * Timeline Component Styles
+ * Category: Data Display
+ * Vertical timeline for chronological events and milestones
+ */
+
+/* ========================================
+   BASE TIMELINE
+   ======================================== */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  position: relative;
+  padding-left: 0;
+}
+
+/* Vertical connecting line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-default);
+}
+
+/* ========================================
+   TIMELINE ITEM
+   ======================================== */
+
+.timelineItem {
+  display: flex;
+  gap: var(--spacing-4);
+  position: relative;
+  padding-left: calc(24px + var(--spacing-4));
+  margin-left: 0;
+}
+
+/* ========================================
+   TIMELINE MARKER
+   ======================================== */
+
+.timelineMarker {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface-primary);
+  border: 2px solid var(--border-default);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.timelineMarker svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   TIMELINE CONTENT
+   ======================================== */
+
+.timelineContent {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  padding: var(--spacing-4);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.timelineTime {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-2);
+  font-weight: var(--font-weight-medium);
+}
+
+.timelineTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-2);
+  line-height: 1.5;
+}
+
+.timelineDescription {
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.timelineMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-3);
+}
+
+/* ========================================
+   TIMELINE VARIANTS
+   ======================================== */
+
+/* Success */
+.timelineItem.timelineSuccess .timelineMarker {
+  background: var(--color-success-50);
+  border-color: var(--color-success-500);
+}
+
+.timelineItem.timelineSuccess .timelineMarker svg {
+  color: var(--color-success-600);
+}
+
+.timelineItem.timelineSuccess .timelineTitle {
+  color: var(--color-success-700);
+}
+
+/* Error */
+.timelineItem.timelineError .timelineMarker {
+  background: var(--color-error-50);
+  border-color: var(--color-error-500);
+}
+
+.timelineItem.timelineError .timelineMarker svg {
+  color: var(--color-error-600);
+}
+
+.timelineItem.timelineError .timelineTitle {
+  color: var(--color-error-700);
+}
+
+/* Warning */
+.timelineItem.timelineWarning .timelineMarker {
+  background: var(--color-warning-50);
+  border-color: var(--color-warning-500);
+}
+
+.timelineItem.timelineWarning .timelineMarker svg {
+  color: var(--color-warning-600);
+}
+
+.timelineItem.timelineWarning .timelineTitle {
+  color: var(--color-warning-700);
+}
+
+/* Info */
+.timelineItem.timelineInfo .timelineMarker {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-500);
+}
+
+.timelineItem.timelineInfo .timelineMarker svg {
+  color: var(--color-primary-600);
+}
+
+.timelineItem.timelineInfo .timelineTitle {
+  color: var(--color-primary-700);
+}
+
+/* Primary */
+.timelineItem.timelinePrimary .timelineMarker {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-600);
+}
+
+.timelineItem.timelinePrimary .timelineMarker svg {
+  color: var(--surface-primary);
+}
+
+/* ========================================
+   COMPACT TIMELINE
+   ======================================== */
+
+.timeline.timelineCompact {
+  gap: var(--spacing-3);
+}
+
+.timeline.timelineCompact .timelineMarker {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.timeline.timelineCompact .timelineMarker svg {
+  width: 10px;
+  height: 10px;
+}
+
+.timeline.timelineCompact::before {
+  left: 8px;
+  width: 2px;
+}
+
+.timeline.timelineCompact .timelineItem {
+  gap: var(--spacing-3);
+  padding-left: calc(16px + var(--spacing-3));
+}
+
+.timeline.timelineCompact .timelineTitle {
+  font-size: var(--font-size-body-small);
+  margin-bottom: var(--spacing-1);
+}
+
+.timeline.timelineCompact .timelineTime {
+  font-size: var(--font-size-body-xsmall);
+  margin-bottom: 0;
+}
+
+.timeline.timelineCompact .timelineDescription {
+  font-size: var(--font-size-body-small);
+}
+
+/* ========================================
+   ALTERNATE TIMELINE
+   ======================================== */
+
+.timeline.timelineAlternate {
+  padding-left: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6) 0;
+  column-gap: 0;
+  row-gap: var(--spacing-6);
+}
+
+/* Center line */
+.timeline.timelineAlternate::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+  background: var(--border-default);
+  z-index: 1;
+}
+
+.timeline.timelineAlternate .timelineItem {
+  display: block;
+  padding-left: 0;
+  position: relative;
+}
+
+/* Odd items (left side) */
+.timeline.timelineAlternate .timelineItem:nth-child(odd) {
+  grid-column: 1;
+  padding-right: var(--spacing-8);
+  padding-left: 0;
+}
+
+/* Even items (right side) */
+.timeline.timelineAlternate .timelineItem:nth-child(even) {
+  grid-column: 2;
+  padding-left: var(--spacing-8);
+  padding-right: 0;
+}
+
+/* Marker on center line */
+.timeline.timelineAlternate .timelineMarker {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-primary);
+  border: 3px solid var(--border-default);
+}
+
+.timeline.timelineAlternate .timelineItem:nth-child(odd) .timelineMarker {
+  right: 0;
+  transform: translateX(50%);
+  left: auto;
+}
+
+.timeline.timelineAlternate .timelineItem:nth-child(even) .timelineMarker {
+  left: 0;
+  transform: translateX(-50%);
+  right: auto;
+}
+
+/* Content alignment */
+.timeline.timelineAlternate .timelineContent {
+  display: block;
+}
+
+.timeline.timelineAlternate .timelineItem:nth-child(odd) .timelineContent {
+  text-align: right;
+}
+
+.timeline.timelineAlternate .timelineItem:nth-child(even) .timelineContent {
+  text-align: left;
+}
+
+/* ========================================
+   INTERACTIVE TIMELINE
+   ======================================== */
+
+.timelineItem.timelineInteractive {
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.timelineItem.timelineInteractive:hover {
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  margin-left: calc(-1 * var(--spacing-3));
+  padding-left: var(--spacing-3);
+  padding-right: var(--spacing-3);
+  margin-right: calc(-1 * var(--spacing-3));
+}
+
+.timelineItem.timelineInteractive:hover .timelineMarker {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
+}
+
+.timelineItem.timelineInteractive:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .timeline::before,
+:global(.dark) .timeline::before {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .timelineMarker,
+:global(.dark) .timelineMarker {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .timelineMarker svg,
+:global(.dark) .timelineMarker svg {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineContent,
+:global(.dark) .timelineContent {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .timelineTime,
+:global(.dark) .timelineTime {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineTitle,
+:global(.dark) .timelineTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .timelineDescription,
+:global(.dark) .timelineDescription {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineSuccess .timelineMarker,
+:global(.dark) .timelineItem.timelineSuccess .timelineMarker {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: var(--color-success-600);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineSuccess .timelineMarker svg,
+:global(.dark) .timelineItem.timelineSuccess .timelineMarker svg {
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineSuccess .timelineTitle,
+:global(.dark) .timelineItem.timelineSuccess .timelineTitle {
+  color: var(--color-success-300);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineError .timelineMarker,
+:global(.dark) .timelineItem.timelineError .timelineMarker {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--color-error-600);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineError .timelineMarker svg,
+:global(.dark) .timelineItem.timelineError .timelineMarker svg {
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineError .timelineTitle,
+:global(.dark) .timelineItem.timelineError .timelineTitle {
+  color: var(--color-error-300);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineWarning .timelineMarker,
+:global(.dark) .timelineItem.timelineWarning .timelineMarker {
+  background: rgba(251, 191, 36, 0.15);
+  border-color: var(--color-warning-600);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineWarning .timelineMarker svg,
+:global(.dark) .timelineItem.timelineWarning .timelineMarker svg {
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineWarning .timelineTitle,
+:global(.dark) .timelineItem.timelineWarning .timelineTitle {
+  color: var(--color-warning-300);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineInfo .timelineMarker,
+:global(.dark) .timelineItem.timelineInfo .timelineMarker {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--color-primary-600);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineInfo .timelineMarker svg,
+:global(.dark) .timelineItem.timelineInfo .timelineMarker svg {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineInfo .timelineTitle,
+:global(.dark) .timelineItem.timelineInfo .timelineTitle {
+  color: var(--color-primary-300);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelinePrimary .timelineMarker,
+:global(.dark) .timelineItem.timelinePrimary .timelineMarker {
+  background: var(--color-primary-600);
+  border-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineInteractive:hover,
+:global(.dark) .timelineItem.timelineInteractive:hover {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineItem.timelineInteractive:focus-visible,
+:global(.dark) .timelineItem.timelineInteractive:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 767px) {
+  .timeline {
+    padding-left: 0;
+  }
+
+  .timeline::before {
+    left: 10px;
+  }
+
+  .timelineItem {
+    gap: var(--spacing-3);
+    padding-left: calc(20px + var(--spacing-3));
+  }
+
+  .timeline.timelineAlternate {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+  }
+
+  .timeline.timelineAlternate::before {
+    left: 10px;
+    transform: none;
+  }
+
+  .timeline.timelineAlternate .timelineItem {
+    width: 100%;
+    padding-right: 0;
+    padding-left: calc(20px + var(--spacing-3));
+  }
+
+  .timeline.timelineAlternate .timelineItem:nth-child(odd) {
+    padding-left: calc(20px + var(--spacing-3));
+    padding-right: 0;
+  }
+
+  .timeline.timelineAlternate .timelineItem:nth-child(even) {
+    padding-left: calc(20px + var(--spacing-3));
+    padding-right: 0;
+  }
+
+  .timeline.timelineAlternate .timelineItem:nth-child(odd) .timelineContent,
+  .timeline.timelineAlternate .timelineItem:nth-child(even) .timelineContent {
+    text-align: left;
+  }
+
+  .timeline.timelineAlternate .timelineMarker {
+    position: absolute;
+    left: 0;
+    transform: none;
+  }
+
+  .timelineMarker {
+    width: 20px;
+    height: 20px;
+  }
+
+  .timelineMarker svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .timelineTitle {
+    font-size: var(--font-size-body-small);
+  }
+
+  .timelineDescription {
+    font-size: var(--font-size-body-small);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .timeline::before {
+    background: #000000;
+  }
+
+  .timelineMarker {
+    border-color: var(--text-primary);
+    background: var(--surface-primary);
+  }
+
+  .timelineItem.timelineInteractive:hover {
+    background: none;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 0;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .timelineMarker,
+  .timelineItem.timelineInteractive {
+    transition: none;
+  }
+
+  .timelineItem.timelineInteractive:hover .timelineMarker {
+    transform: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .timeline::before {
+    background: currentColor;
+    width: 3px;
+  }
+
+  .timelineMarker {
+    border-width: 3px;
+  }
+
+  .timelineItem.timelineSuccess .timelineMarker {
+    border-color: var(--color-success-700);
+  }
+
+  .timelineItem.timelineError .timelineMarker {
+    border-color: var(--color-error-700);
+  }
+
+  .timelineItem.timelineWarning .timelineMarker {
+    border-color: var(--color-warning-700);
+  }
+
+  .timelineItem.timelineInfo .timelineMarker {
+    border-color: var(--color-primary-700);
+  }
+}

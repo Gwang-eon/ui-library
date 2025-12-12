@@ -1,0 +1,221 @@
+/**
+ * Action Sheet Component
+ * Category: Mobile
+ * Mobile-native action sheet for displaying a list of actions
+ */
+
+/* ==================== Action Sheet Container ==================== */
+
+.actionSheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  transform: translateY(100%);
+  transition: transform var(--duration-base) var(--ease-out);
+  z-index: var(--z-drawer);
+  padding: var(--spacing-4);
+  padding-bottom: calc(var(--spacing-4) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ==================== Action Sheet Open State ==================== */
+
+.actionSheet.open {
+  transform: translateY(0);
+}
+
+/* ==================== Action Sheet Content (main actions) ==================== */
+
+.actionSheetContent {
+  background: var(--surface-primary);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  margin-bottom: var(--spacing-2);
+}
+
+/* ==================== Action Sheet Header ==================== */
+
+.actionSheetHeader {
+  padding: var(--spacing-4) var(--spacing-5);
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.actionSheetTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.actionSheetDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ==================== Action Sheet Items ==================== */
+
+.actionSheetItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  min-height: 56px;
+  padding: var(--spacing-2) var(--spacing-5);
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--color-primary-600);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background var(--duration-instant) var(--ease-out);
+  width: 100%;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.actionSheetHeader + .actionSheetItem:first-of-type {
+  border-top: none;
+}
+
+.actionSheetItem:first-child {
+  border-top: none;
+}
+
+.actionSheetItem:active {
+  background: var(--surface-secondary);
+}
+
+.actionIcon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2px;
+}
+
+/* ==================== Danger Action ==================== */
+
+.actionSheetItem.danger {
+  color: var(--color-danger-600);
+}
+
+/* ==================== Disabled Action ==================== */
+
+.actionSheetItem:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.actionSheetItem:disabled:active {
+  background: transparent;
+}
+
+/* ==================== Cancel Button (separated) ==================== */
+
+.actionSheetCancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: var(--spacing-2) var(--spacing-5);
+  background: var(--surface-primary);
+  border: none;
+  border-radius: var(--radius-xl);
+  color: var(--text-primary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background var(--duration-instant) var(--ease-out);
+  width: 100%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.actionSheetCancel:active {
+  background: var(--surface-secondary);
+}
+
+/* ==================== Backdrop ==================== */
+
+.actionSheetBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-default);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-base) var(--ease-out), visibility var(--duration-base);
+  z-index: calc(var(--z-drawer) - 1);
+}
+
+.actionSheetBackdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==================== Dark Mode ==================== */
+
+body.dark-mode .actionSheetContent,
+body[class*='theme-dark'] .actionSheetContent,
+body.dark-mode .actionSheetCancel,
+body[class*='theme-dark'] .actionSheetCancel {
+  background: var(--surface-primary);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .actionSheetItem,
+body[class*='theme-dark'] .actionSheetItem {
+  color: var(--color-primary-400);
+}
+
+body.dark-mode .actionSheetItem.danger,
+body[class*='theme-dark'] .actionSheetItem.danger {
+  color: var(--color-danger-400);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .actionSheet,
+  .actionSheetBackdrop {
+    transition: none;
+  }
+}
+
+/* ==================== Very Small Screens ==================== */
+
+@media (max-width: 374px) {
+  .actionSheet {
+    padding: var(--spacing-2);
+    padding-bottom: calc(var(--spacing-2) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .actionSheetHeader {
+    padding: var(--spacing-2) var(--spacing-4);
+  }
+
+  .actionSheetItem,
+  .actionSheetCancel {
+    padding: var(--spacing-1) var(--spacing-4);
+    font-size: var(--font-size-body-small);
+  }
+}
+
+/* ==================== Landscape Orientation ==================== */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .actionSheet {
+    padding: var(--spacing-2);
+    padding-bottom: calc(var(--spacing-2) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .actionSheetItem,
+  .actionSheetCancel {
+    min-height: 44px;
+  }
+}

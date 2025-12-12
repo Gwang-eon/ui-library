@@ -1,0 +1,465 @@
+/**
+ * Select Component Styles
+ * Custom Select with dropdown
+ */
+
+/* ========================================
+   INPUT GROUP
+   ======================================== */
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  width: auto;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+/* ========================================
+   LABEL
+   ======================================== */
+
+.input-label {
+  display: block;
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-1);
+  line-height: var(--line-height-label-medium);
+}
+
+.required {
+  color: var(--error-text);
+  margin-left: 2px;
+}
+
+/* ========================================
+   CUSTOM SELECT CONTAINER
+   ======================================== */
+
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ========================================
+   NATIVE SELECT (HIDDEN)
+   ======================================== */
+
+.native-select {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+/* ========================================
+   CUSTOM SELECT TRIGGER
+   ======================================== */
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+  width: 100%;
+  min-height: 40px;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-medium);
+  line-height: var(--line-height-body-medium);
+  color: var(--text-primary);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.custom-select-trigger:hover:not(.disabled) {
+  border-color: var(--input-border-hover);
+}
+
+.custom-select-trigger:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: var(--focus-ring-shadow);
+}
+
+.custom-select.disabled .custom-select-trigger {
+  cursor: not-allowed;
+  background-color: var(--input-disabled-bg);
+  border-color: var(--input-disabled-border);
+  color: var(--input-disabled-text);
+}
+
+.custom-select.error .custom-select-trigger {
+  border-color: var(--input-error-border);
+}
+
+.custom-select.error .custom-select-trigger:focus {
+  border-color: var(--input-error-border);
+  box-shadow: 0 0 0 3px var(--error-bg);
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.select-sm .custom-select-trigger {
+  min-height: 32px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-small);
+}
+
+.select-md .custom-select-trigger {
+  min-height: 40px;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-medium);
+}
+
+.select-lg .custom-select-trigger {
+  min-height: 48px;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-large);
+}
+
+/* ========================================
+   TRIGGER CONTENT
+   ======================================== */
+
+.trigger-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-select-trigger.placeholder .trigger-content {
+  color: var(--input-placeholder);
+}
+
+/* ========================================
+   SELECT ICON (CHEVRON)
+   ======================================== */
+
+.select-icon {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.custom-select.open .select-icon {
+  transform: rotate(180deg);
+}
+
+.custom-select.disabled .select-icon {
+  color: var(--input-disabled-text);
+}
+
+/* ========================================
+   DROPDOWN
+   ======================================== */
+
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    visibility 0s linear var(--duration-fast);
+}
+
+.custom-select.open .custom-select-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+/* Scrollbar styling */
+.custom-select-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-track {
+  background: var(--surface-secondary);
+  border-radius: var(--radius-base);
+}
+
+.custom-select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-base);
+}
+
+.custom-select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ========================================
+   OPTIONS
+   ======================================== */
+
+.custom-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.custom-select-option:hover {
+  background-color: var(--surface-secondary);
+}
+
+.custom-select-option.focused {
+  background-color: var(--surface-secondary);
+  outline: 2px solid var(--focus-border-color);
+  outline-offset: -2px;
+}
+
+.custom-select-option.selected {
+  background-color: var(--selected-bg);
+  color: var(--selected-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.custom-select-option.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ========================================
+   OPTION ICON
+   ======================================== */
+
+.option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* ========================================
+   GROUP LABEL
+   ======================================== */
+
+.custom-select-group-label {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-label-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--surface-secondary);
+  border-top: 1px solid var(--border-default);
+}
+
+.custom-select-group-label:first-child {
+  border-top: none;
+}
+
+/* ========================================
+   HELPER TEXT & ERROR MESSAGES
+   ======================================== */
+
+.input-message {
+  display: block;
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-top: var(--spacing-1);
+  line-height: var(--line-height-body-small);
+}
+
+.input-error {
+  color: var(--error-text);
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .custom-select-trigger {
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+
+  .custom-select-dropdown {
+    max-height: 240px;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-select-trigger,
+  .select-icon,
+  .custom-select-dropdown,
+  .custom-select-option {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .custom-select-trigger {
+    border-width: 2px;
+  }
+
+  .custom-select-option.selected {
+    outline: 2px solid currentColor;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .input-label,
+:global(.dark) .input-label {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .required,
+:global(.dark) .required {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .input-message,
+:global(.dark) .input-message {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .input-error,
+:global(.dark) .input-error {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .custom-select-trigger,
+:global(.dark) .custom-select-trigger {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .custom-select-trigger:hover:not(.disabled),
+:global(.dark) .custom-select-trigger:hover:not(.disabled) {
+  border-color: var(--focus-border-color);
+}
+
+:global([data-theme="dark"]) .custom-select-trigger:focus,
+:global(.dark) .custom-select-trigger:focus {
+  border-color: var(--focus-border-color);
+  box-shadow: var(--focus-ring-shadow);
+}
+
+:global([data-theme="dark"]) .custom-select.disabled .custom-select-trigger,
+:global(.dark) .custom-select.disabled .custom-select-trigger {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-subtle);
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .custom-select.error .custom-select-trigger:focus,
+:global(.dark) .custom-select.error .custom-select-trigger:focus {
+  box-shadow: 0 0 0 3px var(--error-bg);
+}
+
+:global([data-theme="dark"]) .custom-select-trigger.placeholder .trigger-content,
+:global(.dark) .custom-select-trigger.placeholder .trigger-content {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .select-icon,
+:global(.dark) .select-icon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .custom-select-dropdown,
+:global(.dark) .custom-select-dropdown {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+:global([data-theme="dark"]) .custom-select-dropdown::-webkit-scrollbar-track,
+:global(.dark) .custom-select-dropdown::-webkit-scrollbar-track {
+  background: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .custom-select-dropdown::-webkit-scrollbar-thumb,
+:global(.dark) .custom-select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .custom-select-dropdown::-webkit-scrollbar-thumb:hover,
+:global(.dark) .custom-select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-quinary);
+}
+
+:global([data-theme="dark"]) .custom-select-option,
+:global(.dark) .custom-select-option {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .custom-select-option:hover:not(.disabled),
+:global(.dark) .custom-select-option:hover:not(.disabled) {
+  background-color: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .custom-select-option.selected,
+:global(.dark) .custom-select-option.selected {
+  background-color: var(--selected-bg);
+  color: var(--selected-text);
+}
+
+:global([data-theme="dark"]) .custom-select-option.disabled,
+:global(.dark) .custom-select-option.disabled {
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .custom-select-group-label,
+:global(.dark) .custom-select-group-label {
+  color: var(--text-tertiary);
+  background-color: var(--surface-tertiary);
+  border-top-color: var(--border-default);
+}

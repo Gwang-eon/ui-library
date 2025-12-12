@@ -1,0 +1,114 @@
+/**
+ * VirtualList Component Styles
+ * Category: Mobile
+ * High-performance virtualized list for large datasets
+ */
+
+/* ==================== Container ==================== */
+
+.virtualList {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  will-change: scroll-position;
+}
+
+/* Hide scrollbar on mobile for cleaner look */
+.virtualList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.virtualList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.virtualList::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 2px;
+}
+
+.virtualList::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* ==================== Inner Container ==================== */
+
+.innerContainer {
+  position: relative;
+  width: 100%;
+}
+
+/* ==================== Items Container ==================== */
+
+.itemsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+/* ==================== Item ==================== */
+
+.item {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==================== Empty State ==================== */
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== Touch Optimization ==================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .virtualList::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+
+  .virtualList {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .virtualList::-webkit-scrollbar-thumb,
+:global(.dark) .virtualList::-webkit-scrollbar-thumb {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .virtualList::-webkit-scrollbar-thumb:hover,
+:global(.dark) .virtualList::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-quaternary);
+}
+
+body.dark-mode .virtualList::-webkit-scrollbar-thumb,
+body[data-theme='dark'] .virtualList::-webkit-scrollbar-thumb {
+  background: var(--surface-quaternary);
+}
+
+body.dark-mode .virtualList::-webkit-scrollbar-thumb:hover,
+body[data-theme='dark'] .virtualList::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-quaternary);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .itemsContainer {
+    will-change: auto;
+  }
+
+  .virtualList {
+    scroll-behavior: auto;
+  }
+}

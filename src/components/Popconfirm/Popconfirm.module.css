@@ -1,0 +1,328 @@
+/* Popconfirm Component Styles */
+
+/* Container */
+.popconfirmContainer {
+  position: relative;
+  display: inline-block;
+}
+
+/* Popconfirm */
+.popconfirm {
+  position: absolute;
+  z-index: var(--z-popover);
+  visibility: hidden;
+  opacity: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.popconfirmShow {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Popconfirm Content */
+.popconfirmContent {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-4);
+  min-width: 280px;
+  max-width: 360px;
+}
+
+/* Popconfirm Message */
+.popconfirmMessage {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.popconfirmIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popconfirmIconInfo {
+  color: var(--info-text);
+}
+
+.popconfirmIconSuccess {
+  color: var(--success-text);
+}
+
+.popconfirmIconWarning {
+  color: var(--warning-text);
+}
+
+.popconfirmIconDanger {
+  color: var(--error-text);
+}
+
+/* Popconfirm Title */
+.popconfirmTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+  line-height: 1.4;
+}
+
+/* Popconfirm Description */
+.popconfirmDescription {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Popconfirm Actions */
+.popconfirmActions {
+  display: flex;
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+}
+
+/* Placement Variants */
+/* Bottom (default) */
+.popconfirm {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+
+.popconfirmShow {
+  transform: translateX(-50%) scale(1);
+}
+
+.popconfirm::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-color: var(--border-default);
+}
+
+.popconfirm::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-bottom-color: var(--surface-primary);
+}
+
+/* Top */
+.popconfirmTop {
+  top: auto;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+}
+
+.popconfirmTop.popconfirmShow {
+  transform: translateX(-50%) scale(1);
+}
+
+.popconfirmTop::before {
+  top: 100%;
+  bottom: auto;
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-top-color: var(--border-default);
+}
+
+.popconfirmTop::after {
+  top: calc(100% + 1px);
+  bottom: auto;
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-top-color: var(--surface-primary);
+}
+
+/* Left */
+.popconfirmLeft {
+  top: 50%;
+  left: auto;
+  right: calc(100% + 8px);
+  transform: translateY(-50%) scale(0.95);
+}
+
+.popconfirmLeft.popconfirmShow {
+  transform: translateY(-50%) scale(1);
+}
+
+.popconfirmLeft::before {
+  top: 50%;
+  left: 100%;
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-left-color: var(--border-default);
+}
+
+.popconfirmLeft::after {
+  top: 50%;
+  left: calc(100% + 1px);
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-left-color: var(--surface-primary);
+}
+
+/* Right */
+.popconfirmRight {
+  top: 50%;
+  left: calc(100% + 8px);
+  transform: translateY(-50%) scale(0.95);
+}
+
+.popconfirmRight.popconfirmShow {
+  transform: translateY(-50%) scale(1);
+}
+
+.popconfirmRight::before {
+  top: 50%;
+  right: 100%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-right-color: var(--border-default);
+}
+
+.popconfirmRight::after {
+  top: 50%;
+  right: calc(100% + 1px);
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-bottom-color: transparent;
+  border-right-color: var(--surface-primary);
+}
+
+/* Dark Mode */
+:global([data-theme="dark"]) .popconfirmContent,
+:global(.dark) .popconfirmContent {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Arrow */
+:global([data-theme="dark"]) .popconfirm::after,
+:global([data-theme="dark"]) .popconfirmTop::after,
+:global([data-theme="dark"]) .popconfirmLeft::after,
+:global([data-theme="dark"]) .popconfirmRight::after,
+:global(.dark) .popconfirm::after,
+:global(.dark) .popconfirmTop::after,
+:global(.dark) .popconfirmLeft::after,
+:global(.dark) .popconfirmRight::after {
+  border-bottom-color: var(--border-subtle);
+  border-top-color: var(--border-subtle);
+  border-left-color: var(--border-subtle);
+  border-right-color: var(--border-subtle);
+}
+
+/* Text */
+:global([data-theme="dark"]) .popconfirmTitle,
+:global(.dark) .popconfirmTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .popconfirmDescription,
+:global(.dark) .popconfirmDescription {
+  color: var(--text-secondary);
+}
+
+/* Icons */
+:global([data-theme="dark"]) .popconfirmIconInfo,
+:global(.dark) .popconfirmIconInfo {
+  color: var(--info-text);
+}
+
+:global([data-theme="dark"]) .popconfirmIconSuccess,
+:global(.dark) .popconfirmIconSuccess {
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .popconfirmIconWarning,
+:global(.dark) .popconfirmIconWarning {
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .popconfirmIconDanger,
+:global(.dark) .popconfirmIconDanger {
+  color: var(--error-text);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .popconfirmContent {
+    min-width: 240px;
+    max-width: 300px;
+    padding: var(--spacing-3);
+  }
+
+  .popconfirmMessage {
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+  }
+
+  .popconfirmIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .popconfirmTitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .popconfirmDescription {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .popconfirm {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .popconfirmContent {
+    border-width: 2px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .popconfirm {
+    display: none;
+  }
+}

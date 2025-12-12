@@ -1,0 +1,107 @@
+/**
+ * Pagination
+ * @category Navigation
+ */
+
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.pagination > span {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-tertiary);
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  padding: 0 var(--spacing-1);
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--spacing-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background-color: var(--surface-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+  font-size: var(--font-size-body-medium);
+}
+
+.pagination-btn:hover:not(:disabled):not(.active) {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-strong);
+}
+
+.pagination-btn.active {
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
+  color: var(--palette-white);
+}
+
+.pagination-btn:focus-visible {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .pagination > span,
+:global(.dark) .pagination > span {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .pagination-ellipsis,
+:global(.dark) .pagination-ellipsis {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .pagination-btn,
+:global(.dark) .pagination-btn {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .pagination-btn:hover:not(:disabled):not(.active),
+:global(.dark) .pagination-btn:hover:not(:disabled):not(.active) {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .pagination-btn.active,
+:global(.dark) .pagination-btn.active {
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
+  color: white;
+}
+
+:global([data-theme="dark"]) .pagination-btn:focus-visible,
+:global(.dark) .pagination-btn:focus-visible {
+  outline-color: var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .pagination-info,
+:global(.dark) .pagination-info {
+  background-color: var(--surface-primary);
+  color: var(--text-secondary);
+}

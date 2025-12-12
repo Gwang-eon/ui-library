@@ -1,0 +1,457 @@
+/**
+ * Carousel Component Styles
+ * Category: Data Display
+ * Image and content slider with navigation controls and indicators
+ */
+
+/* ========================================
+   CAROUSEL CONTAINER
+   ======================================== */
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.carousel:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   CAROUSEL INNER CONTAINER
+   ======================================== */
+
+.carouselInner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ========================================
+   CAROUSEL ITEM
+   ======================================== */
+
+.carouselItem {
+  position: relative;
+  display: none;
+  width: 100%;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.carouselItem.active {
+  display: block;
+}
+
+.carouselItem img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ========================================
+   CAROUSEL SLIDE
+   ======================================== */
+
+.carouselSlide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   CAROUSEL CONTROLS
+   ======================================== */
+
+.carouselControl {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  z-index: 10;
+  opacity: 0;
+  padding: 0;
+}
+
+.carousel:hover .carouselControl {
+  opacity: 1;
+}
+
+.carouselControl:hover {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carouselControl:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carouselControl:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carouselControl:disabled:hover {
+  transform: translateY(-50%) scale(1);
+}
+
+.carouselControl svg {
+  width: 20px;
+  height: 20px;
+  color: var(--palette-white);
+}
+
+.carouselControlPrev {
+  left: var(--spacing-3);
+}
+
+.carouselControlNext {
+  right: var(--spacing-3);
+}
+
+.carouselControl:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   CAROUSEL INDICATORS
+   ======================================== */
+
+.carouselIndicators {
+  position: absolute;
+  bottom: var(--spacing-4);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--spacing-2);
+  z-index: 10;
+}
+
+.carouselIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  padding: 0;
+}
+
+.carouselIndicator:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
+}
+
+.carouselIndicator.active {
+  background: var(--palette-white);
+  width: 24px;
+  border-radius: 5px;
+}
+
+.carouselIndicator:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   CAROUSEL CAPTION
+   ======================================== */
+
+.carouselCaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-6);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: var(--palette-white);
+}
+
+.carouselCaption h3 {
+  margin: 0 0 var(--spacing-2) 0;
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--palette-white);
+}
+
+.carouselCaption p {
+  margin: 0;
+  font-size: var(--font-size-body-medium);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ========================================
+   CAROUSEL THUMBNAILS
+   ======================================== */
+
+.carouselThumbnailsContainer {
+  margin-top: var(--spacing-4);
+  display: flex;
+  gap: var(--spacing-3);
+  overflow-x: auto;
+  padding: var(--spacing-2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+
+.carouselThumbnailsContainer::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carouselThumbnailsContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.carouselThumbnailsContainer::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+.carouselThumbnailsContainer::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+.carouselThumbnail {
+  flex-shrink: 0;
+  width: 80px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--duration-fast) var(--ease-out);
+  opacity: 0.6;
+  padding: 0;
+  background: none;
+}
+
+.carouselThumbnail:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.carouselThumbnail.active {
+  border-color: var(--color-primary-500);
+  opacity: 1;
+}
+
+.carouselThumbnail:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.carouselThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========================================
+   FADE EFFECT VARIANT
+   ======================================== */
+
+.carouselFade .carouselItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.carouselFade .carouselItem.active {
+  position: relative;
+  opacity: 1;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .carousel,
+:global(.dark) .carousel {
+  background: var(--surface-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+:global([data-theme="dark"]) .carousel:focus-visible,
+:global(.dark) .carousel:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .carouselControl,
+:global(.dark) .carouselControl {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+:global([data-theme="dark"]) .carouselControl:hover,
+:global(.dark) .carouselControl:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+:global([data-theme="dark"]) .carouselControl:focus-visible,
+:global(.dark) .carouselControl:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .carouselIndicator,
+:global(.dark) .carouselIndicator {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+:global([data-theme="dark"]) .carouselIndicator:hover,
+:global(.dark) .carouselIndicator:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+:global([data-theme="dark"]) .carouselIndicator.active,
+:global(.dark) .carouselIndicator.active {
+  background: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .carouselIndicator:focus-visible,
+:global(.dark) .carouselIndicator:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .carouselThumbnail,
+:global(.dark) .carouselThumbnail {
+  border-color: transparent;
+}
+
+:global([data-theme="dark"]) .carouselThumbnail.active,
+:global(.dark) .carouselThumbnail.active {
+  border-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .carouselThumbnail:focus-visible,
+:global(.dark) .carouselThumbnail:focus-visible {
+  outline-color: var(--color-primary-400);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .carouselControl {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carouselControl svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .carouselControlPrev {
+    left: var(--spacing-2);
+  }
+
+  .carouselControlNext {
+    right: var(--spacing-2);
+  }
+
+  .carouselCaption {
+    padding: var(--spacing-4);
+  }
+
+  .carouselCaption h3 {
+    font-size: var(--font-size-heading-5);
+  }
+
+  .carouselCaption p {
+    font-size: var(--font-size-body-small);
+  }
+
+  .carouselThumbnail {
+    width: 60px;
+    height: 45px;
+  }
+
+  .carouselIndicators {
+    bottom: var(--spacing-2);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .carouselControl,
+  .carouselIndicators,
+  .carouselThumbnailsContainer {
+    display: none;
+  }
+
+  .carouselItem {
+    display: block;
+    page-break-inside: avoid;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .carouselItem,
+  .carouselControl,
+  .carouselIndicator,
+  .carouselThumbnail {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .carousel {
+    border: 2px solid currentColor;
+  }
+
+  .carouselControl {
+    border: 2px solid currentColor;
+    background: var(--surface-primary);
+  }
+
+  .carouselControl svg {
+    color: var(--text-primary);
+  }
+
+  .carouselIndicator {
+    border: 2px solid currentColor;
+  }
+
+  .carouselIndicator.active {
+    background: currentColor;
+  }
+
+  .carouselThumbnail.active {
+    border-width: 3px;
+  }
+}

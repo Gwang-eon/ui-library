@@ -1,0 +1,173 @@
+/**
+ * Pull to Refresh Component
+ * Category: Mobile
+ * Pull-down gesture to refresh content on mobile devices
+ */
+
+/* ==================== Pull to Refresh Container ==================== */
+
+.pullToRefresh {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ==================== Pull to Refresh Content ==================== */
+
+.pullToRefreshContent {
+  position: relative;
+  transition: transform var(--duration-base) var(--ease-out);
+  will-change: transform;
+}
+
+.pullToRefreshContent.pulling {
+  transition: none;
+}
+
+.pullToRefreshContent.refreshing {
+  transform: translateY(var(--mobile-pull-distance, 80px));
+}
+
+/* ==================== Pull Indicator ==================== */
+
+.pullIndicator {
+  position: absolute;
+  top: calc(var(--mobile-pull-distance, 80px) * -1);
+  left: 0;
+  right: 0;
+  height: var(--mobile-pull-distance, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.pullIndicator.visible {
+  opacity: 1;
+}
+
+/* ==================== Pull Icon ==================== */
+
+.pullIcon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-primary-600);
+  transition: transform var(--duration-fast) var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2.5px;
+}
+
+/* ==================== Pull States ==================== */
+
+.pullIndicator.statePulling .pullIcon {
+  transform: rotate(0deg);
+}
+
+.pullIndicator.stateRelease .pullIcon {
+  transform: rotate(180deg);
+}
+
+.pullIndicator.stateRefreshing .pullIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== Pull Text ==================== */
+
+.pullText {
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ==================== Spinner (Alternative to Icon) ==================== */
+
+.pullSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-primary-200);
+  border-top-color: var(--color-primary-600);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ==================== Compact Style ==================== */
+
+.styleCompact {
+  height: 48px;
+  gap: var(--spacing-1);
+}
+
+.styleCompact .pullIcon,
+.styleCompact .pullSpinner {
+  width: 24px;
+  height: 24px;
+}
+
+.styleCompact .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.styleCompact .pullText {
+  font-size: 12px;
+}
+
+.styleCompact .pullSpinner {
+  border-width: 2px;
+}
+
+/* ==================== Spinner Style ==================== */
+
+.styleSpinner {
+  /* Uses the pullSpinner element instead of icon */
+}
+
+/* ==================== Dark Mode ==================== */
+
+body.dark-mode .pullIcon,
+body[class*='theme-dark'] .pullIcon {
+  color: var(--color-primary-400);
+}
+
+body.dark-mode .pullSpinner,
+body[class*='theme-dark'] .pullSpinner {
+  border-color: var(--color-primary-800);
+  border-top-color: var(--color-primary-400);
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .pullToRefreshContent,
+  .pullIndicator,
+  .pullIcon {
+    transition: none;
+  }
+
+  .pullIcon,
+  .pullSpinner {
+    animation: none;
+  }
+}

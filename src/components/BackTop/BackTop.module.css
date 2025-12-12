@@ -1,0 +1,266 @@
+/**
+ * BackTop Component Styles
+ * Category: Navigation
+ * Button to scroll back to the top of the page
+ */
+
+/* ========================================
+   BASE BACKTOP
+   ======================================== */
+
+.backtop {
+  position: fixed;
+  right: var(--spacing-6);
+  bottom: var(--spacing-6);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-out);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  z-index: var(--z-sticky);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ========================================
+   VISIBLE STATE
+   ======================================== */
+
+.backtop.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ========================================
+   HOVER/ACTIVE/FOCUS STATES
+   ======================================== */
+
+.backtop:hover {
+  background: var(--active-bg);
+  border-color: var(--active-bg);
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.backtop:active {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.backtop:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   ICON
+   ======================================== */
+
+.backtop svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+/* ========================================
+   WITH TEXT
+   ======================================== */
+
+.backtop.withText {
+  width: auto;
+  padding: 0 var(--spacing-4);
+  gap: var(--spacing-2);
+}
+
+.backtop.withText span {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.backtop.sm {
+  width: 40px;
+  height: 40px;
+  right: var(--spacing-4);
+  bottom: var(--spacing-4);
+}
+
+.backtop.sm svg {
+  width: 16px;
+  height: 16px;
+}
+
+.backtop.sm.withText {
+  width: auto;
+  padding: 0 var(--spacing-3);
+  font-size: var(--font-size-body-small);
+}
+
+.backtop.lg {
+  width: 56px;
+  height: 56px;
+  right: var(--spacing-8);
+  bottom: var(--spacing-8);
+}
+
+.backtop.lg svg {
+  width: 24px;
+  height: 24px;
+}
+
+.backtop.lg.withText {
+  width: auto;
+  padding: 0 var(--spacing-5);
+  font-size: var(--font-size-body-large);
+}
+
+/* ========================================
+   VISUAL VARIANTS
+   ======================================== */
+
+.backtop.primary {
+  background: var(--active-bg);
+  border-color: var(--active-bg);
+  color: white;
+}
+
+.backtop.primary:hover {
+  background: var(--active-border);
+  border-color: var(--active-border);
+}
+
+.backtop.outline {
+  background: transparent;
+  border: 2px solid var(--border-default);
+  color: var(--text-primary);
+}
+
+.backtop.outline:hover {
+  background: var(--surface-primary);
+  border-color: var(--active-bg);
+  color: var(--accent-color);
+}
+
+/* ========================================
+   POSITION VARIANTS
+   ======================================== */
+
+.backtop.left {
+  right: auto;
+  left: var(--spacing-6);
+}
+
+.backtop.left.sm {
+  left: var(--spacing-4);
+}
+
+.backtop.left.lg {
+  left: var(--spacing-8);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .backtop,
+:global(.dark) .backtop {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .backtop:hover,
+:global(.dark) .backtop:hover {
+  background: var(--active-border);
+  border-color: var(--active-border);
+  color: var(--palette-white);
+}
+
+:global([data-theme="dark"]) .backtop:focus-visible,
+:global(.dark) .backtop:focus-visible {
+  outline-color: var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .backtop.outline,
+:global(.dark) .backtop.outline {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .backtop.outline:hover,
+:global(.dark) .backtop.outline:hover {
+  background: var(--surface-primary);
+  border-color: var(--active-border);
+  color: var(--accent-color);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .backtop {
+    width: 44px;
+    height: 44px;
+    right: var(--spacing-4);
+    bottom: var(--spacing-4);
+  }
+
+  .backtop svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .backtop.withText {
+    padding: 0 var(--spacing-3);
+    font-size: var(--font-size-body-small);
+  }
+
+  .backtop.sm {
+    width: 36px;
+    height: 36px;
+    right: var(--spacing-3);
+    bottom: var(--spacing-3);
+  }
+
+  .backtop.lg {
+    width: 52px;
+    height: 52px;
+    right: var(--spacing-5);
+    bottom: var(--spacing-5);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .backtop {
+    transition: opacity var(--duration-instant), visibility var(--duration-instant);
+    transform: none;
+  }
+
+  .backtop:hover {
+    transform: none;
+  }
+
+  .backtop:active {
+    transform: none;
+  }
+}

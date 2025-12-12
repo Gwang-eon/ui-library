@@ -1,0 +1,102 @@
+/**
+ * Skeleton Component
+ * @category Data Display
+ *
+ * Placeholder loading states that indicate content structure
+ * while data is being fetched
+ */
+
+/* ========================================
+   SKELETON BASE
+   ======================================== */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+/* ========================================
+   SKELETON VARIANTS
+   ======================================== */
+
+/* Line skeleton - for text lines */
+.skeletonLine {
+  height: 16px;
+  border-radius: var(--radius-sm);
+}
+
+/* Rectangle skeleton - for images, blocks */
+.skeletonRect {
+  border-radius: var(--radius-base);
+}
+
+/* Circle skeleton - for avatars, icons */
+.skeletonCircle {
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+/* Shimmer animation (default) */
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Pulse animation (alternative) */
+.skeletonPulse {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .skeleton,
+:global(.dark) .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+
+  .skeletonPulse {
+    animation: none;
+    opacity: 0.7;
+  }
+}

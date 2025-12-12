@@ -1,0 +1,106 @@
+/**
+ * Breadcrumb
+ * @category Navigation
+ */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-secondary);
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+/* Icons within breadcrumb items (e.g., home icon) */
+.breadcrumb-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breadcrumb-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.breadcrumb-separator {
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Separator icons (chevron, arrow, slash, etc.) */
+.breadcrumb-separator svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.breadcrumb-link {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.breadcrumb-link:hover {
+  color: var(--text-link-hover);
+  text-decoration: underline;
+}
+
+.breadcrumb-link:focus-visible {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.breadcrumb-current {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .breadcrumb,
+:global(.dark) .breadcrumb {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .breadcrumb-separator,
+:global(.dark) .breadcrumb-separator {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .breadcrumb-link,
+:global(.dark) .breadcrumb-link {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .breadcrumb-link:hover,
+:global(.dark) .breadcrumb-link:hover {
+  color: var(--accent-color);
+  opacity: 0.8;
+}
+
+:global([data-theme="dark"]) .breadcrumb-link:focus-visible,
+:global(.dark) .breadcrumb-link:focus-visible {
+  outline-color: var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .breadcrumb-current,
+:global(.dark) .breadcrumb-current {
+  color: var(--text-primary);
+}

@@ -1,0 +1,237 @@
+/**
+ * Picker Component Styles
+ * Category: Mobile
+ * iOS/Android style wheel picker
+ */
+
+/* ==================== Container ==================== */
+
+.picker {
+  width: 100%;
+  background: var(--surface-primary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ==================== Toolbar ==================== */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 var(--spacing-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.cancelBtn,
+.confirmBtn {
+  padding: var(--spacing-2) var(--spacing-3);
+  background: none;
+  border: none;
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cancelBtn {
+  color: var(--text-secondary);
+}
+
+.confirmBtn {
+  color: var(--accent-color);
+}
+
+.cancelBtn:active,
+.confirmBtn:active {
+  opacity: 0.7;
+}
+
+/* ==================== Columns Container ==================== */
+
+.columns {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+/* ==================== Wheel Column ==================== */
+
+.wheelColumn {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+}
+
+.wheelColumn::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==================== Wheel Item ==================== */
+
+.wheelItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-body-medium);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  scroll-snap-align: center;
+  transition: color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--spacing-2);
+}
+
+.wheelItem.selected {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  transform: scale(1.05);
+}
+
+.wheelItem.disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+/* ==================== Selection Indicator ==================== */
+
+.indicator {
+  position: absolute;
+  left: var(--spacing-3);
+  right: var(--spacing-3);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==================== Gradient Mask ==================== */
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(to bottom,
+      var(--surface-primary) 0%,
+      transparent 40%,
+      transparent 60%,
+      var(--surface-primary) 100%
+    );
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .picker,
+:global(.dark) .picker {
+  background: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .toolbar,
+:global(.dark) .toolbar {
+  border-bottom-color: var(--border-subtle);
+}
+
+:global([data-theme="dark"]) .confirmBtn,
+:global(.dark) .confirmBtn {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .wheelItem.selected,
+:global(.dark) .wheelItem.selected {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .indicator,
+:global(.dark) .indicator {
+  background: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .mask,
+:global(.dark) .mask {
+  background:
+    linear-gradient(to bottom,
+      var(--surface-secondary) 0%,
+      transparent 40%,
+      transparent 60%,
+      var(--surface-secondary) 100%
+    );
+}
+
+/* Manual dark mode */
+body.dark-mode .picker,
+body[data-theme='dark'] .picker {
+  background: var(--surface-secondary);
+}
+
+body.dark-mode .toolbar,
+body[data-theme='dark'] .toolbar {
+  border-bottom-color: var(--border-subtle);
+}
+
+body.dark-mode .wheelItem,
+body[data-theme='dark'] .wheelItem {
+  color: var(--text-tertiary);
+}
+
+body.dark-mode .wheelItem.selected,
+body[data-theme='dark'] .wheelItem.selected {
+  color: var(--text-primary);
+}
+
+body.dark-mode .indicator,
+body[data-theme='dark'] .indicator {
+  background: var(--surface-primary);
+}
+
+body.dark-mode .mask,
+body[data-theme='dark'] .mask {
+  background:
+    linear-gradient(to bottom,
+      var(--surface-secondary) 0%,
+      transparent 40%,
+      transparent 60%,
+      var(--surface-secondary) 100%
+    );
+}
+
+/* ==================== Reduced Motion ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .wheelColumn {
+    scroll-behavior: auto;
+  }
+
+  .wheelItem {
+    transition: none;
+  }
+}
+
+/* ==================== Safe Area ==================== */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .columns {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}

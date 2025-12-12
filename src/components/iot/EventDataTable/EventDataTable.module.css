@@ -1,0 +1,418 @@
+/**
+ * Event Data Table
+ * @category IoT Components
+ */
+
+.eventDataTable {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+/* ========================================
+   TABLE CONTROLS
+   ======================================== */
+
+.tableControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.tableControlsLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.tableControlsRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+/* Search Input */
+.searchGroup {
+  position: relative;
+  width: 300px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 32px;
+  padding: 6px 12px 6px 36px;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-small);
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-base);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.searchInput::placeholder {
+  color: var(--input-placeholder);
+}
+
+.searchInput:hover {
+  border-color: var(--input-border-hover);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+/* Filter Buttons */
+.filterGroup {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.filterBtn:hover {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-hover);
+}
+
+.filterBtnActive {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-700);
+}
+
+/* Export Button */
+.exportBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.exportBtn:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   TABLE
+   ======================================== */
+
+.tableContainer {
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--surface-primary);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-body-medium);
+}
+
+/* Table Header */
+.table thead {
+  background-color: var(--table-header-bg);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.table thead th {
+  padding: var(--table-header-padding-y) var(--table-header-padding-x);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  color: var(--table-header-text);
+  white-space: nowrap;
+}
+
+.checkboxCell {
+  width: 40px;
+  text-align: center !important;
+}
+
+.sortableHeader {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortableHeader:hover {
+  background-color: var(--table-row-hover-bg);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.actionsHeader {
+  width: 100px;
+  text-align: center !important;
+}
+
+/* Table Body */
+.table tbody tr {
+  border-bottom: 1px solid var(--table-cell-border);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: var(--table-row-hover-bg);
+}
+
+.table tbody td {
+  padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+  color: var(--text-primary);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--font-size-label-small);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.badgeError {
+  background-color: var(--color-error-100);
+  color: var(--color-error-700);
+}
+
+.badgeWarning {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-800);
+}
+
+.badgeSuccess {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+/* Event Type */
+.eventType {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.eventIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Device Info */
+.deviceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.deviceId {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.deviceType {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.actionBtn:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .tableControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tableControlsLeft,
+  .tableControlsRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .searchGroup {
+    width: 100%;
+  }
+
+  .filterGroup {
+    flex-wrap: wrap;
+  }
+
+  .tableContainer {
+    overflow-x: scroll;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .searchInput,
+:global(.dark) .searchInput {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .searchInput:hover,
+:global(.dark) .searchInput:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .searchInput:focus,
+:global(.dark) .searchInput:focus {
+  border-color: var(--focus-border-color);
+  box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .filterBtn,
+:global(.dark) .filterBtn {
+  background-color: transparent;
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .filterBtn:hover,
+:global(.dark) .filterBtn:hover {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .filterBtnActive,
+:global(.dark) .filterBtnActive {
+  background-color: var(--selected-bg);
+  border-color: var(--active-bg);
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .exportBtn:hover,
+:global(.dark) .exportBtn:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .tableContainer,
+:global(.dark) .tableContainer {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .table thead,
+:global(.dark) .table thead {
+  background-color: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .sortableHeader:hover,
+:global(.dark) .sortableHeader:hover {
+  background-color: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .table tbody tr,
+:global(.dark) .table tbody tr {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .table tbody tr:hover,
+:global(.dark) .table tbody tr:hover {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .badgeError,
+:global(.dark) .badgeError {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .badgeWarning,
+:global(.dark) .badgeWarning {
+  background-color: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .badgeSuccess,
+:global(.dark) .badgeSuccess {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .actionBtn:hover,
+:global(.dark) .actionBtn:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}

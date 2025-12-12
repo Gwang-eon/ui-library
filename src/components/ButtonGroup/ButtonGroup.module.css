@@ -1,0 +1,35 @@
+/**
+ * Button Group
+ * @category Foundation
+ */
+
+.btn-group {
+  display: inline-flex;
+  gap: 0;
+}
+
+.btn-group > button {
+  border-radius: 0;
+  position: relative;
+  margin-left: -1px;
+}
+
+.btn-group > button:first-child {
+  border-top-left-radius: var(--radius-base);
+  border-bottom-left-radius: var(--radius-base);
+  margin-left: 0;
+}
+
+.btn-group > button:last-child {
+  border-top-right-radius: var(--radius-base);
+  border-bottom-right-radius: var(--radius-base);
+}
+
+.btn-group > button:hover:not(:disabled),
+.btn-group > button:focus-visible {
+  z-index: 1;
+}
+
+.btn-group > button:active:not(:disabled) {
+  z-index: 2;
+}

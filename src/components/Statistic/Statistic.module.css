@@ -1,0 +1,357 @@
+/**
+ * Statistic Component Styles
+ * Category: Data Display
+ * Display numerical statistics with trends and formatting
+ */
+
+/* ========================================
+   BASE STATISTIC
+   ======================================== */
+
+.statistic {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+/* ========================================
+   STATISTIC HEADER (with icon)
+   ======================================== */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-2);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Icon Color Variants */
+.iconPrimary {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+}
+
+.iconSuccess {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.iconWarning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.iconError {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+
+/* ========================================
+   STATISTIC TITLE
+   ======================================== */
+
+.title {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ========================================
+   STATISTIC VALUE
+   ======================================== */
+
+.value {
+  font-size: var(--font-size-display-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-1);
+}
+
+.prefix {
+  font-size: var(--font-size-heading-2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+}
+
+.suffix {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   STATISTIC TREND
+   ======================================== */
+
+.trend {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--spacing-1);
+}
+
+.trend svg {
+  width: 16px;
+  height: 16px;
+}
+
+.trendUp {
+  color: var(--success-text);
+}
+
+.trendDown {
+  color: var(--error-text);
+}
+
+/* ========================================
+   STATISTIC DESCRIPTION
+   ======================================== */
+
+.description {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  margin-top: var(--spacing-1);
+}
+
+/* ========================================
+   COMPACT STATISTIC
+   ======================================== */
+
+.statistic.compact {
+  gap: var(--spacing-1);
+}
+
+.statistic.compact .title {
+  font-size: var(--font-size-body-small);
+}
+
+.statistic.compact .value {
+  font-size: var(--font-size-heading-2);
+}
+
+.statistic.compact .trend {
+  font-size: var(--font-size-body-xsmall);
+}
+
+/* ========================================
+   COLOR VARIANTS
+   ======================================== */
+
+.statistic.primary .value {
+  color: var(--accent-color);
+}
+
+.statistic.success .value {
+  color: var(--success-text);
+}
+
+.statistic.warning .value {
+  color: var(--warning-text);
+}
+
+.statistic.error .value {
+  color: var(--error-text);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .value,
+:global(.dark) .value {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .title,
+:global(.dark) .title {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .description,
+:global(.dark) .description {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .prefix,
+:global([data-theme="dark"]) .suffix,
+:global(.dark) .prefix,
+:global(.dark) .suffix {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .iconPrimary,
+:global(.dark) .iconPrimary {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .iconSuccess,
+:global(.dark) .iconSuccess {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .iconWarning,
+:global(.dark) .iconWarning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .iconError,
+:global(.dark) .iconError {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .statistic.primary .value,
+:global(.dark) .statistic.primary .value {
+  color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .statistic.success .value,
+:global(.dark) .statistic.success .value {
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .statistic.warning .value,
+:global(.dark) .statistic.warning .value {
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .statistic.error .value,
+:global(.dark) .statistic.error .value {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .trendUp,
+:global(.dark) .trendUp {
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .trendDown,
+:global(.dark) .trendDown {
+  color: var(--error-text);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 767px) {
+  .value {
+    font-size: var(--font-size-heading-1);
+  }
+
+  .prefix {
+    font-size: var(--font-size-heading-3);
+  }
+
+  .suffix {
+    font-size: var(--font-size-heading-4);
+  }
+
+  .statistic.compact .value {
+    font-size: var(--font-size-heading-3);
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 479px) {
+  .value {
+    font-size: var(--font-size-heading-2);
+  }
+
+  .statistic.compact .value {
+    font-size: var(--font-size-heading-4);
+  }
+
+  .title {
+    font-size: var(--font-size-body-small);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .value {
+    color: #000000;
+  }
+
+  .trend {
+    display: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .value {
+    font-weight: var(--font-weight-black);
+  }
+
+  .title {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .statistic.primary .value {
+    color: var(--color-primary-700);
+  }
+
+  .statistic.success .value {
+    color: var(--color-success-700);
+  }
+
+  .statistic.warning .value {
+    color: var(--color-warning-700);
+  }
+
+  .statistic.error .value {
+    color: var(--color-error-700);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .statistic * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,523 @@
+/**
+ * Real-time Monitor Component
+ * Category: IoT
+ * Live monitoring of device metrics and data streams with pulse indicators
+ */
+
+/* ==================== Monitor Container ==================== */
+
+.monitorContainer {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.monitorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-5);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-secondary);
+}
+
+.monitorHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.monitorTitle {
+  font-size: var(--font-size-heading-4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.monitorUpdate {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+.monitorActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.btnMonitor {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  background: var(--surface-primary);
+  color: var(--text-secondary);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.btnMonitor:hover {
+  background: var(--surface-secondary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.monitorContent {
+  padding: var(--spacing-5);
+}
+
+/* ==================== Status Indicator ==================== */
+
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.statusDot {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.statusDot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.statusActive {
+  background: var(--color-success-500);
+}
+
+.statusActive::before {
+  background: var(--color-success-500);
+}
+
+.statusInactive {
+  background: var(--surface-tertiary);
+  animation: none;
+}
+
+.statusInactive::before {
+  display: none;
+}
+
+.statusWarning {
+  background: var(--color-warning-500);
+}
+
+.statusWarning::before {
+  background: var(--color-warning-500);
+}
+
+.statusLabel {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+/* ==================== Metric Grid ==================== */
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--metric-columns, 3), 1fr);
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+/* ==================== Metric Card ==================== */
+
+.metricCard {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.metricCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-3);
+}
+
+.metricIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-base);
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+.metricIconPrimary {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+}
+
+.metricIconDanger {
+  background: var(--color-danger-100);
+  color: var(--color-danger-600);
+}
+
+.metricIconWarning {
+  background: var(--color-warning-100);
+  color: var(--color-warning-600);
+}
+
+.metricIconSuccess {
+  background: var(--color-success-100);
+  color: var(--color-success-600);
+}
+
+.metricLabel {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.metricContent {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-2);
+}
+
+.metricValue {
+  font-size: var(--font-size-heading-2);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.metricUnit {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+  margin-left: var(--spacing-1);
+}
+
+.metricChange {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.metricChangeIncrease {
+  color: var(--color-success-600);
+}
+
+.metricChangeDecrease {
+  color: var(--color-danger-600);
+}
+
+.metricChangeNeutral {
+  color: var(--text-tertiary);
+}
+
+/* ==================== Data Stream ==================== */
+
+.dataStream {
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+
+.streamTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.streamTable thead {
+  background: var(--surface-secondary);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.streamTable th {
+  padding: var(--spacing-3) var(--spacing-4);
+  text-align: left;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.streamTable td {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.streamTable tbody tr {
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.streamTable tbody tr:hover {
+  background: var(--surface-secondary);
+}
+
+.streamTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.streamRowNew {
+  background: var(--color-primary-50) !important;
+  animation: highlightRow 2s ease-out;
+}
+
+.streamValue {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-medium);
+}
+
+.streamTimestamp {
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+}
+
+/* ==================== Status Badge ==================== */
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  text-transform: capitalize;
+}
+
+.statusBadgeNormal {
+  background: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusBadgeWarning {
+  background: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.statusBadgeCritical {
+  background: var(--color-danger-100);
+  color: var(--color-danger-700);
+}
+
+/* ==================== Animations ==================== */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes ping {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.75;
+  }
+  75%, 100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes highlightRow {
+  0% {
+    background: var(--color-primary-100);
+  }
+  100% {
+    background: var(--color-primary-50);
+  }
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .metricGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .monitorHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .monitorActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .metricGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .monitorHeaderLeft {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .monitorContainer,
+:global(.dark) .monitorContainer {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .monitorHeader,
+:global(.dark) .monitorHeader {
+  background-color: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .btnMonitor,
+:global(.dark) .btnMonitor {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .btnMonitor:hover,
+:global(.dark) .btnMonitor:hover {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .metricCard,
+:global(.dark) .metricCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .metricCard:hover,
+:global(.dark) .metricCard:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .metricIconPrimary,
+:global(.dark) .metricIconPrimary {
+  background: var(--info-bg);
+  color: var(--info-text);
+}
+
+:global([data-theme="dark"]) .metricIconDanger,
+:global(.dark) .metricIconDanger {
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .metricIconWarning,
+:global(.dark) .metricIconWarning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .metricIconSuccess,
+:global(.dark) .metricIconSuccess {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .metricChangeIncrease,
+:global(.dark) .metricChangeIncrease {
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .metricChangeDecrease,
+:global(.dark) .metricChangeDecrease {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .dataStream,
+:global(.dark) .dataStream {
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .streamTable thead,
+:global(.dark) .streamTable thead {
+  background-color: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .streamTable td,
+:global(.dark) .streamTable td {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .streamTable tbody tr:hover,
+:global(.dark) .streamTable tbody tr:hover {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .streamRowNew,
+:global(.dark) .streamRowNew {
+  background-color: var(--selected-bg) !important;
+}
+
+:global([data-theme="dark"]) .statusBadgeNormal,
+:global(.dark) .statusBadgeNormal {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .statusBadgeWarning,
+:global(.dark) .statusBadgeWarning {
+  background-color: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .statusBadgeCritical,
+:global(.dark) .statusBadgeCritical {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .statusInactive,
+:global(.dark) .statusInactive {
+  background-color: var(--surface-quaternary);
+}

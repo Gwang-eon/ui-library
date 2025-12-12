@@ -1,0 +1,354 @@
+/**
+ * Status Badge Component
+ * Category: IoT
+ * Status indicators with dots and labels for device states
+ */
+
+/* ==================== Base Badge ==================== */
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.statusIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.statusIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ==================== Pulsing Animation ==================== */
+
+.statusIndicatorPulse {
+  animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* ==================== Connection Status ==================== */
+
+.statusOnline {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusOnline .statusIndicator {
+  background-color: var(--color-success-500);
+}
+
+.statusOffline {
+  background-color: var(--surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.statusOffline .statusIndicator {
+  background-color: var(--color-gray-500);
+}
+
+.statusConnecting {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.statusConnecting .statusIndicator {
+  background-color: var(--color-primary-500);
+}
+
+.statusDisconnected {
+  background-color: var(--surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.statusDisconnected .statusIndicator {
+  background-color: var(--color-gray-500);
+}
+
+/* ==================== Operational Status ==================== */
+
+.statusActive {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusActive .statusIndicator {
+  background-color: var(--color-success-500);
+}
+
+.statusIdle {
+  background-color: var(--surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.statusIdle .statusIndicator {
+  background-color: var(--color-gray-400);
+}
+
+.statusWarning {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.statusWarning .statusIndicator {
+  background-color: var(--color-warning-500);
+}
+
+.statusError {
+  background-color: var(--color-danger-100);
+  color: var(--color-danger-700);
+}
+
+.statusError .statusIndicator {
+  background-color: var(--color-danger-500);
+}
+
+.statusMaintenance {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.statusMaintenance .statusIndicator {
+  background-color: var(--color-primary-500);
+}
+
+/* ==================== Data Quality Status ==================== */
+
+.statusExcellent {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusExcellent .statusIndicator {
+  background-color: var(--color-success-500);
+}
+
+.statusGood {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusGood .statusIndicator {
+  background-color: var(--color-success-500);
+}
+
+.statusFair {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.statusFair .statusIndicator {
+  background-color: var(--color-warning-500);
+}
+
+.statusPoor {
+  background-color: var(--color-danger-100);
+  color: var(--color-danger-700);
+}
+
+.statusPoor .statusIndicator {
+  background-color: var(--color-danger-500);
+}
+
+.statusNoData {
+  background-color: var(--surface-tertiary);
+  color: var(--text-tertiary);
+}
+
+.statusNoData .statusIndicator {
+  background-color: var(--color-gray-500);
+}
+
+/* ==================== Battery Status ==================== */
+
+.statusBatteryFull {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusBatteryHigh {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusBatteryMedium {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.statusBatteryLow {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.statusBatteryCritical {
+  background-color: var(--color-danger-100);
+  color: var(--color-danger-700);
+}
+
+/* ==================== Signal Strength ==================== */
+
+.statusSignalExcellent {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusSignalGood {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+}
+
+.statusSignalFair {
+  background-color: var(--color-warning-100);
+  color: var(--color-warning-700);
+}
+
+.statusSignalPoor {
+  background-color: var(--color-danger-100);
+  color: var(--color-danger-700);
+}
+
+/* ==================== Dark Mode ==================== */
+
+/* Manual dark mode class support */
+:global(.dark-mode) .statusOnline,
+:global([data-theme="dark"]) .statusOnline {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global(.dark-mode) .statusOffline,
+:global([data-theme="dark"]) .statusOffline {
+  background-color: var(--surface-primary);
+  color: var(--text-tertiary);
+}
+
+:global(.dark-mode) .statusConnecting,
+:global([data-theme="dark"]) .statusConnecting {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary-300);
+}
+
+:global(.dark-mode) .statusDisconnected,
+:global([data-theme="dark"]) .statusDisconnected {
+  background-color: var(--surface-primary);
+  color: var(--text-tertiary);
+}
+
+:global(.dark-mode) .statusActive,
+:global([data-theme="dark"]) .statusActive {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global(.dark-mode) .statusIdle,
+:global([data-theme="dark"]) .statusIdle {
+  background-color: var(--surface-primary);
+  color: var(--text-tertiary);
+}
+
+:global(.dark-mode) .statusWarning,
+:global([data-theme="dark"]) .statusWarning {
+  background-color: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+}
+
+:global(.dark-mode) .statusError,
+:global([data-theme="dark"]) .statusError {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}
+
+:global(.dark-mode) .statusMaintenance,
+:global([data-theme="dark"]) .statusMaintenance {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary-300);
+}
+
+:global(.dark-mode) .statusExcellent,
+:global(.dark-mode) .statusGood,
+:global([data-theme="dark"]) .statusExcellent,
+:global([data-theme="dark"]) .statusGood {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global(.dark-mode) .statusFair,
+:global([data-theme="dark"]) .statusFair {
+  background-color: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+}
+
+:global(.dark-mode) .statusPoor,
+:global([data-theme="dark"]) .statusPoor {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}
+
+:global(.dark-mode) .statusNoData,
+:global([data-theme="dark"]) .statusNoData {
+  background-color: var(--surface-primary);
+  color: var(--text-tertiary);
+}
+
+:global(.dark-mode) .statusBatteryFull,
+:global(.dark-mode) .statusBatteryHigh,
+:global([data-theme="dark"]) .statusBatteryFull,
+:global([data-theme="dark"]) .statusBatteryHigh {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global(.dark-mode) .statusBatteryMedium,
+:global(.dark-mode) .statusBatteryLow,
+:global([data-theme="dark"]) .statusBatteryMedium,
+:global([data-theme="dark"]) .statusBatteryLow {
+  background-color: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+}
+
+:global(.dark-mode) .statusBatteryCritical,
+:global([data-theme="dark"]) .statusBatteryCritical {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}
+
+:global(.dark-mode) .statusSignalExcellent,
+:global(.dark-mode) .statusSignalGood,
+:global([data-theme="dark"]) .statusSignalExcellent,
+:global([data-theme="dark"]) .statusSignalGood {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global(.dark-mode) .statusSignalFair,
+:global([data-theme="dark"]) .statusSignalFair {
+  background-color: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+}
+
+:global(.dark-mode) .statusSignalPoor,
+:global([data-theme="dark"]) .statusSignalPoor {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}

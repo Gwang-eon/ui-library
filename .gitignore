@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+demo-dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# Cache
+.cache/
+*.tsbuildinfo

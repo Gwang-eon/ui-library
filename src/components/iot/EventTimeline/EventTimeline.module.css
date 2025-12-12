@@ -1,0 +1,447 @@
+/**
+ * Event Timeline Component
+ * Category: IoT
+ * Chronological display of device events and activities
+ */
+
+/* ==================== Event Timeline ==================== */
+
+.eventTimeline {
+  position: relative;
+  padding: var(--spacing-4) 0;
+}
+
+/* ==================== Event Item ==================== */
+
+.eventItem {
+  position: relative;
+  padding-left: var(--spacing-12);
+  padding-bottom: var(--spacing-6);
+}
+
+.eventItem:last-child {
+  padding-bottom: 0;
+}
+
+/* Event Marker (Dot) */
+.eventMarker {
+  position: absolute;
+  left: 0;
+  top: var(--spacing-4);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface-primary);
+  border: 2px solid var(--border-default);
+  z-index: 2;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.eventItem:hover .eventMarker {
+  transform: scale(1.2);
+}
+
+/* Event Marker Colors by Type */
+.eventItemSuccess .eventMarker {
+  border-color: var(--color-success-500);
+  background: var(--color-success-500);
+}
+
+.eventItemWarning .eventMarker {
+  border-color: var(--color-warning-500);
+  background: var(--color-warning-500);
+}
+
+.eventItemError .eventMarker {
+  border-color: var(--color-error-500);
+  background: var(--color-error-500);
+}
+
+.eventItemInfo .eventMarker {
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-500);
+}
+
+.eventItemDefault .eventMarker {
+  border-color: var(--border-strong);
+  background: var(--surface-secondary);
+}
+
+/* Event Marker with Icon */
+.eventMarkerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  top: var(--spacing-2);
+  left: -10px;
+  border-radius: var(--radius-full);
+}
+
+.eventIcon {
+  width: 16px;
+  height: 16px;
+  color: white;
+}
+
+.eventItemSuccess .eventMarkerIcon {
+  background: var(--color-success-500);
+  border-color: var(--color-success-500);
+}
+
+.eventItemWarning .eventMarkerIcon {
+  background: var(--color-warning-500);
+  border-color: var(--color-warning-500);
+}
+
+.eventItemError .eventMarkerIcon {
+  background: var(--color-error-500);
+  border-color: var(--color-error-500);
+}
+
+.eventItemInfo .eventMarkerIcon {
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+
+/* Event Line (Vertical Connector) */
+.eventLine {
+  position: absolute;
+  left: 5px;
+  top: calc(var(--spacing-4) + 12px);
+  bottom: calc(var(--spacing-6) * -1);
+  width: 2px;
+  background: var(--border-default);
+  z-index: 1;
+}
+
+.eventItem:last-child .eventLine {
+  display: none;
+}
+
+/* Event Content */
+.eventContent {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  padding: var(--spacing-4);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.eventItem:hover .eventContent {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--border-strong);
+}
+
+.eventHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-2);
+}
+
+.eventTitle {
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.eventTime {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eventDescription {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-2) 0;
+  line-height: 1.5;
+}
+
+.eventMeta {
+  display: flex;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.eventMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1-5);
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+}
+
+.eventMetaItem svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+/* ==================== Compact Timeline ==================== */
+
+.eventTimelineCompact {
+  padding: var(--spacing-2) 0;
+}
+
+.eventItemCompact {
+  position: relative;
+  padding-left: var(--spacing-8);
+  padding-bottom: var(--spacing-4);
+}
+
+.eventItemCompact:last-child {
+  padding-bottom: 0;
+}
+
+.eventMarkerCompact {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  z-index: 2;
+}
+
+.eventItemCompactSuccess .eventMarkerCompact {
+  background: var(--color-success-500);
+}
+
+.eventItemCompactWarning .eventMarkerCompact {
+  background: var(--color-warning-500);
+}
+
+.eventItemCompactError .eventMarkerCompact {
+  background: var(--color-error-500);
+}
+
+.eventItemCompactInfo .eventMarkerCompact {
+  background: var(--color-primary-500);
+}
+
+.eventItemCompactDefault .eventMarkerCompact {
+  background: var(--border-strong);
+}
+
+.eventLineCompact {
+  position: absolute;
+  left: 3px;
+  top: 12px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--border-default);
+  z-index: 1;
+}
+
+.eventItemCompact:last-child .eventLineCompact {
+  display: none;
+}
+
+.eventContentCompact {
+  min-height: 0;
+}
+
+.eventTitleCompact {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin: 0 0 2px 0;
+  line-height: 1.4;
+}
+
+.eventTimeCompact {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* ==================== Group Header ==================== */
+
+.eventGroupHeader {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: var(--spacing-3) 0 var(--spacing-3) var(--spacing-12);
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.eventGroupHeader:first-child {
+  margin-top: 0;
+}
+
+/* ==================== Event Type Highlighting ==================== */
+
+.eventItemSuccess .eventContent {
+  border-left: 3px solid var(--color-success-500);
+}
+
+.eventItemWarning .eventContent {
+  border-left: 3px solid var(--color-warning-500);
+}
+
+.eventItemError .eventContent {
+  border-left: 3px solid var(--color-error-500);
+}
+
+.eventItemInfo .eventContent {
+  border-left: 3px solid var(--color-primary-500);
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .eventItem {
+    padding-left: var(--spacing-10);
+  }
+
+  .eventGroupHeader {
+    padding-left: var(--spacing-10);
+  }
+}
+
+/* ==================== Dark Mode ==================== */
+
+:global([data-theme="dark"]) .eventMarker,
+:global(.dark) .eventMarker {
+  background: var(--surface-primary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .eventItemSuccess .eventMarker,
+:global(.dark) .eventItemSuccess .eventMarker {
+  border-color: var(--success-text);
+  background: var(--success-text);
+}
+
+:global([data-theme="dark"]) .eventItemWarning .eventMarker,
+:global(.dark) .eventItemWarning .eventMarker {
+  border-color: var(--warning-text);
+  background: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .eventItemError .eventMarker,
+:global(.dark) .eventItemError .eventMarker {
+  border-color: var(--error-text);
+  background: var(--error-text);
+}
+
+:global([data-theme="dark"]) .eventItemInfo .eventMarker,
+:global(.dark) .eventItemInfo .eventMarker {
+  border-color: var(--info-text);
+  background: var(--info-text);
+}
+
+:global([data-theme="dark"]) .eventItemDefault .eventMarker,
+:global(.dark) .eventItemDefault .eventMarker {
+  border-color: var(--border-strong);
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .eventItemSuccess .eventMarkerIcon,
+:global(.dark) .eventItemSuccess .eventMarkerIcon {
+  background: var(--color-success-500);
+}
+
+:global([data-theme="dark"]) .eventItemWarning .eventMarkerIcon,
+:global(.dark) .eventItemWarning .eventMarkerIcon {
+  background: var(--color-warning-500);
+}
+
+:global([data-theme="dark"]) .eventItemError .eventMarkerIcon,
+:global(.dark) .eventItemError .eventMarkerIcon {
+  background: var(--color-error-500);
+}
+
+:global([data-theme="dark"]) .eventItemInfo .eventMarkerIcon,
+:global(.dark) .eventItemInfo .eventMarkerIcon {
+  background: var(--active-bg);
+}
+
+:global([data-theme="dark"]) .eventLine,
+:global(.dark) .eventLine {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .eventContent,
+:global(.dark) .eventContent {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .eventItem:hover .eventContent,
+:global(.dark) .eventItem:hover .eventContent {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .eventMarkerCompact,
+:global(.dark) .eventMarkerCompact {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .eventItemCompactSuccess .eventMarkerCompact,
+:global(.dark) .eventItemCompactSuccess .eventMarkerCompact {
+  background: var(--success-text);
+}
+
+:global([data-theme="dark"]) .eventItemCompactWarning .eventMarkerCompact,
+:global(.dark) .eventItemCompactWarning .eventMarkerCompact {
+  background: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .eventItemCompactError .eventMarkerCompact,
+:global(.dark) .eventItemCompactError .eventMarkerCompact {
+  background: var(--error-text);
+}
+
+:global([data-theme="dark"]) .eventItemCompactInfo .eventMarkerCompact,
+:global(.dark) .eventItemCompactInfo .eventMarkerCompact {
+  background: var(--info-text);
+}
+
+:global([data-theme="dark"]) .eventItemCompactDefault .eventMarkerCompact,
+:global(.dark) .eventItemCompactDefault .eventMarkerCompact {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .eventLineCompact,
+:global(.dark) .eventLineCompact {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .eventGroupHeader,
+:global(.dark) .eventGroupHeader {
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .eventItemSuccess .eventContent,
+:global(.dark) .eventItemSuccess .eventContent {
+  border-left-color: var(--color-success-500);
+}
+
+:global([data-theme="dark"]) .eventItemWarning .eventContent,
+:global(.dark) .eventItemWarning .eventContent {
+  border-left-color: var(--color-warning-500);
+}
+
+:global([data-theme="dark"]) .eventItemError .eventContent,
+:global(.dark) .eventItemError .eventContent {
+  border-left-color: var(--color-error-500);
+}
+
+:global([data-theme="dark"]) .eventItemInfo .eventContent,
+:global(.dark) .eventItemInfo .eventContent {
+  border-left-color: var(--active-bg);
+}

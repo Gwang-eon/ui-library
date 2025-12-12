@@ -1,0 +1,107 @@
+/**
+ * Alert Component
+ * Category: Feedback
+ * Alert messages and notifications
+ */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-base);
+  border: 1px solid;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-1);
+}
+
+.alert-info {
+  background-color: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-text);
+}
+
+.alert-success {
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+
+.alert-warning {
+  background-color: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
+}
+
+.alert-error {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+/* Alert close button */
+.alert-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-1);
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.alert-close:hover {
+  opacity: 1;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global(.dark-mode) .alert-info,
+:global(.dark) .alert-info,
+:global([data-theme="dark"]) .alert-info {
+  background-color: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-text);
+}
+
+:global(.dark-mode) .alert-success,
+:global(.dark) .alert-success,
+:global([data-theme="dark"]) .alert-success {
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+
+:global(.dark-mode) .alert-warning,
+:global(.dark) .alert-warning,
+:global([data-theme="dark"]) .alert-warning {
+  background-color: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
+}
+
+:global(.dark-mode) .alert-error,
+:global(.dark) .alert-error,
+:global([data-theme="dark"]) .alert-error {
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}

@@ -1,0 +1,99 @@
+/* Affix Component Styles */
+
+/* ========================================
+   AFFIX
+   ======================================== */
+
+.affix {
+  transition:
+    box-shadow var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out);
+}
+
+/* ========================================
+   AFFIX PLACEHOLDER
+   ======================================== */
+
+.affixPlaceholder {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ========================================
+   AFFIX ACTIVE STATE
+   ======================================== */
+
+.affixActive {
+  box-shadow: var(--shadow-md);
+  animation: slideIn var(--duration-normal) var(--ease-out);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .affixActive,
+:global(.dark) .affixActive {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .affixActive {
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .affix {
+    transition: none;
+  }
+
+  .affixActive {
+    animation: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST MODE
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .affixActive {
+    outline: 2px solid var(--border-strong);
+    outline-offset: -2px;
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .affix {
+    position: static !important;
+    box-shadow: none !important;
+  }
+}

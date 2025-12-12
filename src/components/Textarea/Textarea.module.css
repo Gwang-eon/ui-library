@@ -1,0 +1,347 @@
+/**
+ * Textarea Component Styles
+ * Based on Input component for consistency
+ * @category Foundation
+ */
+
+/* ========================================
+   INPUT GROUP (Container)
+   ======================================== */
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+/* ========================================
+   LABEL
+   ======================================== */
+
+.input-label {
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.required {
+  color: var(--error-text);
+  font-weight: var(--font-weight-semibold);
+  margin-left: 2px;
+}
+
+/* ========================================
+   BASE TEXTAREA STYLES
+   ======================================== */
+
+.input {
+  width: 100%;
+  padding: var(--input-padding-y) var(--input-padding-x);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-medium);
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-base);
+  transition: all var(--duration-fast) var(--ease-out);
+  box-sizing: border-box;
+}
+
+/* Textarea specific */
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.input:hover:not(:disabled):not(:read-only) {
+  border-color: var(--input-border-hover);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  background-color: var(--input-disabled-bg);
+  border-color: var(--input-disabled-border);
+  color: var(--input-disabled-text);
+}
+
+.input:read-only {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-default);
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.input:read-only:focus {
+  border-color: var(--border-default);
+  box-shadow: none;
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.input-sm {
+  padding: 6px var(--spacing-3);
+  font-size: var(--font-size-body-small);
+}
+
+/* Medium (default) - already defined above */
+
+.input-lg {
+  padding: var(--spacing-3) var(--spacing-5);
+  font-size: var(--font-size-body-large);
+}
+
+/* ========================================
+   STATE VARIANTS
+   ======================================== */
+
+.input.error {
+  border-color: var(--error-border);
+}
+
+.input.error:focus {
+  border-color: var(--error-border);
+  box-shadow: 0 0 0 3px var(--error-bg);
+}
+
+.input.success {
+  border-color: var(--success-border);
+}
+
+.input.success:focus {
+  border-color: var(--success-border);
+  box-shadow: 0 0 0 3px var(--success-bg);
+}
+
+.input.warning {
+  border-color: var(--warning-border);
+}
+
+.input.warning:focus {
+  border-color: var(--warning-border);
+  box-shadow: 0 0 0 3px var(--warning-bg);
+}
+
+/* ========================================
+   RESIZE VARIANTS
+   ======================================== */
+
+.resize-none {
+  resize: none;
+}
+
+.resize-vertical {
+  resize: vertical;
+}
+
+.resize-horizontal {
+  resize: horizontal;
+}
+
+.resize-both {
+  resize: both;
+}
+
+/* ========================================
+   MESSAGES & COUNTER
+   ======================================== */
+
+.input-message {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+.input-error {
+  font-size: var(--font-size-body-small);
+  color: var(--error-text);
+}
+
+.input-success {
+  font-size: var(--font-size-body-small);
+  color: var(--success-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.input-warning {
+  font-size: var(--font-size-body-small);
+  color: var(--warning-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Message and Counter Wrapper */
+.message-counter-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.character-count {
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 767px) {
+  /* Label - larger on mobile */
+  .input-label {
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Helper and error text */
+  .input-message,
+  .input-error,
+  .input-success,
+  .input-warning,
+  .character-count {
+    font-size: 12px;
+  }
+
+  /* Textarea - prevent iOS zoom */
+  .input {
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .input-sm {
+    font-size: 14px;
+  }
+
+  .input-lg {
+    font-size: var(--font-size-heading-5);
+  }
+
+  /* Focus shadow - more subtle on mobile */
+  .input:focus {
+    box-shadow: 0 0 0 2px var(--focus-ring-color);
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .input-label,
+:global(.dark) .input-label {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .input-message,
+:global(.dark) .input-message {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .input-error,
+:global(.dark) .input-error {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .input-success,
+:global(.dark) .input-success {
+  color: var(--success-text);
+}
+
+:global([data-theme="dark"]) .input-warning,
+:global(.dark) .input-warning {
+  color: var(--warning-text);
+}
+
+:global([data-theme="dark"]) .required,
+:global(.dark) .required {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .input,
+:global(.dark) .input {
+  background-color: var(--surface-primary);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .input::placeholder,
+:global(.dark) .input::placeholder {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .input:hover:not(:disabled):not(:focus),
+:global(.dark) .input:hover:not(:disabled):not(:focus) {
+  border-color: var(--accent-color);
+}
+
+:global([data-theme="dark"]) .input:focus,
+:global(.dark) .input:focus {
+  border-color: var(--focus-border-color);
+  box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+:global([data-theme="dark"]) .input:disabled,
+:global(.dark) .input:disabled {
+  background-color: var(--surface-secondary);
+  border-color: var(--border-subtle);
+  color: var(--text-disabled);
+}
+
+:global([data-theme="dark"]) .input.error,
+:global(.dark) .input.error {
+  border-color: var(--error-border);
+}
+
+:global([data-theme="dark"]) .input.error:focus,
+:global(.dark) .input.error:focus {
+  border-color: var(--error-border);
+  box-shadow: 0 0 0 3px var(--error-bg);
+}
+
+:global([data-theme="dark"]) .input.success,
+:global(.dark) .input.success {
+  border-color: var(--success-border);
+}
+
+:global([data-theme="dark"]) .input.success:focus,
+:global(.dark) .input.success:focus {
+  border-color: var(--success-border);
+  box-shadow: 0 0 0 3px var(--success-bg);
+}
+
+:global([data-theme="dark"]) .input.warning,
+:global(.dark) .input.warning {
+  border-color: var(--warning-border);
+}
+
+:global([data-theme="dark"]) .input.warning:focus,
+:global(.dark) .input.warning:focus {
+  border-color: var(--warning-border);
+  box-shadow: 0 0 0 3px var(--warning-bg);
+}
+
+:global([data-theme="dark"]) .character-count,
+:global(.dark) .character-count {
+  color: var(--text-tertiary);
+}

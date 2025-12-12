@@ -1,0 +1,425 @@
+/* Image Component Styles */
+
+/* Base Image Wrapper */
+.imageWrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background-color: var(--surface-secondary);
+  border-radius: var(--radius-md);
+  max-width: 100%;
+  transition: all var(--transition-normal) var(--ease-in-out);
+}
+
+/* Base Image */
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: none;
+}
+
+/* Object Fit Variants */
+.imageCover {
+  object-fit: cover;
+}
+
+.imageContain {
+  object-fit: contain;
+}
+
+.imageFill {
+  object-fit: fill;
+}
+
+/* Figure and Caption */
+.imageFigure {
+  margin: 0;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.imageCaption {
+  display: block;
+  margin-top: var(--spacing-sm);
+  padding: 0 var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Loading State */
+.imageLoading {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagePlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+  color: var(--text-tertiary);
+}
+
+.imagePlaceholder svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+}
+
+.imagePlaceholder span {
+  font-size: var(--font-size-sm);
+}
+
+/* Error State */
+.imageError {
+  background-color: var(--surface-tertiary);
+  border: 2px dashed var(--border-color);
+}
+
+.imageErrorContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+  min-height: 200px;
+  color: var(--error-text);
+}
+
+.imageErrorContent svg {
+  width: 40px;
+  height: 40px;
+}
+
+.imageErrorContent span {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* Rounded Variants */
+.imageCircle {
+  border-radius: 50%;
+}
+
+.imageCircle .image {
+  border-radius: 50%;
+}
+
+.imageSquare {
+  border-radius: 0;
+}
+
+/* Preview Mode */
+.imagePreview {
+  cursor: pointer;
+  transition: transform var(--transition-normal) var(--ease-in-out);
+}
+
+.imagePreview:hover {
+  transform: scale(1.02);
+}
+
+.imagePreview:active {
+  transform: scale(0.98);
+}
+
+.imagePreview:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.imagePreviewOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  background-color: color-mix(in srgb, var(--color-black) 60%, transparent);
+  color: var(--palette-white);
+  opacity: 0;
+  transition: opacity var(--transition-normal) var(--ease-in-out);
+  pointer-events: none;
+}
+
+.imagePreview:hover .imagePreviewOverlay,
+.imagePreview:focus-visible .imagePreviewOverlay {
+  opacity: 1;
+}
+
+.imagePreviewOverlay svg {
+  width: 24px;
+  height: 24px;
+}
+
+.imagePreviewOverlay span {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Lightbox Modal */
+.imageLightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  animation: fadeIn var(--transition-normal) var(--ease-in-out);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.imageLightboxBackdrop {
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--color-black) 90%, transparent);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.imageLightboxContent {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 1;
+  animation: scaleIn var(--transition-normal) var(--ease-out);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.imageLightboxContent img {
+  max-width: 100%;
+  max-height: 90vh;
+  display: block;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2xl);
+}
+
+.imageLightboxClose {
+  position: absolute;
+  top: calc(-1 * var(--spacing-xl));
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background-color: color-mix(in srgb, var(--palette-white) 20%, transparent);
+  color: var(--palette-white);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--ease-in-out);
+  backdrop-filter: blur(4px);
+}
+
+.imageLightboxClose:hover {
+  background-color: color-mix(in srgb, var(--palette-white) 30%, transparent);
+  transform: scale(1.1);
+}
+
+.imageLightboxClose:active {
+  transform: scale(0.95);
+}
+
+.imageLightboxClose:focus-visible {
+  outline: 2px solid var(--palette-white);
+  outline-offset: 2px;
+}
+
+.imageLightboxClose svg {
+  width: 24px;
+  height: 24px;
+}
+
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .imageLightbox {
+    padding: var(--spacing-md);
+  }
+
+  .imageLightboxContent {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .imageLightboxContent img {
+    max-height: 85vh;
+    border-radius: var(--radius-md);
+  }
+
+  .imageLightboxClose {
+    top: calc(-1 * var(--spacing-lg));
+    width: 36px;
+    height: 36px;
+  }
+
+  .imageLightboxClose svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .imagePlaceholder svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .imageErrorContent svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .imageWrapper,
+  .imagePreview,
+  .imagePreviewOverlay,
+  .imageLightbox,
+  .imageLightboxContent,
+  .imageLightboxClose {
+    animation: none;
+    transition: none;
+  }
+
+  .imagePreview:hover {
+    transform: none;
+  }
+
+  .imagePreview:active {
+    transform: none;
+  }
+
+  .imageLightboxClose:hover {
+    transform: none;
+  }
+
+  .imageLightboxClose:active {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .imageWrapper {
+    border: 1px solid var(--border-color);
+  }
+
+  .imageError {
+    border-width: 3px;
+  }
+
+  .imageLightboxClose {
+    border: 2px solid var(--palette-white);
+    background-color: var(--color-black);
+  }
+
+  .imagePreview:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .imagePreviewOverlay,
+  .imageLightbox {
+    display: none;
+  }
+
+  .imageWrapper {
+    background-color: transparent;
+  }
+
+  .image {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  .imageFigure {
+    page-break-inside: avoid;
+  }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:global([data-theme="dark"]) .imageWrapper,
+:global(.dark) .imageWrapper {
+  background-color: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .imagePlaceholder,
+:global(.dark) .imagePlaceholder {
+  background-color: var(--surface-primary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .imageError,
+:global(.dark) .imageError {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .imageErrorContent,
+:global(.dark) .imageErrorContent {
+  color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .imageFigcaption,
+:global(.dark) .imageFigcaption {
+  color: var(--text-tertiary);
+  background-color: var(--surface-primary);
+  border-top-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .imagePreviewOverlay,
+:global(.dark) .imagePreviewOverlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+:global([data-theme="dark"]) .imageLightboxContainer,
+:global(.dark) .imageLightboxContainer {
+  background-color: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .imageLightboxClose,
+:global(.dark) .imageLightboxClose {
+  background-color: var(--surface-primary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .imageLightboxClose:hover,
+:global(.dark) .imageLightboxClose:hover {
+  background-color: var(--surface-quaternary);
+}
