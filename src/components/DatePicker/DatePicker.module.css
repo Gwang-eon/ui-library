@@ -304,7 +304,7 @@
 :global([data-theme="dark"]) .date-picker-input,
 :global(.dark) .date-picker-input {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -340,14 +340,14 @@
 :global([data-theme="dark"]) .date-picker-calendar,
 :global(.dark) .date-picker-calendar {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 :global([data-theme="dark"]) .date-picker :global(.react-datepicker__header),
 :global(.dark) .date-picker :global(.react-datepicker__header) {
   background: var(--surface-primary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .date-picker :global(.react-datepicker__navigation):hover,
@@ -385,7 +385,7 @@
 
 :global([data-theme="dark"]) .date-picker :global(.react-datepicker__time-container),
 :global(.dark) .date-picker :global(.react-datepicker__time-container) {
-  border-left-color: var(--text-secondary);
+  border-left-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .date-picker :global(.react-datepicker__time),

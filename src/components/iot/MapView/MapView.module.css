@@ -358,14 +358,14 @@
 :global([data-theme="dark"]) .mapContainer,
 :global(.dark) .mapContainer {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .mapHeader,
 :global([data-theme="dark"]) .mapFooter,
 :global(.dark) .mapHeader,
 :global(.dark) .mapFooter {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .mapFooter,
@@ -376,7 +376,7 @@
 :global([data-theme="dark"]) .devicePopup,
 :global(.dark) .devicePopup {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .badgeOnline,

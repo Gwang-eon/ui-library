@@ -214,7 +214,7 @@
 :global([data-theme="dark"]) .cascade-trigger,
 :global(.dark) .cascade-trigger {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -241,14 +241,14 @@
 :global([data-theme="dark"]) .cascade-panel,
 :global(.dark) .cascade-panel {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 :global([data-theme="dark"]) .cascade-subpanel,
 :global(.dark) .cascade-subpanel {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .cascade-subpanel.nested,
@@ -285,7 +285,7 @@
 :global([data-theme="dark"]) .cascade-breadcrumb,
 :global(.dark) .cascade-breadcrumb {
   background-color: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .breadcrumb-item:hover,

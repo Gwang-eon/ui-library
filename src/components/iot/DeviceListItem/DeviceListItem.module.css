@@ -307,7 +307,7 @@
 :global([data-theme="dark"]) .container,
 :global(.dark) .container {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .containerSpaced,
@@ -318,7 +318,7 @@
 :global([data-theme="dark"]) .deviceListItem,
 :global(.dark) .deviceListItem {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceListItem:hover,

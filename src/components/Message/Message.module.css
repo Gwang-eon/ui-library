@@ -201,7 +201,7 @@
 :global([data-theme="dark"]) .message,
 :global(.dark) .message {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 

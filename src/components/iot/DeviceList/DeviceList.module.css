@@ -500,7 +500,7 @@
 :global(.dark) .listItem,
 :global(.dark) .compactCard {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceCard:hover,
@@ -540,7 +540,7 @@
 /* Device Stats */
 :global([data-theme="dark"]) .deviceStats,
 :global(.dark) .deviceStats {
-  border-top-color: var(--text-secondary);
+  border-top-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceStatLabel,
@@ -622,7 +622,7 @@
 :global([data-theme="dark"]) .compactActionButton,
 :global(.dark) .actionButton,
 :global(.dark) .compactActionButton {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-tertiary);
 }
 

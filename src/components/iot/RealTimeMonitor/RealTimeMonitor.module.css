@@ -405,19 +405,19 @@
 :global([data-theme="dark"]) .monitorContainer,
 :global(.dark) .monitorContainer {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .monitorHeader,
 :global(.dark) .monitorHeader {
   background-color: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .btnMonitor,
 :global(.dark) .btnMonitor {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-secondary);
 }
 
@@ -431,7 +431,7 @@
 :global([data-theme="dark"]) .metricCard,
 :global(.dark) .metricCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .metricCard:hover,
@@ -475,18 +475,18 @@
 
 :global([data-theme="dark"]) .dataStream,
 :global(.dark) .dataStream {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .streamTable thead,
 :global(.dark) .streamTable thead {
   background-color: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .streamTable td,
 :global(.dark) .streamTable td {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .streamTable tbody tr:hover,

@@ -214,7 +214,7 @@
 :global([data-theme="dark"]) .tree,
 :global(.dark) .tree {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .treeNodeContent:hover:not(.treeNodeDisabled),
@@ -246,7 +246,7 @@
 
 :global([data-theme="dark"]) .treeChildren,
 :global(.dark) .treeChildren {
-  border-left-color: var(--text-secondary);
+  border-left-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .treeNodeDisabled .treeNodeContent,

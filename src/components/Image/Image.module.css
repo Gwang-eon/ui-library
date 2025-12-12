@@ -400,7 +400,7 @@
 :global(.dark) .imageFigcaption {
   color: var(--text-tertiary);
   background-color: var(--surface-primary);
-  border-top-color: var(--text-secondary);
+  border-top-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .imagePreviewOverlay,

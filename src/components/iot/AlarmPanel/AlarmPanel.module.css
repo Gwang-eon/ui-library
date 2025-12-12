@@ -439,13 +439,13 @@
 :global([data-theme="dark"]) .alarmPanel,
 :global(.dark) .alarmPanel {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .alarmPanelHeader,
 :global(.dark) .alarmPanelHeader {
   background: var(--surface-secondary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .alarmPanelTitle,
@@ -499,13 +499,13 @@
 :global([data-theme="dark"]) .alarmPanelFilters,
 :global(.dark) .alarmPanelFilters {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .alarmFilterBtn,
 :global(.dark) .alarmFilterBtn {
   background: var(--surface-secondary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-tertiary);
 }
 
@@ -536,7 +536,7 @@
 :global([data-theme="dark"]) .alarmSearchInput,
 :global(.dark) .alarmSearchInput {
   background: var(--surface-secondary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -548,7 +548,7 @@
 
 :global([data-theme="dark"]) .alarmItem,
 :global(.dark) .alarmItem {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .alarmItem:hover,

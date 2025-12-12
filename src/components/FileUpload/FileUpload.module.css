@@ -305,7 +305,7 @@
 :global([data-theme="dark"]) .input-file,
 :global(.dark) .input-file {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -375,7 +375,7 @@
 :global([data-theme="dark"]) .file-item,
 :global(.dark) .file-item {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .file-item:hover,

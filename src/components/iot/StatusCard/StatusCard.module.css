@@ -541,7 +541,7 @@
 :global([data-theme="dark"]) .statusCard,
 :global(.dark) .statusCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .statusCard:hover,
@@ -551,7 +551,7 @@
 
 :global([data-theme="dark"]) .header,
 :global(.dark) .header {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .total,

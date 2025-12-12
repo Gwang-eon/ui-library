@@ -310,7 +310,7 @@
 :global([data-theme="dark"]) .treeselectTrigger,
 :global(.dark) .treeselectTrigger {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -343,19 +343,19 @@
 :global([data-theme="dark"]) .treeselectDropdown,
 :global(.dark) .treeselectDropdown {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 :global([data-theme="dark"]) .treeselectSearch,
 :global(.dark) .treeselectSearch {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .treeselectSearchInput,
 :global(.dark) .treeselectSearchInput {
   background: var(--surface-secondary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 

@@ -181,7 +181,7 @@
 :global([data-theme="dark"]) .deviceCard,
 :global(.dark) .deviceCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceCard:hover,
@@ -192,7 +192,7 @@
 
 :global([data-theme="dark"]) .deviceCardFooter,
 :global(.dark) .deviceCardFooter {
-  border-top-color: var(--text-secondary);
+  border-top-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceCardWarning,

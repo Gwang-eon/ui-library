@@ -277,7 +277,7 @@
 :global(.dark-mode) .btn-outline,
 :global([data-theme="dark"]) .btn-outline {
   color: var(--color-primary-400);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global(.dark-mode) .btn-outline:hover:not(:disabled),

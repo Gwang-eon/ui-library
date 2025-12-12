@@ -565,7 +565,7 @@
 :global([data-theme="dark"]) .deviceControlCard,
 :global(.dark) .deviceControlCard {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceControlCard:hover,
@@ -668,14 +668,14 @@
 
 :global([data-theme="dark"]) .btnGroup,
 :global(.dark) .btnGroup {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .btn,
 :global(.dark) .btn {
   background: var(--surface-primary);
   color: var(--text-tertiary);
-  border-right-color: var(--text-secondary);
+  border-right-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .btn:hover,
@@ -708,7 +708,7 @@
 :global([data-theme="dark"]) .customSelectTrigger,
 :global(.dark) .customSelectTrigger {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .customSelectTrigger:hover,
@@ -730,7 +730,7 @@
 :global([data-theme="dark"]) .customSelectDropdown,
 :global(.dark) .customSelectDropdown {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 

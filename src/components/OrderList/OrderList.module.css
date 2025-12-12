@@ -324,19 +324,19 @@
 :global([data-theme="dark"]) .orderList,
 :global(.dark) .orderList {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .orderListHeader,
 :global(.dark) .orderListHeader {
   background-color: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .orderListItem,
 :global(.dark) .orderListItem {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .orderListItem:hover:not(.orderListItemDragging),

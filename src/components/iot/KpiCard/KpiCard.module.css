@@ -151,7 +151,7 @@
 :global([data-theme="dark"]) .kpiCard,
 :global(.dark) .kpiCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .kpiCard:hover,

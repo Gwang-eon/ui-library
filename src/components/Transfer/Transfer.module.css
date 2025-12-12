@@ -284,24 +284,24 @@
 :global([data-theme="dark"]) .transferPanel,
 :global(.dark) .transferPanel {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .transferHeader,
 :global(.dark) .transferHeader {
   background: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .transferSearch,
 :global(.dark) .transferSearch {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .transferSearchInput,
 :global(.dark) .transferSearchInput {
   background: var(--surface-secondary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -314,7 +314,7 @@
 :global([data-theme="dark"]) .transferSelectAll,
 :global(.dark) .transferSelectAll {
   background: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .transferItem:hover,

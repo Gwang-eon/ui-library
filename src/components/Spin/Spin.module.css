@@ -259,7 +259,7 @@
 
 :global([data-theme="dark"]) .spin,
 :global(.dark) .spin {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   border-top-color: var(--active-bg);
 }
 

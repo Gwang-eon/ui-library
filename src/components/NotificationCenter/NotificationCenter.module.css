@@ -423,7 +423,7 @@
 :global([data-theme="dark"]) .notificationTrigger,
 :global(.dark) .notificationTrigger {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-tertiary);
 }
 
@@ -437,14 +437,14 @@
 :global([data-theme="dark"]) .notificationCenter,
 :global(.dark) .notificationCenter {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 :global([data-theme="dark"]) .notificationCenterHeader,
 :global(.dark) .notificationCenterHeader {
   background: var(--surface-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .notificationCount,
@@ -456,13 +456,13 @@
 :global([data-theme="dark"]) .notificationTabs,
 :global(.dark) .notificationTabs {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .notificationTab,
 :global(.dark) .notificationTab {
   background: var(--surface-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-tertiary);
 }
 
@@ -484,7 +484,7 @@
 :global([data-theme="dark"]) .notificationItemCompact,
 :global(.dark) .notificationItem,
 :global(.dark) .notificationItemCompact {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .notificationItem:hover,
@@ -532,7 +532,7 @@
 :global([data-theme="dark"]) .notificationCenterFooter,
 :global(.dark) .notificationCenterFooter {
   background: var(--surface-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .notificationViewAll,

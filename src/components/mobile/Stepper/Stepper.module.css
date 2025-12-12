@@ -215,12 +215,12 @@
 
 :global([data-theme="dark"]) .variantOutlined,
 :global(.dark) .variantOutlined {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .variantOutlined .button,
 :global(.dark) .variantOutlined .button {
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 /* Manual dark mode */

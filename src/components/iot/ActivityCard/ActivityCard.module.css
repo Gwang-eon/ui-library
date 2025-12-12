@@ -479,17 +479,17 @@
 :global([data-theme="dark"]) .activityCard,
 :global(.dark) .activityCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .header,
 :global(.dark) .header {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .item,
 :global(.dark) .item {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .item.clickable:hover,
@@ -521,7 +521,7 @@
 
 :global([data-theme="dark"]) .footer,
 :global(.dark) .footer {
-  border-top-color: var(--text-secondary);
+  border-top-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .titleSkeleton,
