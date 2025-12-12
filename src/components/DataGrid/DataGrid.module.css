@@ -73,8 +73,8 @@
 }
 
 .globalSearchInput:focus {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-100);
+  border-color: var(--focus-border-color);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 .globalSearchInput::placeholder {
@@ -187,13 +187,48 @@
 .dropdownItem input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: var(--color-primary-500);
+  accent-color: var(--accent-color);
 }
 
 .dropdownDivider {
   height: 1px;
   margin: var(--spacing-2) 0;
   background: var(--border-default);
+}
+
+/* Virtual Page Size Selector */
+.virtualPageSizeSelector {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-left: var(--spacing-3);
+  padding-left: var(--spacing-3);
+  border-left: 1px solid var(--border-subtle);
+}
+
+.virtualPageSizeLabel {
+  font-size: var(--font-size-label-small);
+  color: var(--text-secondary);
+}
+
+.virtualPageSizeSelect {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-label-small);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--surface-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.virtualPageSizeSelect:hover {
+  border-color: var(--border-hover);
+}
+
+.virtualPageSizeSelect:focus {
+  border-color: var(--focus-border-color);
 }
 
 /* ========================================
@@ -307,8 +342,8 @@
 }
 
 .pinButton:hover {
-  color: var(--color-primary-500);
-  background: var(--color-primary-50);
+  color: var(--accent-color);
+  background: var(--selected-bg);
 }
 
 /* Column Resizer */
@@ -327,7 +362,7 @@
 
 .resizer:hover,
 .resizer.resizing {
-  background: var(--color-primary-500);
+  background: var(--accent-color);
 }
 
 /* Column Pinning */
@@ -376,7 +411,7 @@
 }
 
 .filterInput:focus {
-  border-color: var(--color-primary-500);
+  border-color: var(--focus-border-color);
 }
 
 .filterInput::placeholder {
@@ -417,7 +452,7 @@
 }
 
 .selectFilterTrigger:hover {
-  border-color: var(--color-primary-500);
+  border-color: var(--focus-border-color);
 }
 
 .selectFilterText {
@@ -480,14 +515,14 @@
 }
 
 .selectFilterOption.selected {
-  background: var(--color-primary-50);
-  color: var(--color-primary-700);
+  background: var(--selected-bg);
+  color: var(--selected-text);
 }
 
 .selectFilterCheckbox {
   width: 14px;
   height: 14px;
-  accent-color: var(--color-primary-500);
+  accent-color: var(--accent-color);
 }
 
 .selectFilterEmpty {
@@ -519,11 +554,11 @@
 }
 
 .tr.selected {
-  background: var(--color-primary-50);
+  background: var(--selected-bg);
 }
 
 .tr.selected:hover {
-  background: var(--color-primary-100);
+  background: var(--selected-bg-hover);
 }
 
 .tr.grouped {
@@ -594,7 +629,8 @@
 
 .virtualScrollContainer {
   overflow: auto;
-  flex: 1;
+  /* Remove flex: 1 - it was overriding the inline height style */
+  /* Height is set via inline style for virtualization to work correctly */
 }
 
 .virtualBody {
@@ -618,11 +654,11 @@
 }
 
 .virtualRow.selected {
-  background: var(--color-primary-50);
+  background: var(--selected-bg);
 }
 
 .virtualRow.selected:hover {
-  background: var(--color-primary-100);
+  background: var(--selected-bg-hover);
 }
 
 .virtualRow.striped:nth-child(even) {
@@ -681,7 +717,7 @@
 
 :global([data-theme="dark"]) .virtualRow.selected,
 :global(.dark) .virtualRow.selected {
-  background: var(--color-primary-900);
+  background: var(--selected-bg);
 }
 
 /* ========================================
@@ -745,7 +781,7 @@
 }
 
 .groupToggle:hover {
-  color: var(--color-primary-600);
+  color: var(--accent-color-hover);
 }
 
 /* ========================================
@@ -780,13 +816,13 @@
 
 .checkboxInput:checked + .checkboxMark,
 .checkboxInput:indeterminate + .checkboxMark {
-  background: var(--color-primary-500);
-  border-color: var(--color-primary-500);
-  color: var(--palette-white);
+  background: var(--active-bg);
+  border-color: var(--active-border);
+  color: var(--active-text);
 }
 
 .checkboxInput:focus-visible + .checkboxMark {
-  box-shadow: 0 0 0 3px var(--color-primary-100);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 .checkboxInput:disabled + .checkboxMark {
@@ -832,12 +868,12 @@
 }
 
 .radioInput:checked + .radioMark {
-  background: var(--color-primary-500);
-  border-color: var(--color-primary-500);
+  background: var(--active-bg);
+  border-color: var(--active-border);
 }
 
 .radioInput:focus-visible + .radioMark {
-  box-shadow: 0 0 0 3px var(--color-primary-100);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 .radioInput:disabled + .radioMark {
@@ -860,9 +896,9 @@
    ======================================== */
 
 .focusedCell {
-  outline: 2px solid var(--color-primary-500);
+  outline: 2px solid var(--focus-border-color);
   outline-offset: -2px;
-  background: var(--color-primary-50);
+  background: var(--selected-bg);
 }
 
 /* ========================================
@@ -911,25 +947,25 @@
 }
 
 .pinButtonActive {
-  color: var(--color-primary-500);
+  color: var(--accent-color);
   opacity: 1;
 }
 
 .pinButtonActive:hover {
-  color: var(--color-primary-600);
-  background: var(--color-primary-50);
+  color: var(--accent-color-hover);
+  background: var(--selected-bg);
 }
 
 .pinnedRow {
-  background: var(--color-primary-50);
+  background: var(--selected-bg);
 }
 
 .pinnedRowTop {
-  border-bottom: 2px solid var(--color-primary-300);
+  border-bottom: 2px solid var(--selected-border);
 }
 
 .pinnedRowBottom {
-  border-top: 2px solid var(--color-primary-300);
+  border-top: 2px solid var(--selected-border);
 }
 
 /* ========================================
@@ -954,7 +990,7 @@
   font: inherit;
   color: var(--text-primary);
   background: var(--surface-primary);
-  border: 2px solid var(--color-primary-500);
+  border: 2px solid var(--focus-border-color);
   border-radius: var(--radius-sm);
   outline: none;
 }
@@ -966,14 +1002,14 @@
   font: inherit;
   color: var(--text-primary);
   background: var(--surface-primary);
-  border: 2px solid var(--color-primary-500);
+  border: 2px solid var(--focus-border-color);
   border-radius: var(--radius-sm);
   outline: none;
   cursor: pointer;
 }
 
 .editInputError {
-  border-color: var(--color-error-500);
+  border-color: var(--error-border);
 }
 
 .editorWrapper {
@@ -989,9 +1025,9 @@
   margin-top: var(--spacing-1);
   padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-xs);
-  color: var(--color-error-600);
-  background: var(--color-error-50);
-  border: 1px solid var(--color-error-200);
+  color: var(--error-text);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
   border-radius: var(--radius-sm);
   white-space: nowrap;
 }
@@ -1068,14 +1104,14 @@
 /* Dragging Row State */
 .draggingRow {
   opacity: 0.5;
-  background-color: var(--color-primary-50);
+  background-color: var(--selected-bg);
 }
 
 /* Drag Overlay */
 .dragOverlay {
   padding: var(--spacing-2) var(--spacing-3);
   background: var(--surface-primary);
-  border: 2px solid var(--color-primary-500);
+  border: 2px solid var(--focus-border-color);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   font-size: var(--font-size-sm);
@@ -1126,7 +1162,7 @@
 
 .selectionInfo {
   margin-left: var(--spacing-2);
-  color: var(--color-primary-600);
+  color: var(--accent-color-hover);
   font-weight: var(--font-weight-medium);
 }
 
@@ -1229,7 +1265,7 @@
   width: 40px;
   height: 40px;
   border: 3px solid var(--border-default);
-  border-top-color: var(--color-primary-500);
+  border-top-color: var(--accent-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -1269,8 +1305,8 @@
 
 :global([data-theme="dark"]) .globalSearchInput:focus,
 :global(.dark) .globalSearchInput:focus {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: var(--focus-border-color);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 :global([data-theme="dark"]) .globalSearchInput::placeholder,
@@ -1363,15 +1399,15 @@
 
 :global([data-theme="dark"]) .pinButton:hover,
 :global(.dark) .pinButton:hover {
-  color: var(--color-primary-400);
-  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-color);
+  background: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .resizer:hover,
 :global([data-theme="dark"]) .resizer.resizing,
 :global(.dark) .resizer:hover,
 :global(.dark) .resizer.resizing {
-  background: var(--color-primary-400);
+  background: var(--accent-color);
 }
 
 :global([data-theme="dark"]) .pinnedLeft,
@@ -1393,7 +1429,7 @@
 
 :global([data-theme="dark"]) .filterInput:focus,
 :global(.dark) .filterInput:focus {
-  border-color: var(--color-primary-500);
+  border-color: var(--focus-border-color);
 }
 
 :global([data-theme="dark"]) .filterInput::placeholder,
@@ -1413,12 +1449,12 @@
 
 :global([data-theme="dark"]) .tr.selected,
 :global(.dark) .tr.selected {
-  background: rgba(59, 130, 246, 0.15);
+  background: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .tr.selected:hover,
 :global(.dark) .tr.selected:hover {
-  background: rgba(59, 130, 246, 0.25);
+  background: var(--selected-bg-hover);
 }
 
 :global([data-theme="dark"]) .tr.grouped,
@@ -1465,7 +1501,7 @@
 
 :global([data-theme="dark"]) .groupToggle:hover,
 :global(.dark) .groupToggle:hover {
-  color: var(--color-primary-400);
+  color: var(--accent-color);
 }
 
 :global([data-theme="dark"]) .checkboxMark,
@@ -1478,13 +1514,13 @@
 :global([data-theme="dark"]) .checkboxInput:indeterminate + .checkboxMark,
 :global(.dark) .checkboxInput:checked + .checkboxMark,
 :global(.dark) .checkboxInput:indeterminate + .checkboxMark {
-  background: var(--color-primary-500);
-  border-color: var(--color-primary-500);
+  background: var(--active-bg);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .checkboxInput:focus-visible + .checkboxMark,
 :global(.dark) .checkboxInput:focus-visible + .checkboxMark {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 /* Radio button dark mode */
@@ -1496,13 +1532,13 @@
 
 :global([data-theme="dark"]) .radioInput:checked + .radioMark,
 :global(.dark) .radioInput:checked + .radioMark {
-  background: var(--color-primary-500);
-  border-color: var(--color-primary-500);
+  background: var(--active-bg);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .radioInput:focus-visible + .radioMark,
 :global(.dark) .radioInput:focus-visible + .radioMark {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 /* Row pinning dark mode */
@@ -1514,35 +1550,35 @@
 
 :global([data-theme="dark"]) .pinButtonActive,
 :global(.dark) .pinButtonActive {
-  color: var(--color-primary-400);
+  color: var(--accent-color);
 }
 
 :global([data-theme="dark"]) .pinButtonActive:hover,
 :global(.dark) .pinButtonActive:hover {
-  color: var(--color-primary-300);
-  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-color-hover);
+  background: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .pinnedRow,
 :global(.dark) .pinnedRow {
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .pinnedRowTop,
 :global(.dark) .pinnedRowTop {
-  border-bottom-color: var(--color-primary-500);
+  border-bottom-color: var(--selected-border);
 }
 
 :global([data-theme="dark"]) .pinnedRowBottom,
 :global(.dark) .pinnedRowBottom {
-  border-top-color: var(--color-primary-500);
+  border-top-color: var(--selected-border);
 }
 
 /* Keyboard navigation dark mode */
 :global([data-theme="dark"]) .focusedCell,
 :global(.dark) .focusedCell {
-  outline-color: var(--color-primary-400);
-  background: rgba(59, 130, 246, 0.15);
+  outline-color: var(--focus-border-color);
+  background: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .editableCell:hover,
@@ -1564,14 +1600,14 @@
 
 :global([data-theme="dark"]) .editInputError,
 :global(.dark) .editInputError {
-  border-color: var(--color-error-400);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .editorError,
 :global(.dark) .editorError {
-  color: var(--color-error-300);
-  background: rgba(239, 68, 68, 0.15);
-  border-color: var(--color-error-500);
+  color: var(--error-text);
+  background: var(--error-bg);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .tfoot,
@@ -1599,7 +1635,7 @@
 
 :global([data-theme="dark"]) .selectionInfo,
 :global(.dark) .selectionInfo {
-  color: var(--color-primary-400);
+  color: var(--accent-color);
 }
 
 :global([data-theme="dark"]) .pageSizeSelect,
@@ -1640,7 +1676,7 @@
 :global([data-theme="dark"]) .spinner,
 :global(.dark) .spinner {
   border-color: var(--text-secondary);
-  border-top-color: var(--color-primary-400);
+  border-top-color: var(--accent-color);
 }
 
 /* Select Filter Dark Mode */
@@ -1653,7 +1689,7 @@
 
 :global([data-theme="dark"]) .selectFilterTrigger:hover,
 :global(.dark) .selectFilterTrigger:hover {
-  border-color: var(--color-primary-400);
+  border-color: var(--focus-border-color);
 }
 
 :global([data-theme="dark"]) .selectFilterText,
@@ -1696,8 +1732,8 @@
 
 :global([data-theme="dark"]) .selectFilterOption.selected,
 :global(.dark) .selectFilterOption.selected {
-  background: rgba(59, 130, 246, 0.2);
-  color: var(--color-primary-400);
+  background: var(--selected-bg);
+  color: var(--selected-text);
 }
 
 :global([data-theme="dark"]) .selectFilterEmpty,
@@ -1765,14 +1801,14 @@
 
 :global([data-theme="dark"]) .draggingRow,
 :global(.dark) .draggingRow {
-  background-color: rgba(59, 130, 246, 0.1);
+  background-color: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .dragOverlay,
 :global(.dark) .dragOverlay {
   background: var(--surface-primary);
   color: var(--text-primary);
-  border-color: var(--color-primary-400);
+  border-color: var(--focus-border-color);
 }
 
 :global([data-theme="dark"]) .dragHandle,
@@ -1920,8 +1956,8 @@
    ======================================== */
 
 .selectedCell {
-  background-color: var(--color-primary-50) !important;
-  outline: 2px solid var(--color-primary-500);
+  background-color: var(--selected-bg) !important;
+  outline: 2px solid var(--focus-border-color);
   outline-offset: -2px;
 }
 
@@ -1936,6 +1972,6 @@
 
 :global([data-theme="dark"]) .selectedCell,
 :global(.dark) .selectedCell {
-  background-color: rgba(59, 130, 246, 0.2) !important;
-  outline-color: var(--color-primary-400);
+  background-color: var(--selected-bg) !important;
+  outline-color: var(--focus-border-color);
 }

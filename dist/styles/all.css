@@ -459,6 +459,31 @@
   --border-strong: var(--color-gray-400);
   --border-hover: var(--color-gray-500);  /* Hover state for borders */
 
+  /* Interactive States - Focus */
+  --focus-ring-color: var(--color-primary-500);
+  --focus-ring-shadow: 0 0 0 3px var(--color-primary-100);
+  --focus-border-color: var(--color-primary-500);
+
+  /* Interactive States - Selected */
+  --selected-bg: var(--color-primary-50);
+  --selected-bg-hover: var(--color-primary-100);
+  --selected-text: var(--color-primary-700);
+  --selected-border: var(--color-primary-300);
+
+  /* Interactive States - Active */
+  --active-bg: var(--color-primary-500);
+  --active-text: var(--color-white);
+  --active-border: var(--color-primary-500);
+
+  /* Interactive States - Accent (for checkboxes, radios, etc.) */
+  --accent-color: var(--color-primary-500);
+  --accent-color-hover: var(--color-primary-600);
+
+  /* Interactive States - Error */
+  --error-bg: var(--color-error-50);
+  --error-text: var(--color-error-600);
+  --error-border: var(--color-error-500);
+
   /* Status Colors */
   --status-online: var(--color-success-500);
   --status-offline: var(--color-gray-500);
@@ -1095,6 +1120,31 @@ body.dark-mode {
   --border-subtle: var(--palette-dark-blue-600);   /* Subtle borders */
   --border-strong: var(--palette-dark-blue-300);   /* Strong emphasis */
   --border-hover: var(--palette-dark-blue-300);    /* Hover state for borders */
+
+  /* Interactive States - Focus (Dark Mode) */
+  --focus-ring-color: var(--color-primary-400);
+  --focus-ring-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  --focus-border-color: var(--color-primary-400);
+
+  /* Interactive States - Selected (Dark Mode) */
+  --selected-bg: var(--color-primary-950);
+  --selected-bg-hover: var(--color-primary-900);
+  --selected-text: var(--color-primary-200);
+  --selected-border: var(--color-primary-600);
+
+  /* Interactive States - Active (Dark Mode) */
+  --active-bg: var(--color-primary-500);
+  --active-text: var(--color-white);
+  --active-border: var(--color-primary-500);
+
+  /* Interactive States - Accent (Dark Mode) */
+  --accent-color: var(--color-primary-500);
+  --accent-color-hover: var(--color-primary-400);
+
+  /* Interactive States - Error (Dark Mode) */
+  --error-bg: rgba(239, 68, 68, 0.15);
+  --error-text: var(--color-error-300);
+  --error-border: var(--color-error-500);
 
   /* Status Colors - Dark Mode (lighter variants) */
   --status-online: var(--color-success-400);

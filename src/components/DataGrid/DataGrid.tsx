@@ -373,6 +373,12 @@ export interface DataGridProps<TData> {
   estimateColumnWidth?: number;
   /** Overscan count for virtualization */
   overscan?: number;
+  /** Virtual page size - number of visible rows in virtualized view */
+  virtualPageSize?: number;
+  /** Virtual page size options for selector */
+  virtualPageSizeOptions?: number[];
+  /** Callback when virtual page size changes */
+  onVirtualPageSizeChange?: (size: number) => void;
 
   // Appearance
   /** Grid height */
@@ -1467,9 +1473,12 @@ function DataGridInner<TData>(
     estimateRowHeight = DEFAULT_ESTIMATE_ROW_HEIGHT,
     estimateColumnWidth = DEFAULT_ESTIMATE_COLUMN_WIDTH,
     overscan = DEFAULT_OVERSCAN,
+    virtualPageSize,
+    virtualPageSizeOptions = [20, 50, 100],
+    onVirtualPageSizeChange,
 
     // Appearance
-    height = DEFAULT_HEIGHT,
+    height: heightProp = DEFAULT_HEIGHT,
     striped = false,
     hoverable = true,
     bordered = true,
@@ -1536,6 +1545,28 @@ function DataGridInner<TData>(
   const tableContainerRef = useRef<HTMLDivElement>(null);
   // State-based ref for virtualization (triggers re-render when scroll element is available)
   const [virtualScrollElement, setVirtualScrollElement] = useState<HTMLDivElement | null>(null);
+
+  // Internal state for virtual page size (controllable or uncontrolled)
+  const [internalVirtualPageSize, setInternalVirtualPageSize] = useState(virtualPageSize ?? virtualPageSizeOptions[0] ?? 20);
+  const effectiveVirtualPageSize = virtualPageSize ?? internalVirtualPageSize;
+
+  // Calculate height based on virtualPageSize when virtualization is enabled
+  const HEADER_HEIGHT = 48;
+  const TOOLBAR_HEIGHT = showToolbar ? 56 : 0;
+  const height = enableVirtualization && effectiveVirtualPageSize
+    ? effectiveVirtualPageSize * estimateRowHeight + HEADER_HEIGHT + TOOLBAR_HEIGHT
+    : heightProp;
+
+  // Handle virtual page size change
+  const handleVirtualPageSizeChange = useCallback((newSize: number) => {
+    setInternalVirtualPageSize(newSize);
+    onVirtualPageSizeChange?.(newSize);
+  }, [onVirtualPageSizeChange]);
+
+  // Ref callback for virtualization scroll element
+  const handleVirtualScrollRef = useCallback((element: HTMLDivElement | null) => {
+    setVirtualScrollElement(element);
+  }, []);
 
   // Drag & Drop sensors
   const sensors = useSensors(
@@ -1902,6 +1933,18 @@ function DataGridInner<TData>(
 
   const virtualRows = enableVirtualization ? rowVirtualizer.getVirtualItems() : null;
   const totalSize = enableVirtualization ? rowVirtualizer.getTotalSize() : 0;
+
+  // Force virtualizer to re-measure when scroll element becomes available
+  useEffect(() => {
+    if (enableVirtualization && virtualScrollElement) {
+      // Small delay to ensure DOM has been laid out
+      const timer = setTimeout(() => {
+        rowVirtualizer.measure();
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enableVirtualization, virtualScrollElement]);
 
   // Column virtualization
   const visibleColumns = table.getVisibleLeafColumns();
@@ -3026,6 +3069,22 @@ function DataGridInner<TData>(
                 </button>
               </>
             )}
+            {enableVirtualization && virtualPageSizeOptions.length > 0 && (
+              <div className={styles.virtualPageSizeSelector}>
+                <span className={styles.virtualPageSizeLabel}>Rows:</span>
+                <select
+                  value={effectiveVirtualPageSize}
+                  onChange={(e) => handleVirtualPageSizeChange(Number(e.target.value))}
+                  className={styles.virtualPageSizeSelect}
+                >
+                  {virtualPageSizeOptions.map((size) => (
+                    <option key={size} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             {enableColumnVisibility && <ColumnVisibilityDropdown table={table} />}
           </div>
         </div>
@@ -3077,16 +3136,20 @@ function DataGridInner<TData>(
                   <div className={styles.virtualHeader} role="rowgroup">
                     {table.getHeaderGroups().map((headerGroup) => (
                       <div key={headerGroup.id} className={styles.virtualHeaderRow} role="row">
-                        {headerGroup.headers.map((header) => {
+                        {headerGroup.headers.map((header, headerIndex, headers) => {
                           const canSort = header.column.getCanSort();
                           const sorted = header.column.getIsSorted();
                           const align = (header.column.columnDef.meta as any)?.align ?? 'left';
+                          const isLastColumn = headerIndex === headers.length - 1;
 
                           return (
                             <div
                               key={header.id}
                               className={`${styles.virtualHeaderCell} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]}`}
-                              style={{ width: header.getSize(), flex: `0 0 ${header.getSize()}px` }}
+                              style={{
+                                minWidth: header.getSize(),
+                                flex: isLastColumn ? '1 0 auto' : `0 0 ${header.getSize()}px`,
+                              }}
                               role="columnheader"
                             >
                               {header.isPlaceholder ? null : (
@@ -3120,7 +3183,7 @@ function DataGridInner<TData>(
 
                 {/* Virtualized Body - scrollable container */}
                 <div
-                  ref={setVirtualScrollElement}
+                  ref={handleVirtualScrollRef}
                   className={styles.virtualScrollContainer}
                   style={{ height: typeof height === 'number' ? `${height - 48}px` : `calc(${height} - 48px)` }}
                 >
@@ -3138,7 +3201,7 @@ function DataGridInner<TData>(
                           </div>
                         )}
                       </div>
-                    ) : virtualScrollElement && virtualRows?.map((virtualRow) => {
+                    ) : virtualRows?.map((virtualRow) => {
                       const row = rows[virtualRow.index];
                       const isSelected = row.getIsSelected();
 
@@ -3155,14 +3218,18 @@ function DataGridInner<TData>(
                           onClick={() => onRowClick?.(row.original)}
                           onDoubleClick={() => onRowDoubleClick?.(row.original)}
                         >
-                          {row.getVisibleCells().map((cell, cellIndex) => {
+                          {row.getVisibleCells().map((cell, cellIndex, cells) => {
                             const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
+                            const isLastColumn = cellIndex === cells.length - 1;
 
                             return (
                               <div
                                 key={cell.id}
                                 className={`${styles.virtualCell} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]}`}
-                                style={{ width: cell.column.getSize(), flex: `0 0 ${cell.column.getSize()}px` }}
+                                style={{
+                                  minWidth: cell.column.getSize(),
+                                  flex: isLastColumn ? '1 0 auto' : `0 0 ${cell.column.getSize()}px`,
+                                }}
                                 role="gridcell"
                                 data-row-index={row.index}
                                 data-column-index={cellIndex}

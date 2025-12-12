@@ -63,6 +63,31 @@ const semanticTokens = {
     { name: '--border-strong', lightValue: 'gray-400', darkValue: 'dark-blue-300', usage: 'Emphasized borders' },
     { name: '--border-hover', lightValue: 'gray-500', darkValue: 'dark-blue-300', usage: 'Hover state borders' },
   ],
+  focus: [
+    { name: '--focus-ring-color', lightValue: 'primary-500', darkValue: 'primary-400', usage: 'Focus ring color' },
+    { name: '--focus-ring-shadow', lightValue: '0 0 0 3px primary-100', darkValue: '0 0 0 3px primary-900/30', usage: 'Focus ring shadow' },
+    { name: '--focus-border-color', lightValue: 'primary-500', darkValue: 'primary-400', usage: 'Input focus border' },
+  ],
+  selected: [
+    { name: '--selected-bg', lightValue: 'primary-50', darkValue: 'primary-900/20', usage: 'Selected row/item background' },
+    { name: '--selected-bg-hover', lightValue: 'primary-100', darkValue: 'primary-900/30', usage: 'Selected item hover' },
+    { name: '--selected-text', lightValue: 'primary-700', darkValue: 'primary-300', usage: 'Selected item text' },
+    { name: '--selected-border', lightValue: 'primary-300', darkValue: 'primary-600', usage: 'Selected item border' },
+  ],
+  active: [
+    { name: '--active-bg', lightValue: 'primary-500', darkValue: 'primary-500', usage: 'Active checkbox/radio fill' },
+    { name: '--active-text', lightValue: 'white', darkValue: 'white', usage: 'Active element text' },
+    { name: '--active-border', lightValue: 'primary-500', darkValue: 'primary-500', usage: 'Active element border' },
+  ],
+  accent: [
+    { name: '--accent-color', lightValue: 'primary-500', darkValue: 'primary-400', usage: 'Accent/highlight color' },
+    { name: '--accent-color-hover', lightValue: 'primary-600', darkValue: 'primary-300', usage: 'Accent hover state' },
+  ],
+  error: [
+    { name: '--error-bg', lightValue: 'error-50', darkValue: 'error-900/20', usage: 'Error state background' },
+    { name: '--error-text', lightValue: 'error-600', darkValue: 'error-400', usage: 'Error message text' },
+    { name: '--error-border', lightValue: 'error-500', darkValue: 'error-500', usage: 'Error input border' },
+  ],
 };
 
 const spacingTokens = [
@@ -320,6 +345,104 @@ export default function TokensDemos() {
           </thead>
           <tbody>
             {semanticTokens.border.map((token) => (
+              <SemanticTokenRow key={token.name} {...token} />
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      {/* Interactive States */}
+      <section className="tokens-section">
+        <h3>Interactive States</h3>
+        <p className="section-intro">
+          Semantic tokens for interactive UI elements. Use these instead of raw color values for consistent focus, selection, and error states.
+        </p>
+
+        <h4>Focus States</h4>
+        <table className="tokens-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light Mode</th>
+              <th>Dark Mode</th>
+              <th>Usage</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {semanticTokens.focus.map((token) => (
+              <SemanticTokenRow key={token.name} {...token} />
+            ))}
+          </tbody>
+        </table>
+
+        <h4>Selected States</h4>
+        <table className="tokens-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light Mode</th>
+              <th>Dark Mode</th>
+              <th>Usage</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {semanticTokens.selected.map((token) => (
+              <SemanticTokenRow key={token.name} {...token} />
+            ))}
+          </tbody>
+        </table>
+
+        <h4>Active States (Checkbox/Radio)</h4>
+        <table className="tokens-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light Mode</th>
+              <th>Dark Mode</th>
+              <th>Usage</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {semanticTokens.active.map((token) => (
+              <SemanticTokenRow key={token.name} {...token} />
+            ))}
+          </tbody>
+        </table>
+
+        <h4>Accent Colors</h4>
+        <table className="tokens-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light Mode</th>
+              <th>Dark Mode</th>
+              <th>Usage</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {semanticTokens.accent.map((token) => (
+              <SemanticTokenRow key={token.name} {...token} />
+            ))}
+          </tbody>
+        </table>
+
+        <h4>Error States</h4>
+        <table className="tokens-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light Mode</th>
+              <th>Dark Mode</th>
+              <th>Usage</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {semanticTokens.error.map((token) => (
               <SemanticTokenRow key={token.name} {...token} />
             ))}
           </tbody>
