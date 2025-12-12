@@ -15,6 +15,8 @@ export interface FABProps {
     onClick?: () => void;
     disabled?: boolean;
     className?: string;
+    /** Use absolute positioning relative to parent container instead of fixed viewport positioning */
+    absolute?: boolean;
 }
 export declare const FAB: React.FC<FABProps>;
 export interface SpeedDialAction {
@@ -28,6 +30,8 @@ export interface SpeedDialFABProps {
     position?: FABPosition;
     color?: FABColor;
     className?: string;
+    /** Use absolute positioning relative to parent container instead of fixed viewport positioning */
+    absolute?: boolean;
 }
 export declare const SpeedDialFAB: React.FC<SpeedDialFABProps>;
 declare const _default: {

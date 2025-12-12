@@ -246,45 +246,37 @@ export default function FeedbackDemos() {
           <h3>Watermark</h3>
 
           {/* Preset Examples */}
-          <Card variant="outlined" style={{ marginBottom: '1.5rem' }}>
+          <Card variant="outlined" className="mb-6">
             <Card.Header>
               <Card.Title>Preset Examples</Card.Title>
             </Card.Header>
             <Card.Content>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+              <div className="demo-grid-auto">
                 <Watermark content="IoT Platform" opacity={0.08}>
-                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                    <h4 style={{ margin: '0 0 0.5rem' }}>Confidential Document</h4>
-                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      Basic watermark with default settings.
-                    </p>
+                  <div className="demo-box">
+                    <h4>Confidential Document</h4>
+                    <p>Basic watermark with default settings.</p>
                   </div>
                 </Watermark>
 
                 <Watermark content="CONFIDENTIAL" opacity={0.1} rotate={-30}>
-                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                    <h4 style={{ margin: '0 0 0.5rem' }}>High Security</h4>
-                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      Custom rotation angle (-30°).
-                    </p>
+                  <div className="demo-box">
+                    <h4>High Security</h4>
+                    <p>Custom rotation angle (-30°).</p>
                   </div>
                 </Watermark>
 
                 <Watermark content="DRAFT" opacity={0.15} fontSize={20}>
-                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                    <h4 style={{ margin: '0 0 0.5rem' }}>Draft Version</h4>
-                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      Larger font size (20px) and higher opacity.
-                    </p>
+                  <div className="demo-box">
+                    <h4>Draft Version</h4>
+                    <p>Larger font size (20px) and higher opacity.</p>
                   </div>
                 </Watermark>
 
                 <Watermark content={['Internal Use Only', 'Do Not Distribute']} opacity={0.1}>
-                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                    <h4 style={{ margin: '0 0 0.5rem' }}>Multi-line Watermark</h4>
-                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      Multiple lines of text.
-                    </p>
+                  <div className="demo-box">
+                    <h4>Multi-line Watermark</h4>
+                    <p>Multiple lines of text.</p>
                   </div>
                 </Watermark>
               </div>
@@ -297,9 +289,9 @@ export default function FeedbackDemos() {
               <Card.Title>Interactive Customization</Card.Title>
             </Card.Header>
             <Card.Content>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+              <div className="demo-grid-2">
                 {/* Controls */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div className="flex flex-col gap-4">
                   <Input
                     label="Watermark Text"
                     value={wmText}
@@ -356,22 +348,11 @@ export default function FeedbackDemos() {
                   fontSize={wmFontSize}
                   gap={wmGap}
                 >
-                  <div style={{
-                    padding: '2rem',
-                    background: 'var(--color-bg-secondary)',
-                    borderRadius: '8px',
-                    minHeight: '280px',
-                  }}>
-                    <h4 style={{ margin: '0 0 1rem' }}>Preview</h4>
-                    <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      Use the controls on the left to customize the watermark appearance.
-                    </p>
-                    <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      Adjust text, opacity, rotation angle, font size, and gap between watermarks.
-                    </p>
-                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      The watermark is designed to protect content while maintaining readability.
-                    </p>
+                  <div className="demo-box demo-preview-lg">
+                    <h4>Preview</h4>
+                    <p>Use the controls on the left to customize the watermark appearance.</p>
+                    <p>Adjust text, opacity, rotation angle, font size, and gap between watermarks.</p>
+                    <p>The watermark is designed to protect content while maintaining readability.</p>
                   </div>
                 </Watermark>
               </div>

@@ -60,7 +60,7 @@ export default function MobileDemos() {
             title="Device Details"
             height="half"
           >
-            <div style={{ padding: '16px' }}>
+            <div className="demo-content-box">
               <p>Device Name: Temperature Sensor</p>
               <p>Status: Online</p>
               <p>Location: Building A, Floor 1</p>
@@ -72,12 +72,13 @@ export default function MobileDemos() {
         {/* FAB */}
         <div className="demo-item">
           <h3>FAB (Floating Action Button)</h3>
-          <div style={{ position: 'relative', height: '150px', background: 'var(--surface-secondary)', borderRadius: '8px' }}>
+          <div className="demo-preview demo-preview-sm">
             <FAB
               icon={Plus}
               label="Add"
               position="bottom-right"
               onClick={() => alert('FAB clicked!')}
+              absolute
             />
           </div>
         </div>
@@ -85,7 +86,7 @@ export default function MobileDemos() {
         {/* SpeedDialFAB */}
         <div className="demo-item">
           <h3>SpeedDial FAB</h3>
-          <div style={{ position: 'relative', height: '200px', background: 'var(--surface-secondary)', borderRadius: '8px' }}>
+          <div className="demo-preview demo-preview-lg">
             <SpeedDialFAB
               icon={Plus}
               actions={[
@@ -93,6 +94,7 @@ export default function MobileDemos() {
                 { icon: Lightbulb, label: 'Add Controller', onClick: () => {} },
                 { icon: Network, label: 'Add Gateway', onClick: () => {} },
               ]}
+              absolute
             />
           </div>
         </div>
@@ -100,7 +102,7 @@ export default function MobileDemos() {
         {/* MobileNavBar */}
         <div className="demo-item full-width">
           <h3>MobileNavBar</h3>
-          <div style={{ background: 'var(--surface-secondary)', borderRadius: '8px', overflow: 'hidden' }}>
+          <div className="demo-preview">
             <MobileNavBar
               items={[
                 { icon: Home, label: 'Home' },
@@ -109,6 +111,7 @@ export default function MobileDemos() {
                 { icon: Settings, label: 'Settings' },
               ]}
               activeIndex={0}
+              relative
             />
           </div>
         </div>

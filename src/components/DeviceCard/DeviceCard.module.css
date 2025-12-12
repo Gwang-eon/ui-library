@@ -165,13 +165,13 @@
    ======================================== */
 
 .deviceCardWarning {
-  border-color: var(--color-warning-300);
-  background-color: var(--color-warning-50);
+  border-color: var(--warning-border);
+  background-color: var(--warning-bg);
 }
 
 .deviceCardError {
-  border-color: var(--color-error-300);
-  background-color: var(--color-error-50);
+  border-color: var(--error-border);
+  background-color: var(--error-bg);
 }
 
 /* ========================================

@@ -134,6 +134,14 @@
   transform: translateX(-50%) scale(1);
 }
 
+/* ==================== FAB Absolute Positioning ==================== */
+
+.absolute.fab,
+.absolute.fabWrapper,
+.absolute.speedDial {
+  position: absolute;
+}
+
 /* ==================== FAB Hide State ==================== */
 
 .hidden {
@@ -298,10 +306,13 @@
   transform: translateX(0);
 }
 
-.speedDialAction .fab {
+.speedDialAction .fab,
+.speedDial > .fab {
   position: relative;
   bottom: auto;
   right: auto;
+  left: auto;
+  top: auto;
 }
 
 /* ==================== Speed Dial Backdrop ==================== */

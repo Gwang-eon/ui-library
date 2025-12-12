@@ -271,31 +271,31 @@
 /* ==================== Dark Mode ==================== */
 :global(.dark-mode) .btn:focus-visible,
 :global([data-theme="dark"]) .btn:focus-visible {
-  outline-color: var(--color-primary-400);
+  outline-color: var(--focus-ring-color);
 }
 
 :global(.dark-mode) .btn-outline,
 :global([data-theme="dark"]) .btn-outline {
-  color: var(--color-primary-400);
+  color: var(--accent-color);
   border-color: var(--border-default);
 }
 
 :global(.dark-mode) .btn-outline:hover:not(:disabled),
 :global([data-theme="dark"]) .btn-outline:hover:not(:disabled) {
-  background-color: rgba(59, 130, 246, 0.15);
-  border-color: var(--color-primary-400);
-  color: var(--color-primary-300);
+  background-color: var(--selected-bg);
+  border-color: var(--border-hover);
+  color: var(--accent-color);
 }
 
 :global(.dark-mode) .btn-ghost,
 :global([data-theme="dark"]) .btn-ghost {
-  color: var(--color-primary-400);
+  color: var(--accent-color);
 }
 
 :global(.dark-mode) .btn-ghost:hover:not(:disabled),
 :global([data-theme="dark"]) .btn-ghost:hover:not(:disabled) {
-  background-color: rgba(59, 130, 246, 0.15);
-  color: var(--color-primary-300);
+  background-color: var(--selected-bg);
+  color: var(--accent-color);
 }
 
 :global(.dark-mode) .btn-primary,
@@ -348,7 +348,7 @@
 :global([data-theme="dark"]) .btn-secondary.btn-loading::after,
 :global([data-theme="dark"]) .btn-ghost.btn-loading::after,
 :global([data-theme="dark"]) .btn-outline.btn-loading::after {
-  border-color: var(--color-primary-400);
+  border-color: var(--accent-color);
   border-right-color: transparent;
 }
 

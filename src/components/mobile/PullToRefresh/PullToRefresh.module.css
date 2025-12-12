@@ -106,8 +106,8 @@
 .pullSpinner {
   width: 32px;
   height: 32px;
-  border: 3px solid var(--color-primary-200);
-  border-top-color: var(--color-primary-600);
+  border: 3px solid var(--selected-border);
+  border-top-color: var(--active-border);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -148,13 +148,13 @@
 
 body.dark-mode .pullIcon,
 body[class*='theme-dark'] .pullIcon {
-  color: var(--color-primary-400);
+  color: var(--accent-color);
 }
 
 body.dark-mode .pullSpinner,
 body[class*='theme-dark'] .pullSpinner {
-  border-color: var(--color-primary-800);
-  border-top-color: var(--color-primary-400);
+  border-color: var(--selected-border);
+  border-top-color: var(--active-border);
 }
 
 /* ==================== Reduced Motion ==================== */

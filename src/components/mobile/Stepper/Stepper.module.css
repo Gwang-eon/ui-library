@@ -10,6 +10,7 @@
   display: inline-flex;
   align-items: center;
   background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -189,6 +190,7 @@
 :global([data-theme="dark"]) .stepper,
 :global(.dark) .stepper {
   background: var(--surface-primary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .button,

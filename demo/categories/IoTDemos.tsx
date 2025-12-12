@@ -31,7 +31,8 @@ import DeviceList from '../../src/components/iot/DeviceList';
 import SensorPanel from '../../src/components/iot/SensorPanel';
 import { AlarmPanel, AlarmItem } from '../../src/components/iot/AlarmPanel';
 import { DeviceControlCard, TemperatureControl } from '../../src/components/iot/DeviceControlPanel';
-import { EventDataTable } from '../../src/components/iot/EventDataTable';
+import { DataGrid, type ColumnDef } from '../../src/components/DataGrid';
+import { Badge } from '../../src/components/Badge';
 import { EventTimeline, EventItem } from '../../src/components/iot/EventTimeline';
 import { LogContainer, LogEntry } from '../../src/components/iot/ActivityLog';
 import { StatusCard } from '../../src/components/iot/StatusCard';
@@ -94,11 +95,21 @@ const sampleDevices = [
   },
 ];
 
-const sampleEvents = [
+type EventData = {
+  id: string;
+  time: string;
+  severity: 'critical' | 'warning' | 'info';
+  eventType: { icon: string; label: string };
+  device: { id: string; type: string };
+  message: string;
+  location: string;
+};
+
+const sampleEvents: EventData[] = [
   {
     id: 'evt-001',
     time: '2024-01-15 10:30:00',
-    severity: 'critical' as const,
+    severity: 'critical',
     eventType: { icon: '⚠️', label: 'Critical Alert' },
     device: { id: 'dev-001', type: 'Sensor' },
     message: 'Temperature exceeded critical threshold',
@@ -107,7 +118,7 @@ const sampleEvents = [
   {
     id: 'evt-002',
     time: '2024-01-15 10:25:00',
-    severity: 'warning' as const,
+    severity: 'warning',
     eventType: { icon: '⚡', label: 'Warning' },
     device: { id: 'dev-003', type: 'Sensor' },
     message: 'Motion sensor battery low',
@@ -116,11 +127,63 @@ const sampleEvents = [
   {
     id: 'evt-003',
     time: '2024-01-15 10:20:00',
-    severity: 'info' as const,
+    severity: 'info',
     eventType: { icon: 'ℹ️', label: 'Info' },
     device: { id: 'dev-002', type: 'Controller' },
     message: 'HVAC mode changed to cooling',
     location: 'Building A, Floor 1',
+  },
+];
+
+const eventColumns: ColumnDef<EventData>[] = [
+  {
+    id: 'time',
+    header: 'Time',
+    accessorKey: 'time',
+    width: 160,
+  },
+  {
+    id: 'severity',
+    header: 'Severity',
+    accessorKey: 'severity',
+    width: 100,
+    cell: ({ row }) => {
+      const severity = row.original.severity;
+      const variant = severity === 'critical' ? 'error' : severity === 'warning' ? 'warning' : 'info';
+      return <Badge variant={variant}>{severity}</Badge>;
+    },
+  },
+  {
+    id: 'eventType',
+    header: 'Event Type',
+    accessorKey: 'eventType',
+    width: 140,
+    cell: ({ row }) => (
+      <span>{row.original.eventType.icon} {row.original.eventType.label}</span>
+    ),
+  },
+  {
+    id: 'device',
+    header: 'Device',
+    accessorKey: 'device',
+    width: 140,
+    cell: ({ row }) => (
+      <span className="text-tertiary-sm">
+        <strong>{row.original.device.id}</strong>
+        <span className="text-tertiary ml-1">({row.original.device.type})</span>
+      </span>
+    ),
+  },
+  {
+    id: 'message',
+    header: 'Message',
+    accessorKey: 'message',
+  },
+  {
+    id: 'location',
+    header: 'Location',
+    accessorKey: 'location',
+    width: 150,
   },
 ];
 
@@ -151,7 +214,7 @@ export default function IoTDemos() {
             <ConnectionIndicator status="disconnected" />
             <ConnectionIndicator status="connecting" />
           </div>
-          <div className="demo-row" style={{ marginTop: '8px' }}>
+          <div className="demo-row mt-2">
             <SignalIndicator strength="excellent" />
             <SignalIndicator strength="good" />
             <SignalIndicator strength="fair" />
@@ -216,7 +279,7 @@ export default function IoTDemos() {
         {/* DeviceList */}
         <div className="demo-item full-width">
           <h3>DeviceList</h3>
-          <div className="demo-row" style={{ marginBottom: '12px' }}>
+          <div className="demo-row mb-3">
             <Segmented
               options={[
                 { label: 'Grid', value: 'grid', icon: <LayoutGrid size={14} /> },
@@ -284,13 +347,15 @@ export default function IoTDemos() {
           </AlarmPanel>
         </div>
 
-        {/* EventDataTable */}
+        {/* Event DataGrid */}
         <div className="demo-item full-width">
-          <h3>EventDataTable</h3>
-          <EventDataTable
-            events={sampleEvents}
+          <h3>Event DataGrid</h3>
+          <DataGrid
+            data={sampleEvents}
+            columns={eventColumns}
             searchable
             filterable
+            pageSize={10}
           />
         </div>
 

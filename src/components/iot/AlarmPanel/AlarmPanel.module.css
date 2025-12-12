@@ -142,9 +142,9 @@
 }
 
 .alarmFilterBtn.alarmFilterActive {
-  background: var(--color-primary-50);
-  border-color: var(--color-primary-300);
-  color: var(--color-primary-700);
+  background: var(--selected-bg);
+  border-color: var(--selected-border);
+  color: var(--accent-color);
 }
 
 .alarmFilterCount {
@@ -195,8 +195,8 @@
 
 .alarmSearchInput:focus {
   outline: none;
-  border-color: var(--color-primary-400);
-  box-shadow: 0 0 0 3px var(--color-primary-100);
+  border-color: var(--active-border);
+  box-shadow: 0 0 0 3px var(--selected-bg);
 }
 
 /* ==================== Alarm Panel Body ==================== */
@@ -327,8 +327,8 @@
 
 /* New Alarm */
 .alarmItemNew {
-  background: var(--color-primary-50);
-  border-left: 3px solid var(--color-primary-500);
+  background: var(--info-bg);
+  border-left: 3px solid var(--info-border);
 }
 
 /* Acknowledged Alarm */
@@ -517,9 +517,9 @@
 
 :global([data-theme="dark"]) .alarmFilterBtn.alarmFilterActive,
 :global(.dark) .alarmFilterBtn.alarmFilterActive {
-  background: var(--color-primary-900);
-  border-color: var(--color-primary-600);
-  color: var(--color-primary-300);
+  background: var(--selected-bg);
+  border-color: var(--selected-border);
+  color: var(--accent-color);
 }
 
 :global([data-theme="dark"]) .alarmFilterCount,
@@ -542,8 +542,8 @@
 
 :global([data-theme="dark"]) .alarmSearchInput:focus,
 :global(.dark) .alarmSearchInput:focus {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-900);
+  border-color: var(--active-border);
+  box-shadow: 0 0 0 3px var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .alarmItem,
@@ -591,8 +591,8 @@
 
 :global([data-theme="dark"]) .alarmItemNew,
 :global(.dark) .alarmItemNew {
-  background: var(--color-primary-900);
-  border-left-color: var(--color-primary-500);
+  background: var(--info-bg);
+  border-left-color: var(--info-border);
 }
 
 :global([data-theme="dark"]) .alarmItemAcknowledged .alarmSeverity,

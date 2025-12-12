@@ -1,4 +1,5 @@
 .demo-app {
+  --demo-header-height: 60px;
   min-height: 100vh;
   background: var(--surface-secondary);
 }
@@ -14,6 +15,8 @@
   position: sticky;
   top: 0;
   z-index: 1200;
+  min-height: var(--demo-header-height);
+  box-sizing: border-box;
 }
 
 .demo-header-left {
@@ -79,7 +82,7 @@
   border-bottom: 1px solid var(--border-default);
   overflow-x: auto;
   position: sticky;
-  top: 56px;
+  top: var(--demo-header-height);
   z-index: 1100;
 }
 
@@ -183,15 +186,15 @@ body.dark-mode .demo-nav-item.active {
   color: var(--text-secondary);
   margin-bottom: var(--spacing-4);
   padding: var(--spacing-3);
-  background: var(--color-info-50);
+  background: var(--info-bg);
   border-radius: var(--radius-base);
-  border-left: 3px solid var(--color-info-500);
+  border-left: 3px solid var(--info-border);
 }
 
 body.dark-mode .demo-note,
 [data-theme="dark"] .demo-note {
-  background: var(--color-info-900);
-  border-left-color: var(--color-info-400);
+  background: var(--info-bg);
+  border-left-color: var(--info-border);
 }
 
 /* Demo item dark mode */
@@ -272,4 +275,104 @@ body.dark-mode .demo-footer,
 .demo-loading p {
   font-size: var(--font-size-body);
   margin: 0;
+}
+
+/* ========================================
+   DEMO-SPECIFIC CLASSES
+   Note: Use base.css utility classes for spacing, text, flex, etc.
+   e.g. .mt-2, .mb-3, .text-tertiary, .flex, .gap-2
+   ======================================== */
+
+/* Preview container for mobile components */
+.demo-preview {
+  position: relative;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.demo-preview-sm { height: 150px; }
+.demo-preview-md { height: 200px; }
+.demo-preview-lg { height: 280px; }
+
+/* Content box for previews */
+.demo-content-box {
+  padding: var(--spacing-4);
+}
+
+/* Grid layouts */
+.demo-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+}
+
+.demo-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-4);
+}
+
+/* Flex spacer (use base.css for other flex utilities) */
+.demo-spacer { flex: 1; }
+
+/* Status colors for DataGrid cells */
+.demo-status {
+  font-weight: var(--font-weight-medium);
+}
+
+.demo-status-success { color: var(--success-text); }
+.demo-status-warning { color: var(--warning-text); }
+.demo-status-error { color: var(--error-text); }
+.demo-status-info { color: var(--info-text); }
+
+/* Card-like box for watermark demos */
+.demo-box {
+  padding: var(--spacing-4);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  min-height: 150px;
+}
+
+.demo-box h4 {
+  margin: 0 0 var(--spacing-2) 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.demo-box p {
+  margin: 0;
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+}
+
+/* Expandable row details */
+.demo-expand-content {
+  padding: var(--spacing-4);
+  background: var(--surface-tertiary);
+}
+
+.demo-expand-content h4 {
+  margin: 0 0 var(--spacing-3) 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.demo-expand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-3);
+}
+
+/* Carousel slide placeholder */
+.demo-slide {
+  background: var(--surface-tertiary);
+  padding: var(--spacing-10);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .demo-grid-2 {
+    grid-template-columns: 1fr;
+  }
 }

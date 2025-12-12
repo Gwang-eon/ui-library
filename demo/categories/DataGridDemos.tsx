@@ -2,6 +2,8 @@ import React from 'react';
 import { Download, FileJson, FileSpreadsheet } from 'lucide-react';
 import { Button } from '../../src/components/Button';
 import { Badge } from '../../src/components/Badge';
+import { Checkbox } from '../../src/components/Checkbox';
+import { Tag } from '../../src/components/Tag';
 import { DataGrid, DataGridColumn, DataGridRef } from '../../src/components/DataGrid';
 
 // DataGrid sample data
@@ -108,8 +110,8 @@ const treeColumns: DataGridColumn<TreeNode>[] = [
     id: 'status', header: 'Status', accessorKey: 'status', size: 100,
     cell: ({ getValue }) => {
       const status = getValue() as string;
-      const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-      return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+      const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+      return <span className={`demo-status ${statusClass}`}>{status}</span>;
     },
   },
 ];
@@ -145,8 +147,8 @@ const dataGridColumns: DataGridColumn<DeviceData>[] = [
     id: 'uptime', header: 'Uptime', accessorKey: 'uptime', size: 120, minSize: 100, align: 'right',
     cell: ({ getValue }) => {
       const value = getValue() as number;
-      const color = value >= 99 ? 'var(--color-success-500)' : value >= 90 ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-      return <span style={{ color, fontWeight: 500 }}>{value.toFixed(1)}%</span>;
+      const statusClass = value >= 99 ? 'demo-status-success' : value >= 90 ? 'demo-status-warning' : 'demo-status-error';
+      return <span className={`demo-status ${statusClass}`}>{value.toFixed(1)}%</span>;
     },
   },
   { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 160, minSize: 130 },
@@ -191,13 +193,13 @@ export default function DataGridDemos() {
   return (
     <section className="demo-section">
       <h2>DataGrid (TanStack Table)</h2>
-      <p className="demo-note" style={{ marginBottom: '24px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+      <p className="demo-note mb-6">
         Enterprise-grade data grid built on TanStack Table. Features include sorting, filtering, pagination,
         column resizing/pinning/visibility, row selection/expansion, cell editing, and virtualization for large datasets.
       </p>
 
       {/* Basic DataGrid */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Basic DataGrid with All Features</h3>
         <DataGrid
           data={dataGridData}
@@ -215,9 +217,9 @@ export default function DataGridDemos() {
           striped
           hoverable
           renderExpandedRow={(row) => (
-            <div style={{ padding: '16px', background: 'var(--surface-tertiary)' }}>
-              <h4 style={{ margin: '0 0 12px 0' }}>Device Details: {row.name}</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+            <div className="demo-expand-content">
+              <h4>Device Details: {row.name}</h4>
+              <div className="demo-expand-grid">
                 <div><strong>ID:</strong> {row.id}</div>
                 <div><strong>Type:</strong> {row.type}</div>
                 <div><strong>Status:</strong> {row.status}</div>
@@ -233,7 +235,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Compact Mode */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Compact Mode (No Filtering)</h3>
         <DataGrid
           data={dataGridData.slice(0, 6)}
@@ -249,7 +251,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Selection Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Row Selection (Single & Multi)</h3>
         <p className="demo-note">Select rows using checkboxes. Use the global search to filter data.</p>
         <DataGrid
@@ -260,8 +262,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
@@ -279,7 +281,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Single Selection (Radio) Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Single Selection (Radio Style)</h3>
         <p className="demo-note">Use radio buttons for single row selection. Only one row can be selected at a time.</p>
         <DataGrid
@@ -290,8 +292,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
@@ -309,7 +311,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Conditional Selection Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Conditional Selection</h3>
         <p className="demo-note">Only <strong>online</strong> devices can be selected. Offline and warning devices are disabled.</p>
         <DataGrid
@@ -320,8 +322,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
@@ -340,7 +342,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Page Selection Mode Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Page-Only Selection</h3>
         <p className="demo-note">Header checkbox toggles only the current page rows. Change pages and use header checkbox to see the difference.</p>
         <DataGrid
@@ -351,8 +353,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
@@ -370,7 +372,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Advanced Filters Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Advanced Filters (Select, Multi-Select, Date Range)</h3>
         <p className="demo-note">
           <strong>Type:</strong> Single select dropdown &nbsp;|&nbsp;
@@ -393,7 +395,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Column Pinning Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Column Pinning & Resizing</h3>
         <p className="demo-note">Pin columns by clicking the pin icon. Drag column borders to resize.</p>
         <DataGrid
@@ -411,7 +413,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Tree Structure Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Tree Structure (Hierarchical Data)</h3>
         <p className="demo-note">
           Display hierarchical data with <code>getSubRows</code>. Click expand icons to show child rows.
@@ -432,7 +434,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Keyboard Navigation Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Keyboard Navigation</h3>
         <p className="demo-note">
           Click on any cell to focus it, then use keyboard to navigate:
@@ -455,8 +457,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status',
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location', editable: true },
@@ -477,11 +479,11 @@ export default function DataGridDemos() {
       </div>
 
       {/* Loading State */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Loading & Empty States</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+        <div className="demo-grid-2">
           <div>
-            <h4 style={{ marginBottom: '12px', fontWeight: 500 }}>Loading State</h4>
+            <h4 className="mb-3">Loading State</h4>
             <DataGrid
               data={dataGridData.slice(0, 3)}
               columns={dataGridColumns.slice(0, 4)}
@@ -493,7 +495,7 @@ export default function DataGridDemos() {
             />
           </div>
           <div>
-            <h4 style={{ marginBottom: '12px', fontWeight: 500 }}>Empty State</h4>
+            <h4 className="mb-3">Empty State</h4>
             <DataGrid
               data={[]}
               columns={dataGridColumns.slice(0, 4)}
@@ -508,7 +510,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Minimal Config */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Minimal Configuration</h3>
         <p className="demo-note">DataGrid with minimum required props - just data and columns.</p>
         <DataGrid
@@ -526,7 +528,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Row Grouping Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Row Grouping with Aggregation</h3>
         <p className="demo-note">Group rows by Type. Shows count aggregation for grouped rows.</p>
         <DataGrid
@@ -537,17 +539,17 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status',
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right',
               aggregationFn: 'mean',
-              aggregatedCell: ({ getValue }) => <span style={{ fontWeight: 600 }}>Avg: {(getValue() as number).toFixed(1)}°C</span>
+              aggregatedCell: ({ getValue }) => <span className="font-semibold">Avg: {(getValue() as number).toFixed(1)}°C</span>
             },
             { id: 'uptime', header: 'Uptime (%)', accessorKey: 'uptime', align: 'right',
               aggregationFn: 'mean',
-              aggregatedCell: ({ getValue }) => <span style={{ fontWeight: 600 }}>Avg: {(getValue() as number).toFixed(1)}%</span>
+              aggregatedCell: ({ getValue }) => <span className="font-semibold">Avg: {(getValue() as number).toFixed(1)}%</span>
             },
           ]}
           enableGrouping
@@ -560,7 +562,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Cell Editing Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Cell Editing</h3>
         <p className="demo-note">Double-click on Name or Location cells to edit. Press Enter to save, Escape to cancel.</p>
         <DataGrid
@@ -584,16 +586,18 @@ export default function DataGridDemos() {
       </div>
 
       {/* Advanced Cell Editing Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
-        <h3>Advanced Cell Editing (Validation & Editor Types)</h3>
+      <div className="demo-item full-width mb-8">
+        <h3>Advanced Cell Editing (Multiple Editor Types)</h3>
         <p className="demo-note">
-          Double-click to edit. Different editor types: Text (with validation), Number, Select dropdown.
+          Double-click to edit. Supports various editor types for different data types:
           <br />
-          • <strong>Name:</strong> Must be at least 3 characters
+          • <strong>Name:</strong> Text input with validation (min 3 characters)
           <br />
-          • <strong>Temperature:</strong> Number editor, must be between -50 and 100
+          • <strong>Temperature:</strong> Number input with range validation (-50 ~ 100)
           <br />
-          • <strong>Status:</strong> Select dropdown editor
+          • <strong>Status:</strong> Select dropdown
+          <br />
+          • <strong>Last Update:</strong> Date picker
         </p>
         <DataGrid
           data={dataGridData.slice(0, 6)}
@@ -625,11 +629,17 @@ export default function DataGridDemos() {
               ],
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               },
             },
-            { id: 'location', header: 'Location', accessorKey: 'location' },
+            {
+              id: 'lastUpdate',
+              header: 'Last Update',
+              accessorKey: 'lastUpdate',
+              editable: true,
+              editorType: 'date',
+            },
             {
               id: 'temperature',
               header: 'Temp (°C)',
@@ -656,8 +666,107 @@ export default function DataGridDemos() {
         />
       </div>
 
+      {/* Custom Editor Components Demo */}
+      <div className="demo-item full-width mb-8">
+        <h3>Custom Editor Components</h3>
+        <p className="demo-note">
+          Use <code>editComponent</code> prop for custom editors like Checkbox, Tag selector, or any React component.
+          <br />
+          • <strong>Active:</strong> Custom Checkbox editor
+          <br />
+          • <strong>Priority:</strong> Custom Tag selector editor
+        </p>
+        <DataGrid
+          data={[
+            { id: '1', name: 'Task A', active: true, priority: 'high' },
+            { id: '2', name: 'Task B', active: false, priority: 'medium' },
+            { id: '3', name: 'Task C', active: true, priority: 'low' },
+            { id: '4', name: 'Task D', active: true, priority: 'high' },
+            { id: '5', name: 'Task E', active: false, priority: 'medium' },
+          ]}
+          columns={[
+            {
+              id: 'name',
+              header: 'Task Name',
+              accessorKey: 'name',
+              editable: true,
+              editorType: 'text',
+            },
+            {
+              id: 'active',
+              header: 'Active',
+              accessorKey: 'active',
+              align: 'center',
+              editable: true,
+              editComponent: ({ value, onChange, onBlur }) => (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0' }}>
+                  <Checkbox
+                    checked={Boolean(value)}
+                    onChange={(e) => {
+                      onChange(e.target.checked);
+                      // Auto-save on change for better UX
+                      setTimeout(onBlur, 0);
+                    }}
+                  />
+                </div>
+              ),
+              cell: ({ getValue }) => (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Checkbox checked={Boolean(getValue())} readOnly />
+                </div>
+              ),
+            },
+            {
+              id: 'priority',
+              header: 'Priority',
+              accessorKey: 'priority',
+              editable: true,
+              editComponent: ({ value, onChange, onBlur }) => (
+                <div style={{ display: 'flex', gap: '4px', padding: '4px 0' }}>
+                  {(['high', 'medium', 'low'] as const).map((p) => (
+                    <Tag
+                      key={p}
+                      variant={value === p ? 'solid' : 'outline'}
+                      color={p === 'high' ? 'error' : p === 'medium' ? 'warning' : 'success'}
+                      size="sm"
+                      onClick={() => {
+                        onChange(p);
+                        setTimeout(onBlur, 0);
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {p}
+                    </Tag>
+                  ))}
+                </div>
+              ),
+              cell: ({ getValue }) => {
+                const priority = getValue() as string;
+                return (
+                  <Tag
+                    variant="solid"
+                    color={priority === 'high' ? 'error' : priority === 'medium' ? 'warning' : 'success'}
+                    size="sm"
+                  >
+                    {priority}
+                  </Tag>
+                );
+              },
+            },
+          ]}
+          enableCellEditing
+          onCellEdit={(rowId, columnId, value) => {
+            console.log(`Custom edit - Row: ${rowId}, Column: ${columnId}, Value: ${value}`);
+          }}
+          enableSorting={false}
+          enableFiltering={false}
+          enablePagination={false}
+          height={280}
+        />
+      </div>
+
       {/* Row Pinning Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Row Pinning</h3>
         <p className="demo-note">
           Hover over a row to see pin buttons. Pin rows to top or bottom to keep them visible while scrolling.
@@ -671,8 +780,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status',
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location' },
@@ -688,7 +797,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Virtualization Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Virtualization (10,000 Rows)</h3>
         <p className="demo-note">
           Efficient rendering of large datasets using virtual scrolling. Only ~50-100 visible rows are rendered at a time,
@@ -703,8 +812,8 @@ export default function DataGridDemos() {
             { id: 'status', header: 'Status', accessorKey: 'status', size: 100,
               cell: ({ getValue }) => {
                 const status = getValue() as string;
-                const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color }}>{status}</span>;
+                const statusClass = status === 'online' ? 'demo-status-success' : status === 'warning' ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{status}</span>;
               }
             },
             { id: 'location', header: 'Location', accessorKey: 'location', size: 180 },
@@ -727,7 +836,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Horizontal Scroll Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Horizontal Scroll (Many Columns)</h3>
         <p className="demo-note">
           DataGrid with many columns showing horizontal scroll capability. Useful for data with many fields.
@@ -755,8 +864,8 @@ export default function DataGridDemos() {
             { id: 'uptime', header: 'Uptime (%)', accessorKey: 'uptime', size: 120, align: 'right',
               cell: ({ getValue }) => {
                 const value = getValue() as number;
-                const color = value >= 99 ? 'var(--color-success-500)' : value >= 90 ? 'var(--color-warning-500)' : 'var(--color-error-500)';
-                return <span style={{ color, fontWeight: 500 }}>{value.toFixed(1)}%</span>;
+                const statusClass = value >= 99 ? 'demo-status-success' : value >= 90 ? 'demo-status-warning' : 'demo-status-error';
+                return <span className={`demo-status ${statusClass}`}>{value.toFixed(1)}%</span>;
               }
             },
             { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 160 },
@@ -771,7 +880,7 @@ export default function DataGridDemos() {
       </div>
 
       {/* Custom Footer Demo */}
-      <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
+      <div className="demo-item full-width mb-8">
         <h3>Custom Footer with Totals</h3>
         <p className="demo-note">Footer row showing column totals and averages.</p>
         <DataGrid
@@ -804,7 +913,7 @@ export default function DataGridDemos() {
       <div className="demo-item full-width">
         <h3>CSV Export & Ref Methods</h3>
         <p className="demo-note">Use the Export button to download data as CSV.</p>
-        <div style={{ marginBottom: '12px' }}>
+        <div className="mb-3">
           <Button
             size="sm"
             variant="outline"
@@ -828,7 +937,7 @@ export default function DataGridDemos() {
               URL.revokeObjectURL(url);
             }}
           >
-            <Download size={14} style={{ marginRight: '6px' }} />
+            <Download size={14} className="mr-1" />
             Export to CSV
           </Button>
         </div>
@@ -1009,7 +1118,7 @@ function ExportDemo() {
       <p className="demo-note">
         Export data to various formats: CSV, TSV, JSON. Excel export requires xlsx package.
       </p>
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+      <div className="flex gap-2 mb-3">
         <Button
           variant="secondary"
           size="sm"

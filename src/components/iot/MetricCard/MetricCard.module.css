@@ -227,11 +227,11 @@
 }
 
 .metricCard.live {
-  border-color: var(--color-success-300);
+  border-color: var(--success-border);
 }
 
 .metricCard.alert {
-  border-color: var(--color-error-300);
+  border-color: var(--error-border);
 }
 
 /* MetricCardGrid */
@@ -341,12 +341,12 @@
 
 :global([data-theme="dark"]) .metricCard.live,
 :global(.dark) .metricCard.live {
-  border-color: var(--color-success-600);
+  border-color: var(--success-border);
 }
 
 :global([data-theme="dark"]) .metricCard.alert,
 :global(.dark) .metricCard.alert {
-  border-color: var(--color-error-600);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .labelSkeleton,

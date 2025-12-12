@@ -249,12 +249,12 @@
 }
 
 .carouselThumbnail.active {
-  border-color: var(--color-primary-500);
+  border-color: var(--active-border);
   opacity: 1;
 }
 
 .carouselThumbnail:focus-visible {
-  outline: 2px solid var(--color-primary-500);
+  outline: 2px solid var(--focus-ring-color);
   outline-offset: 2px;
 }
 
@@ -342,12 +342,12 @@
 
 :global([data-theme="dark"]) .carouselThumbnail.active,
 :global(.dark) .carouselThumbnail.active {
-  border-color: var(--color-primary-500);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .carouselThumbnail:focus-visible,
 :global(.dark) .carouselThumbnail:focus-visible {
-  outline-color: var(--color-primary-400);
+  outline-color: var(--focus-ring-color);
 }
 
 /* ========================================

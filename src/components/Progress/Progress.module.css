@@ -204,23 +204,23 @@
 
 /* Spinner Color Variants */
 .progressSpinnerPrimary .progressSpinnerCircle {
-  border-top-color: var(--color-primary-500);
-  border-right-color: var(--color-primary-500);
+  border-top-color: var(--active-border);
+  border-right-color: var(--active-border);
 }
 
 .progressSpinnerSuccess .progressSpinnerCircle {
-  border-top-color: var(--color-success-500);
-  border-right-color: var(--color-success-500);
+  border-top-color: var(--success-border);
+  border-right-color: var(--success-border);
 }
 
 .progressSpinnerWarning .progressSpinnerCircle {
-  border-top-color: var(--color-warning-500);
-  border-right-color: var(--color-warning-500);
+  border-top-color: var(--warning-border);
+  border-right-color: var(--warning-border);
 }
 
 .progressSpinnerDanger .progressSpinnerCircle {
-  border-top-color: var(--color-error-500);
-  border-right-color: var(--color-error-500);
+  border-top-color: var(--error-border);
+  border-right-color: var(--error-border);
 }
 
 /* ========================================

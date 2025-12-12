@@ -87,15 +87,6 @@
   font-size: var(--font-size-sm);
 }
 
-.token-name {
-  font-family: 'SF Mono', Monaco, Consolas, monospace;
-  font-size: 12px;
-  color: var(--color-primary-600);
-  background: var(--color-primary-50);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
 .token-value {
   font-family: 'SF Mono', Monaco, Consolas, monospace;
   font-size: 12px;
@@ -189,12 +180,6 @@
 .swatch-info {
   flex: 1;
   min-width: 0;
-}
-
-.swatch-info .token-name {
-  display: block;
-  font-size: 11px;
-  margin-bottom: 2px;
 }
 
 .swatch-info .token-value {

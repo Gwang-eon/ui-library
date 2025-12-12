@@ -224,7 +224,7 @@
 :global(.dark-mode) .cardHoverable:hover,
 :global(.dark) .cardHoverable:hover,
 :global([data-theme="dark"]) .cardHoverable:hover {
-  border-color: var(--color-primary-400);
+  border-color: var(--border-hover);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
@@ -234,21 +234,21 @@
 :global(.dark) .cardSelectable:focus-visible,
 :global([data-theme="dark"]) .cardHoverable:focus-visible,
 :global([data-theme="dark"]) .cardSelectable:focus-visible {
-  outline-color: var(--color-primary-400);
+  outline-color: var(--focus-ring-color);
 }
 
 :global(.dark-mode) .cardSelectable:hover,
 :global(.dark) .cardSelectable:hover,
 :global([data-theme="dark"]) .cardSelectable:hover {
-  border-color: var(--color-primary-400);
+  border-color: var(--border-hover);
 }
 
 :global(.dark-mode) .cardSelected,
 :global(.dark) .cardSelected,
 :global([data-theme="dark"]) .cardSelected {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: var(--color-primary-400);
-  box-shadow: 0 0 0 1px var(--color-primary-400);
+  background: var(--selected-bg);
+  border-color: var(--selected-border);
+  box-shadow: 0 0 0 1px var(--selected-border);
 }
 
 :global(.dark-mode) .cardHeader,
@@ -279,5 +279,5 @@
 :global(.dark) .card .loadingSpinner,
 :global([data-theme="dark"]) .card .loadingSpinner {
   border-color: var(--border-default);
-  border-top-color: var(--color-primary-400);
+  border-top-color: var(--active-border);
 }

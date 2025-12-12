@@ -43,23 +43,23 @@
 
 /* Event Marker Colors by Type */
 .eventItemSuccess .eventMarker {
-  border-color: var(--color-success-500);
-  background: var(--color-success-500);
+  border-color: var(--success-border);
+  background: var(--success-border);
 }
 
 .eventItemWarning .eventMarker {
-  border-color: var(--color-warning-500);
-  background: var(--color-warning-500);
+  border-color: var(--warning-border);
+  background: var(--warning-border);
 }
 
 .eventItemError .eventMarker {
-  border-color: var(--color-error-500);
-  background: var(--color-error-500);
+  border-color: var(--error-border);
+  background: var(--error-border);
 }
 
 .eventItemInfo .eventMarker {
-  border-color: var(--color-primary-500);
-  background: var(--color-primary-500);
+  border-color: var(--info-border);
+  background: var(--info-border);
 }
 
 .eventItemDefault .eventMarker {
@@ -86,23 +86,23 @@
 }
 
 .eventItemSuccess .eventMarkerIcon {
-  background: var(--color-success-500);
-  border-color: var(--color-success-500);
+  background: var(--success-border);
+  border-color: var(--success-border);
 }
 
 .eventItemWarning .eventMarkerIcon {
-  background: var(--color-warning-500);
-  border-color: var(--color-warning-500);
+  background: var(--warning-border);
+  border-color: var(--warning-border);
 }
 
 .eventItemError .eventMarkerIcon {
-  background: var(--color-error-500);
-  border-color: var(--color-error-500);
+  background: var(--error-border);
+  border-color: var(--error-border);
 }
 
 .eventItemInfo .eventMarkerIcon {
-  background: var(--color-primary-500);
-  border-color: var(--color-primary-500);
+  background: var(--info-border);
+  border-color: var(--info-border);
 }
 
 /* Event Line (Vertical Connector) */
@@ -284,19 +284,19 @@
 /* ==================== Event Type Highlighting ==================== */
 
 .eventItemSuccess .eventContent {
-  border-left: 3px solid var(--color-success-500);
+  border-left: 3px solid var(--success-border);
 }
 
 .eventItemWarning .eventContent {
-  border-left: 3px solid var(--color-warning-500);
+  border-left: 3px solid var(--warning-border);
 }
 
 .eventItemError .eventContent {
-  border-left: 3px solid var(--color-error-500);
+  border-left: 3px solid var(--error-border);
 }
 
 .eventItemInfo .eventContent {
-  border-left: 3px solid var(--color-primary-500);
+  border-left: 3px solid var(--info-border);
 }
 
 /* ==================== Responsive ==================== */
@@ -428,20 +428,20 @@
 
 :global([data-theme="dark"]) .eventItemSuccess .eventContent,
 :global(.dark) .eventItemSuccess .eventContent {
-  border-left-color: var(--color-success-500);
+  border-left-color: var(--success-border);
 }
 
 :global([data-theme="dark"]) .eventItemWarning .eventContent,
 :global(.dark) .eventItemWarning .eventContent {
-  border-left-color: var(--color-warning-500);
+  border-left-color: var(--warning-border);
 }
 
 :global([data-theme="dark"]) .eventItemError .eventContent,
 :global(.dark) .eventItemError .eventContent {
-  border-left-color: var(--color-error-500);
+  border-left-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .eventItemInfo .eventContent,
 :global(.dark) .eventItemInfo .eventContent {
-  border-left-color: var(--active-bg);
+  border-left-color: var(--info-border);
 }

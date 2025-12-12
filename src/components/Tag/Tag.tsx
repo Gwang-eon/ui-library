@@ -6,7 +6,7 @@ export interface TagProps {
   /** Tag content */
   children: ReactNode;
   /** Color variant */
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error';
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'code';
   /** Size variant */
   size?: 'sm' | 'md' | 'lg';
   /** Whether the tag can be removed */

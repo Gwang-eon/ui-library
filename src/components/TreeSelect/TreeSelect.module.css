@@ -442,7 +442,7 @@
   }
 
   .treeNodeSelected {
-    border: 2px solid var(--color-primary-600);
+    border: 2px solid var(--active-border);
   }
 }
 

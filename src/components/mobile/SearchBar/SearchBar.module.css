@@ -21,15 +21,21 @@
   display: flex;
   align-items: center;
   flex: 1;
-  height: 36px;
-  background: var(--surface-secondary);
-  border-radius: var(--radius-lg);
-  transition: background-color var(--duration-fast) var(--ease-out);
+  height: 40px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-base);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.inputWrapper:hover:not(.focused) {
+  border-color: var(--input-border-hover);
 }
 
 .focused .inputWrapper {
-  background: var(--surface-primary);
-  box-shadow: 0 0 0 2px var(--selected-bg);
+  background: var(--input-bg);
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
 }
 
 /* ==================== Search Icon ==================== */
@@ -83,7 +89,7 @@
 }
 
 .input::placeholder {
-  color: var(--text-tertiary);
+  color: var(--input-placeholder);
 }
 
 /* Remove search cancel button on WebKit */
@@ -172,13 +178,20 @@
 
 :global([data-theme="dark"]) .inputWrapper,
 :global(.dark) .inputWrapper {
-  background: var(--surface-primary);
+  background: var(--input-bg);
+  border-color: var(--input-border);
+}
+
+:global([data-theme="dark"]) .inputWrapper:hover:not(.focused),
+:global(.dark) .inputWrapper:hover:not(.focused) {
+  border-color: var(--input-border-hover);
 }
 
 :global([data-theme="dark"]) .focused .inputWrapper,
 :global(.dark) .focused .inputWrapper {
-  background: var(--surface-secondary);
-  box-shadow: 0 0 0 2px var(--selected-bg);
+  background: var(--input-bg);
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
 }
 
 :global([data-theme="dark"]) .focused .searchIcon,
@@ -206,13 +219,20 @@
 /* Manual dark mode */
 body.dark-mode .inputWrapper,
 body[data-theme='dark'] .inputWrapper {
-  background: var(--surface-primary);
+  background: var(--input-bg);
+  border-color: var(--input-border);
+}
+
+body.dark-mode .inputWrapper:hover:not(.focused),
+body[data-theme='dark'] .inputWrapper:hover:not(.focused) {
+  border-color: var(--input-border-hover);
 }
 
 body.dark-mode .focused .inputWrapper,
 body[data-theme='dark'] .focused .inputWrapper {
-  background: var(--surface-secondary);
-  box-shadow: 0 0 0 2px var(--color-primary-800);
+  background: var(--input-bg);
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
 }
 
 /* ==================== Reduced Motion ==================== */

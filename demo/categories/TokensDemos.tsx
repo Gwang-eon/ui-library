@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Copy, Check, Sun, Moon } from 'lucide-react';
+import { Tag } from '../../src/components/Tag';
 import './TokensDemos.css';
 
 // ============================================
@@ -180,7 +181,7 @@ function ColorSwatch({ name, value, desc }: { name: string; value: string; desc?
         style={{ backgroundColor: value }}
       />
       <div className="swatch-info">
-        <code className="token-name">{name}</code>
+        <Tag variant="code" size="sm">{name}</Tag>
         <span className="token-value">{value}</span>
         {desc && <span className="token-desc">{desc}</span>}
       </div>
@@ -192,7 +193,7 @@ function ColorSwatch({ name, value, desc }: { name: string; value: string; desc?
 function TokenRow({ name, value, usage }: { name: string; value: string; usage?: string }) {
   return (
     <tr className="token-row">
-      <td><code className="token-name">{name}</code></td>
+      <td><Tag variant="code" size="sm">{name}</Tag></td>
       <td><code className="token-value">{value}</code></td>
       {usage && <td className="token-usage">{usage}</td>}
       <td className="token-copy"><CopyButton text={`var(${name})`} /></td>
@@ -208,7 +209,7 @@ function SemanticTokenRow({ name, lightValue, darkValue, usage }: {
 }) {
   return (
     <tr className="token-row">
-      <td><code className="token-name">{name}</code></td>
+      <td><Tag variant="code" size="sm">{name}</Tag></td>
       <td><span className="light-value"><Sun size={12} /> {lightValue}</span></td>
       <td><span className="dark-value"><Moon size={12} /> {darkValue}</span></td>
       <td className="token-usage">{usage}</td>
@@ -222,7 +223,7 @@ function SpacingDemo({ name, value }: { name: string; value: string }) {
     <div className="spacing-demo">
       <div className="spacing-bar" style={{ width: value, height: '24px' }} />
       <div className="spacing-info">
-        <code className="token-name">{name}</code>
+        <Tag variant="code" size="sm">{name}</Tag>
         <span className="token-value">{value}</span>
       </div>
       <CopyButton text={`var(${name})`} />
@@ -235,7 +236,7 @@ function ShadowDemo({ name, value, usage }: { name: string; value: string; usage
     <div className="shadow-demo">
       <div className="shadow-box" style={{ boxShadow: value }} />
       <div className="shadow-info">
-        <code className="token-name">{name}</code>
+        <Tag variant="code" size="sm">{name}</Tag>
         <span className="token-usage">{usage}</span>
       </div>
       <CopyButton text={`var(${name})`} />
@@ -248,7 +249,7 @@ function RadiusDemo({ name, value, usage }: { name: string; value: string; usage
     <div className="radius-demo">
       <div className="radius-box" style={{ borderRadius: value }} />
       <div className="radius-info">
-        <code className="token-name">{name}</code>
+        <Tag variant="code" size="sm">{name}</Tag>
         <span className="token-value">{value}</span>
         <span className="token-usage">{usage}</span>
       </div>

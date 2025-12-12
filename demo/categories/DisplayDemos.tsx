@@ -176,33 +176,38 @@ export default function DisplayDemos() {
           <Divider textAlign="left">Left Aligned</Divider>
         </div>
 
-        {/* Table */}
+        {/* Static Table */}
         <div className="demo-item full-width">
-          <h3>Table</h3>
-          <Table striped>
-            <Table.Head>
-              <Table.Row>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Status</Table.HeaderCell>
-                <Table.HeaderCell>Location</Table.HeaderCell>
-                <Table.HeaderCell>Last Update</Table.HeaderCell>
-              </Table.Row>
-            </Table.Head>
-            <Table.Body>
-              {tableData.map((row) => (
-                <Table.Row key={row.id}>
-                  <Table.Cell>{row.name}</Table.Cell>
-                  <Table.Cell>
-                    <Badge variant={row.status === 'online' ? 'success' : row.status === 'warning' ? 'warning' : 'error'}>
-                      {row.status}
-                    </Badge>
-                  </Table.Cell>
-                  <Table.Cell>{row.location}</Table.Cell>
-                  <Table.Cell>{row.lastUpdate}</Table.Cell>
+          <h3>Static Table</h3>
+          <p className="demo-note">
+            For interactive features (sorting, filtering, pagination, editing), use <strong>DataGrid</strong> instead.
+          </p>
+          <Table.Container>
+            <Table striped>
+              <Table.Head>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
+                  <Table.HeaderCell>Location</Table.HeaderCell>
+                  <Table.HeaderCell>Last Update</Table.HeaderCell>
                 </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+              </Table.Head>
+              <Table.Body>
+                {tableData.map((row) => (
+                  <Table.Row key={row.id}>
+                    <Table.Cell>{row.name}</Table.Cell>
+                    <Table.Cell>
+                      <Badge variant={row.status === 'online' ? 'success' : row.status === 'warning' ? 'warning' : 'error'}>
+                        {row.status}
+                      </Badge>
+                    </Table.Cell>
+                    <Table.Cell>{row.location}</Table.Cell>
+                    <Table.Cell>{row.lastUpdate}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </Table.Container>
         </div>
 
         {/* List */}
@@ -214,7 +219,7 @@ export default function DisplayDemos() {
                 <Thermometer size={16} />
                 <div>
                   <div>Temperature Sensor</div>
-                  <small style={{ color: 'var(--text-tertiary)' }}>Building A, Floor 1</small>
+                  <small className="text-tertiary">Building A, Floor 1</small>
                 </div>
               </div>
             </List.Item>
@@ -223,7 +228,7 @@ export default function DisplayDemos() {
                 <Droplets size={16} />
                 <div>
                   <div>Humidity Sensor</div>
-                  <small style={{ color: 'var(--text-tertiary)' }}>Building A, Floor 2</small>
+                  <small className="text-tertiary">Building A, Floor 2</small>
                 </div>
               </div>
             </List.Item>
@@ -232,7 +237,7 @@ export default function DisplayDemos() {
                 <Gauge size={16} />
                 <div>
                   <div>Pressure Sensor</div>
-                  <small style={{ color: 'var(--text-tertiary)' }}>Building B, Floor 1</small>
+                  <small className="text-tertiary">Building B, Floor 1</small>
                 </div>
               </div>
             </List.Item>
@@ -283,15 +288,9 @@ export default function DisplayDemos() {
         <div className="demo-item full-width">
           <h3>Carousel</h3>
           <Carousel>
-            <div style={{ background: 'var(--surface-tertiary)', padding: '40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-              Slide 1: Dashboard Overview
-            </div>
-            <div style={{ background: 'var(--surface-tertiary)', padding: '40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-              Slide 2: Device Analytics
-            </div>
-            <div style={{ background: 'var(--surface-tertiary)', padding: '40px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-              Slide 3: Alert Summary
-            </div>
+            <div className="demo-slide">Slide 1: Dashboard Overview</div>
+            <div className="demo-slide">Slide 2: Device Analytics</div>
+            <div className="demo-slide">Slide 3: Alert Summary</div>
           </Carousel>
         </div>
       </div>

@@ -24,6 +24,8 @@ export interface MobileNavBarProps {
   style?: MobileNavBarStyle;
   withSafeArea?: boolean;
   className?: string;
+  /** Use relative positioning instead of fixed (for demos/previews) */
+  relative?: boolean;
 }
 
 export const MobileNavBar: React.FC<MobileNavBarProps> = ({
@@ -33,6 +35,7 @@ export const MobileNavBar: React.FC<MobileNavBarProps> = ({
   style = 'top-bar',
   withSafeArea = true,
   className = '',
+  relative = false,
 }) => {
   const handleItemClick = (index: number, item: MobileNavItem) => {
     if (item.onClick) {
@@ -47,6 +50,7 @@ export const MobileNavBar: React.FC<MobileNavBarProps> = ({
     ${styles.mobileNavBar}
     ${style !== 'top-bar' ? styles[`style${style.charAt(0).toUpperCase() + style.slice(1).replace('-', '')}`] : ''}
     ${withSafeArea ? styles.withSafeArea : ''}
+    ${relative ? styles.relative : ''}
     ${className}
   `.trim();
 

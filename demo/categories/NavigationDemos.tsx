@@ -171,7 +171,7 @@ export default function NavigationDemos() {
               <Button size="sm" variant="ghost" icon={<ZoomIn size={16} />} />
               <Button size="sm" variant="ghost" icon={<ZoomOut size={16} />} />
             </ToolbarSection>
-            <div style={{ flex: 1 }} />
+            <div className="demo-spacer" />
             <ToolbarSection>
               <Button size="sm" variant="ghost" icon={<Settings size={16} />} />
             </ToolbarSection>

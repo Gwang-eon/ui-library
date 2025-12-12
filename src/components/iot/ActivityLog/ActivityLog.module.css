@@ -170,19 +170,19 @@
 }
 
 .timelineMarkerInfo {
-  border-color: var(--color-primary-500);
+  border-color: var(--info-border);
 }
 
 .timelineMarkerSuccess {
-  border-color: var(--color-success-500);
+  border-color: var(--success-border);
 }
 
 .timelineMarkerWarning {
-  border-color: var(--color-warning-500);
+  border-color: var(--warning-border);
 }
 
 .timelineMarkerError {
-  border-color: var(--color-error-500);
+  border-color: var(--error-border);
 }
 
 /* ==================== Timeline Content ==================== */
@@ -425,4 +425,24 @@
 :global([data-theme="dark"]) .logStatValueError,
 :global(.dark) .logStatValueError {
   color: var(--error-text);
+}
+
+:global([data-theme="dark"]) .timelineMarkerInfo,
+:global(.dark) .timelineMarkerInfo {
+  border-color: var(--info-border);
+}
+
+:global([data-theme="dark"]) .timelineMarkerSuccess,
+:global(.dark) .timelineMarkerSuccess {
+  border-color: var(--success-border);
+}
+
+:global([data-theme="dark"]) .timelineMarkerWarning,
+:global(.dark) .timelineMarkerWarning {
+  border-color: var(--warning-border);
+}
+
+:global([data-theme="dark"]) .timelineMarkerError,
+:global(.dark) .timelineMarkerError {
+  border-color: var(--error-border);
 }

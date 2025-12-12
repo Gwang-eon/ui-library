@@ -307,26 +307,26 @@
 
 :global([data-theme="dark"]) .radio:hover:not(.disabled) .radio-circle,
 :global(.dark) .radio:hover:not(.disabled) .radio-circle {
-  border-color: var(--color-primary-400);
-  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--border-hover);
+  background-color: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .radio-input:focus-visible + .radio-circle,
 :global(.dark) .radio-input:focus-visible + .radio-circle {
-  outline-color: var(--color-primary-400);
-  border-color: var(--color-primary-400);
+  outline-color: var(--focus-ring-color);
+  border-color: var(--focus-border-color);
 }
 
 :global([data-theme="dark"]) .radio-input:checked + .radio-circle,
 :global(.dark) .radio-input:checked + .radio-circle {
-  background-color: var(--color-primary-500);
-  border-color: var(--color-primary-500);
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .radio:hover:not(.disabled) .radio-input:checked + .radio-circle,
 :global(.dark) .radio:hover:not(.disabled) .radio-input:checked + .radio-circle {
-  background-color: var(--color-primary-400);
-  border-color: var(--color-primary-400);
+  background-color: var(--accent-color-hover);
+  border-color: var(--accent-color-hover);
 }
 
 :global([data-theme="dark"]) .radio.disabled .radio-circle,
@@ -341,27 +341,27 @@
 
 :global([data-theme="dark"]) .radio.error .radio-circle,
 :global(.dark) .radio.error .radio-circle {
-  border-color: var(--color-error-400);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .radio.error .radio-label,
 :global(.dark) .radio.error .radio-label {
-  color: var(--color-error-400);
+  color: var(--error-text);
 }
 
 :global([data-theme="dark"]) .radio.error:hover:not(.disabled) .radio-circle,
 :global(.dark) .radio.error:hover:not(.disabled) .radio-circle {
-  border-color: var(--color-error-300);
-  background-color: rgba(239, 68, 68, 0.15);
+  border-color: var(--error-border);
+  background-color: var(--error-bg);
 }
 
 :global([data-theme="dark"]) .radio.error .radio-input:checked + .radio-circle,
 :global(.dark) .radio.error .radio-input:checked + .radio-circle {
-  background-color: var(--color-error-500);
-  border-color: var(--color-error-500);
+  background-color: var(--error-border);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .radio-error,
 :global(.dark) .radio-error {
-  color: var(--color-error-400);
+  color: var(--error-text);
 }

@@ -61,6 +61,14 @@
   border-color: var(--error-border);
 }
 
+.code {
+  font-family: 'SF Mono', Monaco, Consolas, 'Liberation Mono', monospace;
+  font-size: 12px;
+  background: var(--selected-bg);
+  color: var(--accent-color);
+  border-color: var(--active-border);
+}
+
 /* ========================================
    SIZE VARIANTS
    ======================================== */
@@ -219,6 +227,13 @@
   background: var(--error-bg);
   color: var(--error-text);
   border-color: var(--error-border);
+}
+
+:global([data-theme="dark"]) .code,
+:global(.dark) .code {
+  background: var(--selected-bg);
+  color: var(--accent-color);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .remove:hover,

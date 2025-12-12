@@ -17,6 +17,8 @@ export interface MobileNavBarProps {
     style?: MobileNavBarStyle;
     withSafeArea?: boolean;
     className?: string;
+    /** Use relative positioning instead of fixed (for demos/previews) */
+    relative?: boolean;
 }
 export declare const MobileNavBar: React.FC<MobileNavBarProps>;
 export default MobileNavBar;

@@ -167,7 +167,7 @@
 }
 
 .deviceControlCard:hover {
-  border-color: var(--color-primary-300);
+  border-color: var(--border-hover);
   box-shadow: var(--shadow-md);
 }
 
@@ -570,7 +570,7 @@
 
 :global([data-theme="dark"]) .deviceControlCard:hover,
 :global(.dark) .deviceControlCard:hover {
-  border-color: var(--active-bg);
+  border-color: var(--border-hover);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 

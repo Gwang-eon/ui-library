@@ -22,13 +22,13 @@
 }
 
 .input-file:hover {
-  border-color: var(--color-primary-400);
+  border-color: var(--border-hover);
 }
 
 .input-file:focus {
-  outline: 2px solid var(--color-primary-500);
+  outline: 2px solid var(--active-border);
   outline-offset: 2px;
-  border-color: var(--color-primary-500);
+  border-color: var(--active-border);
 }
 
 .input-file::file-selector-button {
@@ -36,17 +36,17 @@
   margin-right: var(--spacing-3);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary-700);
-  background-color: var(--color-primary-50);
-  border: 1px solid var(--color-primary-200);
+  color: var(--accent-color);
+  background-color: var(--selected-bg);
+  border: 1px solid var(--selected-border);
   border-radius: var(--radius-base);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
 }
 
 .input-file::file-selector-button:hover {
-  background-color: var(--color-primary-100);
-  border-color: var(--color-primary-300);
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
 }
 
 .label {
@@ -73,18 +73,18 @@
 }
 
 .upload-area:hover:not(.disabled) {
-  border-color: var(--color-primary-400);
-  background-color: var(--color-primary-50);
+  border-color: var(--border-hover);
+  background-color: var(--selected-bg);
 }
 
 .upload-area:focus-visible {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-50);
+  border-color: var(--active-border);
+  box-shadow: 0 0 0 3px var(--selected-bg);
 }
 
 .upload-area.dragging {
-  border-color: var(--color-primary-500);
-  background-color: var(--color-primary-50);
+  border-color: var(--active-border);
+  background-color: var(--selected-bg);
 }
 
 .upload-area.disabled {
@@ -146,13 +146,13 @@
 }
 
 .file-success {
-  border-color: var(--color-success-300);
-  background-color: var(--color-success-50);
+  border-color: var(--success-border);
+  background-color: var(--success-bg);
 }
 
 .file-error {
-  border-color: var(--color-error-300);
-  background-color: var(--color-error-50);
+  border-color: var(--error-border);
+  background-color: var(--error-bg);
 }
 
 /* File Preview (for images) */
@@ -256,7 +256,7 @@
 }
 
 .remove-btn:focus-visible {
-  outline: 2px solid var(--color-primary-500);
+  outline: 2px solid var(--active-border);
   outline-offset: 2px;
 }
 
@@ -311,26 +311,26 @@
 
 :global([data-theme="dark"]) .input-file:hover,
 :global(.dark) .input-file:hover {
-  border-color: var(--color-primary-500);
+  border-color: var(--border-hover);
 }
 
 :global([data-theme="dark"]) .input-file:focus,
 :global(.dark) .input-file:focus {
-  outline-color: var(--color-primary-400);
-  border-color: var(--color-primary-400);
+  outline-color: var(--active-border);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .input-file::file-selector-button,
 :global(.dark) .input-file::file-selector-button {
-  background-color: rgba(59, 130, 246, 0.15);
-  border-color: var(--color-primary-700);
-  color: var(--color-primary-300);
+  background-color: var(--selected-bg);
+  border-color: var(--selected-border);
+  color: var(--accent-color);
 }
 
 :global([data-theme="dark"]) .input-file::file-selector-button:hover,
 :global(.dark) .input-file::file-selector-button:hover {
-  background-color: rgba(59, 130, 246, 0.25);
-  border-color: var(--color-primary-600);
+  background-color: var(--active-bg);
+  border-color: var(--active-border);
 }
 
 :global([data-theme="dark"]) .upload-area,
@@ -341,20 +341,20 @@
 
 :global([data-theme="dark"]) .upload-area:hover:not(.disabled),
 :global(.dark) .upload-area:hover:not(.disabled) {
-  background-color: rgba(59, 130, 246, 0.15);
-  border-color: var(--color-primary-500);
+  background-color: var(--selected-bg);
+  border-color: var(--border-hover);
 }
 
 :global([data-theme="dark"]) .upload-area:focus-visible,
 :global(.dark) .upload-area:focus-visible {
-  border-color: var(--color-primary-400);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--active-border);
+  box-shadow: 0 0 0 3px var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .upload-area.dragging,
 :global(.dark) .upload-area.dragging {
-  border-color: var(--color-primary-400);
-  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--active-border);
+  background-color: var(--selected-bg);
 }
 
 :global([data-theme="dark"]) .upload-icon,
@@ -385,8 +385,8 @@
 
 :global([data-theme="dark"]) .file-success,
 :global(.dark) .file-success {
-  background-color: rgba(34, 197, 94, 0.15);
-  border-color: var(--color-success-700);
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
 }
 
 :global([data-theme="dark"]) .file-success .file-icon,
@@ -407,8 +407,8 @@
 
 :global([data-theme="dark"]) .file-error,
 :global(.dark) .file-error {
-  background-color: rgba(239, 68, 68, 0.15);
-  border-color: var(--color-error-700);
+  background-color: var(--error-bg);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .file-error .file-icon,
@@ -455,5 +455,5 @@
 
 :global([data-theme="dark"]) .remove-btn:focus-visible,
 :global(.dark) .remove-btn:focus-visible {
-  outline-color: var(--color-primary-400);
+  outline-color: var(--active-border);
 }

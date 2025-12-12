@@ -4,6 +4,7 @@
 .splitButton {
   position: relative;
   display: inline-flex;
+  width: fit-content;
 }
 
 /* Action Button */

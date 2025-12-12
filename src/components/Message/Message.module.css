@@ -117,8 +117,8 @@
 
 /* Success */
 .message-success {
-  border-color: var(--color-success-200);
-  background: var(--color-success-50);
+  border-color: var(--success-border);
+  background: var(--success-bg);
 }
 
 .message-success .message-icon {
@@ -131,8 +131,8 @@
 
 /* Error */
 .message-error {
-  border-color: var(--color-error-200);
-  background: var(--color-error-50);
+  border-color: var(--error-border);
+  background: var(--error-bg);
 }
 
 .message-error .message-icon {
@@ -145,8 +145,8 @@
 
 /* Warning */
 .message-warning {
-  border-color: var(--color-warning-200);
-  background: var(--color-warning-50);
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
 }
 
 .message-warning .message-icon {
@@ -159,8 +159,8 @@
 
 /* Info */
 .message-info {
-  border-color: var(--color-primary-200);
-  background: var(--color-primary-50);
+  border-color: var(--info-border);
+  background: var(--info-bg);
 }
 
 .message-info .message-icon {
@@ -173,8 +173,8 @@
 
 /* Loading */
 .message-loading {
-  border-color: var(--color-primary-200);
-  background: var(--color-primary-50);
+  border-color: var(--info-border);
+  background: var(--info-bg);
 }
 
 .message-loading .message-icon {
@@ -228,13 +228,13 @@
 
 :global([data-theme="dark"]) .message-close:focus-visible,
 :global(.dark) .message-close:focus-visible {
-  outline-color: var(--color-primary-400);
+  outline-color: var(--focus-ring-color);
 }
 
 :global([data-theme="dark"]) .message-success,
 :global(.dark) .message-success {
-  background: rgba(34, 197, 94, 0.15);
-  border-color: var(--color-success-700);
+  background: var(--success-bg);
+  border-color: var(--success-border);
 }
 
 :global([data-theme="dark"]) .message-success .message-icon,
@@ -249,8 +249,8 @@
 
 :global([data-theme="dark"]) .message-error,
 :global(.dark) .message-error {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: var(--color-error-700);
+  background: var(--error-bg);
+  border-color: var(--error-border);
 }
 
 :global([data-theme="dark"]) .message-error .message-icon,
@@ -265,8 +265,8 @@
 
 :global([data-theme="dark"]) .message-warning,
 :global(.dark) .message-warning {
-  background: rgba(251, 191, 36, 0.15);
-  border-color: var(--color-warning-700);
+  background: var(--warning-bg);
+  border-color: var(--warning-border);
 }
 
 :global([data-theme="dark"]) .message-warning .message-icon,
@@ -281,8 +281,8 @@
 
 :global([data-theme="dark"]) .message-info,
 :global(.dark) .message-info {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: var(--color-primary-700);
+  background: var(--info-bg);
+  border-color: var(--info-border);
 }
 
 :global([data-theme="dark"]) .message-info .message-icon,
@@ -297,8 +297,8 @@
 
 :global([data-theme="dark"]) .message-loading,
 :global(.dark) .message-loading {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: var(--color-primary-700);
+  background: var(--info-bg);
+  border-color: var(--info-border);
 }
 
 :global([data-theme="dark"]) .message-loading .message-icon,
@@ -360,19 +360,19 @@
   }
 
   .message-success {
-    border-color: var(--color-success-600);
+    border-color: var(--success-border);
   }
 
   .message-error {
-    border-color: var(--color-error-600);
+    border-color: var(--error-border);
   }
 
   .message-warning {
-    border-color: var(--color-warning-600);
+    border-color: var(--warning-border);
   }
 
   .message-info,
   .message-loading {
-    border-color: var(--color-primary-600);
+    border-color: var(--info-border);
   }
 }

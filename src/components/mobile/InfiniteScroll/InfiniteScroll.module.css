@@ -78,7 +78,7 @@
 body.dark-mode .spinner,
 body[data-theme='dark'] .spinner {
   border-color: var(--border-default);
-  border-top-color: var(--color-primary-400);
+  border-top-color: var(--active-border);
 }
 
 body.dark-mode .loaderText,
@@ -93,7 +93,7 @@ body[data-theme='dark'] .endMessage {
 @media (prefers-reduced-motion: reduce) {
   .spinner {
     animation: none;
-    border-top-color: var(--color-primary-500);
+    border-top-color: var(--active-border);
     opacity: 0.7;
   }
 
