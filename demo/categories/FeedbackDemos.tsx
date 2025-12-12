@@ -16,6 +16,8 @@ import { Popover, PopoverContent, PopoverHeader, PopoverTitle } from '../../src/
 import { Popconfirm } from '../../src/components/Popconfirm';
 import { Tour } from '../../src/components/Tour';
 import { Watermark } from '../../src/components/Watermark';
+import { Card } from '../../src/components/Card';
+import { Slider } from '../../src/components/Slider';
 
 const tourSteps = [
   {
@@ -42,6 +44,13 @@ export default function FeedbackDemos() {
   const [toastVariant, setToastVariant] = useState<'info' | 'success' | 'warning' | 'error'>('info');
   const [messageVisible, setMessageVisible] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
+
+  // Watermark interactive controls
+  const [wmText, setWmText] = useState('Custom Watermark');
+  const [wmOpacity, setWmOpacity] = useState(0.08);
+  const [wmRotate, setWmRotate] = useState(-45);
+  const [wmFontSize, setWmFontSize] = useState(16);
+  const [wmGap, setWmGap] = useState(100);
 
   const showToast = (variant: 'info' | 'success' | 'warning' | 'error') => {
     setToastVariant(variant);
@@ -235,43 +244,139 @@ export default function FeedbackDemos() {
         {/* Watermark */}
         <div className="demo-item full-width">
           <h3>Watermark</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-            <Watermark content="IoT Platform" opacity={0.08}>
-              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                <h4 style={{ margin: '0 0 0.5rem' }}>Confidential Document</h4>
-                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                  This is a protected document with a watermark overlay. The watermark text is repeated across the entire container.
-                </p>
-              </div>
-            </Watermark>
 
-            <Watermark content="CONFIDENTIAL" opacity={0.1} rotate={-30}>
-              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                <h4 style={{ margin: '0 0 0.5rem' }}>High Security</h4>
-                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                  Watermark with "CONFIDENTIAL" text at 10% opacity for sensitive documents.
-                </p>
-              </div>
-            </Watermark>
+          {/* Preset Examples */}
+          <Card variant="outlined" style={{ marginBottom: '1.5rem' }}>
+            <Card.Header>
+              <Card.Title>Preset Examples</Card.Title>
+            </Card.Header>
+            <Card.Content>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                <Watermark content="IoT Platform" opacity={0.08}>
+                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                    <h4 style={{ margin: '0 0 0.5rem' }}>Confidential Document</h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      Basic watermark with default settings.
+                    </p>
+                  </div>
+                </Watermark>
 
-            <Watermark content="DRAFT" opacity={0.15} fontSize={20}>
-              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                <h4 style={{ margin: '0 0 0.5rem' }}>Draft Version</h4>
-                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                  Watermark with "DRAFT" text at 15% opacity for work-in-progress content.
-                </p>
-              </div>
-            </Watermark>
+                <Watermark content="CONFIDENTIAL" opacity={0.1} rotate={-30}>
+                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                    <h4 style={{ margin: '0 0 0.5rem' }}>High Security</h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      Custom rotation angle (-30°).
+                    </p>
+                  </div>
+                </Watermark>
 
-            <Watermark content={['Internal Use Only', 'Do Not Distribute']} opacity={0.1}>
-              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
-                <h4 style={{ margin: '0 0 0.5rem' }}>Multi-line Watermark</h4>
-                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                  Multi-line watermarks for displaying detailed information such as classification levels.
-                </p>
+                <Watermark content="DRAFT" opacity={0.15} fontSize={20}>
+                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                    <h4 style={{ margin: '0 0 0.5rem' }}>Draft Version</h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      Larger font size (20px) and higher opacity.
+                    </p>
+                  </div>
+                </Watermark>
+
+                <Watermark content={['Internal Use Only', 'Do Not Distribute']} opacity={0.1}>
+                  <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                    <h4 style={{ margin: '0 0 0.5rem' }}>Multi-line Watermark</h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      Multiple lines of text.
+                    </p>
+                  </div>
+                </Watermark>
               </div>
-            </Watermark>
-          </div>
+            </Card.Content>
+          </Card>
+
+          {/* Interactive Customization */}
+          <Card variant="outlined">
+            <Card.Header>
+              <Card.Title>Interactive Customization</Card.Title>
+            </Card.Header>
+            <Card.Content>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                {/* Controls */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <Input
+                    label="Watermark Text"
+                    value={wmText}
+                    onChange={(e) => setWmText(e.target.value)}
+                    placeholder="Enter watermark text"
+                  />
+                  <Slider
+                    label="Opacity"
+                    min={0.02}
+                    max={0.3}
+                    step={0.02}
+                    value={wmOpacity}
+                    onChange={setWmOpacity}
+                    showValue
+                    formatValue={(v) => v.toFixed(2)}
+                  />
+                  <Slider
+                    label="Rotation"
+                    min={-90}
+                    max={90}
+                    step={5}
+                    value={wmRotate}
+                    onChange={setWmRotate}
+                    showValue
+                    formatValue={(v) => `${v}°`}
+                  />
+                  <Slider
+                    label="Font Size"
+                    min={12}
+                    max={32}
+                    step={2}
+                    value={wmFontSize}
+                    onChange={setWmFontSize}
+                    showValue
+                    formatValue={(v) => `${v}px`}
+                  />
+                  <Slider
+                    label="Gap"
+                    min={50}
+                    max={200}
+                    step={10}
+                    value={wmGap}
+                    onChange={setWmGap}
+                    showValue
+                    formatValue={(v) => `${v}px`}
+                  />
+                </div>
+
+                {/* Preview */}
+                <Watermark
+                  content={wmText}
+                  opacity={wmOpacity}
+                  rotate={wmRotate}
+                  fontSize={wmFontSize}
+                  gap={wmGap}
+                >
+                  <div style={{
+                    padding: '2rem',
+                    background: 'var(--color-bg-secondary)',
+                    borderRadius: '8px',
+                    minHeight: '280px',
+                  }}>
+                    <h4 style={{ margin: '0 0 1rem' }}>Preview</h4>
+                    <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      Use the controls on the left to customize the watermark appearance.
+                    </p>
+                    <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      Adjust text, opacity, rotation angle, font size, and gap between watermarks.
+                    </p>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                      The watermark is designed to protect content while maintaining readability.
+                    </p>
+                  </div>
+                </Watermark>
+              </div>
+            </Card.Content>
+          </Card>
         </div>
       </div>
     </section>
