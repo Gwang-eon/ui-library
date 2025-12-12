@@ -1130,11 +1130,11 @@ body.dark-mode {
   --surface-quaternary: var(--palette-dark-blue-700);  /* 위젯 배경 #334E68 */
   --surface-quinary: var(--palette-dark-blue-600);     /* 서브 컴포넌트, 최상위 레이어 #486581 */
 
-  /* Border - Dark Mode (WCAG AA: 3:1+ contrast, Dark Blue) */
-  --border-default: var(--palette-dark-blue-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-blue-600);   /* Subtle borders */
-  --border-strong: var(--palette-dark-blue-300);   /* Strong emphasis */
-  --border-hover: var(--palette-dark-blue-300);    /* Hover state for borders */
+  /* Border - Dark Mode (Dark Blue) */
+  --border-default: var(--palette-dark-blue-500);
+  --border-subtle: var(--palette-dark-blue-700);
+  --border-strong: var(--palette-dark-blue-400);
+  --border-hover: var(--palette-dark-blue-400);
 
   /* Interactive States - Focus (Dark Mode) */
   --focus-ring-color: var(--color-primary-400);
@@ -1233,9 +1233,10 @@ body.dark-mode {
     --surface-quinary: var(--palette-dark-blue-600);
 
     /* Border - Dark Mode (Dark Blue) */
-    --border-default: var(--palette-dark-blue-400);
-    --border-subtle: var(--palette-dark-blue-600);
-    --border-strong: var(--palette-dark-blue-300);
+    --border-default: var(--palette-dark-blue-500);
+    --border-subtle: var(--palette-dark-blue-700);
+    --border-strong: var(--palette-dark-blue-400);
+    --border-hover: var(--palette-dark-blue-400);
 
     /* Overlay - Dark Mode */
     --overlay-light: rgba(0, 0, 0, 0.25);
@@ -1278,10 +1279,11 @@ body.theme-dark-blue {
   --surface-quaternary: var(--palette-dark-blue-700);  /* 위젯 배경 #334E68 */
   --surface-quinary: var(--palette-dark-blue-600);     /* 서브 컴포넌트 #486581 */
 
-  /* Border (WCAG AA: 3:1+ contrast) */
-  --border-default: var(--palette-dark-blue-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-blue-600);
-  --border-strong: var(--palette-dark-blue-300);   /* Strong emphasis */
+  /* Border - Dark Blue */
+  --border-default: var(--palette-dark-blue-500);
+  --border-subtle: var(--palette-dark-blue-700);
+  --border-strong: var(--palette-dark-blue-400);
+  --border-hover: var(--palette-dark-blue-400);
 }
 
 /* Dark Green Theme */
@@ -1301,10 +1303,11 @@ body.theme-dark-green {
   --surface-quaternary: var(--palette-dark-green-700);  /* 위젯 배경 #047857 */
   --surface-quinary: var(--palette-dark-green-600);     /* 서브 컴포넌트 #059669 */
 
-  /* Border (WCAG AA: 3:1+ contrast) */
-  --border-default: var(--palette-dark-green-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-green-600);
-  --border-strong: var(--palette-dark-green-300);
+  /* Border - Dark Green */
+  --border-default: var(--palette-dark-green-500);
+  --border-subtle: var(--palette-dark-green-700);
+  --border-strong: var(--palette-dark-green-400);
+  --border-hover: var(--palette-dark-green-400);
 }
 
 /* Dark Violet Theme */
@@ -1324,10 +1327,11 @@ body.theme-dark-violet {
   --surface-quaternary: var(--palette-dark-violet-700);  /* 위젯 배경 #7E22CE */
   --surface-quinary: var(--palette-dark-violet-600);     /* 서브 컴포넌트 #9333EA */
 
-  /* Border (WCAG AA: 3:1+ contrast) */
-  --border-default: var(--palette-dark-violet-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-violet-600);
-  --border-strong: var(--palette-dark-violet-300);
+  /* Border - Dark Violet */
+  --border-default: var(--palette-dark-violet-500);
+  --border-subtle: var(--palette-dark-violet-700);
+  --border-strong: var(--palette-dark-violet-400);
+  --border-hover: var(--palette-dark-violet-400);
 }
 
 /* Dark Brown Theme */
@@ -1347,10 +1351,11 @@ body.theme-dark-brown {
   --surface-quaternary: var(--palette-dark-brown-700);  /* 위젯 배경 #44403C */
   --surface-quinary: var(--palette-dark-brown-600);     /* 서브 컴포넌트 #57534E */
 
-  /* Border (WCAG AA: 3:1+ contrast) */
-  --border-default: var(--palette-dark-brown-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-brown-600);
-  --border-strong: var(--palette-dark-brown-300);
+  /* Border - Dark Brown */
+  --border-default: var(--palette-dark-brown-500);
+  --border-subtle: var(--palette-dark-brown-700);
+  --border-strong: var(--palette-dark-brown-400);
+  --border-hover: var(--palette-dark-brown-400);
 }
 
 /* ========================================
