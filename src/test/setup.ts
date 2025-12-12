@@ -21,7 +21,7 @@ class ResizeObserverMock {
   unobserve = vi.fn();
   disconnect = vi.fn();
 }
-global.ResizeObserver = ResizeObserverMock;
+globalThis.ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver;
 
 // IntersectionObserver 모킹
 class IntersectionObserverMock {
@@ -33,7 +33,7 @@ class IntersectionObserverMock {
   disconnect = vi.fn();
   takeRecords = vi.fn().mockReturnValue([]);
 }
-global.IntersectionObserver = IntersectionObserverMock;
+globalThis.IntersectionObserver = IntersectionObserverMock as unknown as typeof IntersectionObserver;
 
 // matchMedia 모킹
 Object.defineProperty(window, 'matchMedia', {
@@ -60,13 +60,13 @@ Object.defineProperty(window, 'scrollTo', {
 Element.prototype.scrollIntoView = vi.fn();
 
 // requestAnimationFrame 모킹
-global.requestAnimationFrame = vi.fn((cb) => {
+globalThis.requestAnimationFrame = vi.fn((cb) => {
   return setTimeout(cb, 0);
-});
+}) as unknown as typeof requestAnimationFrame;
 
-global.cancelAnimationFrame = vi.fn((id) => {
+globalThis.cancelAnimationFrame = vi.fn((id) => {
   clearTimeout(id);
-});
+}) as unknown as typeof cancelAnimationFrame;
 
 // getComputedStyle 모킹 (CSS 모듈용)
 const originalGetComputedStyle = window.getComputedStyle;
