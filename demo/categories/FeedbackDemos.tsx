@@ -15,6 +15,7 @@ import { Tooltip } from '../../src/components/Tooltip';
 import { Popover, PopoverContent, PopoverHeader, PopoverTitle } from '../../src/components/Popover';
 import { Popconfirm } from '../../src/components/Popconfirm';
 import { Tour } from '../../src/components/Tour';
+import { Watermark } from '../../src/components/Watermark';
 
 const tourSteps = [
   {
@@ -229,6 +230,48 @@ export default function FeedbackDemos() {
             onClose={() => setTourOpen(false)}
             onFinish={() => setTourOpen(false)}
           />
+        </div>
+
+        {/* Watermark */}
+        <div className="demo-item full-width">
+          <h3>Watermark</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+            <Watermark content="IoT Platform" opacity={0.08}>
+              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                <h4 style={{ margin: '0 0 0.5rem' }}>Confidential Document</h4>
+                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                  This is a protected document with a watermark overlay. The watermark text is repeated across the entire container.
+                </p>
+              </div>
+            </Watermark>
+
+            <Watermark content="CONFIDENTIAL" opacity={0.1} rotate={-30}>
+              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                <h4 style={{ margin: '0 0 0.5rem' }}>High Security</h4>
+                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                  Watermark with "CONFIDENTIAL" text at 10% opacity for sensitive documents.
+                </p>
+              </div>
+            </Watermark>
+
+            <Watermark content="DRAFT" opacity={0.15} fontSize={20}>
+              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                <h4 style={{ margin: '0 0 0.5rem' }}>Draft Version</h4>
+                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                  Watermark with "DRAFT" text at 15% opacity for work-in-progress content.
+                </p>
+              </div>
+            </Watermark>
+
+            <Watermark content={['Internal Use Only', 'Do Not Distribute']} opacity={0.1}>
+              <div style={{ padding: '1.5rem', background: 'var(--color-bg-secondary)', borderRadius: '8px', minHeight: '150px' }}>
+                <h4 style={{ margin: '0 0 0.5rem' }}>Multi-line Watermark</h4>
+                <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                  Multi-line watermarks for displaying detailed information such as classification levels.
+                </p>
+              </div>
+            </Watermark>
+          </div>
         </div>
       </div>
     </section>
