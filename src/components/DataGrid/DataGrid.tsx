@@ -1534,6 +1534,8 @@ function DataGridInner<TData>(
   const [isSelecting, setIsSelecting] = useState(false);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
+  // State-based ref for virtualization (triggers re-render when scroll element is available)
+  const [virtualScrollElement, setVirtualScrollElement] = useState<HTMLDivElement | null>(null);
 
   // Drag & Drop sensors
   const sensors = useSensors(
@@ -1892,7 +1894,7 @@ function DataGridInner<TData>(
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => tableContainerRef.current,
+    getScrollElement: () => enableVirtualization ? virtualScrollElement : tableContainerRef.current,
     estimateSize: () => estimateRowHeight,
     overscan,
     enabled: enableVirtualization,
@@ -1905,7 +1907,7 @@ function DataGridInner<TData>(
   const visibleColumns = table.getVisibleLeafColumns();
   const columnVirtualizer = useVirtualizer({
     count: visibleColumns.length,
-    getScrollElement: () => tableContainerRef.current,
+    getScrollElement: () => enableVirtualization ? virtualScrollElement : tableContainerRef.current,
     estimateSize: (index) => visibleColumns[index]?.getSize() ?? estimateColumnWidth,
     horizontal: true,
     overscan,
@@ -3032,7 +3034,7 @@ function DataGridInner<TData>(
 
       {/* Table Container */}
       <div
-        ref={tableContainerRef}
+        ref={enableVirtualization ? undefined : tableContainerRef}
         className={styles.tableContainer}
         style={{ height: typeof height === 'number' ? `${height}px` : height }}
         tabIndex={enableKeyboardNavigation ? 0 : undefined}
@@ -3040,7 +3042,7 @@ function DataGridInner<TData>(
         onClick={(e) => {
           if (!enableKeyboardNavigation) return;
           const target = e.target as HTMLElement;
-          const cell = target.closest('td');
+          const cell = target.closest('td, [role="gridcell"]');
           if (cell) {
             const rowIndex = parseInt(cell.getAttribute('data-row-index') || '0', 10);
             const columnIndex = parseInt(cell.getAttribute('data-column-index') || '0', 10);
@@ -3068,93 +3070,189 @@ function DataGridInner<TData>(
             onDragStart={enableRowOrdering ? handleRowDragStart : undefined}
             onDragEnd={enableRowOrdering ? handleRowDragEnd : undefined}
           >
-            <table className={styles.table}>
-              {showHeader && (
-                <thead className={styles.thead}>
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id} className={styles.headerRow}>
-                      {/* Drag handle column header for row ordering */}
-                      {enableRowOrdering && (
-                        <th className={`${styles.th} ${styles.dragHandleHeader}`} style={{ width: 40 }}>
-                          <GripVertical size={16} />
-                        </th>
-                      )}
-                      <SortableContext items={columnIds} strategy={horizontalListSortingStrategy}>
+            {/* Virtualized Grid - div-based rendering for performance */}
+            {enableVirtualization ? (
+              <div className={styles.virtualGrid} role="grid">
+                {/* Virtualized Header - sticky outside scroll area */}
+                {showHeader && (
+                  <div className={styles.virtualHeader} role="rowgroup">
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <div key={headerGroup.id} className={styles.virtualHeaderRow} role="row">
                         {headerGroup.headers.map((header) => {
-                          const isSpecialColumn = header.id.startsWith('_');
-                          return enableColumnDrag && !isSpecialColumn ? (
-                            <th
+                          const canSort = header.column.getCanSort();
+                          const sorted = header.column.getIsSorted();
+                          const align = (header.column.columnDef.meta as any)?.align ?? 'left';
+
+                          return (
+                            <div
                               key={header.id}
-                              className={styles.th}
-                              style={{ width: header.getSize() }}
+                              className={`${styles.virtualHeaderCell} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]}`}
+                              style={{ width: header.getSize(), flex: `0 0 ${header.getSize()}px` }}
+                              role="columnheader"
                             >
-                              <DraggableHeaderCell id={header.id}>
-                                {renderHeaderCell(header)}
-                              </DraggableHeaderCell>
-                            </th>
-                          ) : (
-                            renderHeaderCell(header)
+                              {header.isPlaceholder ? null : (
+                                <div className={styles.thContent}>
+                                  <div
+                                    className={`${styles.thLabel} ${canSort ? styles.sortable : ''}`}
+                                    onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
+                                  >
+                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                    {canSort && (
+                                      <span className={styles.sortIcon}>
+                                        {sorted === 'asc' ? (
+                                          <ChevronUp size={14} />
+                                        ) : sorted === 'desc' ? (
+                                          <ChevronDown size={14} />
+                                        ) : (
+                                          <ChevronsUpDown size={14} />
+                                        )}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           );
                         })}
-                      </SortableContext>
-                    </tr>
-                  ))}
-                </thead>
-              )}
-
-              <tbody
-                className={styles.tbody}
-                style={enableVirtualization ? { height: `${totalSize}px`, position: 'relative', display: 'block', width: '100%' } : undefined}
-              >
-                {rows.length === 0 ? (
-                  <tr className={styles.emptyRow}>
-                    <td colSpan={table.getAllLeafColumns().length + (enableRowOrdering ? 1 : 0)} className={styles.emptyCell}>
-                      {renderEmpty ? renderEmpty() : (
-                        <div className={styles.emptyState}>
-                          <Filter size={48} className={styles.emptyIcon} />
-                          <p>{emptyMessage}</p>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ) : enableRowOrdering ? (
-                  <SortableContext items={rowIds} strategy={verticalListSortingStrategy}>
-                    {enableVirtualization && virtualRows ? (
-                      virtualRows.map((virtualRow) => {
-                        const row = rows[virtualRow.index];
-                        return renderRow(row, virtualRow);
-                      })
-                    ) : (
-                      rows.map((row) => renderRow(row))
-                    )}
-                  </SortableContext>
-                ) : enableVirtualization && virtualRows ? (
-                  virtualRows.map((virtualRow) => {
-                    const row = rows[virtualRow.index];
-                    return renderRow(row, virtualRow);
-                  })
-                ) : (
-                  rows.map((row) => renderRow(row))
+                      </div>
+                    ))}
+                  </div>
                 )}
-              </tbody>
 
-              {showFooter && (
-                <tfoot className={styles.tfoot}>
-                  {table.getFooterGroups().map((footerGroup) => (
-                    <tr key={footerGroup.id} className={styles.footerRow}>
-                      {enableRowOrdering && <th className={styles.footerCell} style={{ width: 40 }} />}
-                      {footerGroup.headers.map((header) => (
-                        <th key={header.id} className={styles.footerCell}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(header.column.columnDef.footer, header.getContext())}
-                        </th>
-                      ))}
+                {/* Virtualized Body - scrollable container */}
+                <div
+                  ref={setVirtualScrollElement}
+                  className={styles.virtualScrollContainer}
+                  style={{ height: typeof height === 'number' ? `${height - 48}px` : `calc(${height} - 48px)` }}
+                >
+                  <div
+                    className={styles.virtualBody}
+                    style={{ height: `${totalSize}px` }}
+                    role="rowgroup"
+                  >
+                    {rows.length === 0 ? (
+                      <div className={styles.virtualEmptyRow}>
+                        {renderEmpty ? renderEmpty() : (
+                          <div className={styles.emptyState}>
+                            <Filter size={48} className={styles.emptyIcon} />
+                            <p>{emptyMessage}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : virtualScrollElement && virtualRows?.map((virtualRow) => {
+                      const row = rows[virtualRow.index];
+                      const isSelected = row.getIsSelected();
+
+                      return (
+                        <div
+                          key={row.id}
+                          className={`${styles.virtualRow} ${isSelected ? styles.selected : ''} ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''}`}
+                          style={{
+                            height: `${virtualRow.size}px`,
+                            transform: `translateY(${virtualRow.start}px)`,
+                          }}
+                          role="row"
+                          data-row-index={row.index}
+                          onClick={() => onRowClick?.(row.original)}
+                          onDoubleClick={() => onRowDoubleClick?.(row.original)}
+                        >
+                          {row.getVisibleCells().map((cell, cellIndex) => {
+                            const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
+
+                            return (
+                              <div
+                                key={cell.id}
+                                className={`${styles.virtualCell} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]}`}
+                                style={{ width: cell.column.getSize(), flex: `0 0 ${cell.column.getSize()}px` }}
+                                role="gridcell"
+                                data-row-index={row.index}
+                                data-column-index={cellIndex}
+                              >
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Standard Table - native table elements for accessibility and proper layout */
+              <table className={styles.table}>
+                {showHeader && (
+                  <thead className={styles.thead}>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <tr key={headerGroup.id} className={styles.headerRow}>
+                        {/* Drag handle column header for row ordering */}
+                        {enableRowOrdering && (
+                          <th className={`${styles.th} ${styles.dragHandleHeader}`} style={{ width: 40 }}>
+                            <GripVertical size={16} />
+                          </th>
+                        )}
+                        <SortableContext items={columnIds} strategy={horizontalListSortingStrategy}>
+                          {headerGroup.headers.map((header) => {
+                            const isSpecialColumn = header.id.startsWith('_');
+                            return enableColumnDrag && !isSpecialColumn ? (
+                              <th
+                                key={header.id}
+                                className={styles.th}
+                                style={{ width: header.getSize() }}
+                              >
+                                <DraggableHeaderCell id={header.id}>
+                                  {renderHeaderCell(header)}
+                                </DraggableHeaderCell>
+                              </th>
+                            ) : (
+                              renderHeaderCell(header)
+                            );
+                          })}
+                        </SortableContext>
+                      </tr>
+                    ))}
+                  </thead>
+                )}
+
+                <tbody className={styles.tbody}>
+                  {rows.length === 0 ? (
+                    <tr className={styles.emptyRow}>
+                      <td colSpan={table.getAllLeafColumns().length + (enableRowOrdering ? 1 : 0)} className={styles.emptyCell}>
+                        {renderEmpty ? renderEmpty() : (
+                          <div className={styles.emptyState}>
+                            <Filter size={48} className={styles.emptyIcon} />
+                            <p>{emptyMessage}</p>
+                          </div>
+                        )}
+                      </td>
                     </tr>
-                  ))}
-                </tfoot>
-              )}
-            </table>
+                  ) : enableRowOrdering ? (
+                    <SortableContext items={rowIds} strategy={verticalListSortingStrategy}>
+                      {rows.map((row) => renderRow(row))}
+                    </SortableContext>
+                  ) : (
+                    rows.map((row) => renderRow(row))
+                  )}
+                </tbody>
+
+                {showFooter && (
+                  <tfoot className={styles.tfoot}>
+                    {table.getFooterGroups().map((footerGroup) => (
+                      <tr key={footerGroup.id} className={styles.footerRow}>
+                        {enableRowOrdering && <th className={styles.footerCell} style={{ width: 40 }} />}
+                        {footerGroup.headers.map((header) => (
+                          <th key={header.id} className={styles.footerCell}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(header.column.columnDef.footer, header.getContext())}
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </tfoot>
+                )}
+              </table>
+            )}
 
             {/* Row Drag Overlay */}
             {enableRowOrdering && (
