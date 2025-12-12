@@ -2578,7 +2578,6 @@ function DataGridInner<TData>(
 
       try {
         // Dynamic import of xlsx - eslint-disable to allow dynamic require
-        // @ts-expect-error xlsx is an optional dependency
         const XLSX = await import(/* @vite-ignore */ 'xlsx') as {
           utils: {
             aoa_to_sheet: (data: unknown[][]) => unknown;
