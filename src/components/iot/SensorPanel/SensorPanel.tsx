@@ -60,7 +60,7 @@ export interface SensorPanelProps {
 // ========================================
 
 const skeletonStyles = {
-  compactIcon: { width: 20, height: 20, borderRadius: 4 } as React.CSSProperties,
+  compactIcon: { width: 20, height: 20, borderRadius: 'var(--radius-base)' } as React.CSSProperties,
   compactLabel: { height: 14, width: '60%', marginBottom: 8 } as React.CSSProperties,
   compactValue: { height: 28, width: '40%' } as React.CSSProperties,
   detailedIcon: { width: 40, height: 40, borderRadius: 'var(--radius-lg)' } as React.CSSProperties,

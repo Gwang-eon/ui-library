@@ -22,7 +22,7 @@ export interface KpiCardProps {
 // Skeleton styles
 const skeletonStyles = {
   label: { height: 16, width: '50%' } as React.CSSProperties,
-  icon: { width: 24, height: 24, borderRadius: 4 } as React.CSSProperties,
+  icon: { width: 24, height: 24, borderRadius: 'var(--radius-base)' } as React.CSSProperties,
   value: { height: 40, width: '60%', marginBottom: 8 } as React.CSSProperties,
   trend: { height: 14, width: '40%' } as React.CSSProperties,
 };

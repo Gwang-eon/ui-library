@@ -17747,7 +17747,7 @@ const nM = "_eventTimeline_w8abc_9", rM = "_eventItem_w8abc_16", oM = "_eventMar
   loading: GM
 }, ho = {
   label: { height: 16, width: "50%" },
-  icon: { width: 24, height: 24, borderRadius: 4 },
+  icon: { width: 24, height: 24, borderRadius: "var(--radius-base)" },
   value: { height: 40, width: "60%", marginBottom: 8 },
   trend: { height: 14, width: "40%" }
 }, Jl = Y(({ className: e }) => {
@@ -18411,7 +18411,7 @@ const w8 = "_monitorContainer_15og8_9", y8 = "_monitorHeader_15og8_16", S8 = "_m
   skeletonIcon: C3,
   skeletonBadge: w3
 }, xt = {
-  compactIcon: { width: 20, height: 20, borderRadius: 4 },
+  compactIcon: { width: 20, height: 20, borderRadius: "var(--radius-base)" },
   compactLabel: { height: 14, width: "60%", marginBottom: 8 },
   compactValue: { height: 28, width: "40%" },
   detailedIcon: { width: 40, height: 40, borderRadius: "var(--radius-lg)" },
