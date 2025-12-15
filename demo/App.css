@@ -61,6 +61,11 @@
   text-decoration: none;
   border-radius: var(--radius-base);
   transition: all var(--duration-fast) var(--ease-out);
+  /* Button reset for Docs button */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .demo-header-link:hover {
