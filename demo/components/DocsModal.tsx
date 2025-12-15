@@ -92,13 +92,6 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
                   <StatCard label="Coverage" value={stats.coverage} />
                 </div>
 
-                <h3>Quick Links</h3>
-                <ul style={{ lineHeight: 1.8 }}>
-                  <li><a href="https://github.com/Gwang-eon/ui-library" target="_blank" rel="noopener">GitHub Repository</a></li>
-                  <li><a href="https://design-system-wheat-beta.vercel.app/" target="_blank" rel="noopener">Storybook Documentation</a></li>
-                  <li><a href="https://pure-html-ui-kit.vercel.app/" target="_blank" rel="noopener">Pure HTML Version</a></li>
-                </ul>
-
                 <h3>Recent Updates</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <UpdateItem

@@ -9,6 +9,7 @@ import {
   BookOpen,
   Code2,
   FileText,
+  Github,
 } from 'lucide-react';
 
 // Core components for shell only
@@ -127,6 +128,16 @@ function App() {
               <FileText size={14} />
               Docs
             </button>
+            <a
+              href="https://github.com/Gwang-eon/ui-library"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="demo-header-link"
+            >
+              <Github size={14} />
+              GitHub
+              <ExternalLink size={12} />
+            </a>
             <a
               href="https://design-system-wheat-beta.vercel.app/"
               target="_blank"
