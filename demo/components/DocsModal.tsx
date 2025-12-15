@@ -13,10 +13,22 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 
 // Changelog content
 const changelogMd = `# Changelog
+
+## v1.2.0 (2025-12-15)
+
+### Test Suite Expansion - Phase 2-4
+- Added **139 new tests** for Overlay components
+- Total test count: **1094 tests** across **32 components**
+- Coverage maintained at **96%+ statements**
+
+### New Test Coverage
+- **Overlay Components**: Drawer (34), Popover (30), Popconfirm (41), Tooltip (34)
+
+---
 
 ## v1.1.0 (2025-12-15)
 
@@ -50,8 +62,8 @@ const changelogMd = `# Changelog
 
 // Quick stats
 const stats = {
-  components: 28,
-  tests: 955,
+  components: 32,
+  tests: 1094,
   coverage: '96%',
   version: VERSION,
 };
@@ -99,8 +111,13 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <UpdateItem
                     date="2025-12-15"
+                    title="Phase 2-4 Overlay Tests"
+                    description="Added 139 tests for Drawer, Popover, Popconfirm, Tooltip"
+                  />
+                  <UpdateItem
+                    date="2025-12-15"
                     title="Phase 2 Test Suite"
-                    description="Added 351 tests for form and navigation components"
+                    description="Added 533 tests for form, navigation, data display components"
                   />
                   <UpdateItem
                     date="2025-12-14"
