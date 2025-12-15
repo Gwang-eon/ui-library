@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Modal } from '../../src/components/Modal';
 import { Tabs, TabsList, Tab, TabPanel, TabContent } from '../../src/components/Tabs';
 import { Badge } from '../../src/components/Badge';
@@ -110,13 +111,13 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
 
             <TabPanel value="changelog">
               <div className="docs-markdown">
-                <ReactMarkdown>{changelogMd}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{changelogMd}</ReactMarkdown>
               </div>
             </TabPanel>
 
             <TabPanel value="tests">
               <div className="docs-markdown">
-                <ReactMarkdown>{testRoadmapMd}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{testRoadmapMd}</ReactMarkdown>
               </div>
             </TabPanel>
           </TabContent>

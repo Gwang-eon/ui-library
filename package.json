@@ -59,7 +59,8 @@
     "@tanstack/match-sorter-utils": "^8.19.4",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.13",
-    "lucide-react": "^0.546.0"
+    "lucide-react": "^0.546.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
