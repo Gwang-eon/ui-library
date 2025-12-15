@@ -13,10 +13,22 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.2.0';
+const VERSION = '1.3.0';
 
 // Changelog content
 const changelogMd = `# Changelog
+
+## v1.3.0 (2025-12-15)
+
+### Test Suite Expansion - Phase 2-5
+- Added **234 new tests** for Misc components
+- Total test count: **1328 tests** across **40 components**
+- Coverage maintained at **96%+ statements**
+
+### New Test Coverage
+- **Misc Components**: Accordion (26), Avatar (40), Carousel (30), Divider (31), EmptyState (19), Skeleton (22), Spin (32), Result (34)
+
+---
 
 ## v1.2.0 (2025-12-15)
 
@@ -62,8 +74,8 @@ const changelogMd = `# Changelog
 
 // Quick stats
 const stats = {
-  components: 32,
-  tests: 1094,
+  components: 40,
+  tests: 1328,
   coverage: '96%',
   version: VERSION,
 };
@@ -111,6 +123,11 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <UpdateItem
                     date="2025-12-15"
+                    title="Phase 2-5 Misc Tests"
+                    description="Added 234 tests for Accordion, Avatar, Carousel, Divider, EmptyState, Skeleton, Spin, Result"
+                  />
+                  <UpdateItem
+                    date="2025-12-15"
                     title="Phase 2-4 Overlay Tests"
                     description="Added 139 tests for Drawer, Popover, Popconfirm, Tooltip"
                   />
@@ -118,11 +135,6 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
                     date="2025-12-15"
                     title="Phase 2 Test Suite"
                     description="Added 533 tests for form, navigation, data display components"
-                  />
-                  <UpdateItem
-                    date="2025-12-14"
-                    title="Initial Release"
-                    description="15 core components with 422 tests"
                   />
                 </div>
               </div>

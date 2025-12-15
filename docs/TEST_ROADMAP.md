@@ -2,7 +2,7 @@
 
 ## 현재 상태
 
-### 완료된 테스트 (32개 컴포넌트, 1094개 테스트)
+### 완료된 테스트 (40개 컴포넌트, 1328개 테스트)
 
 #### Phase 1: 기본 컴포넌트 (15개, 422개 테스트)
 
@@ -61,6 +61,19 @@
 | Popconfirm | 41 | 100% |
 | Tooltip | 34 | 100% |
 
+#### Phase 2-5: 기타 컴포넌트 (8개, 234개 테스트)
+
+| 컴포넌트 | 테스트 수 | 커버리지 |
+|---------|----------|---------|
+| Accordion | 26 | 100% |
+| Avatar | 40 | 100% |
+| Carousel | 30 | 100% |
+| Divider | 31 | 100% |
+| EmptyState | 19 | 100% |
+| Skeleton | 22 | 100% |
+| Spin | 32 | 100% |
+| Result | 34 | 100% |
+
 **전체 커버리지**: 96%+ Statements / 92%+ Branch / 99%+ Functions
 
 ---
@@ -105,20 +118,9 @@
 
 Phase 2-4 섹션 참조 (4개 컴포넌트, 139개 테스트)
 
-### 우선순위 5: 기타 컴포넌트 (8개)
+### ~~우선순위 5: 기타 컴포넌트~~ ✅ 완료
 
-| 컴포넌트 | 복잡도 | 테스트 포인트 |
-|---------|--------|-------------|
-| **Accordion** | 중간 | expand/collapse, multiple |
-| **Avatar** | 낮음 | src, fallback, size |
-| **Carousel** | 높음 | autoplay, indicators, controls |
-| **Divider** | 낮음 | type, orientation, text |
-| **EmptyState** | 낮음 | description, action |
-| **Skeleton** | 낮음 | animation, shape |
-| **Spin** | 낮음 | size, tip |
-| **Result** | 낮음 | status, title, actions |
-
-예상 테스트 수: 80-100개
+Phase 2-5 섹션 참조 (8개 컴포넌트, 234개 테스트)
 
 ---
 
@@ -128,7 +130,7 @@ Phase 2-4 섹션 참조 (4개 컴포넌트, 139개 테스트)
 
 | 컴포넌트 | 복잡도 | 테스트 포인트 |
 |---------|--------|-------------|
-| **DatePicker** | 매우 높음 | date selection, range, format, locale |
+| **DatePicker** | 매우 높음 | date selection, range, format, locale (별도 고도화 작업 필요) |
 | **ColorPicker** | 높음 | color formats, presets, alpha |
 | **FileUpload** | 높음 | drag & drop, multiple, validation |
 | **Autocomplete** | 높음 | search, async, selection |
@@ -209,13 +211,18 @@ Phase 2-4 섹션 참조 (4개 컴포넌트, 139개 테스트)
 
 ## 예상 일정
 
-| Phase | 컴포넌트 수 | 예상 테스트 수 |
+| Phase | 컴포넌트 수 | 테스트 수 |
 |-------|-----------|--------------|
-| 완료 | 15 | 422 |
-| Phase 2 | 25 | 440-560 |
-| Phase 3 | 8 | 290-380 |
-| Phase 4 | 28 | 250-350 |
-| **총계** | **76** | **1,400-1,700** |
+| Phase 1: 기본 컴포넌트 | 15 | 422 |
+| Phase 2-1: 폼 컴포넌트 | 3 | 161 |
+| Phase 2-2: 네비게이션 컴포넌트 | 5 | 190 |
+| Phase 2-3: 데이터 표시 컴포넌트 | 5 | 182 |
+| Phase 2-4: 오버레이 컴포넌트 | 4 | 139 |
+| Phase 2-5: 기타 컴포넌트 | 8 | 234 |
+| **완료 합계** | **40** | **1,328** |
+| Phase 3: 고급 컴포넌트 | 8 | 예상 290-380 |
+| Phase 4: 특화 컴포넌트 | 28 | 예상 250-350 |
+| **총 목표** | **76** | **~1,900-2,100** |
 
 ---
 
@@ -290,6 +297,6 @@ describe('ComponentName', () => {
 
 ## 다음 단계
 
-1. **Phase 2 시작**: Textarea, Slider, Rating 테스트 작성
+1. **Phase 3 시작**: ColorPicker, FileUpload, Autocomplete, CascadeSelect 테스트 작성 (DatePicker 제외 - 별도 고도화 필요)
 2. **커버리지 모니터링**: CI에서 커버리지 리포트 자동화
 3. **테스트 문서 업데이트**: 새 테스트 추가 시 TESTING.md 업데이트
