@@ -21,17 +21,19 @@ const changelogMd = `# Changelog
 ## v1.1.0 (2025-12-15)
 
 ### Test Suite Expansion
-- Added **351 new tests** for Phase 2 components
-- Total test count: **773 tests** across **23 components**
+- Added **533 new tests** for Phase 2 components
+- Total test count: **955 tests** across **28 components**
 - Coverage maintained at **96%+ statements**
 
 ### New Test Coverage
 - **Form Components**: Textarea (50), Slider (54), Rating (57)
 - **Navigation Components**: Menu (36), Breadcrumb (30), Steps (38), Navbar (41), Sidemenu (45)
+- **Data Display Components**: List (28), Statistic (39), Descriptions (28), Timeline (40), Table (47)
 
 ### Improvements
 - Updated TEST_ROADMAP.md with current progress
 - Improved component documentation
+- Fixed Tooltip light theme styling
 
 ---
 
@@ -48,8 +50,8 @@ const changelogMd = `# Changelog
 
 // Quick stats
 const stats = {
-  components: 23,
-  tests: 773,
+  components: 28,
+  tests: 955,
   coverage: '96%',
   version: VERSION,
 };

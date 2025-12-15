@@ -13,7 +13,7 @@
   position: fixed;
   z-index: var(--z-tooltip);
   padding: var(--spacing-2) var(--spacing-3);
-  background-color: var(--surface-secondary);
+  background-color: var(--color-gray-800);
   color: var(--palette-white);
   font-size: var(--font-size-body-small);
   line-height: 1.4;

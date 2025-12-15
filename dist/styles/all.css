@@ -1469,6 +1469,12 @@ body.theme-dark-brown {
   color: var(--color-primary-600);
 }
 
+/* Font weight utilities */
+.font-normal { font-weight: var(--font-weight-regular); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
 .text-center {
   text-align: center;
 }
