@@ -17,6 +17,7 @@ import { Tour } from '../src/components/Tour';
 
 // Lazy-loaded category components
 import { CategoryLoader } from './components/CategoryLoader';
+import { DocsModal } from './components/DocsModal';
 import {
   FormDemos,
   DisplayDemos,
@@ -66,6 +67,7 @@ function App() {
   const [activeCategory, setActiveCategory] = useState<Category>('tokens');
   const [darkMode, setDarkMode] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
+  const [docsOpen, setDocsOpen] = useState(false);
   const [baseFontSize, setBaseFontSize] = useState(14);
 
   const handleFontSizeChange = (size: number) => {
@@ -117,6 +119,14 @@ function App() {
         </div>
         <div className="demo-header-right">
           <div className="demo-header-links">
+            <button
+              onClick={() => setDocsOpen(true)}
+              className="demo-header-link"
+              style={{ cursor: 'pointer', background: 'none', border: 'none', color: 'inherit', padding: 0 }}
+            >
+              <BookOpen size={14} />
+              Docs
+            </button>
             <a
               href="https://design-system-wheat-beta.vercel.app/"
               target="_blank"
@@ -193,6 +203,12 @@ function App() {
         steps={tourSteps}
         onClose={() => setTourOpen(false)}
         onFinish={() => setTourOpen(false)}
+      />
+
+      {/* Docs Modal */}
+      <DocsModal
+        open={docsOpen}
+        onClose={() => setDocsOpen(false)}
       />
     </div>
   );
