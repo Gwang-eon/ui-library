@@ -64,13 +64,8 @@
 }
 
 .date-picker-input:focus {
-<<<<<<< HEAD
-  border-color: var(--input-border-focus);
-  box-shadow: 0 0 0 3px var(--color-primary-100);
-=======
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--selected-bg);
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 .date-picker-input:disabled {
@@ -137,13 +132,8 @@
 }
 
 .date-picker-error .date-picker-input:focus {
-<<<<<<< HEAD
-  border-color: var(--input-error-border);
-  box-shadow: 0 0 0 3px var(--color-error-100);
-=======
   border-color: var(--error);
   box-shadow: 0 0 0 3px var(--error-bg);
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 /* ========================================
@@ -310,52 +300,24 @@
   border-radius: var(--radius-base);
 }
 
-<<<<<<< HEAD
-/* Selected Day */
-.date-picker :global(.react-datepicker__day--selected) {
-  background-color: var(--color-primary-600);
-  color: var(--palette-white);
-  font-weight: var(--font-weight-semibold);
-}
-
-.date-picker :global(.react-datepicker__day--selected:hover) {
-  background-color: var(--color-primary-700);
-}
-
-/* Today */
-.date-picker :global(.react-datepicker__day--today) {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-primary-600);
-  background-color: var(--color-primary-50);
-=======
 /* Today */
 .date-picker :global(.react-datepicker__day--today) {
   font-weight: 600;
   background-color: var(--dp-day-today);
   color: var(--primary);
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 /* Selected */
 .date-picker :global(.react-datepicker__day--selected),
 .date-picker :global(.react-datepicker__day--keyboard-selected) {
-<<<<<<< HEAD
-  background-color: var(--color-primary-100);
-  color: var(--color-primary-900);
-=======
   background-color: var(--dp-day-selected) !important;
   color: var(--dp-day-selected-text) !important;
   font-weight: 600;
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 .date-picker :global(.react-datepicker__day--selected:hover),
 .date-picker :global(.react-datepicker__day--keyboard-selected:hover) {
-<<<<<<< HEAD
-  background-color: var(--color-primary-200);
-=======
   background-color: var(--primary-hover) !important;
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 /* Outside month */
@@ -429,11 +391,6 @@
 }
 
 .date-picker :global(.react-datepicker__time-list-item--selected) {
-<<<<<<< HEAD
-  background-color: var(--color-primary-600);
-  color: var(--palette-white);
-  font-weight: var(--font-weight-medium);
-=======
   background-color: var(--dp-day-selected) !important;
   color: var(--dp-day-selected-text) !important;
   font-weight: 500;
@@ -511,147 +468,12 @@
 
 .date-picker :global(.react-datepicker__month-container + .react-datepicker__month-container) {
   border-left: 1px solid var(--dp-border);
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 /* ========================================
    DARK MODE
    ======================================== */
 
-<<<<<<< HEAD
-@media (prefers-color-scheme: dark) {
-  /* Input Field */
-  .date-picker-input {
-    background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
-    color: var(--text-primary);
-  }
-
-  .date-picker-input::placeholder {
-    color: var(--text-tertiary);
-  }
-
-  .date-picker-input:hover:not(:disabled) {
-    border-color: var(--color-primary-500);
-  }
-
-  .date-picker-input:focus {
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  }
-
-  .date-picker-input:disabled {
-    background-color: var(--surface-secondary);
-    border-color: var(--border-subtle);
-    color: var(--text-disabled);
-  }
-
-  /* Trigger Button */
-  .date-picker-trigger {
-    color: var(--text-tertiary);
-  }
-
-  .date-picker-trigger:hover {
-    color: var(--text-primary);
-  }
-
-  .date-picker-disabled .date-picker-trigger {
-    color: var(--text-disabled);
-  }
-
-  /* Error State */
-  .date-picker-error .date-picker-input {
-    border-color: var(--color-error-500);
-  }
-
-  .date-picker-error .date-picker-input:focus {
-    border-color: var(--color-error-500);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-  }
-
-  /* Calendar */
-  .date-picker-calendar {
-    background: var(--surface-primary);
-    border-color: var(--text-secondary);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  }
-
-  .date-picker :global(.react-datepicker__header) {
-    background: var(--surface-primary);
-    border-bottom-color: var(--text-secondary);
-  }
-
-  .date-picker :global(.react-datepicker__current-month) {
-    color: var(--text-primary);
-  }
-
-  .date-picker :global(.react-datepicker__navigation):hover {
-    background-color: var(--surface-tertiary);
-  }
-
-  .date-picker :global(.react-datepicker__day-name) {
-    color: var(--text-tertiary);
-  }
-
-  .date-picker :global(.react-datepicker__day) {
-    color: var(--text-primary);
-  }
-
-  .date-picker :global(.react-datepicker__day:hover) {
-    background-color: var(--surface-tertiary);
-  }
-
-  .date-picker :global(.react-datepicker__day--selected) {
-    background-color: var(--color-primary-600);
-    color: var(--palette-white);
-  }
-
-  .date-picker :global(.react-datepicker__day--selected:hover) {
-    background-color: var(--color-primary-500);
-  }
-
-  .date-picker :global(.react-datepicker__day--today) {
-    background-color: rgba(59, 130, 246, 0.2);
-    color: var(--color-primary-400);
-  }
-
-  .date-picker :global(.react-datepicker__day--keyboard-selected) {
-    background-color: rgba(59, 130, 246, 0.15);
-    color: var(--color-primary-300);
-  }
-
-  .date-picker :global(.react-datepicker__day--keyboard-selected:hover) {
-    background-color: rgba(59, 130, 246, 0.25);
-  }
-
-  .date-picker :global(.react-datepicker__day--outside-month) {
-    color: var(--text-disabled);
-  }
-
-  .date-picker :global(.react-datepicker__day--disabled) {
-    color: var(--text-disabled);
-  }
-
-  .date-picker :global(.react-datepicker__time-container) {
-    border-left-color: var(--text-secondary);
-  }
-
-  .date-picker :global(.react-datepicker__time) {
-    background: var(--surface-primary);
-  }
-
-  .date-picker :global(.react-datepicker__time-list-item) {
-    color: var(--text-primary);
-  }
-
-  .date-picker :global(.react-datepicker__time-list-item:hover) {
-    background-color: var(--surface-tertiary);
-  }
-
-  .date-picker :global(.react-datepicker__time-list-item--selected) {
-    background-color: var(--color-primary-600);
-  }
-=======
 :global([data-theme="dark"]) .date-picker,
 :global(.dark) .date-picker {
   --dp-bg: var(--surface-primary);
@@ -817,7 +639,6 @@
 :global(.dark) .date-range-picker-dropdown {
   background: var(--surface-primary);
   border-color: var(--border-default);
->>>>>>> 10bf8cb (Fix: Add missing DateRangePicker and related files to resolve build error)
 }
 
 /* ========================================
