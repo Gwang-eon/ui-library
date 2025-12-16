@@ -1,34 +1,12 @@
-import { forwardRef, useRef, useImperativeHandle, useState } from 'react';
-import ReactDatePicker, { type ReactDatePickerProps } from 'react-datepicker';
+import { forwardRef, useRef, useImperativeHandle, useState, useId } from 'react';
+import ReactDatePicker from 'react-datepicker';
 import { Calendar } from 'lucide-react';
 // Note: react-datepicker CSS should be imported in global styles
 // Import from '@gractor/ui/styles' or add 'react-datepicker/dist/react-datepicker.css' in your app
 import styles from './DatePicker.module.css';
+import type { DatePickerProps, DatePickerSize } from './types';
 
-export type DatePickerSize = 'sm' | 'md' | 'lg';
-
-export interface DatePickerProps {
-  size?: DatePickerSize;
-  error?: boolean;
-  disabled?: boolean;
-  value?: Date | null;
-  onChange?: (date: Date | null) => void;
-  placeholder?: string;
-  className?: string;
-  dateFormat?: string;
-  minDate?: Date;
-  maxDate?: Date;
-  showTimeSelect?: boolean;
-  timeFormat?: string;
-  timeIntervals?: number;
-  isClearable?: boolean;
-  showMonthDropdown?: boolean;
-  showYearDropdown?: boolean;
-  dropdownMode?: 'select' | 'scroll';
-  filterDate?: (date: Date) => boolean;
-  inline?: boolean;
-  monthsShown?: number;
-}
+export type { DatePickerProps, DatePickerSize };
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   (
@@ -53,11 +31,19 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       filterDate,
       inline,
       monthsShown,
+      // 접근성 props
+      ariaLabel,
+      ariaDescribedBy,
+      id,
+      name,
+      required,
     },
     forwardedRef
   ) => {
     const internalRef = useRef<HTMLInputElement>(null);
     const [isOpen, setIsOpen] = useState(false);
+    const generatedId = useId();
+    const inputId = id || `datepicker-${generatedId}`;
 
     // Forward the ref to the parent if provided
     useImperativeHandle(forwardedRef, () => internalRef.current as HTMLInputElement);
@@ -83,6 +69,8 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     return (
       <div className={wrapperClasses}>
         <ReactDatePicker
+          id={inputId}
+          name={name}
           selected={value}
           onChange={(date: Date | null) => onChange?.(date)}
           disabled={disabled}
@@ -107,6 +95,9 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           onInputClick={() => setIsOpen(true)}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}
+          required={required}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedBy}
         />
         <button
           className={styles['date-picker-trigger']}
@@ -114,6 +105,8 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           disabled={disabled}
           type="button"
           aria-label="Open calendar"
+          aria-controls={inputId}
+          aria-expanded={isOpen}
         >
           <Calendar size={size === 'sm' ? 16 : size === 'lg' ? 20 : 18} />
         </button>
