@@ -1,0 +1,756 @@
+/**
+ * Calendar 컴포넌트 스타일
+ * atomic.css 기반, 디자인 토큰 사용
+ */
+
+/* ============================================
+   팝오버 컨테이너
+   ============================================ */
+
+.popover {
+  position: absolute;
+  z-index: var(--z-index-popover);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn var(--duration-fast) var(--easing-ease-out);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--spacing-1)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   캘린더 메인 컨테이너
+   ============================================ */
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-3);
+  min-width: 280px;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-medium);
+  line-height: var(--line-height-body-medium);
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.calendar--sm {
+  min-width: 240px;
+  padding: var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+}
+
+.calendar--lg {
+  min-width: 320px;
+  padding: var(--spacing-4);
+  font-size: var(--font-size-body-large);
+  line-height: var(--line-height-body-large);
+}
+
+/* ============================================
+   캘린더 헤더
+   ============================================ */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-3);
+  gap: var(--spacing-2);
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+}
+
+.headerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-8);
+  height: var(--spacing-8);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+}
+
+.headerButton:hover:not(:disabled) {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.headerButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.headerPlaceholder {
+  width: var(--spacing-8);
+  height: var(--spacing-8);
+}
+
+.titleButton {
+  padding: var(--spacing-1) var(--spacing-2);
+  border: none;
+  background: transparent;
+  font-weight: var(--font-weight-semibold);
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--text-primary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast);
+}
+
+.titleButton:hover {
+  background: var(--surface-secondary);
+}
+
+.titleButtonStatic {
+  composes: titleButton;
+  cursor: default;
+}
+
+.titleButtonStatic:hover {
+  background: transparent;
+}
+
+/* ============================================
+   요일 헤더
+   ============================================ */
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--spacing-1);
+}
+
+.weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--spacing-8);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+}
+
+.weekday--weekend {
+  color: var(--error-text);
+}
+
+/* ============================================
+   날짜 그리드
+   ============================================ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--spacing-px);
+}
+
+/* ============================================
+   날짜 셀
+   ============================================ */
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-body-small);
+  font-family: inherit;
+  color: var(--text-primary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+  position: relative;
+}
+
+.day:hover:not(:disabled):not(.day--selected) {
+  background: var(--surface-secondary);
+}
+
+.day--otherMonth {
+  color: var(--text-disabled);
+}
+
+.day--today {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
+}
+
+.day--today::after {
+  content: '';
+  position: absolute;
+  bottom: var(--spacing-1);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--spacing-1);
+  height: var(--spacing-1);
+  background: var(--color-primary-600);
+  border-radius: var(--radius-full);
+}
+
+.day--selected {
+  background: var(--color-primary-600);
+  color: var(--button-primary-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.day--selected::after {
+  display: none;
+}
+
+.day--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.day--weekend {
+  color: var(--error-text);
+}
+
+.day--weekend.day--otherMonth {
+  color: var(--text-disabled);
+}
+
+/* 범위 선택 스타일 */
+.day--inRange {
+  background: var(--color-primary-100);
+  border-radius: 0;
+}
+
+.day--rangeStart {
+  background: var(--color-primary-600);
+  color: var(--button-primary-text);
+  border-radius: var(--radius-base) 0 0 var(--radius-base);
+}
+
+.day--rangeEnd {
+  background: var(--color-primary-600);
+  color: var(--button-primary-text);
+  border-radius: 0 var(--radius-base) var(--radius-base) 0;
+}
+
+.day--rangeStart.day--rangeEnd {
+  border-radius: var(--radius-base);
+}
+
+/* ============================================
+   월 그리드
+   ============================================ */
+
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) 0;
+}
+
+.month {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-body-small);
+  font-family: inherit;
+  color: var(--text-primary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+}
+
+.month:hover:not(:disabled):not(.month--selected) {
+  background: var(--surface-secondary);
+}
+
+.month--current {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
+}
+
+.month--selected {
+  background: var(--color-primary-600);
+  color: var(--button-primary-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.month--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   년 그리드
+   ============================================ */
+
+.yearGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) 0;
+}
+
+.year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-body-small);
+  font-family: inherit;
+  color: var(--text-primary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+}
+
+.year:hover:not(:disabled):not(.year--selected) {
+  background: var(--surface-secondary);
+}
+
+.year--current {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
+}
+
+.year--selected {
+  background: var(--color-primary-600);
+  color: var(--button-primary-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.year--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.year--outside {
+  color: var(--text-disabled);
+}
+
+/* ============================================
+   시간 선택기
+   ============================================ */
+
+.timeSelector {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-default);
+  padding-left: var(--spacing-3);
+  margin-left: var(--spacing-3);
+  min-width: 100px;
+}
+
+.timeHeader {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+  text-align: center;
+  padding-bottom: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.timeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-px);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.timeItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-body-small);
+  font-family: inherit;
+  color: var(--text-primary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast);
+  white-space: nowrap;
+}
+
+.timeItem:hover:not(:disabled):not(.timeItem--selected) {
+  background: var(--surface-secondary);
+}
+
+.timeItem--selected {
+  background: var(--color-primary-600);
+  color: var(--button-primary-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.timeItem--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   입력 필드 (atomic 기반)
+   ============================================ */
+
+.inputWrapper {
+  composes: input-wrapper from global;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.input {
+  composes: input-base from global;
+  composes: input-base--icon-right from global;
+  height: 40px;
+}
+
+.input--sm {
+  composes: input-base--sm from global;
+  height: 32px;
+  padding-right: 36px;
+}
+
+.input--lg {
+  composes: input-base--lg from global;
+  height: 48px;
+  padding-right: 48px;
+}
+
+.input--error {
+  border-color: var(--input-error-border);
+}
+
+.input--error:focus {
+  border-color: var(--input-error-border);
+  box-shadow: 0 0 0 3px var(--error-bg);
+}
+
+.inputIcon {
+  composes: input-icon input-icon--right from global;
+  pointer-events: none;
+}
+
+.clearButton {
+  position: absolute;
+  right: var(--spacing-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+  padding: 0;
+  border: none;
+  background: var(--surface-tertiary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--duration-fast);
+}
+
+.clearButton:hover {
+  background: var(--surface-quaternary);
+}
+
+/* ============================================
+   범위 입력
+   ============================================ */
+
+.rangeInputWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.rangeSeparator {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-medium);
+}
+
+/* ============================================
+   듀얼 캘린더 (DateRangePicker)
+   ============================================ */
+
+.dualCalendar {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.dualCalendar > .calendar {
+  border-right: 1px solid var(--border-default);
+  padding-right: var(--spacing-4);
+}
+
+.dualCalendar > .calendar:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* ============================================
+   DateTime 컨테이너
+   ============================================ */
+
+.dateTimeContainer {
+  display: flex;
+}
+
+/* ============================================
+   Range 컨테이너 (프리셋 + 듀얼 캘린더)
+   ============================================ */
+
+.rangeContainer {
+  display: flex;
+}
+
+/* ============================================
+   푸터 (적용/취소 버튼)
+   ============================================ */
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+  padding-top: var(--spacing-3);
+  margin-top: var(--spacing-3);
+  border-top: 1px solid var(--border-default);
+}
+
+.footerButton {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid var(--border-default);
+  background: var(--surface-primary);
+  font-size: var(--font-size-body-small);
+  font-family: inherit;
+  color: var(--text-primary);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.footerButton:hover {
+  background: var(--surface-secondary);
+}
+
+.footerButton--primary {
+  background: var(--button-primary-bg);
+  border-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+
+.footerButton--primary:hover {
+  background: var(--button-primary-bg-hover);
+  border-color: var(--button-primary-bg-hover);
+}
+
+/* ============================================
+   프리셋 범위
+   ============================================ */
+
+.presets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding-right: var(--spacing-3);
+  margin-right: var(--spacing-3);
+  border-right: 1px solid var(--border-default);
+  min-width: 120px;
+}
+
+.presetButton {
+  padding: var(--spacing-2) var(--spacing-3);
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-body-small);
+  font-family: inherit;
+  color: var(--text-secondary);
+  text-align: left;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+  white-space: nowrap;
+}
+
+.presetButton:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.presetButton--active {
+  background: var(--color-primary-100);
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ============================================
+   인라인 모드
+   ============================================ */
+
+.inline {
+  display: inline-block;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+/* ============================================
+   다크모드
+   ============================================ */
+
+:global([data-theme="dark"]) .popover,
+:global(.dark) .popover {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .calendar,
+:global(.dark) .calendar {
+  color: var(--text-primary);
+}
+
+/* 헤더 버튼 호버 */
+:global([data-theme="dark"]) .headerButton:hover:not(:disabled),
+:global(.dark) .headerButton:hover:not(:disabled) {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .titleButton:hover,
+:global(.dark) .titleButton:hover {
+  background: var(--surface-tertiary);
+}
+
+/* 오늘 날짜 - 다크모드에서 더 밝은 primary 사용 */
+:global([data-theme="dark"]) .day--today,
+:global(.dark) .day--today {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .day--today::after,
+:global(.dark) .day--today::after {
+  background: var(--color-primary-400);
+}
+
+/* 날짜 호버 */
+:global([data-theme="dark"]) .day:hover:not(:disabled):not(.day--selected),
+:global(.dark) .day:hover:not(:disabled):not(.day--selected) {
+  background: var(--surface-tertiary);
+}
+
+/* 선택된 날짜 - 다크모드 */
+:global([data-theme="dark"]) .day--selected,
+:global(.dark) .day--selected {
+  background: var(--color-primary-500);
+}
+
+/* 범위 선택 - 다크모드에서 더 어두운 배경 */
+:global([data-theme="dark"]) .day--inRange,
+:global(.dark) .day--inRange {
+  background: var(--color-primary-900);
+}
+
+:global([data-theme="dark"]) .day--rangeStart,
+:global(.dark) .day--rangeStart,
+:global([data-theme="dark"]) .day--rangeEnd,
+:global(.dark) .day--rangeEnd {
+  background: var(--color-primary-500);
+}
+
+/* 월 선택 */
+:global([data-theme="dark"]) .month--current,
+:global(.dark) .month--current {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .month:hover:not(:disabled):not(.month--selected),
+:global(.dark) .month:hover:not(:disabled):not(.month--selected) {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .month--selected,
+:global(.dark) .month--selected {
+  background: var(--color-primary-500);
+}
+
+/* 년도 선택 */
+:global([data-theme="dark"]) .year--current,
+:global(.dark) .year--current {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .year:hover:not(:disabled):not(.year--selected),
+:global(.dark) .year:hover:not(:disabled):not(.year--selected) {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .year--selected,
+:global(.dark) .year--selected {
+  background: var(--color-primary-500);
+}
+
+/* 시간 선택 */
+:global([data-theme="dark"]) .timeItem:hover:not(:disabled):not(.timeItem--selected),
+:global(.dark) .timeItem:hover:not(:disabled):not(.timeItem--selected) {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .timeItem--selected,
+:global(.dark) .timeItem--selected {
+  background: var(--color-primary-500);
+}
+
+/* 프리셋 버튼 */
+:global([data-theme="dark"]) .presetButton:hover,
+:global(.dark) .presetButton:hover {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .presetButton--active,
+:global(.dark) .presetButton--active {
+  background: var(--color-primary-900);
+  color: var(--color-primary-300);
+}
+
+/* 푸터 버튼 */
+:global([data-theme="dark"]) .footerButton:hover,
+:global(.dark) .footerButton:hover {
+  background: var(--surface-tertiary);
+}
+
+/* 클리어 버튼 */
+:global([data-theme="dark"]) .clearButton,
+:global(.dark) .clearButton {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .clearButton:hover,
+:global(.dark) .clearButton:hover {
+  background: var(--surface-quaternary);
+}

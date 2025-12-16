@@ -37,6 +37,12 @@ import { CascadeSelect } from '../../src/components/CascadeSelect';
 import { TreeSelect } from '../../src/components/TreeSelect';
 import { Transfer } from '../../src/components/Transfer';
 import { Knob } from '../../src/components/Knob';
+import {
+  DatePicker,
+  DateRangePicker,
+  TimePicker,
+  DateTimePicker,
+} from '../../src/components/Calendar';
 
 // Sample Data
 const autocompleteOptions = [
@@ -252,6 +258,35 @@ export default function FormDemos() {
           <TreeSelect
             data={treeSelectData}
             placeholder="Select category"
+          />
+        </div>
+
+        {/* DatePicker */}
+        <div className="demo-item">
+          <h3>DatePicker</h3>
+          <DatePicker placeholder="날짜 선택" />
+          <DatePicker placeholder="날짜 선택" size="sm" />
+        </div>
+
+        {/* TimePicker */}
+        <div className="demo-item">
+          <h3>TimePicker</h3>
+          <TimePicker placeholder="시간 선택" />
+          <TimePicker placeholder="30분 간격" timeIntervals={30} />
+        </div>
+
+        {/* DateTimePicker */}
+        <div className="demo-item">
+          <h3>DateTimePicker</h3>
+          <DateTimePicker placeholder="날짜/시간 선택" />
+        </div>
+
+        {/* DateRangePicker */}
+        <div className="demo-item full-width">
+          <h3>DateRangePicker</h3>
+          <DateRangePicker
+            showPresets
+            clearable
           />
         </div>
 
