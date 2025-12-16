@@ -158,7 +158,7 @@ export const TreeSelect = ({
     return labels.join(', ');
   };
 
-  // Filter tree by search
+  // Filter tree by search (pure function, no side effects)
   const filterTree = (nodes: TreeSelectNode[], query: string): TreeSelectNode[] => {
     if (!query) return nodes;
 
@@ -174,16 +174,52 @@ export const TreeSelect = ({
           ...node,
           children: filteredChildren.length > 0 ? filteredChildren : node.children,
         });
-
-        // Auto-expand nodes with matches
-        if (filteredChildren.length > 0) {
-          setExpandedNodes((prev) => new Set(prev).add(node.value));
-        }
       }
     });
 
     return filtered;
   };
+
+  // Get nodes that should be auto-expanded when searching
+  const getMatchingParentNodes = (nodes: TreeSelectNode[], query: string): string[] => {
+    if (!query) return [];
+
+    const q = query.toLowerCase();
+    const parentNodes: string[] = [];
+
+    const traverse = (nodeList: TreeSelectNode[]) => {
+      nodeList.forEach((node) => {
+        if (node.children && node.children.length > 0) {
+          const hasMatchingDescendant = node.children.some(
+            (child) =>
+              child.label.toLowerCase().includes(q) ||
+              (child.children && getMatchingParentNodes([child], query).length > 0)
+          );
+          if (hasMatchingDescendant) {
+            parentNodes.push(node.value);
+          }
+          traverse(node.children);
+        }
+      });
+    };
+
+    traverse(nodes);
+    return parentNodes;
+  };
+
+  // Auto-expand nodes when search query changes
+  useEffect(() => {
+    if (searchQuery) {
+      const nodesToExpand = getMatchingParentNodes(data, searchQuery);
+      if (nodesToExpand.length > 0) {
+        setExpandedNodes((prev) => {
+          const next = new Set(prev);
+          nodesToExpand.forEach((nodeValue) => next.add(nodeValue));
+          return next;
+        });
+      }
+    }
+  }, [searchQuery, data]);
 
   const filteredData = filterTree(data, searchQuery);
 
