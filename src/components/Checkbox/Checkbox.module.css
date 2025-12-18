@@ -40,7 +40,7 @@
   cursor: pointer;
   user-select: none;
   font-size: var(--font-size-body-medium);
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height-body-medium);
   color: var(--text-primary);
 }
 
@@ -154,7 +154,7 @@
 
 .checkbox.disabled .checkbox-box {
   cursor: not-allowed;
-  background-color: var(--surface-disabled);
+  background-color: var(--input-disabled-bg);
 }
 
 .checkbox.disabled .checkbox-label {

@@ -53,7 +53,7 @@
   right: 0;
   bottom: 0;
   background-color: var(--surface-tertiary);
-  transition: var(--duration-normal) var(--ease-out);
+  transition: var(--duration-base) var(--ease-out);
   border-radius: var(--radius-full);
 }
 
@@ -65,7 +65,7 @@
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: var(--duration-normal) var(--ease-out);
+  transition: var(--duration-base) var(--ease-out);
   border-radius: 50%;
 }
 
@@ -114,7 +114,7 @@
   border-radius: 50%;
   background: var(--color-primary-500);
   cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all var(--duration-base) var(--ease-out);
 }
 
 .slider::-webkit-slider-thumb:hover {
@@ -139,7 +139,7 @@
   background: var(--color-primary-500);
   cursor: pointer;
   border: none;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all var(--duration-base) var(--ease-out);
 }
 
 .slider::-moz-range-thumb:hover {
@@ -163,7 +163,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--spacing-5);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all var(--duration-base) var(--ease-out);
 }
 
 .deviceControlCard:hover {

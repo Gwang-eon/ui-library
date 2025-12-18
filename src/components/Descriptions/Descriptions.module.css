@@ -38,7 +38,7 @@
 
 /* Label */
 .descriptionsLabel {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
   word-break: break-word;
@@ -46,7 +46,7 @@
 
 /* Content */
 .descriptionsContent {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
   color: var(--text-primary);
   word-break: break-word;
@@ -164,7 +164,7 @@
 }
 
 .descriptionsVertical .descriptionsContent {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   color: var(--text-primary);
 }
 
@@ -286,7 +286,7 @@
   }
 
   .descriptionsContent {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-body);
   }
 
   .descriptionsHeader {

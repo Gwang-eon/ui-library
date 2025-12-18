@@ -10,8 +10,8 @@
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--transition-normal) var(--ease-out),
-              visibility var(--transition-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out),
+              visibility var(--duration-base) var(--ease-out);
 }
 
 .imageViewerOpen {
@@ -23,7 +23,7 @@
 .imageViewerMask {
   position: absolute;
   inset: 0;
-  background-color: color-mix(in srgb, var(--color-black) 85%, transparent);
+  background-color: color-mix(in srgb, var(--palette-black) 85%, transparent);
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
@@ -57,7 +57,7 @@
   border-radius: var(--radius-base);
   color: var(--palette-white);
   cursor: pointer;
-  transition: all var(--transition-fast) var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
   z-index: 10;
 }
 
@@ -109,7 +109,7 @@
   border-radius: var(--radius-base);
   color: var(--palette-white);
   cursor: pointer;
-  transition: all var(--transition-fast) var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
 .imageViewerTool:hover:not(:disabled) {
@@ -175,7 +175,7 @@
   max-height: 90%;
   object-fit: contain;
   user-select: none;
-  transition: transform var(--transition-normal) var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-out);
   cursor: move;
 }
 
@@ -196,7 +196,7 @@
   border-radius: var(--radius-full);
   color: var(--palette-white);
   cursor: pointer;
-  transition: all var(--transition-fast) var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
   z-index: 10;
 }
 
@@ -279,7 +279,7 @@
   object-fit: cover;
   cursor: pointer;
   opacity: 0.6;
-  transition: all var(--transition-fast) var(--ease-out);
+  transition: all var(--duration-fast) var(--ease-out);
   border: 2px solid transparent;
 }
 
@@ -401,7 +401,7 @@
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
   .imageViewerMask {
-    background-color: color-mix(in srgb, var(--color-black) 95%, transparent);
+    background-color: color-mix(in srgb, var(--palette-black) 95%, transparent);
   }
 
   .imageViewerToolbar,

@@ -133,7 +133,7 @@
 }
 
 .colorPickerTitle {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   margin: 0 0 var(--spacing-3) 0;
@@ -152,7 +152,7 @@
 }
 
 .colorValueHex {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   font-family: monospace;

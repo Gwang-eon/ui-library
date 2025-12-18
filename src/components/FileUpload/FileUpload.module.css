@@ -90,7 +90,7 @@
 .upload-area.disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: var(--surface-disabled);
+  background-color: var(--input-disabled-bg);
 }
 
 .upload-icon {

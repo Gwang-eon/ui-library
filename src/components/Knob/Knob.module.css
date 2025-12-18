@@ -57,7 +57,7 @@
   stroke-width: 12;
   stroke-linecap: round;
   transition:
-    stroke-dashoffset var(--duration-normal) var(--ease-out),
+    stroke-dashoffset var(--duration-base) var(--ease-out),
     stroke var(--duration-fast);
 }
 
@@ -89,7 +89,7 @@
    ======================================== */
 
 .knob-value {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-display-small);
   font-weight: var(--font-weight-bold);
   fill: var(--text-primary);
   transition: fill var(--duration-fast);
@@ -125,7 +125,7 @@
 }
 
 .knob--sm .knob-value {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-heading-2);
 }
 
 .knob--sm .knob-label {
@@ -143,11 +143,11 @@
 }
 
 .knob--lg .knob-value {
-  font-size: var(--font-size-6xl);
+  font-size: var(--font-size-display-large);
 }
 
 .knob--lg .knob-label {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-heading-4);
 }
 
 /* ========================================

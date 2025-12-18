@@ -152,7 +152,7 @@
 }
 
 .statistic.compact .trend {
-  font-size: var(--font-size-body-xsmall);
+  font-size: var(--font-size-label-small);
 }
 
 /* ========================================

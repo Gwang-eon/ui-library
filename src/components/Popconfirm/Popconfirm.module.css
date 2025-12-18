@@ -68,7 +68,7 @@
 
 /* Popconfirm Title */
 .popconfirmTitle {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   margin-bottom: var(--spacing-1);

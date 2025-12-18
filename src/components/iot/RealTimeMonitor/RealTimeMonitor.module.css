@@ -304,12 +304,12 @@
 }
 
 .streamValue {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   font-weight: var(--font-weight-medium);
 }
 
 .streamTimestamp {
-  font-family: var(--font-mono);
+  font-family: var(--font-family-mono);
   color: var(--text-tertiary);
 }
 

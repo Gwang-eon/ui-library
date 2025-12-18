@@ -21,7 +21,7 @@
   transition: all var(--duration-base) var(--ease-mobile);
   -webkit-tap-highlight-color: transparent;
   text-decoration: none;
-  font-family: var(--font-family);
+  font-family: var(--font-family-sans);
   font-weight: var(--font-weight-medium);
 }
 

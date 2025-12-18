@@ -12,7 +12,7 @@
   flex-direction: column;
   height: 100%;
   position: relative;
-  transition: width var(--duration-normal) var(--ease-out);
+  transition: width var(--duration-base) var(--ease-out);
 }
 
 /* ========================================
@@ -51,7 +51,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .sidemenuCollapseBtn {
@@ -186,14 +186,14 @@
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .sidemenuBadge {
   margin-left: auto;
   font-size: var(--font-size-xs);
   flex-shrink: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .sidemenuChevron {
@@ -209,7 +209,7 @@
 
 .sidemenuSubmenu {
   overflow: hidden;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all var(--duration-base) var(--ease-out);
 }
 
 .sidemenuItemChild {
@@ -245,7 +245,7 @@
   padding: var(--spacing-3) var(--spacing-4);
   margin-top: var(--spacing-2);
   margin-bottom: var(--spacing-1);
-  transition: opacity var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .sidemenuGroupHeader svg {
@@ -300,7 +300,7 @@
 .sidemenuUserInfo {
   flex: 1;
   min-width: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .sidemenuUserName {
@@ -525,7 +525,7 @@
     max-width: 85vw;
     z-index: var(--z-sticky);
     transform: translateX(-100%);
-    transition: transform var(--duration-normal) var(--ease-out);
+    transition: transform var(--duration-base) var(--ease-out);
     box-shadow: var(--shadow-xl);
   }
 

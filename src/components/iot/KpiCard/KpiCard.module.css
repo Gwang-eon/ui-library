@@ -14,7 +14,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--spacing-6);
-  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
 .kpiCard:hover {

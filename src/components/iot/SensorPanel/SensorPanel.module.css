@@ -30,7 +30,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--spacing-5);
-  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+  transition: all var(--duration-fast) var(--ease-out);
   cursor: pointer;
 }
 
@@ -294,7 +294,7 @@
 .progressBar {
   height: 100%;
   border-radius: var(--radius-full);
-  transition: width var(--motion-duration-normal) var(--motion-easing-standard);
+  transition: width var(--duration-base) var(--ease-out);
 }
 
 .progressBarSuccess {
@@ -341,7 +341,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: var(--spacing-4);
-  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+  transition: all var(--duration-fast) var(--ease-out);
   cursor: pointer;
 }
 
@@ -468,7 +468,7 @@
   font-size: var(--font-size-body-medium);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all var(--motion-duration-fast) var(--motion-easing-standard);
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
 .emptyStateButton:hover {

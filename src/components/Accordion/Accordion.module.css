@@ -84,7 +84,7 @@
 .accordionContent {
   overflow: hidden;
   background-color: var(--surface-primary);
-  transition: max-height var(--duration-normal) var(--ease-out);
+  transition: max-height var(--duration-base) var(--ease-out);
 }
 
 .accordionBody {

@@ -13,7 +13,7 @@
   background: color-mix(in srgb, black 45%, transparent);
   z-index: var(--z-overlay);
   opacity: 0;
-  transition: opacity var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-base) var(--ease-out);
   pointer-events: none;
 }
 
@@ -36,7 +36,7 @@
   z-index: calc(var(--z-overlay) + 1);
   opacity: 0;
   transform: scale(0.95);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: all var(--duration-base) var(--ease-out);
 }
 
 .tourPopupVisible {
@@ -103,7 +103,7 @@
 }
 
 .tourDescription {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
@@ -313,7 +313,7 @@
   }
 
   .tourTitle {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-body);
   }
 
   .tourDescription {

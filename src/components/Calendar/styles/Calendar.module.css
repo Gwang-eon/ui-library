@@ -14,7 +14,7 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  animation: fadeIn var(--duration-fast) var(--easing-ease-out);
+  animation: fadeIn var(--duration-fast) var(--ease-out);
 }
 
 @keyframes fadeIn {
@@ -166,7 +166,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: var(--spacing-px);
+  gap: 1px;
 }
 
 /* ============================================
@@ -382,7 +382,7 @@
 .timeList {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-px);
+  gap: 1px;
   max-height: 200px;
   overflow-y: auto;
 }

@@ -8,7 +8,7 @@
   background-color: var(--surface-secondary);
   border-radius: var(--radius-md);
   max-width: 100%;
-  transition: all var(--transition-normal) var(--ease-in-out);
+  transition: all var(--duration-base) var(--ease-in-out);
 }
 
 /* Base Image */
@@ -41,10 +41,10 @@
 
 .imageCaption {
   display: block;
-  margin-top: var(--spacing-sm);
-  padding: 0 var(--spacing-xs);
+  margin-top: var(--spacing-2);
+  padding: 0 var(--spacing-1);
   font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height-body-medium);
   color: var(--text-secondary);
   text-align: center;
 }
@@ -62,8 +62,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-xl);
+  gap: var(--spacing-2);
+  padding: var(--spacing-8);
   color: var(--text-tertiary);
 }
 
@@ -80,7 +80,7 @@
 /* Error State */
 .imageError {
   background-color: var(--surface-tertiary);
-  border: 2px dashed var(--border-color);
+  border: 2px dashed var(--border-default);
 }
 
 .imageErrorContent {
@@ -88,10 +88,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-xl);
+  gap: var(--spacing-2);
+  padding: var(--spacing-8);
   min-height: 200px;
-  color: var(--error-500);
+  color: var(--color-error-500);
 }
 
 .imageErrorContent svg {
@@ -120,7 +120,7 @@
 /* Preview Mode */
 .imagePreview {
   cursor: pointer;
-  transition: transform var(--transition-normal) var(--ease-in-out);
+  transition: transform var(--duration-base) var(--ease-in-out);
 }
 
 .imagePreview:hover {
@@ -143,11 +143,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xs);
-  background-color: color-mix(in srgb, var(--color-black) 60%, transparent);
+  gap: var(--spacing-1);
+  background-color: color-mix(in srgb, var(--palette-black) 60%, transparent);
   color: var(--palette-white);
   opacity: 0;
-  transition: opacity var(--transition-normal) var(--ease-in-out);
+  transition: opacity var(--duration-base) var(--ease-in-out);
   pointer-events: none;
 }
 
@@ -174,8 +174,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xl);
-  animation: fadeIn var(--transition-normal) var(--ease-in-out);
+  padding: var(--spacing-8);
+  animation: fadeIn var(--duration-base) var(--ease-in-out);
 }
 
 @keyframes fadeIn {
@@ -190,7 +190,7 @@
 .imageLightboxBackdrop {
   position: absolute;
   inset: 0;
-  background-color: color-mix(in srgb, var(--color-black) 90%, transparent);
+  background-color: color-mix(in srgb, var(--palette-black) 90%, transparent);
   backdrop-filter: blur(8px);
   cursor: pointer;
 }
@@ -200,7 +200,7 @@
   max-width: 90vw;
   max-height: 90vh;
   z-index: 1;
-  animation: scaleIn var(--transition-normal) var(--ease-out);
+  animation: scaleIn var(--duration-base) var(--ease-out);
 }
 
 @keyframes scaleIn {
@@ -225,7 +225,7 @@
 
 .imageLightboxClose {
   position: absolute;
-  top: calc(-1 * var(--spacing-xl));
+  top: calc(-1 * var(--spacing-8));
   right: 0;
   display: flex;
   align-items: center;
@@ -238,7 +238,7 @@
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all var(--transition-fast) var(--ease-in-out);
+  transition: all var(--duration-fast) var(--ease-in-out);
   backdrop-filter: blur(4px);
 }
 
@@ -273,18 +273,18 @@
 
   .imageError {
     background-color: var(--surface-tertiary);
-    border-color: var(--border-color);
+    border-color: var(--border-default);
   }
 
   .imageErrorContent {
-    color: var(--error-400);
+    color: var(--color-error-400);
   }
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .imageLightbox {
-    padding: var(--spacing-md);
+    padding: var(--spacing-4);
   }
 
   .imageLightboxContent {
@@ -298,7 +298,7 @@
   }
 
   .imageLightboxClose {
-    top: calc(-1 * var(--spacing-lg));
+    top: calc(-1 * var(--spacing-6));
     width: 36px;
     height: 36px;
   }
@@ -351,7 +351,7 @@
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
   .imageWrapper {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-default);
   }
 
   .imageError {
@@ -360,7 +360,7 @@
 
   .imageLightboxClose {
     border: 2px solid var(--palette-white);
-    background-color: var(--color-black);
+    background-color: var(--palette-black);
   }
 
   .imagePreview:focus-visible {

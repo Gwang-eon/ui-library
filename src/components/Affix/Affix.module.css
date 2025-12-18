@@ -6,8 +6,8 @@
 
 .affix {
   transition:
-    box-shadow var(--duration-normal) var(--ease-out),
-    opacity var(--duration-normal) var(--ease-out);
+    box-shadow var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
 }
 
 /* ========================================
@@ -25,7 +25,7 @@
 
 .affixActive {
   box-shadow: var(--shadow-md);
-  animation: slideIn var(--duration-normal) var(--ease-out);
+  animation: slideIn var(--duration-base) var(--ease-out);
 }
 
 /* ========================================

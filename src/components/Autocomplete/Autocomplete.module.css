@@ -28,7 +28,7 @@
   padding: var(--spacing-3) var(--spacing-4);
   padding-right: 40px;
   font-family: var(--font-family-sans);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   color: var(--text-primary);
   background-color: var(--surface-primary);
   border: 1px solid var(--border-default);
@@ -127,7 +127,7 @@
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-out);
   color: var(--text-primary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
 }
 
 .autocompleteItem:hover {
@@ -205,7 +205,7 @@
 }
 
 .autocompleteItemTitle {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
   margin-bottom: var(--spacing-1);
@@ -250,7 +250,7 @@
 
 .autocompleteEmpty p {
   margin: 0 0 var(--spacing-1) 0;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-medium);
   color: var(--text-secondary);
 }

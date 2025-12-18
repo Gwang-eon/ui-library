@@ -468,7 +468,7 @@
   align-items: center;
   justify-content: center;
   padding: 2px;
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   color: var(--text-tertiary);
   cursor: pointer;
 }
@@ -504,7 +504,7 @@
   align-items: center;
   gap: var(--spacing-2);
   padding: var(--spacing-1) var(--spacing-2);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: var(--font-size-body-small);
   color: var(--text-primary);
