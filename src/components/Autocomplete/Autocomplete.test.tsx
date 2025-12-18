@@ -349,7 +349,7 @@ describe('Autocomplete', () => {
       await user.keyboard('{ArrowDown}');
 
       const firstOption = screen.getByRole('option', { name: 'Apple' });
-      expect(firstOption).toHaveClass('autocompleteItemActive');
+      expect(firstOption.className).toMatch(/autocompleteItemActive/);
     });
 
     it('ArrowUp으로 이전 option 하이라이트', async () => {
@@ -360,7 +360,7 @@ describe('Autocomplete', () => {
       await user.keyboard('{ArrowDown}{ArrowDown}{ArrowUp}');
 
       const firstOption = screen.getByRole('option', { name: 'Apple' });
-      expect(firstOption).toHaveClass('autocompleteItemActive');
+      expect(firstOption.className).toMatch(/autocompleteItemActive/);
     });
 
     it('Enter로 하이라이트된 option 선택', async () => {
