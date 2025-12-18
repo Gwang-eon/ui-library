@@ -46,6 +46,11 @@ export default defineConfig({
     }),
     copyStylesPlugin(),
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+  },
   server: {
     open: true,
   },
