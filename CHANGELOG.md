@@ -23,6 +23,55 @@
 - Radio: 접근성 속성 추가 (aria-describedby)
 - Checkbox: 접근성 속성 추가 (aria-describedby)
 
+## [1.2.2] - 2025-12-18
+
+### Fixed
+- 31개 CSS 토큰 변수 불일치 수정 (39개 컴포넌트)
+  - `--transition-normal` → `--duration-base`
+  - `--transition-fast` → `--duration-fast`
+  - `--spacing-xs/sm/md/lg/xl` → `--spacing-1/2/4/6/8`
+  - `--font-size-base` → `--font-size-body`
+  - `--border-color` → `--border-default`
+  - `--error-400/500` → `--color-error-400/500`
+  - `--color-black` → `--palette-black`
+  - 기타 다수 토큰 변수
+- Autocomplete 테스트 CSS 모듈 클래스명 매칭 수정
+- tsconfig.json에서 test 폴더 빌드 제외
+
+### Added
+- vitest 테스트 환경 설정 (jsdom, setup.ts)
+
+## [1.2.1] - 2025-12-18
+
+### Fixed
+- Calendar popover z-index 토큰 변수 수정 (`--z-index-popover` → `--z-popover`)
+
+## [1.2.0] - 2025-12-18
+
+### Removed
+- **BREAKING**: `LegacyDatePicker`, `LegacyDateRangePicker` export 제거
+- **BREAKING**: `react-datepicker` 의존성 완전 제거 (peerDependencies, devDependencies)
+
+### Changed
+- DatePicker는 이제 순수 구현된 Calendar 컴포넌트만 사용
+- vite.config.ts에서 react-datepicker external 설정 제거
+
+### Migration
+기존 `LegacyDatePicker` 사용자는 새로운 `DatePicker`로 마이그레이션 필요:
+```tsx
+// 이전
+import { LegacyDatePicker } from '@gractor/ui';
+
+// 이후
+import { DatePicker } from '@gractor/ui';
+```
+
+## [1.1.0] - 2025-12-XX
+
+### Added
+- Docs 버튼 추가 (데모 앱 헤더)
+- 문서화 모달 업데이트
+
 ## [1.0.0] - 2025-01-XX
 
 ### Added
