@@ -13,99 +13,71 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.5.0';
+const VERSION = '1.2.2';
 
 // Changelog content
 const changelogMd = `# Changelog
 
-## v1.5.0 (2025-12-15)
-
-### DatePicker Enhancement
-- Added **96 new tests** for DatePicker components
-- Total test count: **1720 tests** across **50 components**
-- Coverage maintained at **96%+ statements**
-
-### New Components
-- **DateRangePicker**: Date range selection with visual highlighting
-- **PresetRanges**: Preset date ranges (Today, Last 7 days, etc.)
-
-### New Test Coverage
-- **DatePicker** (42 tests) - Comprehensive test coverage with accessibility
-- **DateRangePicker** (37 tests) - Range selection, presets, keyboard navigation
-- **PresetRanges** (17 tests) - Preset selection and accessibility
-
-### Improvements
-- Added accessibility props to DatePicker (ariaLabel, ariaDescribedBy, id, name, required)
-- DateRangePicker supports custom presets and preset positions
-- Full dark mode support for all DatePicker components
-
----
-
-## v1.4.0 (2025-12-15)
-
-### Test Suite Expansion - Phase 3
-- Added **296 new tests** for Advanced components
-- Total test count: **1624 tests** across **47 components**
-- Coverage maintained at **96%+ statements**
-
-### New Test Coverage
-- **Advanced Components**: ColorPicker (44), FileUpload (39), Autocomplete (50), CascadeSelect (28), DataGrid (58), Tree (34), TreeSelect (43)
+## v1.2.2 (2025-12-18)
 
 ### Bug Fixes
-- Fixed TreeSelect search infinite loop bug (setExpandedNodes called during render)
+- Fixed **31 CSS token variable mismatches** across 39 components
+  - \`--transition-normal\` → \`--duration-base\`
+  - \`--spacing-xs/sm/md/lg/xl\` → \`--spacing-1/2/4/6/8\`
+  - \`--font-size-base\` → \`--font-size-body\`
+  - \`--border-color\` → \`--border-default\`
+  - And more...
+- Fixed Autocomplete test CSS module class matching
+- Fixed tsconfig.json to exclude test folder from build
+
+### Added
+- vitest test environment setup (jsdom, setup.ts)
 
 ---
 
-## v1.3.0 (2025-12-15)
+## v1.2.1 (2025-12-18)
 
-### Test Suite Expansion - Phase 2-5
-- Added **234 new tests** for Misc components
-- Total test count: **1328 tests** across **40 components**
-- Coverage maintained at **96%+ statements**
-
-### New Test Coverage
-- **Misc Components**: Accordion (26), Avatar (40), Carousel (30), Divider (31), EmptyState (19), Skeleton (22), Spin (32), Result (34)
+### Bug Fixes
+- Fixed Calendar popover z-index token (\`--z-index-popover\` → \`--z-popover\`)
 
 ---
 
-## v1.2.0 (2025-12-15)
+## v1.2.0 (2025-12-18)
 
-### Test Suite Expansion - Phase 2-4
-- Added **139 new tests** for Overlay components
-- Total test count: **1094 tests** across **32 components**
-- Coverage maintained at **96%+ statements**
+### Breaking Changes
+- **Removed** \`LegacyDatePicker\` and \`LegacyDateRangePicker\` exports
+- **Removed** \`react-datepicker\` dependency completely
 
-### New Test Coverage
-- **Overlay Components**: Drawer (34), Popover (30), Popconfirm (41), Tooltip (34)
+### Changed
+- DatePicker now uses pure Calendar component implementation
+- No external date picker library required
+
+### Migration
+\`\`\`tsx
+// Before
+import { LegacyDatePicker } from '@gractor/ui';
+
+// After
+import { DatePicker } from '@gractor/ui';
+\`\`\`
 
 ---
 
-## v1.1.0 (2025-12-15)
+## v1.1.0 (2025-12-17)
 
-### Test Suite Expansion
-- Added **533 new tests** for Phase 2 components
-- Total test count: **955 tests** across **28 components**
-- Coverage maintained at **96%+ statements**
-
-### New Test Coverage
-- **Form Components**: Textarea (50), Slider (54), Rating (57)
-- **Navigation Components**: Menu (36), Breadcrumb (30), Steps (38), Navbar (41), Sidemenu (45)
-- **Data Display Components**: List (28), Statistic (39), Descriptions (28), Timeline (40), Table (47)
-
-### Improvements
-- Updated TEST_ROADMAP.md with current progress
-- Improved component documentation
-- Fixed Tooltip light theme styling
+### Added
+- Docs button in demo app header
+- Documentation modal updates
 
 ---
 
 ## v1.0.0 (2025-12-14)
 
 ### Initial Release
-- **15 core components** with full test coverage
-- **422 tests** with 96% statement coverage
+- **69+ UI components** with TypeScript support
 - Design tokens system
 - Dark mode support
+- CSS Modules based styling
 - IoT-specific components
 - Mobile components
 `;
