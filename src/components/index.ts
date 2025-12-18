@@ -11,17 +11,7 @@ export * from './FileUpload';
 export * from './Slider';
 export * from './Rating';
 export * from './ColorPicker';
-// 기존 DatePicker (react-datepicker 기반) - deprecated, Calendar 사용 권장
-export {
-  DatePicker as LegacyDatePicker,
-  DateRangePicker as LegacyDateRangePicker,
-} from './DatePicker';
-export type {
-  DatePickerProps as LegacyDatePickerProps,
-  DateRangePickerProps as LegacyDateRangePickerProps,
-} from './DatePicker';
-
-// 새 Calendar 컴포넌트 시스템
+// Calendar 컴포넌트 시스템 (순수 구현)
 export * from './Calendar';
 export * from './Transfer';
 export * from './TreeSelect';

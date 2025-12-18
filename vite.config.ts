@@ -70,7 +70,7 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'react-datepicker', 'lucide-react', 'xlsx'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'lucide-react', 'xlsx'],
       output: {
         preserveModules: false,
         globals: {

@@ -10,8 +10,6 @@ export * from './FileUpload';
 export * from './Slider';
 export * from './Rating';
 export * from './ColorPicker';
-export { DatePicker as LegacyDatePicker, DateRangePicker as LegacyDateRangePicker, } from './DatePicker';
-export type { DatePickerProps as LegacyDatePickerProps, DateRangePickerProps as LegacyDateRangePickerProps, } from './DatePicker';
 export * from './Calendar';
 export * from './Transfer';
 export * from './TreeSelect';

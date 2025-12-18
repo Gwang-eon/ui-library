@@ -26,7 +26,7 @@ export * from './components/FileUpload';
 export * from './components/Slider';
 export * from './components/Rating';
 export * from './components/ColorPicker';
-export * from './components/DatePicker';
+export * from './components/Calendar';
 export * from './components/Transfer';
 export * from './components/TreeSelect';
 export * from './components/CascadeSelect';
