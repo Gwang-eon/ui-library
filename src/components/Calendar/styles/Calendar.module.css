@@ -9,7 +9,7 @@
 
 .popover {
   position: absolute;
-  z-index: var(--z-index-popover);
+  z-index: var(--z-popover);
   background: var(--surface-primary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
