@@ -373,6 +373,19 @@
   --color-danger-800: var(--color-error-800);
   --color-danger-900: var(--color-error-900);
 
+  /* Alpha Colors (semi-transparent backgrounds for dark mode) */
+  --color-primary-alpha-15: rgba(59, 130, 246, 0.15);
+  --color-primary-alpha-20: rgba(59, 130, 246, 0.2);
+  --color-success-alpha-15: rgba(34, 197, 94, 0.15);
+  --color-success-alpha-20: rgba(34, 197, 94, 0.2);
+  --color-error-alpha-15: rgba(239, 68, 68, 0.15);
+  --color-error-alpha-20: rgba(239, 68, 68, 0.2);
+  --color-warning-alpha-15: rgba(251, 146, 60, 0.15);
+  --color-warning-alpha-20: rgba(245, 158, 11, 0.2);
+  --color-info-alpha-15: rgba(59, 130, 246, 0.15);
+  --color-info-alpha-20: rgba(59, 130, 246, 0.2);
+  --color-gray-alpha-30: rgba(107, 114, 128, 0.3);
+
   /* ========================================
      COMPONENT COLOR TOKENS
      ======================================== */

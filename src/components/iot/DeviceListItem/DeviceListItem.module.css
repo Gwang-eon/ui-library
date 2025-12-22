@@ -324,7 +324,7 @@
   }
 
   .icon {
-    background: rgba(59, 130, 246, 0.15);
+    background: var(--color-primary-alpha-15);
     color: var(--color-primary-400);
   }
 

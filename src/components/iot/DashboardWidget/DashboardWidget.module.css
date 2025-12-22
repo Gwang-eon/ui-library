@@ -608,20 +608,20 @@
 
 :global([data-theme="dark"]) .statIconCircle,
 :global(.dark) .statIconCircle {
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: var(--color-primary-alpha-20);
   color: var(--color-primary-400);
 }
 
 :global([data-theme="dark"]) .statTrend.positive,
 :global(.dark) .statTrend.positive {
   color: var(--color-success-400);
-  background-color: rgba(34, 197, 94, 0.2);
+  background-color: var(--color-success-alpha-20);
 }
 
 :global([data-theme="dark"]) .statTrend.negative,
 :global(.dark) .statTrend.negative {
   color: var(--color-error-400);
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: var(--color-error-alpha-20);
 }
 
 :global([data-theme="dark"]) .statPeriod,
@@ -719,7 +719,7 @@
 /* Status Widget */
 :global([data-theme="dark"]) .statusValueCircle,
 :global(.dark) .statusValueCircle {
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: var(--color-primary-alpha-20);
   color: var(--color-primary-400);
 }
 

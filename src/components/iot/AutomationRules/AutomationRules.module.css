@@ -387,7 +387,7 @@
   }
 
   .switchInput:focus + .switchSlider {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
   }
 
   /* Meta Groups */
@@ -495,7 +495,7 @@
 
 :global([data-theme="dark"]) .switchInput:focus + .switchSlider,
 :global(.dark) .switchInput:focus + .switchSlider {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
 }
 
 :global([data-theme="dark"]) .ruleMetaLabel,

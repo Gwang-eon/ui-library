@@ -607,25 +607,25 @@
   }
 
   .healthScore.excellent {
-    background: rgba(34, 197, 94, 0.15);
+    background: var(--color-success-alpha-15);
     color: var(--color-success-300);
     border-color: var(--color-success-500);
   }
 
   .healthScore.good {
-    background: rgba(59, 130, 246, 0.15);
+    background: var(--color-primary-alpha-15);
     color: var(--color-primary-300);
     border-color: var(--color-primary-500);
   }
 
   .healthScore.warning {
-    background: rgba(251, 146, 60, 0.15);
+    background: var(--color-warning-alpha-15);
     color: var(--color-warning-300);
     border-color: var(--color-warning-500);
   }
 
   .healthScore.poor {
-    background: rgba(239, 68, 68, 0.15);
+    background: var(--color-error-alpha-15);
     color: var(--color-error-300);
     border-color: var(--color-error-500);
   }
@@ -747,28 +747,28 @@
 
 :global([data-theme="dark"]) .healthScore.excellent,
 :global(.dark) .healthScore.excellent {
-  background: rgba(34, 197, 94, 0.15);
+  background: var(--color-success-alpha-15);
   color: var(--color-success-300);
   border-color: var(--color-success-500);
 }
 
 :global([data-theme="dark"]) .healthScore.good,
 :global(.dark) .healthScore.good {
-  background: rgba(59, 130, 246, 0.15);
+  background: var(--color-primary-alpha-15);
   color: var(--color-primary-300);
   border-color: var(--color-primary-500);
 }
 
 :global([data-theme="dark"]) .healthScore.warning,
 :global(.dark) .healthScore.warning {
-  background: rgba(251, 146, 60, 0.15);
+  background: var(--color-warning-alpha-15);
   color: var(--color-warning-300);
   border-color: var(--color-warning-500);
 }
 
 :global([data-theme="dark"]) .healthScore.poor,
 :global(.dark) .healthScore.poor {
-  background: rgba(239, 68, 68, 0.15);
+  background: var(--color-error-alpha-15);
   color: var(--color-error-300);
   border-color: var(--color-error-500);
 }

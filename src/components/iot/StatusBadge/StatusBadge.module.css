@@ -233,7 +233,7 @@
 @media (prefers-color-scheme: dark) {
   /* Connection Status */
   .statusOnline {
-    background-color: rgba(34, 197, 94, 0.15);
+    background-color: var(--color-success-alpha-15);
     color: var(--color-success-300);
   }
 
@@ -243,7 +243,7 @@
   }
 
   .statusConnecting {
-    background-color: rgba(59, 130, 246, 0.15);
+    background-color: var(--color-primary-alpha-15);
     color: var(--color-primary-300);
   }
 
@@ -254,7 +254,7 @@
 
   /* Operational Status */
   .statusActive {
-    background-color: rgba(34, 197, 94, 0.15);
+    background-color: var(--color-success-alpha-15);
     color: var(--color-success-300);
   }
 
@@ -264,34 +264,34 @@
   }
 
   .statusWarning {
-    background-color: rgba(251, 146, 60, 0.15);
+    background-color: var(--color-warning-alpha-15);
     color: var(--color-warning-300);
   }
 
   .statusError {
-    background-color: rgba(239, 68, 68, 0.15);
+    background-color: var(--color-error-alpha-15);
     color: var(--color-error-300);
   }
 
   .statusMaintenance {
-    background-color: rgba(59, 130, 246, 0.15);
+    background-color: var(--color-primary-alpha-15);
     color: var(--color-primary-300);
   }
 
   /* Data Quality */
   .statusExcellent,
   .statusGood {
-    background-color: rgba(34, 197, 94, 0.15);
+    background-color: var(--color-success-alpha-15);
     color: var(--color-success-300);
   }
 
   .statusFair {
-    background-color: rgba(251, 146, 60, 0.15);
+    background-color: var(--color-warning-alpha-15);
     color: var(--color-warning-300);
   }
 
   .statusPoor {
-    background-color: rgba(239, 68, 68, 0.15);
+    background-color: var(--color-error-alpha-15);
     color: var(--color-error-300);
   }
 
@@ -303,35 +303,35 @@
   /* Battery Status */
   .statusBatteryFull,
   .statusBatteryHigh {
-    background-color: rgba(34, 197, 94, 0.15);
+    background-color: var(--color-success-alpha-15);
     color: var(--color-success-300);
   }
 
   .statusBatteryMedium,
   .statusBatteryLow {
-    background-color: rgba(251, 146, 60, 0.15);
+    background-color: var(--color-warning-alpha-15);
     color: var(--color-warning-300);
   }
 
   .statusBatteryCritical {
-    background-color: rgba(239, 68, 68, 0.15);
+    background-color: var(--color-error-alpha-15);
     color: var(--color-error-300);
   }
 
   /* Signal Strength */
   .statusSignalExcellent,
   .statusSignalGood {
-    background-color: rgba(34, 197, 94, 0.15);
+    background-color: var(--color-success-alpha-15);
     color: var(--color-success-300);
   }
 
   .statusSignalFair {
-    background-color: rgba(251, 146, 60, 0.15);
+    background-color: var(--color-warning-alpha-15);
     color: var(--color-warning-300);
   }
 
   .statusSignalPoor {
-    background-color: rgba(239, 68, 68, 0.15);
+    background-color: var(--color-error-alpha-15);
     color: var(--color-error-300);
   }
 }
@@ -339,7 +339,7 @@
 /* Manual dark mode class support */
 :global(.dark-mode) .statusOnline,
 :global([data-theme="dark"]) .statusOnline {
-  background-color: rgba(34, 197, 94, 0.15);
+  background-color: var(--color-success-alpha-15);
   color: var(--color-success-300);
 }
 
@@ -351,7 +351,7 @@
 
 :global(.dark-mode) .statusConnecting,
 :global([data-theme="dark"]) .statusConnecting {
-  background-color: rgba(59, 130, 246, 0.15);
+  background-color: var(--color-primary-alpha-15);
   color: var(--color-primary-300);
 }
 
@@ -363,7 +363,7 @@
 
 :global(.dark-mode) .statusActive,
 :global([data-theme="dark"]) .statusActive {
-  background-color: rgba(34, 197, 94, 0.15);
+  background-color: var(--color-success-alpha-15);
   color: var(--color-success-300);
 }
 
@@ -375,19 +375,19 @@
 
 :global(.dark-mode) .statusWarning,
 :global([data-theme="dark"]) .statusWarning {
-  background-color: rgba(251, 146, 60, 0.15);
+  background-color: var(--color-warning-alpha-15);
   color: var(--color-warning-300);
 }
 
 :global(.dark-mode) .statusError,
 :global([data-theme="dark"]) .statusError {
-  background-color: rgba(239, 68, 68, 0.15);
+  background-color: var(--color-error-alpha-15);
   color: var(--color-error-300);
 }
 
 :global(.dark-mode) .statusMaintenance,
 :global([data-theme="dark"]) .statusMaintenance {
-  background-color: rgba(59, 130, 246, 0.15);
+  background-color: var(--color-primary-alpha-15);
   color: var(--color-primary-300);
 }
 
@@ -395,19 +395,19 @@
 :global(.dark-mode) .statusGood,
 :global([data-theme="dark"]) .statusExcellent,
 :global([data-theme="dark"]) .statusGood {
-  background-color: rgba(34, 197, 94, 0.15);
+  background-color: var(--color-success-alpha-15);
   color: var(--color-success-300);
 }
 
 :global(.dark-mode) .statusFair,
 :global([data-theme="dark"]) .statusFair {
-  background-color: rgba(251, 146, 60, 0.15);
+  background-color: var(--color-warning-alpha-15);
   color: var(--color-warning-300);
 }
 
 :global(.dark-mode) .statusPoor,
 :global([data-theme="dark"]) .statusPoor {
-  background-color: rgba(239, 68, 68, 0.15);
+  background-color: var(--color-error-alpha-15);
   color: var(--color-error-300);
 }
 
@@ -421,7 +421,7 @@
 :global(.dark-mode) .statusBatteryHigh,
 :global([data-theme="dark"]) .statusBatteryFull,
 :global([data-theme="dark"]) .statusBatteryHigh {
-  background-color: rgba(34, 197, 94, 0.15);
+  background-color: var(--color-success-alpha-15);
   color: var(--color-success-300);
 }
 
@@ -429,13 +429,13 @@
 :global(.dark-mode) .statusBatteryLow,
 :global([data-theme="dark"]) .statusBatteryMedium,
 :global([data-theme="dark"]) .statusBatteryLow {
-  background-color: rgba(251, 146, 60, 0.15);
+  background-color: var(--color-warning-alpha-15);
   color: var(--color-warning-300);
 }
 
 :global(.dark-mode) .statusBatteryCritical,
 :global([data-theme="dark"]) .statusBatteryCritical {
-  background-color: rgba(239, 68, 68, 0.15);
+  background-color: var(--color-error-alpha-15);
   color: var(--color-error-300);
 }
 
@@ -443,18 +443,18 @@
 :global(.dark-mode) .statusSignalGood,
 :global([data-theme="dark"]) .statusSignalExcellent,
 :global([data-theme="dark"]) .statusSignalGood {
-  background-color: rgba(34, 197, 94, 0.15);
+  background-color: var(--color-success-alpha-15);
   color: var(--color-success-300);
 }
 
 :global(.dark-mode) .statusSignalFair,
 :global([data-theme="dark"]) .statusSignalFair {
-  background-color: rgba(251, 146, 60, 0.15);
+  background-color: var(--color-warning-alpha-15);
   color: var(--color-warning-300);
 }
 
 :global(.dark-mode) .statusSignalPoor,
 :global([data-theme="dark"]) .statusSignalPoor {
-  background-color: rgba(239, 68, 68, 0.15);
+  background-color: var(--color-error-alpha-15);
   color: var(--color-error-300);
 }

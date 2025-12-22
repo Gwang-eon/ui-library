@@ -572,22 +572,22 @@
 
   /* Sensor Icons */
   .iconCircleError {
-    background: rgba(239, 68, 68, 0.15);
+    background: var(--color-error-alpha-15);
     color: var(--color-error-400);
   }
 
   .iconCirclePrimary {
-    background: rgba(59, 130, 246, 0.15);
+    background: var(--color-primary-alpha-15);
     color: var(--color-primary-400);
   }
 
   .iconCircleSuccess {
-    background: rgba(34, 197, 94, 0.15);
+    background: var(--color-success-alpha-15);
     color: var(--color-success-400);
   }
 
   .iconCircleWarning {
-    background: rgba(251, 146, 60, 0.15);
+    background: var(--color-warning-alpha-15);
     color: var(--color-warning-400);
   }
 
@@ -669,17 +669,17 @@
 
   /* Badges */
   .badgeSuccess {
-    background: rgba(34, 197, 94, 0.15);
+    background: var(--color-success-alpha-15);
     color: var(--color-success-300);
   }
 
   .badgeWarning {
-    background: rgba(251, 146, 60, 0.15);
+    background: var(--color-warning-alpha-15);
     color: var(--color-warning-300);
   }
 
   .badgeError {
-    background: rgba(239, 68, 68, 0.15);
+    background: var(--color-error-alpha-15);
     color: var(--color-error-300);
   }
 
@@ -781,25 +781,25 @@
 
 :global([data-theme="dark"]) .iconCircleError,
 :global(.dark) .iconCircleError {
-  background: rgba(239, 68, 68, 0.15);
+  background: var(--color-error-alpha-15);
   color: var(--color-error-400);
 }
 
 :global([data-theme="dark"]) .iconCirclePrimary,
 :global(.dark) .iconCirclePrimary {
-  background: rgba(59, 130, 246, 0.15);
+  background: var(--color-primary-alpha-15);
   color: var(--color-primary-400);
 }
 
 :global([data-theme="dark"]) .iconCircleSuccess,
 :global(.dark) .iconCircleSuccess {
-  background: rgba(34, 197, 94, 0.15);
+  background: var(--color-success-alpha-15);
   color: var(--color-success-400);
 }
 
 :global([data-theme="dark"]) .iconCircleWarning,
 :global(.dark) .iconCircleWarning {
-  background: rgba(251, 146, 60, 0.15);
+  background: var(--color-warning-alpha-15);
   color: var(--color-warning-400);
 }
 
@@ -896,19 +896,19 @@
 
 :global([data-theme="dark"]) .badgeSuccess,
 :global(.dark) .badgeSuccess {
-  background: rgba(34, 197, 94, 0.15);
+  background: var(--color-success-alpha-15);
   color: var(--color-success-300);
 }
 
 :global([data-theme="dark"]) .badgeWarning,
 :global(.dark) .badgeWarning {
-  background: rgba(251, 146, 60, 0.15);
+  background: var(--color-warning-alpha-15);
   color: var(--color-warning-300);
 }
 
 :global([data-theme="dark"]) .badgeError,
 :global(.dark) .badgeError {
-  background: rgba(239, 68, 68, 0.15);
+  background: var(--color-error-alpha-15);
   color: var(--color-error-300);
 }
 

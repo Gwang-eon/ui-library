@@ -573,22 +573,22 @@
 
   /* Item Icons - use subtle transparency for better visual hierarchy */
   .item.success .itemIcon {
-    background: rgba(34, 197, 94, 0.15);
+    background: var(--color-success-alpha-15);
     color: var(--color-success-400);
   }
 
   .item.warning .itemIcon {
-    background: rgba(251, 146, 60, 0.15);
+    background: var(--color-warning-alpha-15);
     color: var(--color-warning-400);
   }
 
   .item.error .itemIcon {
-    background: rgba(239, 68, 68, 0.15);
+    background: var(--color-error-alpha-15);
     color: var(--color-error-400);
   }
 
   .item.info .itemIcon {
-    background: rgba(59, 130, 246, 0.15);
+    background: var(--color-primary-alpha-15);
     color: var(--color-primary-400);
   }
 
@@ -645,23 +645,23 @@
 
   /* Mini Card Icons */
   .iconSuccess {
-    background: rgba(34, 197, 94, 0.15);
+    background: var(--color-success-alpha-15);
     color: var(--color-success-400);
   }
 
   .iconWarning {
-    background: rgba(251, 146, 60, 0.15);
+    background: var(--color-warning-alpha-15);
     color: var(--color-warning-400);
   }
 
   .iconError {
-    background: rgba(239, 68, 68, 0.15);
+    background: var(--color-error-alpha-15);
     color: var(--color-error-400);
   }
 
   .iconInfo,
   .iconPrimary {
-    background: rgba(59, 130, 246, 0.15);
+    background: var(--color-primary-alpha-15);
     color: var(--color-primary-400);
   }
 
@@ -730,25 +730,25 @@
 
 :global([data-theme="dark"]) .item.success .itemIcon,
 :global(.dark) .item.success .itemIcon {
-  background: rgba(34, 197, 94, 0.15);
+  background: var(--color-success-alpha-15);
   color: var(--color-success-400);
 }
 
 :global([data-theme="dark"]) .item.warning .itemIcon,
 :global(.dark) .item.warning .itemIcon {
-  background: rgba(251, 146, 60, 0.15);
+  background: var(--color-warning-alpha-15);
   color: var(--color-warning-400);
 }
 
 :global([data-theme="dark"]) .item.error .itemIcon,
 :global(.dark) .item.error .itemIcon {
-  background: rgba(239, 68, 68, 0.15);
+  background: var(--color-error-alpha-15);
   color: var(--color-error-400);
 }
 
 :global([data-theme="dark"]) .item.info .itemIcon,
 :global(.dark) .item.info .itemIcon {
-  background: rgba(59, 130, 246, 0.15);
+  background: var(--color-primary-alpha-15);
   color: var(--color-primary-400);
 }
 
@@ -814,19 +814,19 @@
 
 :global([data-theme="dark"]) .iconSuccess,
 :global(.dark) .iconSuccess {
-  background: rgba(34, 197, 94, 0.15);
+  background: var(--color-success-alpha-15);
   color: var(--color-success-400);
 }
 
 :global([data-theme="dark"]) .iconWarning,
 :global(.dark) .iconWarning {
-  background: rgba(251, 146, 60, 0.15);
+  background: var(--color-warning-alpha-15);
   color: var(--color-warning-400);
 }
 
 :global([data-theme="dark"]) .iconError,
 :global(.dark) .iconError {
-  background: rgba(239, 68, 68, 0.15);
+  background: var(--color-error-alpha-15);
   color: var(--color-error-400);
 }
 
@@ -834,7 +834,7 @@
 :global([data-theme="dark"]) .iconPrimary,
 :global(.dark) .iconInfo,
 :global(.dark) .iconPrimary {
-  background: rgba(59, 130, 246, 0.15);
+  background: var(--color-primary-alpha-15);
   color: var(--color-primary-400);
 }
 
