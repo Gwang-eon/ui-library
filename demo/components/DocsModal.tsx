@@ -13,10 +13,28 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.2.2';
+const VERSION = '1.2.3';
 
 // Changelog content
 const changelogMd = `# Changelog
+
+## v1.2.3 (2025-12-22)
+
+### Bug Fixes
+- **Size prop propagation fix** - 7개 컴포넌트의 size prop이 하위 요소에 올바르게 전파되도록 수정
+  - Select: 옵션, 아이콘, 그룹 레이블에 size variant 적용
+  - Autocomplete: dropdown 아이템, 카테고리 헤더에 size variant 적용
+  - Menu: \`MenuSize\` 타입 추가, 전체 size 지원
+  - SplitButton: 동적 chevron 아이콘, 메뉴 아이템 CSS 강화
+  - CascadeSelect: \`CascadeSelectSize\` 타입 추가
+  - TreeSelect: \`TreeSelectSize\` 타입 추가, 전체 size 지원
+  - ColorPicker: 'lg' size 추가, 전체 size variants
+
+### Technical
+- CSS 상속 패턴 사용 (Ant Design, Material UI 스타일)
+- 동적 아이콘 크기 매핑 (sm:12-14px, md:16-18px, lg:20-22px)
+
+---
 
 ## v1.2.2 (2025-12-18)
 
@@ -131,6 +149,11 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
 
                 <h3>Recent Updates</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <UpdateItem
+                    date="2025-12-22"
+                    title="Size Prop Propagation Fix"
+                    description="Fixed size prop propagation for Select, Autocomplete, Menu, SplitButton, CascadeSelect, TreeSelect, ColorPicker"
+                  />
                   <UpdateItem
                     date="2025-12-15"
                     title="DatePicker Enhancement"
