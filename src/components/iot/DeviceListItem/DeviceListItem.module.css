@@ -125,7 +125,7 @@
   content: "•";
   position: absolute;
   left: 0;
-  color: var(--border-strong);
+  color: var(--text-tertiary);
 }
 
 .metaItem:first-child {
