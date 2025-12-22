@@ -59,7 +59,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
+  color: var(--text-primary);
 }
 
 .placeholderIcon {
@@ -250,7 +250,7 @@
   border: none;
   border-radius: var(--radius-base);
   background: var(--color-primary-500);
-  color: white;
+  color: var(--palette-white);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
@@ -293,10 +293,11 @@
   position: absolute;
   bottom: var(--spacing-5);
   right: var(--spacing-5);
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--surface-primary);
   padding: var(--spacing-3);
   border-radius: var(--radius-base);
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-default);
 }
 
 .heatmapTitle {
@@ -410,7 +411,8 @@
   }
 
   .heatmapLegend {
-    background: rgba(30, 30, 30, 0.95);
+    background: var(--surface-primary);
+    border-color: var(--text-secondary);
   }
 
   .heatmapTitle {

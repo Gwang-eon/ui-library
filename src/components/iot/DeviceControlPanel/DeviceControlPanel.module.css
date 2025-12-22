@@ -64,9 +64,10 @@
   width: 18px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background-color: var(--surface-primary);
   transition: var(--duration-base) var(--ease-out);
   border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .switchInput:checked + .switchSlider {

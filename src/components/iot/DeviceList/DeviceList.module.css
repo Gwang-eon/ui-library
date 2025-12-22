@@ -68,7 +68,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--palette-white);
   margin-right: var(--spacing-3);
   flex-shrink: 0;
 }
@@ -201,7 +201,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--palette-white);
   flex-shrink: 0;
 }
 
@@ -307,7 +307,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--palette-white);
   flex-shrink: 0;
 }
 
@@ -435,7 +435,7 @@
   gap: var(--spacing-2);
   padding: var(--spacing-3) var(--spacing-5);
   background: var(--color-primary-500);
-  color: white;
+  color: var(--palette-white);
   border: none;
   border-radius: var(--radius-md);
   font-size: var(--font-size-body-medium);
