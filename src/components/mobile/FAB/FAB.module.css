@@ -245,6 +245,15 @@
   position: absolute;
 }
 
+/* SpeedDial 내부의 모든 FAB 버튼을 relative로 변경 */
+.speedDial .fab {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  top: auto;
+}
+
 .speedDial.bottomRight {
   bottom: var(--spacing-5);
   right: var(--spacing-5);
@@ -306,12 +315,6 @@
 .speedDialOpen .speedDialActionLabel {
   opacity: 1;
   transform: translateX(0);
-}
-
-.speedDialAction .fab {
-  position: relative;
-  bottom: auto;
-  right: auto;
 }
 
 /* ==================== Speed Dial Backdrop ==================== */
