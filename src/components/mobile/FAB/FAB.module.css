@@ -236,9 +236,13 @@
   position: fixed;
   z-index: var(--z-sticky);
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: flex-end;
-  gap: var(--spacing-4);
+  gap: var(--spacing-3);
+}
+
+.speedDial.relative {
+  position: absolute;
 }
 
 .speedDial.bottomRight {

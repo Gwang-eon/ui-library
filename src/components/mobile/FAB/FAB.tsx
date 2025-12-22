@@ -145,6 +145,12 @@ export const SpeedDialFAB: React.FC<SpeedDialFABProps> = ({
   return (
     <>
       <div className={`${styles.speedDial} ${styles[positionClass]} ${open ? styles.speedDialOpen : ''} ${relative ? styles.relative : ''} ${className}`}>
+        <button
+          className={`${styles.fab} ${styles.standard} ${color !== 'primary' ? styles[color] : ''}`}
+          onClick={handleToggle}
+        >
+          <Icon className={styles.icon} />
+        </button>
         <div className={styles.speedDialActions}>
           {actions.map((action, index) => {
             const ActionIcon = action.icon;
@@ -161,12 +167,6 @@ export const SpeedDialFAB: React.FC<SpeedDialFABProps> = ({
             );
           })}
         </div>
-        <button
-          className={`${styles.fab} ${styles.standard} ${color !== 'primary' ? styles[color] : ''}`}
-          onClick={handleToggle}
-        >
-          <Icon className={styles.icon} />
-        </button>
       </div>
       {open && (
         <div
