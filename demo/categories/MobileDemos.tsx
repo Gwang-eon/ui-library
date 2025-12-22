@@ -78,6 +78,7 @@ export default function MobileDemos() {
               label="Add"
               position="bottom-right"
               onClick={() => alert('FAB clicked!')}
+              relative
             />
           </div>
         </div>
@@ -93,6 +94,7 @@ export default function MobileDemos() {
                 { icon: Lightbulb, label: 'Add Controller', onClick: () => {} },
                 { icon: Network, label: 'Add Gateway', onClick: () => {} },
               ]}
+              relative
             />
           </div>
         </div>

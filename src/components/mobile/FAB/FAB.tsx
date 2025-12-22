@@ -21,6 +21,8 @@ export interface FABProps {
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  /** Use absolute positioning relative to parent container (for demos/contained layouts) */
+  relative?: boolean;
 }
 
 export const FAB: React.FC<FABProps> = ({
@@ -34,6 +36,7 @@ export const FAB: React.FC<FABProps> = ({
   onClick,
   disabled = false,
   className = '',
+  relative = false,
 }) => {
   const [hidden, setHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -57,12 +60,18 @@ export const FAB: React.FC<FABProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hideOnScroll, lastScrollY]);
 
+  const positionClass = position === 'bottom-right' ? 'bottomRight'
+    : position === 'bottom-left' ? 'bottomLeft'
+    : position === 'bottom-center' ? 'bottomCenter'
+    : 'topRight';
+
   const fabClassName = `
     ${styles.fab}
     ${styles[size]}
-    ${styles[position]}
+    ${styles[positionClass]}
     ${color !== 'primary' ? styles[color] : ''}
     ${hidden ? styles.hidden : ''}
+    ${relative ? styles.relative : ''}
     ${className}
   `.trim();
 
@@ -75,7 +84,7 @@ export const FAB: React.FC<FABProps> = ({
 
   if (badge) {
     return (
-      <div className={`${styles.fabWrapper} ${styles[position]}`}>
+      <div className={`${styles.fabWrapper} ${styles[positionClass]} ${relative ? styles.relative : ''}`}>
         <button className={fabClassName} onClick={onClick} disabled={disabled}>
           {content}
         </button>
@@ -105,6 +114,8 @@ export interface SpeedDialFABProps {
   position?: FABPosition;
   color?: FABColor;
   className?: string;
+  /** Use absolute positioning relative to parent container (for demos/contained layouts) */
+  relative?: boolean;
 }
 
 export const SpeedDialFAB: React.FC<SpeedDialFABProps> = ({
@@ -113,6 +124,7 @@ export const SpeedDialFAB: React.FC<SpeedDialFABProps> = ({
   position = 'bottom-right',
   color = 'primary',
   className = '',
+  relative = false,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -125,9 +137,14 @@ export const SpeedDialFAB: React.FC<SpeedDialFABProps> = ({
     setOpen(false);
   };
 
+  const positionClass = position === 'bottom-right' ? 'bottomRight'
+    : position === 'bottom-left' ? 'bottomLeft'
+    : position === 'bottom-center' ? 'bottomCenter'
+    : 'topRight';
+
   return (
     <>
-      <div className={`${styles.speedDial} ${styles[position]} ${open ? styles.speedDialOpen : ''} ${className}`}>
+      <div className={`${styles.speedDial} ${styles[positionClass]} ${open ? styles.speedDialOpen : ''} ${relative ? styles.relative : ''} ${className}`}>
         <div className={styles.speedDialActions}>
           {actions.map((action, index) => {
             const ActionIcon = action.icon;

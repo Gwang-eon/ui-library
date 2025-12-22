@@ -134,6 +134,12 @@
   transform: translateX(-50%) scale(1);
 }
 
+/* ==================== FAB Relative Position (for contained layouts) ==================== */
+
+.relative {
+  position: absolute;
+}
+
 /* ==================== FAB Hide State ==================== */
 
 .hidden {
