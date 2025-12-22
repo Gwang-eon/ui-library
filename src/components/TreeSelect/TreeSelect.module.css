@@ -304,6 +304,144 @@
 }
 
 /* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small */
+.treeselect-sm .treeselectTrigger {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  min-height: 32px;
+}
+
+.treeselect-sm .treeselectIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.treeselect-sm .treeselectSearch {
+  padding: var(--spacing-2);
+}
+
+.treeselect-sm .treeselectSearchIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.treeselect-sm .treeselectSearchInput {
+  font-size: var(--font-size-body-small);
+}
+
+.treeselect-sm .treeNodeContent {
+  padding: var(--spacing-1) var(--spacing-2);
+  gap: var(--spacing-1);
+}
+
+.treeselect-sm .treeLabel {
+  font-size: var(--font-size-body-small);
+  gap: var(--spacing-1);
+}
+
+.treeselect-sm .treeExpandBtn {
+  width: 16px;
+  height: 16px;
+}
+
+.treeselect-sm .treeIndent {
+  width: 16px;
+  height: 16px;
+}
+
+.treeselect-sm .treeCheckbox {
+  width: 12px;
+  height: 12px;
+}
+
+.treeselect-sm .treeIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.treeselect-sm .treeIcon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.treeselect-sm .treeChildren {
+  margin-left: var(--spacing-4);
+}
+
+/* Medium (default) */
+.treeselect-md .treeselectTrigger {
+  min-height: 40px;
+  font-size: var(--font-size-body);
+}
+
+/* Large */
+.treeselect-lg .treeselectTrigger {
+  padding: var(--spacing-4) var(--spacing-5);
+  font-size: var(--font-size-body-large);
+  min-height: 48px;
+}
+
+.treeselect-lg .treeselectIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.treeselect-lg .treeselectSearch {
+  padding: var(--spacing-4);
+}
+
+.treeselect-lg .treeselectSearchIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.treeselect-lg .treeselectSearchInput {
+  font-size: var(--font-size-body-large);
+}
+
+.treeselect-lg .treeNodeContent {
+  padding: var(--spacing-3) var(--spacing-4);
+  gap: var(--spacing-3);
+}
+
+.treeselect-lg .treeLabel {
+  font-size: var(--font-size-body-large);
+  gap: var(--spacing-3);
+}
+
+.treeselect-lg .treeExpandBtn {
+  width: 24px;
+  height: 24px;
+}
+
+.treeselect-lg .treeIndent {
+  width: 24px;
+  height: 24px;
+}
+
+.treeselect-lg .treeCheckbox {
+  width: 20px;
+  height: 20px;
+}
+
+.treeselect-lg .treeIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.treeselect-lg .treeIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.treeselect-lg .treeChildren {
+  margin-left: var(--spacing-6);
+}
+
+/* ========================================
    DARK MODE
    ======================================== */
 

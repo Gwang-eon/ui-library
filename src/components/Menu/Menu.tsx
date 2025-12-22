@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import type { ReactNode, HTMLAttributes, AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import styles from './Menu.module.css';
 
+export type MenuSize = 'sm' | 'md' | 'lg';
+
 // Menu Container Component
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   trigger: ReactNode;
@@ -10,6 +12,8 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   onOpenChange?: (open: boolean) => void;
   align?: 'left' | 'right';
   wide?: boolean;
+  /** Size variant */
+  size?: MenuSize;
   className?: string;
 }
 
@@ -20,6 +24,7 @@ export const Menu: React.FC<MenuProps> = ({
   onOpenChange,
   align = 'left',
   wide = false,
+  size = 'md',
   className = '',
   ...props
 }) => {
@@ -65,6 +70,7 @@ export const Menu: React.FC<MenuProps> = ({
     styles.menu,
     wide && styles['menu-wide'],
     align === 'right' && styles['menu-right'],
+    styles[`menu-${size}`],
   ]
     .filter(Boolean)
     .join(' ');

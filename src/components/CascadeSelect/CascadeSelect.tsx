@@ -2,6 +2,20 @@ import React, { useState, useRef, useEffect, type HTMLAttributes } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import styles from './CascadeSelect.module.css';
 
+export type CascadeSelectSize = 'sm' | 'md' | 'lg';
+
+const CASCADE_ICON_SIZES: Record<CascadeSelectSize, number> = {
+  sm: 14,
+  md: 18,
+  lg: 22,
+};
+
+const CASCADE_ARROW_SIZES: Record<CascadeSelectSize, number> = {
+  sm: 12,
+  md: 16,
+  lg: 20,
+};
+
 export interface CascadeOption {
   /**
    * Option label
@@ -46,6 +60,11 @@ export interface CascadeSelectProps extends Omit<HTMLAttributes<HTMLDivElement>,
   placeholder?: string;
 
   /**
+   * Size variant
+   */
+  size?: CascadeSelectSize;
+
+  /**
    * Disabled state
    */
   disabled?: boolean;
@@ -84,6 +103,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
   value = [],
   onChange,
   placeholder = 'Select...',
+  size = 'md',
   disabled = false,
   className = '',
   ...rest
@@ -245,6 +265,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
 
   const containerClasses = [
     styles['cascade-select'],
+    styles[`cascade-${size}`],
     isOpen && styles.open,
     disabled && styles.disabled,
     className,
@@ -273,7 +294,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
         aria-expanded={isOpen}
       >
         {getDisplayText()}
-        <ChevronDown className={styles['select-icon']} size={18} />
+        <ChevronDown className={styles['select-icon']} size={CASCADE_ICON_SIZES[size]} />
       </button>
 
       {/* Dropdown Panel */}
@@ -333,7 +354,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
                       aria-disabled={option.disabled}
                     >
                       <span>{option.label}</span>
-                      {hasChildren && <ChevronRight className={styles['option-arrow']} size={16} />}
+                      {hasChildren && <ChevronRight className={styles['option-arrow']} size={CASCADE_ARROW_SIZES[size]} />}
                     </div>
                   );
                 })}

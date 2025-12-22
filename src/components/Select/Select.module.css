@@ -134,6 +134,62 @@
   font-size: var(--font-size-body-large);
 }
 
+/* Option size variants */
+.select-sm .custom-select-option {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  gap: var(--spacing-1);
+}
+
+.select-lg .custom-select-option {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-large);
+  gap: var(--spacing-3);
+}
+
+/* Option icon size variants */
+.select-sm .option-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.select-sm .option-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.select-lg .option-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.select-lg .option-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Select icon (chevron) size variants */
+.select-sm .select-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.select-lg .select-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Group label size variants */
+.select-sm .custom-select-group-label {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+}
+
+.select-lg .custom-select-group-label {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-label-medium);
+}
+
 /* ========================================
    TRIGGER CONTENT
    ======================================== */

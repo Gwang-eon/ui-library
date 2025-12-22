@@ -4,6 +4,12 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '../Button';
 import styles from './SplitButton.module.css';
 
+const SPLIT_BUTTON_ICON_SIZES: Record<'sm' | 'md' | 'lg', number> = {
+  sm: 12,
+  md: 16,
+  lg: 20,
+};
+
 export interface SplitButtonMenuItem {
   /** Menu item label */
   label?: ReactNode;
@@ -193,7 +199,7 @@ export const SplitButton = ({
         aria-expanded={isOpen}
         iconOnly
       >
-        {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        {isOpen ? <ChevronUp size={SPLIT_BUTTON_ICON_SIZES[size]} /> : <ChevronDown size={SPLIT_BUTTON_ICON_SIZES[size]} />}
       </Button>
 
       <ul

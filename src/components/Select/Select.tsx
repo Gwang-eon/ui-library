@@ -17,6 +17,12 @@ export interface SelectOptionGroup {
 export type SelectState = 'default' | 'error';
 export type SelectSize = 'sm' | 'md' | 'lg';
 
+const SELECT_ICON_SIZES: Record<SelectSize, number> = {
+  sm: 14,
+  md: 18,
+  lg: 22,
+};
+
 export interface SelectProps {
   label?: string;
   name?: string;
@@ -331,7 +337,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
               )}
               {selectedOption ? selectedOption.label : placeholder}
             </span>
-            <ChevronDown className={styles['select-icon']} size={18} />
+            <ChevronDown className={styles['select-icon']} size={SELECT_ICON_SIZES[size]} />
           </div>
 
           {/* Dropdown */}

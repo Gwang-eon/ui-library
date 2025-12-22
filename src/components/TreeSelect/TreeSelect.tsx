@@ -1,7 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Fragment } from 'react';
 import type { ReactNode } from 'react';
 import { ChevronDown, ChevronRight, Search, X } from 'lucide-react';
 import styles from './TreeSelect.module.css';
+
+export type TreeSelectSize = 'sm' | 'md' | 'lg';
+
+const TREE_ICON_SIZES: Record<TreeSelectSize, number> = {
+  sm: 12,
+  md: 16,
+  lg: 20,
+};
 
 export interface TreeSelectNode {
   /** Unique value */
@@ -33,6 +41,8 @@ export interface TreeSelectProps {
   searchPlaceholder?: string;
   /** Placeholder text */
   placeholder?: string;
+  /** Size variant */
+  size?: TreeSelectSize;
   /** Disabled state */
   disabled?: boolean;
   /** Additional CSS classes */
@@ -71,6 +81,7 @@ export const TreeSelect = ({
   showSearch = false,
   searchPlaceholder = 'Search...',
   placeholder = 'Select...',
+  size = 'md',
   disabled = false,
   className = '',
   clearable = false,
@@ -82,6 +93,7 @@ export const TreeSelect = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMountedRef = useRef(false);
 
   const value = controlledValue !== undefined ? controlledValue : uncontrolledValue;
 
@@ -207,8 +219,18 @@ export const TreeSelect = ({
     return parentNodes;
   };
 
+  // Track mounted state
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
   // Auto-expand nodes when search query changes
   useEffect(() => {
+    if (!isMountedRef.current) return;
+
     if (searchQuery) {
       const nodesToExpand = getMatchingParentNodes(data, searchQuery);
       if (nodesToExpand.length > 0) {
@@ -232,7 +254,7 @@ export const TreeSelect = ({
       : value === node.value;
 
     return (
-      <div key={node.value} className={styles.treeNode}>
+      <div className={styles.treeNode}>
         <div
           className={`${styles.treeNodeContent} ${isSelected ? styles.treeNodeSelected : ''} ${
             node.disabled ? styles.treeNodeDisabled : ''
@@ -245,7 +267,7 @@ export const TreeSelect = ({
               onClick={() => toggleNode(node.value)}
               aria-label={isExpanded ? 'Collapse' : 'Expand'}
             >
-              {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              {isExpanded ? <ChevronDown size={TREE_ICON_SIZES[size]} /> : <ChevronRight size={TREE_ICON_SIZES[size]} />}
             </button>
           ) : (
             <span className={styles.treeIndent} />
@@ -273,7 +295,9 @@ export const TreeSelect = ({
 
         {hasChildren && isExpanded && (
           <div className={styles.treeChildren}>
-            {node.children!.map((child) => renderNode(child, level + 1))}
+            {node.children!.map((child) => (
+              <Fragment key={child.value}>{renderNode(child, level + 1)}</Fragment>
+            ))}
           </div>
         )}
       </div>
@@ -290,7 +314,7 @@ export const TreeSelect = ({
   const showClearButton = clearable && !disabled && selectedLabel;
 
   return (
-    <div className={`${styles.treeselect} ${className}`} ref={containerRef}>
+    <div className={`${styles.treeselect} ${styles[`treeselect-${size}`]} ${className}`} ref={containerRef}>
       {/* Trigger */}
       <div
         className={`${styles.treeselectTrigger} ${disabled ? styles.disabled : ''}`}
@@ -310,12 +334,12 @@ export const TreeSelect = ({
               onClick={handleClear}
               aria-label="Clear selection"
             >
-              <X size={16} />
+              <X size={TREE_ICON_SIZES[size]} />
             </button>
           )}
           <ChevronDown
             className={`${styles.treeselectIcon} ${isOpen ? styles.treeselectIconOpen : ''}`}
-            size={16}
+            size={TREE_ICON_SIZES[size]}
           />
         </div>
       </div>
@@ -325,7 +349,7 @@ export const TreeSelect = ({
         <div className={styles.treeselectDropdown}>
           {showSearch && (
             <div className={styles.treeselectSearch}>
-              <Search className={styles.treeselectSearchIcon} size={16} />
+              <Search className={styles.treeselectSearchIcon} size={TREE_ICON_SIZES[size]} />
               <input
                 type="text"
                 className={styles.treeselectSearchInput}
@@ -336,11 +360,13 @@ export const TreeSelect = ({
             </div>
           )}
 
-          <div className={styles.treeselectTree}>
+          <div className={styles.treeselectTree} role="tree">
             {filteredData.length === 0 ? (
               <div className={styles.treeselectEmpty}>No results found</div>
             ) : (
-              filteredData.map((node) => renderNode(node))
+              filteredData.map((node) => (
+                <Fragment key={node.value}>{renderNode(node)}</Fragment>
+              ))
             )}
           </div>
         </div>

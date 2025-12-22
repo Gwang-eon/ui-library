@@ -116,6 +116,76 @@
 }
 
 /* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small */
+.menu-sm {
+  min-width: 160px;
+  padding: var(--spacing-1);
+}
+
+.menu-sm .menu-item {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-small);
+  gap: var(--spacing-1);
+}
+
+.menu-sm .menu-item-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.menu-sm .menu-header {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+}
+
+.menu-sm .menu-shortcut {
+  font-size: var(--font-size-xs);
+}
+
+.menu-sm .menu-divider {
+  margin: var(--spacing-1) 0;
+}
+
+/* Medium (default) */
+.menu-md {
+  min-width: 200px;
+  padding: var(--spacing-2);
+}
+
+/* Large */
+.menu-lg {
+  min-width: 280px;
+  padding: var(--spacing-3);
+}
+
+.menu-lg .menu-item {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-large);
+  gap: var(--spacing-3);
+}
+
+.menu-lg .menu-item-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.menu-lg .menu-header {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-body-small);
+}
+
+.menu-lg .menu-shortcut {
+  font-size: var(--font-size-body-medium);
+}
+
+.menu-lg .menu-divider {
+  margin: var(--spacing-3) 0;
+}
+
+/* ========================================
    DARK MODE
    ======================================== */
 

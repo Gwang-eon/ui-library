@@ -33,6 +33,14 @@ const isValidHex = (hex: string): boolean => {
   return /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
 };
 
+export type ColorPickerSize = 'sm' | 'md' | 'lg';
+
+const COLOR_PICKER_ICON_SIZES: Record<ColorPickerSize, number> = {
+  sm: 12,
+  md: 16,
+  lg: 20,
+};
+
 export interface ColorPickerProps {
   value?: string;
   defaultValue?: string;
@@ -41,7 +49,7 @@ export interface ColorPickerProps {
   presets?: string[];
   showRecent?: boolean;
   compact?: boolean;
-  size?: 'sm' | 'md';
+  size?: ColorPickerSize;
   allowCustom?: boolean;
   disabled?: boolean;
   className?: string;
@@ -361,18 +369,18 @@ export const ColorPicker = ({
 
   // Memoized class names
   const compactContainerClassName = useMemo(() =>
-    `${styles.colorPickerCompact} ${className}`,
-    [className]
+    `${styles.colorPickerCompact} ${styles[`colorPicker-${size}`]} ${className}`,
+    [size, className]
   );
 
   const swatchesClassName = useMemo(() =>
-    `${styles.colorSwatches} ${size === 'sm' ? styles.colorSwatchesSm : ''}`,
+    `${styles.colorSwatches} ${size === 'sm' ? styles.colorSwatchesSm : ''} ${size === 'lg' ? styles.colorSwatchesLg : ''}`,
     [size]
   );
 
   const containerClassName = useMemo(() =>
-    `${styles.colorPicker} ${className}`,
-    [className]
+    `${styles.colorPicker} ${styles[`colorPicker-${size}`]} ${className}`,
+    [size, className]
   );
 
   // Memoized inline styles
@@ -402,7 +410,7 @@ export const ColorPicker = ({
               aria-label="Custom color"
               disabled={disabled}
             >
-              <Plus size={14} />
+              <Plus size={COLOR_PICKER_ICON_SIZES[size]} />
             </button>
           )}
         </div>
@@ -488,7 +496,7 @@ export const ColorPicker = ({
             aria-label="Open color picker"
             disabled={disabled}
           >
-            <Palette size={16} />
+            <Palette size={COLOR_PICKER_ICON_SIZES[size]} />
           </button>
         </div>
       )}

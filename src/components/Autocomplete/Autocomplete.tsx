@@ -20,6 +20,18 @@ export interface AutocompleteOption {
 
 export type AutocompleteSize = 'sm' | 'md' | 'lg';
 
+const AUTOCOMPLETE_ICON_SIZES: Record<AutocompleteSize, number> = {
+  sm: 16,
+  md: 20,
+  lg: 24,
+};
+
+const AUTOCOMPLETE_EMPTY_ICON_SIZES: Record<AutocompleteSize, number> = {
+  sm: 36,
+  md: 48,
+  lg: 56,
+};
+
 export interface AutocompleteProps {
   /** Available options */
   options: AutocompleteOption[];
@@ -326,9 +338,9 @@ export const Autocomplete = ({
               }
             />
             {loading ? (
-              <Loader2 className={styles.autocompleteSpinner} size={20} />
+              <Loader2 className={styles.autocompleteSpinner} size={AUTOCOMPLETE_ICON_SIZES[size]} />
             ) : (
-              <Search className={styles.autocompleteIcon} size={20} />
+              <Search className={styles.autocompleteIcon} size={AUTOCOMPLETE_ICON_SIZES[size]} />
             )}
           </>
         )}
@@ -346,7 +358,7 @@ export const Autocomplete = ({
             <div className={styles.autocompleteLoadingText}>Loading results...</div>
           ) : filteredOptions.length === 0 ? (
             <div className={styles.autocompleteEmpty}>
-              <SearchX size={48} />
+              <SearchX size={AUTOCOMPLETE_EMPTY_ICON_SIZES[size]} />
               <p>{emptyMessage}</p>
               <span>Try adjusting your search terms</span>
             </div>

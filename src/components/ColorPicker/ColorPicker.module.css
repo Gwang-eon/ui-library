@@ -412,6 +412,113 @@
 }
 
 /* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+/* Small */
+.colorPicker-sm .colorSwatch {
+  width: 24px;
+  height: 24px;
+}
+
+.colorPicker-sm .colorSwatchLg {
+  width: 36px;
+  height: 36px;
+}
+
+.colorPicker-sm .colorInput {
+  height: 28px;
+  font-size: var(--font-size-xs);
+}
+
+.colorPicker-sm .colorPickerBtn {
+  width: 28px;
+  height: 28px;
+}
+
+.colorPicker-sm .colorSwatchBtn {
+  width: 28px;
+  height: 28px;
+}
+
+.colorPicker-sm .colorRecentItem {
+  width: 24px;
+  height: 24px;
+}
+
+.colorPicker-sm .colorPickerPanel {
+  width: 280px;
+}
+
+.colorPicker-sm .colorPickerTitle {
+  font-size: var(--font-size-sm);
+}
+
+.colorPicker-sm .colorInputText,
+.colorPicker-sm .colorInputNumber {
+  height: 32px;
+  font-size: var(--font-size-xs);
+}
+
+.colorSwatchesLg .colorSwatchBtn {
+  width: 44px;
+  height: 44px;
+}
+
+/* Large */
+.colorPicker-lg .colorSwatch {
+  width: 40px;
+  height: 40px;
+}
+
+.colorPicker-lg .colorSwatchLg {
+  width: 56px;
+  height: 56px;
+}
+
+.colorPicker-lg .colorInput {
+  height: 40px;
+  font-size: var(--font-size-body);
+}
+
+.colorPicker-lg .colorPickerBtn {
+  width: 40px;
+  height: 40px;
+}
+
+.colorPicker-lg .colorSwatchBtn {
+  width: 44px;
+  height: 44px;
+}
+
+.colorPicker-lg .colorRecentItem {
+  width: 40px;
+  height: 40px;
+}
+
+.colorPicker-lg .colorPickerPanel {
+  width: 360px;
+}
+
+.colorPicker-lg .colorPickerTitle {
+  font-size: var(--font-size-lg);
+}
+
+.colorPicker-lg .colorInputText,
+.colorPicker-lg .colorInputNumber {
+  height: 44px;
+  font-size: var(--font-size-body);
+}
+
+.colorPicker-lg .colorPresetsGrid {
+  gap: var(--spacing-3);
+}
+
+.colorPicker-lg .colorPresetItem {
+  min-width: 36px;
+}
+
+/* ========================================
    DARK MODE
    ======================================== */
 
