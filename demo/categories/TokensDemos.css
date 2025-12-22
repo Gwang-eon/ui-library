@@ -299,3 +299,10 @@
   gap: 2px;
   text-align: center;
 }
+
+/* Dark Mode */
+body.dark-mode .token-name,
+[data-theme="dark"] .token-name {
+  background: var(--color-primary-alpha-15);
+  color: var(--color-primary-400);
+}

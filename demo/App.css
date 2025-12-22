@@ -106,7 +106,8 @@
   color: var(--color-primary-700);
 }
 
-body.dark-mode .demo-nav-item.active {
+body.dark-mode .demo-nav-item.active,
+[data-theme="dark"] .demo-nav-item.active {
   background: var(--color-primary-900);
   color: var(--color-primary-300);
 }
