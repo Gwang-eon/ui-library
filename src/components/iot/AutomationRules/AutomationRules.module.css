@@ -326,7 +326,7 @@
   /* Card */
   .ruleCard {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .ruleCard:hover {
@@ -335,7 +335,7 @@
 
   /* Header */
   .ruleHeader {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .ruleIconWrapper,
@@ -402,7 +402,7 @@
   /* Rule Flow */
   .ruleStep {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .ruleStepLabel {
@@ -423,7 +423,7 @@
 :global([data-theme="dark"]) .ruleCard,
 :global(.dark) .ruleCard {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .ruleCard:hover,
@@ -433,7 +433,7 @@
 
 :global([data-theme="dark"]) .ruleHeader,
 :global(.dark) .ruleHeader {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .ruleIconWrapper,
@@ -511,7 +511,7 @@
 :global([data-theme="dark"]) .ruleStep,
 :global(.dark) .ruleStep {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .ruleStepLabel,

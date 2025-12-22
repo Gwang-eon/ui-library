@@ -480,12 +480,12 @@
   /* Card */
   .activityCard {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   /* Header */
   .header {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .title {
@@ -494,7 +494,7 @@
 
   /* Items */
   .item {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .item.clickable:hover {
@@ -559,7 +559,7 @@
 
   /* Footer */
   .footer {
-    border-top-color: var(--text-secondary);
+    border-top-color: var(--border-default);
   }
 
   /* Loading Skeleton */

@@ -587,7 +587,7 @@
 :global(.dark) .listWidget,
 :global(.dark) .statusWidget {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .statWidget:hover,
@@ -669,7 +669,7 @@
 
 :global([data-theme="dark"]) .chartStats,
 :global(.dark) .chartStats {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .chartStatLabel,
@@ -685,14 +685,14 @@
 :global([data-theme="dark"]) .chartPlaceholder,
 :global(.dark) .chartPlaceholder {
   background-color: var(--surface-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-tertiary);
 }
 
 /* List Widget */
 :global([data-theme="dark"]) .listItem,
 :global(.dark) .listItem {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .listItem.clickable:hover,

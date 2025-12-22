@@ -330,7 +330,7 @@
 
   .searchInput {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
     color: var(--text-primary);
   }
 
@@ -350,7 +350,7 @@
   /* Filter Buttons */
   .filterBtn {
     background-color: transparent;
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
     color: var(--text-secondary);
   }
 
@@ -378,13 +378,13 @@
   /* Table Container */
   .tableContainer {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   /* Table Header */
   .table thead {
     background-color: var(--surface-tertiary);
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .table thead th {
@@ -397,7 +397,7 @@
 
   /* Table Body */
   .table tbody tr {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .table tbody tr:hover {
@@ -456,7 +456,7 @@
 :global([data-theme="dark"]) .searchInput,
 :global(.dark) .searchInput {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-primary);
 }
 
@@ -479,7 +479,7 @@
 :global([data-theme="dark"]) .filterBtn,
 :global(.dark) .filterBtn {
   background-color: transparent;
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-secondary);
 }
 
@@ -510,13 +510,13 @@
 :global([data-theme="dark"]) .tableContainer,
 :global(.dark) .tableContainer {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .table thead,
 :global(.dark) .table thead {
   background-color: var(--surface-tertiary);
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .table thead th,
@@ -531,7 +531,7 @@
 
 :global([data-theme="dark"]) .table tbody tr,
 :global(.dark) .table tbody tr {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .table tbody tr:hover,

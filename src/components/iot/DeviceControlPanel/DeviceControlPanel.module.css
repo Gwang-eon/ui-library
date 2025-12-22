@@ -575,7 +575,7 @@
   /* Device Control Card */
   .deviceControlCard {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .deviceControlCard:hover {
@@ -672,13 +672,13 @@
   }
 
   .btnGroup {
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .btn {
     background: var(--surface-primary);
     color: var(--text-tertiary);
-    border-right-color: var(--text-secondary);
+    border-right-color: var(--border-default);
   }
 
   .btn:hover {
@@ -707,7 +707,7 @@
   /* Custom Select */
   .customSelectTrigger {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .customSelectTrigger:hover {
@@ -729,7 +729,7 @@
 
   .customSelectDropdown {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
   }
 

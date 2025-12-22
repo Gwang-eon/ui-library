@@ -347,12 +347,12 @@
   .groupedLog,
   .logStat {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   /* Header */
   .logHeader {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .logTitle {
@@ -366,7 +366,7 @@
 
   /* Entry */
   .logEntry {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .logEntry:hover {
@@ -465,12 +465,12 @@
 :global(.dark) .groupedLog,
 :global(.dark) .logStat {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .logHeader,
 :global(.dark) .logHeader {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .logTitle,
@@ -486,7 +486,7 @@
 
 :global([data-theme="dark"]) .logEntry,
 :global(.dark) .logEntry {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .logEntry:hover,

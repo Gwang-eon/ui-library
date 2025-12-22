@@ -533,7 +533,7 @@
   .detailedCard,
   .compactCard {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .basicCard:hover,
@@ -549,7 +549,7 @@
 
   /* Card Header */
   .cardHeader {
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: var(--border-default);
   }
 
   .cardTitle {
@@ -563,7 +563,7 @@
   /* Card Footer */
   .cardFooter {
     background-color: var(--surface-tertiary);
-    border-top-color: var(--text-secondary);
+    border-top-color: var(--border-default);
   }
 
   .sensorFooterTimestamp {
@@ -686,7 +686,7 @@
   /* Empty State */
   .emptyState {
     background-color: var(--surface-tertiary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .emptyStateIcon {
@@ -735,7 +735,7 @@
 :global(.dark) .detailedCard,
 :global(.dark) .compactCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .basicCard:hover,
@@ -755,7 +755,7 @@
 
 :global([data-theme="dark"]) .cardHeader,
 :global(.dark) .cardHeader {
-  border-bottom-color: var(--text-secondary);
+  border-bottom-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .cardTitle,
@@ -771,7 +771,7 @@
 :global([data-theme="dark"]) .cardFooter,
 :global(.dark) .cardFooter {
   background-color: var(--surface-tertiary);
-  border-top-color: var(--text-secondary);
+  border-top-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .sensorFooterTimestamp,
@@ -915,7 +915,7 @@
 :global([data-theme="dark"]) .emptyState,
 :global(.dark) .emptyState {
   background-color: var(--surface-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .emptyStateIcon,

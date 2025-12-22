@@ -370,7 +370,7 @@
   /* Event Content */
   .eventContent {
     background: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .eventItem:hover .eventContent {
@@ -433,7 +433,7 @@
   /* Group Header */
   .eventGroupHeader {
     color: var(--text-secondary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   /* Event Type Highlighting */
@@ -520,7 +520,7 @@
 :global([data-theme="dark"]) .eventContent,
 :global(.dark) .eventContent {
   background: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .eventItem:hover .eventContent,
@@ -596,7 +596,7 @@
 :global([data-theme="dark"]) .eventGroupHeader,
 :global(.dark) .eventGroupHeader {
   color: var(--text-secondary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .eventItemSuccess .eventContent,

@@ -561,7 +561,7 @@
   /* Analytics Card */
   .analyticsCard {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .analyticsLabel {
@@ -583,7 +583,7 @@
   /* Chart Card */
   .chartCard {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .chartTitle {
@@ -592,14 +592,14 @@
 
   .chartPlaceholder {
     background-color: var(--surface-tertiary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
     color: var(--text-tertiary);
   }
 
   /* Device Health Item */
   .deviceHealthItem {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .deviceHealthName {
@@ -641,7 +641,7 @@
   /* Insight Item */
   .insightItem {
     background-color: var(--surface-primary);
-    border-color: var(--text-secondary);
+    border-color: var(--border-default);
   }
 
   .insightTitle {
@@ -693,7 +693,7 @@
 :global([data-theme="dark"]) .analyticsCard,
 :global(.dark) .analyticsCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .analyticsLabel,
@@ -719,7 +719,7 @@
 :global([data-theme="dark"]) .chartCard,
 :global(.dark) .chartCard {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .chartTitle,
@@ -730,14 +730,14 @@
 :global([data-theme="dark"]) .chartPlaceholder,
 :global(.dark) .chartPlaceholder {
   background-color: var(--surface-tertiary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
   color: var(--text-tertiary);
 }
 
 :global([data-theme="dark"]) .deviceHealthItem,
 :global(.dark) .deviceHealthItem {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .deviceHealthName,
@@ -786,7 +786,7 @@
 :global([data-theme="dark"]) .insightItem,
 :global(.dark) .insightItem {
   background-color: var(--surface-primary);
-  border-color: var(--text-secondary);
+  border-color: var(--border-default);
 }
 
 :global([data-theme="dark"]) .insightTitle,
