@@ -725,6 +725,240 @@
 }
 
 /* ========================================
+   DARK MODE - data-theme attribute
+   ======================================== */
+
+:global([data-theme="dark"]) .basicCard,
+:global([data-theme="dark"]) .detailedCard,
+:global([data-theme="dark"]) .compactCard,
+:global(.dark) .basicCard,
+:global(.dark) .detailedCard,
+:global(.dark) .compactCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .basicCard:hover,
+:global([data-theme="dark"]) .compactCard:hover,
+:global(.dark) .basicCard:hover,
+:global(.dark) .compactCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+:global([data-theme="dark"]) .basicCard:focus-visible,
+:global([data-theme="dark"]) .compactCard:focus-visible,
+:global(.dark) .basicCard:focus-visible,
+:global(.dark) .compactCard:focus-visible {
+  outline-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .cardHeader,
+:global(.dark) .cardHeader {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .cardTitle,
+:global(.dark) .cardTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .detailedSensorId,
+:global(.dark) .detailedSensorId {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .cardFooter,
+:global(.dark) .cardFooter {
+  background-color: var(--surface-tertiary);
+  border-top-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .sensorFooterTimestamp,
+:global(.dark) .sensorFooterTimestamp {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .iconCircleError,
+:global(.dark) .iconCircleError {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .iconCirclePrimary,
+:global(.dark) .iconCirclePrimary {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .iconCircleSuccess,
+:global(.dark) .iconCircleSuccess {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .iconCircleWarning,
+:global(.dark) .iconCircleWarning {
+  background: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .sensorLabel,
+:global(.dark) .sensorLabel {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .sensorValue,
+:global([data-theme="dark"]) .currentValue,
+:global([data-theme="dark"]) .compactValue,
+:global(.dark) .sensorValue,
+:global(.dark) .currentValue,
+:global(.dark) .compactValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .sensorRange,
+:global(.dark) .sensorRange {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .currentUnit,
+:global([data-theme="dark"]) .compactUnit,
+:global(.dark) .currentUnit,
+:global(.dark) .compactUnit {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .trendValue,
+:global(.dark) .trendValue {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .trendPositive,
+:global(.dark) .trendPositive {
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .trendNegative,
+:global(.dark) .trendNegative {
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .trendLabel,
+:global(.dark) .trendLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .sensorStatsBox,
+:global(.dark) .sensorStatsBox {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .statLabel,
+:global(.dark) .statLabel {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .statValue,
+:global(.dark) .statValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .thresholdLabel,
+:global(.dark) .thresholdLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .thresholdStatus,
+:global(.dark) .thresholdStatus {
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .progress,
+:global(.dark) .progress {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .rangeValue,
+:global(.dark) .rangeValue {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .compactHeader .compactIcon,
+:global(.dark) .compactHeader .compactIcon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .compactLabel,
+:global(.dark) .compactLabel {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .badgeSuccess,
+:global(.dark) .badgeSuccess {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global([data-theme="dark"]) .badgeWarning,
+:global(.dark) .badgeWarning {
+  background: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+}
+
+:global([data-theme="dark"]) .badgeError,
+:global(.dark) .badgeError {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}
+
+:global([data-theme="dark"]) .emptyState,
+:global(.dark) .emptyState {
+  background-color: var(--surface-tertiary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .emptyStateIcon,
+:global(.dark) .emptyStateIcon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .emptyStateTitle,
+:global(.dark) .emptyStateTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .emptyStateDescription,
+:global(.dark) .emptyStateDescription {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .emptyStateButton,
+:global(.dark) .emptyStateButton {
+  background-color: var(--color-primary-600);
+}
+
+:global([data-theme="dark"]) .emptyStateButton:hover,
+:global(.dark) .emptyStateButton:hover {
+  background-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .emptyStateButton:focus-visible,
+:global(.dark) .emptyStateButton:focus-visible {
+  outline-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .skeleton,
+:global(.dark) .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 25%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 75%
+  );
+}
+
+/* ========================================
    REDUCED MOTION
    ======================================== */
 

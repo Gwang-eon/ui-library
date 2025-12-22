@@ -395,6 +395,119 @@
 }
 
 /* ========================================
+   DARK MODE - data-theme attribute
+   ======================================== */
+
+:global([data-theme="dark"]) .metricCard,
+:global(.dark) .metricCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .metricCard:hover,
+:global(.dark) .metricCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+:global([data-theme="dark"]) .label,
+:global(.dark) .label {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .icon,
+:global(.dark) .icon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .value,
+:global(.dark) .value {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .change.positive,
+:global(.dark) .change.positive {
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .change.negative,
+:global(.dark) .change.negative {
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .change.neutral,
+:global(.dark) .change.neutral {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .subtext,
+:global(.dark) .subtext {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .comparativeLabel,
+:global(.dark) .comparativeLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .comparativeValue,
+:global(.dark) .comparativeValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .progressContainer,
+:global(.dark) .progressContainer {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .chartBar,
+:global(.dark) .chartBar {
+  background-color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .statusBadge.live,
+:global(.dark) .statusBadge.live {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global([data-theme="dark"]) .statusBadge.alert,
+:global(.dark) .statusBadge.alert {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}
+
+:global([data-theme="dark"]) .pulse,
+:global(.dark) .pulse {
+  opacity: 0.9;
+}
+
+:global([data-theme="dark"]) .metricCard.live,
+:global(.dark) .metricCard.live {
+  border-color: var(--color-success-600);
+}
+
+:global([data-theme="dark"]) .metricCard.alert,
+:global(.dark) .metricCard.alert {
+  border-color: var(--color-error-600);
+}
+
+:global([data-theme="dark"]) .labelSkeleton,
+:global([data-theme="dark"]) .iconSkeleton,
+:global([data-theme="dark"]) .valueSkeleton,
+:global([data-theme="dark"]) .subtextSkeleton,
+:global(.dark) .labelSkeleton,
+:global(.dark) .iconSkeleton,
+:global(.dark) .valueSkeleton,
+:global(.dark) .subtextSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+}
+
+/* ========================================
    MOBILE RESPONSIVE ENHANCEMENTS
    ======================================== */
 

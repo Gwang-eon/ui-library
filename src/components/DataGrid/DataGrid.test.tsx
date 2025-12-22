@@ -52,7 +52,7 @@ describe('DataGrid', () => {
     it('DataGrid가 렌더링됨', () => {
       render(<DataGrid data={mockData} columns={mockColumns} />);
 
-      expect(screen.getByRole('table')).toBeInTheDocument();
+      expect(screen.getByRole('grid')).toBeInTheDocument();
     });
 
     it('헤더가 표시됨', () => {
@@ -112,8 +112,8 @@ describe('DataGrid', () => {
       render(<DataGrid data={mockData} columns={mockColumns} striped />);
 
       // striped is applied to rows, check that component renders
-      const table = screen.getByRole('table');
-      expect(table).toBeInTheDocument();
+      const grid = screen.getByRole('grid');
+      expect(grid).toBeInTheDocument();
     });
 
     it('bordered 스타일이 적용됨', () => {
@@ -134,8 +134,8 @@ describe('DataGrid', () => {
       render(<DataGrid data={mockData} columns={mockColumns} hoverable />);
 
       // hoverable is applied to rows, check that component renders
-      const table = screen.getByRole('table');
-      expect(table).toBeInTheDocument();
+      const grid = screen.getByRole('grid');
+      expect(grid).toBeInTheDocument();
     });
   });
 
@@ -165,7 +165,7 @@ describe('DataGrid', () => {
       await user.click(nameHeader);
 
       // Check if sorted ascending
-      const cells = screen.getAllByRole('cell');
+      const cells = screen.getAllByRole('gridcell');
       const nameColumnCells = cells.filter((_, index) => index % 5 === 0);
       // Alice should be first when sorted ascending
       expect(nameColumnCells[0]).toHaveTextContent('Alice');
@@ -179,7 +179,7 @@ describe('DataGrid', () => {
       await user.click(nameHeader); // ascending
       await user.click(nameHeader); // descending
 
-      const cells = screen.getAllByRole('cell');
+      const cells = screen.getAllByRole('gridcell');
       const nameColumnCells = cells.filter((_, index) => index % 5 === 0);
       // Eve should be first when sorted descending
       expect(nameColumnCells[0]).toHaveTextContent('Eve');
@@ -222,7 +222,7 @@ describe('DataGrid', () => {
       await user.keyboard('{/Shift}');
 
       // Both columns should have sort indicators
-      expect(nameHeader.closest('th')).toBeInTheDocument();
+      expect(nameHeader.closest('[role="columnheader"]')).toBeInTheDocument();
     });
   });
 
@@ -578,7 +578,7 @@ describe('DataGrid', () => {
       );
 
       // Name column should have pinned styling
-      const header = screen.getByText('Name').closest('th');
+      const header = screen.getByText('Name').closest('[role="columnheader"]');
       expect(header).toHaveClass(/pinned/);
     });
   });
@@ -719,7 +719,7 @@ describe('DataGrid', () => {
       ref.current?.resetSorting();
 
       // Sorting should be cleared (original order)
-      const cells = screen.getAllByRole('cell');
+      const cells = screen.getAllByRole('gridcell');
       const nameColumnCells = cells.filter((_, index) => index % 5 === 0);
       expect(nameColumnCells[0]).toHaveTextContent('Alice');
     });
@@ -839,26 +839,26 @@ describe('DataGrid', () => {
   });
 
   describe('접근성', () => {
-    it('기본 DataGrid가 테이블 구조를 가짐', () => {
+    it('기본 DataGrid가 그리드 구조를 가짐', () => {
       render(<DataGrid data={mockData} columns={mockColumns} />);
 
-      // DataGrid has proper table structure
-      expect(screen.getByRole('table')).toBeInTheDocument();
+      // DataGrid has proper grid structure
+      expect(screen.getByRole('grid')).toBeInTheDocument();
       expect(screen.getAllByRole('columnheader').length).toBeGreaterThan(0);
       expect(screen.getAllByRole('row').length).toBeGreaterThan(0);
     });
 
-    it('빈 상태에서도 테이블 구조를 유지함', () => {
+    it('빈 상태에서도 그리드 구조를 유지함', () => {
       render(<DataGrid data={[]} columns={mockColumns} />);
 
-      expect(screen.getByRole('table')).toBeInTheDocument();
+      expect(screen.getByRole('grid')).toBeInTheDocument();
       expect(screen.getByText('No data available')).toBeInTheDocument();
     });
 
-    it('테이블에 role="table"이 있음', () => {
+    it('그리드에 role="grid"가 있음', () => {
       render(<DataGrid data={mockData} columns={mockColumns} />);
 
-      expect(screen.getByRole('table')).toBeInTheDocument();
+      expect(screen.getByRole('grid')).toBeInTheDocument();
     });
 
     it('헤더에 role="columnheader"가 있음', () => {
@@ -867,10 +867,10 @@ describe('DataGrid', () => {
       expect(screen.getAllByRole('columnheader').length).toBeGreaterThan(0);
     });
 
-    it('셀에 role="cell"이 있음', () => {
+    it('셀에 role="gridcell"이 있음', () => {
       render(<DataGrid data={mockData} columns={mockColumns} />);
 
-      expect(screen.getAllByRole('cell').length).toBeGreaterThan(0);
+      expect(screen.getAllByRole('gridcell').length).toBeGreaterThan(0);
     });
   });
 
@@ -895,7 +895,7 @@ describe('DataGrid', () => {
 
       await waitFor(() => {
         // Results should be filtered
-        const cells = screen.getAllByRole('cell');
+        const cells = screen.getAllByRole('gridcell');
         const statusCells = cells.filter((_, index) => index % 5 === 3);
         statusCells.forEach((cell) => {
           expect(cell).toHaveTextContent(/active/i);
@@ -943,10 +943,147 @@ describe('DataGrid', () => {
       );
 
       // Name should be pinned
-      const nameHeader = screen.getByText('Name').closest('th');
+      const nameHeader = screen.getByText('Name').closest('[role="columnheader"]');
       expect(nameHeader).toHaveClass(/pinned/);
 
       // Email should be hidden
+      expect(screen.queryByText('Email')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Controlled Props 동기화', () => {
+    it('sorting prop 변경 시 상태가 업데이트됨', async () => {
+      const { rerender } = render(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          enableSorting
+          sorting={[]}
+        />
+      );
+
+      // 정렬 상태 변경
+      rerender(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          enableSorting
+          sorting={[{ id: 'name', desc: false }]}
+        />
+      );
+
+      // 정렬이 적용되었는지 확인 (Alice가 첫 번째)
+      const cells = screen.getAllByRole('gridcell');
+      const nameColumnCells = cells.filter((_, index) => index % 5 === 0);
+      expect(nameColumnCells[0]).toHaveTextContent('Alice');
+    });
+
+    it('globalFilter prop 변경 시 필터가 적용됨', async () => {
+      const { rerender } = render(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          enableGlobalFilter
+          globalFilter=""
+        />
+      );
+
+      // 모든 데이터가 표시됨
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+      expect(screen.getByText('Bob')).toBeInTheDocument();
+
+      rerender(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          enableGlobalFilter
+          globalFilter="Alice"
+        />
+      );
+
+      // Alice만 표시됨
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+      expect(screen.queryByText('Bob')).not.toBeInTheDocument();
+    });
+
+    it('rowSelection prop 변경 시 선택 상태가 업데이트됨', () => {
+      const { rerender } = render(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          enableRowSelection
+          rowSelection={{}}
+          getRowId={(row) => row.id}
+        />
+      );
+
+      // 체크박스가 선택되지 않음
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(checkboxes[1]).not.toBeChecked();
+
+      rerender(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          enableRowSelection
+          rowSelection={{ '1': true }}
+          getRowId={(row) => row.id}
+        />
+      );
+
+      // 첫 번째 행이 선택됨
+      const updatedCheckboxes = screen.getAllByRole('checkbox');
+      expect(updatedCheckboxes[1]).toBeChecked();
+    });
+
+    it('pagination prop 변경 시 페이지 상태가 업데이트됨', () => {
+      const { rerender } = render(
+        <DataGrid
+          data={largeData}
+          columns={mockColumns}
+          enablePagination
+          pagination={{ pageIndex: 0, pageSize: 10 }}
+        />
+      );
+
+      // 첫 페이지 데이터가 표시됨
+      expect(screen.getByText('User 1')).toBeInTheDocument();
+
+      rerender(
+        <DataGrid
+          data={largeData}
+          columns={mockColumns}
+          enablePagination
+          pagination={{ pageIndex: 1, pageSize: 10 }}
+        />
+      );
+
+      // 두 번째 페이지 데이터가 표시됨
+      expect(screen.getByText('User 11')).toBeInTheDocument();
+      expect(screen.queryByText('User 1')).not.toBeInTheDocument();
+    });
+
+    it('columnVisibility prop 변경 시 컬럼 가시성이 업데이트됨', () => {
+      const { rerender } = render(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          columnVisibility={{}}
+        />
+      );
+
+      // 모든 컬럼이 표시됨
+      expect(screen.getByText('Email')).toBeInTheDocument();
+
+      rerender(
+        <DataGrid
+          data={mockData}
+          columns={mockColumns}
+          columnVisibility={{ email: false }}
+        />
+      );
+
+      // Email 컬럼이 숨겨짐
       expect(screen.queryByText('Email')).not.toBeInTheDocument();
     });
   });

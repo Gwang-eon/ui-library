@@ -443,3 +443,142 @@
     color: var(--text-primary);
   }
 }
+
+/* ========================================
+   DARK MODE - data-theme attribute
+   ======================================== */
+
+:global([data-theme="dark"]) .searchIcon,
+:global(.dark) .searchIcon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .searchInput,
+:global(.dark) .searchInput {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .searchInput::placeholder,
+:global(.dark) .searchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .searchInput:hover,
+:global(.dark) .searchInput:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .searchInput:focus,
+:global(.dark) .searchInput:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+:global([data-theme="dark"]) .filterBtn,
+:global(.dark) .filterBtn {
+  background-color: transparent;
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .filterBtn:hover,
+:global(.dark) .filterBtn:hover {
+  background-color: var(--surface-tertiary);
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .filterBtnActive,
+:global(.dark) .filterBtnActive {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .exportBtn,
+:global(.dark) .exportBtn {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .exportBtn:hover,
+:global(.dark) .exportBtn:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .tableContainer,
+:global(.dark) .tableContainer {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .table thead,
+:global(.dark) .table thead {
+  background-color: var(--surface-tertiary);
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .table thead th,
+:global(.dark) .table thead th {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .sortableHeader:hover,
+:global(.dark) .sortableHeader:hover {
+  background-color: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .table tbody tr,
+:global(.dark) .table tbody tr {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .table tbody tr:hover,
+:global(.dark) .table tbody tr:hover {
+  background-color: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .table tbody td,
+:global(.dark) .table tbody td {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .badgeError,
+:global(.dark) .badgeError {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+}
+
+:global([data-theme="dark"]) .badgeWarning,
+:global(.dark) .badgeWarning {
+  background-color: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+}
+
+:global([data-theme="dark"]) .badgeSuccess,
+:global(.dark) .badgeSuccess {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+}
+
+:global([data-theme="dark"]) .deviceId,
+:global(.dark) .deviceId {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .deviceType,
+:global(.dark) .deviceType {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .actionBtn,
+:global(.dark) .actionBtn {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .actionBtn:hover,
+:global(.dark) .actionBtn:hover {
+  background-color: var(--surface-tertiary);
+  color: var(--text-primary);
+}

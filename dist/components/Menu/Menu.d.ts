@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactNode, HTMLAttributes, AnchorHTMLAttributes } from 'react';
+export type MenuSize = 'sm' | 'md' | 'lg';
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
     trigger: ReactNode;
     children: ReactNode;
@@ -7,6 +8,8 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
     onOpenChange?: (open: boolean) => void;
     align?: 'left' | 'right';
     wide?: boolean;
+    /** Size variant */
+    size?: MenuSize;
     className?: string;
 }
 export declare const Menu: React.FC<MenuProps>;

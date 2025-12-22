@@ -15,6 +15,7 @@ import React, {
   useImperativeHandle,
   memo,
 } from 'react';
+import { createPortal } from 'react-dom';
 import {
   useReactTable,
   getCoreRowModel,
@@ -95,6 +96,10 @@ import {
   Square,
   MoreHorizontal,
 } from 'lucide-react';
+import { Select } from '../Select';
+import { Input } from '../Input';
+import { DatePicker } from '../Calendar/DatePicker';
+import { DateRangePicker } from '../Calendar/DateRangePicker';
 import styles from './DataGrid.module.css';
 
 // ============================================
@@ -211,6 +216,10 @@ export interface DataGridProps<TData> {
   // Filtering
   /** Enable column filtering */
   enableFiltering?: boolean;
+  /** Show column filters in header (controlled) */
+  showColumnFilters?: boolean;
+  /** Callback when column filter visibility changes */
+  onShowColumnFiltersChange?: (show: boolean) => void;
   /** Enable global filtering */
   enableGlobalFilter?: boolean;
   /** Global filter value */
@@ -616,24 +625,25 @@ const DraggableRow = memo(({ id, children, disabled = false, className = '', sty
   };
 
   return (
-    <tr
+    <div
       ref={setNodeRef}
       style={style}
       className={`${className} ${isDragging ? styles.draggingRow : ''}`}
       {...attributes}
+      role="row"
     >
       {/* Drag handle cell */}
-      <td className={styles.dragHandleCell} {...listeners}>
+      <div className={styles.gridDragHandleCell} {...listeners} role="gridcell">
         <GripVertical size={16} className={styles.rowDragHandle} />
-      </td>
+      </div>
       {children}
-    </tr>
+    </div>
   );
 });
 
 DraggableRow.displayName = 'DraggableRow';
 
-// Sortable Row component using useSortable hook
+// Sortable Row component using useSortable hook (div-based)
 interface SortableRowProps {
   id: string;
   children: React.ReactNode;
@@ -663,32 +673,110 @@ const SortableRow = memo(({ id, children, className = '', style: rowStyle = {}, 
   };
 
   return (
-    <tr
+    <div
       ref={setNodeRef}
       style={style}
       className={`${className} ${isDragging ? styles.draggingRow : ''}`}
       {...attributes}
       {...props}
+      role="row"
     >
       {children}
-    </tr>
+    </div>
   );
 });
 
 SortableRow.displayName = 'SortableRow';
 
-// Row Drag Handle component - just the handle cell
+// Row Drag Handle component - just the handle cell (div-based)
 const RowDragHandle = memo(({ rowId }: { rowId: string }) => {
   const { attributes, listeners } = useSortable({ id: rowId });
 
   return (
-    <td className={styles.dragHandleCell} {...attributes} {...listeners}>
+    <div className={styles.gridDragHandleCell} {...attributes} {...listeners} role="gridcell">
       <GripVertical size={16} className={styles.rowDragHandle} />
-    </td>
+    </div>
   );
 });
 
 RowDragHandle.displayName = 'RowDragHandle';
+
+// ============================================
+// Memoized Grid Cell Component (Performance)
+// Event handlers are delegated to grid body level
+// ============================================
+interface GridCellProps {
+  cellId: string;
+  className: string;
+  style: React.CSSProperties;
+  rowIndex: number;
+  columnIndex: number;
+  children: React.ReactNode;
+}
+
+const GridCell = memo(({
+  cellId,
+  className,
+  style,
+  rowIndex,
+  columnIndex,
+  children,
+}: GridCellProps) => {
+  return (
+    <div
+      className={className}
+      style={style}
+      role="gridcell"
+      data-row-index={rowIndex}
+      data-column-index={columnIndex}
+    >
+      {children}
+    </div>
+  );
+});
+
+GridCell.displayName = 'GridCell';
+
+// ============================================
+// Memoized Grid Row Component (Performance)
+// ============================================
+interface GridRowProps {
+  rowId: string;
+  className: string;
+  style?: React.CSSProperties;
+  isSelected: boolean;
+  rowIndex: number;
+  children: React.ReactNode;
+  onClick?: () => void;
+  onDoubleClick?: () => void;
+}
+
+const GridRow = memo(({
+  rowId,
+  className,
+  style,
+  isSelected,
+  rowIndex,
+  children,
+  onClick,
+  onDoubleClick,
+}: GridRowProps) => {
+  return (
+    <div
+      className={className}
+      role="row"
+      aria-selected={isSelected}
+      data-row-index={rowIndex}
+      onClick={onClick}
+      onDoubleClick={onDoubleClick}
+      style={style}
+    >
+      {children}
+    </div>
+  );
+});
+
+GridRow.displayName = 'GridRow';
 
 // Context Menu Component
 interface ContextMenuProps {
@@ -810,24 +898,76 @@ const getDefaultHeaderMenuItems = (isPinned: string | false): ContextMenuItem[] 
   { id: 'sort-desc', label: 'Sort descending', icon: <ChevronDown size={14} /> },
   { id: 'sort-clear', label: 'Clear sort', icon: <X size={14} /> },
   { id: 'divider1', label: '', divider: true },
-  { id: 'pin-left', label: 'Pin to left', icon: <Pin size={14} />, disabled: isPinned === 'left' },
-  { id: 'pin-right', label: 'Pin to right', icon: <Pin size={14} />, disabled: isPinned === 'right' },
+  { id: 'pin', label: 'Pin column', icon: <Pin size={14} />, disabled: !!isPinned },
   { id: 'unpin', label: 'Unpin column', icon: <PinOff size={14} />, disabled: !isPinned },
   { id: 'divider2', label: '', divider: true },
   { id: 'hide', label: 'Hide column', icon: <EyeOff size={14} /> },
 ];
 
-// Select filter component for single/multi select
-const SelectFilter = memo(({
+// Single select filter using Select component
+const SingleSelectFilter = memo(({
   column,
-  isMulti = false,
   options: customOptions,
 }: {
   column: any;
-  isMulti?: boolean;
+  options?: FilterOption[];
+}) => {
+  const columnFilterValue = column.getFilterValue() as string | undefined;
+  const facetedValues = column.getFacetedUniqueValues();
+
+  // Get options from faceted values or custom options
+  const options = useMemo(() => {
+    if (customOptions && customOptions.length > 0) {
+      return customOptions;
+    }
+    const uniqueValues = Array.from(facetedValues.keys());
+    return uniqueValues
+      .filter((v): v is string | number => v != null)
+      .map((value) => ({
+        value: String(value),
+        label: String(value),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [facetedValues.size, column.id, customOptions]);
+
+  // Add "All" option at the beginning
+  const selectOptions = useMemo(() => [
+    { value: '', label: 'All' },
+    ...options,
+  ], [options]);
+
+  const handleChange = useCallback((value: string, _option: { value: string; label: string } | null) => {
+    column.setFilterValue(value || undefined);
+  }, [column]);
+
+  return (
+    <div className={styles.filterWrapper}>
+      <Select
+        value={columnFilterValue ?? ''}
+        options={selectOptions}
+        onChange={handleChange}
+        size="sm"
+        placeholder="All"
+        fullWidth
+      />
+    </div>
+  );
+});
+
+SingleSelectFilter.displayName = 'SingleSelectFilter';
+
+// Multi select filter component (checkbox list)
+const MultiSelectFilter = memo(({
+  column,
+  options: customOptions,
+}: {
+  column: any;
   options?: FilterOption[];
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const columnFilterValue = column.getFilterValue();
   const facetedValues = column.getFacetedUniqueValues();
@@ -848,16 +988,43 @@ const SelectFilter = memo(({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facetedValues.size, column.id, customOptions]);
 
+  // Update dropdown position when opening
+  const updatePosition = useCallback(() => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+      });
+    }
+  }, []);
+
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (
+        triggerRef.current && !triggerRef.current.contains(target) &&
+        dropdownRef.current && !dropdownRef.current.contains(target)
+      ) {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
+  // Close on window resize
+  useEffect(() => {
+    if (isOpen) {
+      const handleResize = () => setIsOpen(false);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [isOpen]);
 
   const selectedValues = useMemo(() => {
     if (!columnFilterValue) return [];
@@ -866,16 +1033,11 @@ const SelectFilter = memo(({
   }, [columnFilterValue]);
 
   const handleSelect = useCallback((value: string) => {
-    if (isMulti) {
-      const newValues = selectedValues.includes(value)
-        ? selectedValues.filter((v) => v !== value)
-        : [...selectedValues, value];
-      column.setFilterValue(newValues.length > 0 ? newValues : undefined);
-    } else {
-      column.setFilterValue(selectedValues.includes(value) ? undefined : value);
-      setIsOpen(false);
-    }
-  }, [column, isMulti, selectedValues]);
+    const newValues = selectedValues.includes(value)
+      ? selectedValues.filter((v) => v !== value)
+      : [...selectedValues, value];
+    column.setFilterValue(newValues.length > 0 ? newValues : undefined);
+  }, [column, selectedValues]);
 
   const clearFilter = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -883,20 +1045,28 @@ const SelectFilter = memo(({
   }, [column]);
 
   const displayText = useMemo(() => {
-    if (selectedValues.length === 0) return isMulti ? 'Select...' : 'All';
+    if (selectedValues.length === 0) return 'Select...';
     if (selectedValues.length === 1) {
       const opt = options.find((o) => o.value === selectedValues[0]);
       return opt?.label ?? selectedValues[0];
     }
     return `${selectedValues.length} selected`;
-  }, [selectedValues, options, isMulti]);
+  }, [selectedValues, options]);
+
+  const handleToggle = useCallback(() => {
+    if (!isOpen) {
+      updatePosition();
+    }
+    setIsOpen(!isOpen);
+  }, [isOpen, updatePosition]);
 
   return (
-    <div className={styles.selectFilter} ref={dropdownRef}>
+    <div className={styles.selectFilter}>
       <button
+        ref={triggerRef}
         type="button"
         className={styles.selectFilterTrigger}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
       >
         <span className={styles.selectFilterText}>{displayText}</span>
         {selectedValues.length > 0 && (
@@ -906,8 +1076,18 @@ const SelectFilter = memo(({
         )}
         <ChevronDown size={14} className={styles.selectFilterIcon} />
       </button>
-      {isOpen && (
-        <div className={styles.selectFilterDropdown}>
+      {isOpen && createPortal(
+        <div
+          ref={dropdownRef}
+          className={styles.selectFilterDropdownPortal}
+          style={{
+            position: 'fixed',
+            top: dropdownPosition.top,
+            left: dropdownPosition.left,
+            width: dropdownPosition.width,
+            minWidth: 150,
+          }}
+        >
           {options.length === 0 ? (
             <div className={styles.selectFilterEmpty}>No options</div>
           ) : (
@@ -917,7 +1097,7 @@ const SelectFilter = memo(({
                 className={`${styles.selectFilterOption} ${selectedValues.includes(option.value) ? styles.selected : ''}`}
               >
                 <input
-                  type={isMulti ? 'checkbox' : 'radio'}
+                  type="checkbox"
                   checked={selectedValues.includes(option.value)}
                   onChange={() => handleSelect(option.value)}
                   className={styles.selectFilterCheckbox}
@@ -926,13 +1106,30 @@ const SelectFilter = memo(({
               </label>
             ))
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
 });
 
-SelectFilter.displayName = 'SelectFilter';
+MultiSelectFilter.displayName = 'MultiSelectFilter';
+
+// Helper functions for date conversion
+const dateToString = (date: Date | null): string => {
+  if (!date) return '';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const stringToDate = (str: string): Date | null => {
+  if (!str) return null;
+  const [year, month, day] = str.split('-').map(Number);
+  if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+  return new Date(year, month - 1, day);
+};
 
 // Date filter component
 const DateFilter = memo(({
@@ -944,36 +1141,33 @@ const DateFilter = memo(({
 }) => {
   const columnFilterValue = column.getFilterValue();
 
-  const handleDateChange = useCallback((value: string, position?: 'start' | 'end') => {
-    if (isRange) {
-      const currentValue = (columnFilterValue as [string, string]) ?? ['', ''];
-      if (position === 'start') {
-        column.setFilterValue([value, currentValue[1]]);
-      } else {
-        column.setFilterValue([currentValue[0], value]);
-      }
+  const handleSingleDateChange = useCallback((date: Date | null) => {
+    column.setFilterValue(date ? dateToString(date) : undefined);
+  }, [column]);
+
+  const handleRangeDateChange = useCallback((range: { startDate: Date | null; endDate: Date | null }) => {
+    const startStr = range.startDate ? dateToString(range.startDate) : '';
+    const endStr = range.endDate ? dateToString(range.endDate) : '';
+    if (!startStr && !endStr) {
+      column.setFilterValue(undefined);
     } else {
-      column.setFilterValue(value || undefined);
+      column.setFilterValue([startStr, endStr]);
     }
-  }, [column, columnFilterValue, isRange]);
+  }, [column]);
 
   if (isRange) {
-    const [startDate, endDate] = (columnFilterValue as [string, string]) ?? ['', ''];
+    const [startDateStr, endDateStr] = (columnFilterValue as [string, string]) ?? ['', ''];
     return (
-      <div className={styles.filterRange}>
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => handleDateChange(e.target.value, 'start')}
-          className={styles.filterInput}
-          placeholder="Start"
-        />
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => handleDateChange(e.target.value, 'end')}
-          className={styles.filterInput}
-          placeholder="End"
+      <div className={styles.filterWrapper}>
+        <DateRangePicker
+          startDate={stringToDate(startDateStr)}
+          endDate={stringToDate(endDateStr)}
+          onChange={handleRangeDateChange}
+          size="sm"
+          clearable
+          showPresets={false}
+          startPlaceholder="Start"
+          endPlaceholder="End"
         />
       </div>
     );
@@ -981,11 +1175,12 @@ const DateFilter = memo(({
 
   return (
     <div className={styles.filterWrapper}>
-      <input
-        type="date"
-        value={(columnFilterValue as string) ?? ''}
-        onChange={(e) => handleDateChange(e.target.value)}
-        className={styles.filterInput}
+      <DatePicker
+        value={stringToDate((columnFilterValue as string) ?? '')}
+        onChange={handleSingleDateChange}
+        size="sm"
+        clearable
+        placeholder="Select date"
       />
     </div>
   );
@@ -1014,9 +1209,9 @@ const ColumnFilter = memo(({
   // Route to appropriate filter based on filterType
   switch (filterType) {
     case 'select':
-      return <SelectFilter column={column} isMulti={false} options={filterOptions} />;
+      return <SingleSelectFilter column={column} options={filterOptions} />;
     case 'multi-select':
-      return <SelectFilter column={column} isMulti={true} options={filterOptions} />;
+      return <MultiSelectFilter column={column} options={filterOptions} />;
     case 'date':
       return <DateFilter column={column} isRange={false} />;
     case 'date-range':
@@ -1042,38 +1237,51 @@ ColumnFilter.displayName = 'ColumnFilter';
 
 // Number range filter component
 const NumberRangeFilter = memo(({ column }: { column: any }) => {
-  const columnFilterValue = column.getFilterValue();
-  const [min, max] = column.getFacetedMinMaxValues() ?? [0, 0];
+  const columnFilterValue = column.getFilterValue() as [string | number, string | number] | undefined;
+  const [min, max] = column.getFacetedMinMaxValues() ?? [undefined, undefined];
+
+  const minValue = columnFilterValue?.[0] ?? '';
+  const maxValue = columnFilterValue?.[1] ?? '';
+
+  const handleMinChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    column.setFilterValue((old: [string | number, string | number] | undefined) => {
+      const newMax = old?.[1] ?? '';
+      if (!val && !newMax) return undefined;
+      return [val, newMax];
+    });
+  }, [column]);
+
+  const handleMaxChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    column.setFilterValue((old: [string | number, string | number] | undefined) => {
+      const newMin = old?.[0] ?? '';
+      if (!val && !newMin) return undefined;
+      return [newMin, val];
+    });
+  }, [column]);
 
   return (
     <div className={styles.filterRange}>
-      <input
+      <Input
         type="number"
-        min={Number(min ?? '')}
-        max={Number(max ?? '')}
-        value={(columnFilterValue as [number, number])?.[0] ?? ''}
-        onChange={(e) =>
-          column.setFilterValue((old: [number, number]) => [
-            e.target.value,
-            old?.[1],
-          ])
-        }
+        min={min != null ? Number(min) : undefined}
+        max={max != null ? Number(max) : undefined}
+        value={String(minValue)}
+        onChange={handleMinChange}
         placeholder="Min"
-        className={styles.filterInput}
+        size="sm"
+        fullWidth
       />
-      <input
+      <Input
         type="number"
-        min={Number(min ?? '')}
-        max={Number(max ?? '')}
-        value={(columnFilterValue as [number, number])?.[1] ?? ''}
-        onChange={(e) =>
-          column.setFilterValue((old: [number, number]) => [
-            old?.[0],
-            e.target.value,
-          ])
-        }
+        min={min != null ? Number(min) : undefined}
+        max={max != null ? Number(max) : undefined}
+        value={String(maxValue)}
+        onChange={handleMaxChange}
         placeholder="Max"
-        className={styles.filterInput}
+        size="sm"
+        fullWidth
       />
     </div>
   );
@@ -1083,29 +1291,24 @@ NumberRangeFilter.displayName = 'NumberRangeFilter';
 
 // Text filter component
 const TextFilter = memo(({ column }: { column: any }) => {
-  const columnFilterValue = column.getFilterValue();
+  const columnFilterValue = column.getFilterValue() as string | undefined;
   const facetedValues = column.getFacetedUniqueValues();
-  const sortedUniqueValues = useMemo(
-    () => Array.from(facetedValues.keys()).sort(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [facetedValues.size, column.id]
-  );
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    column.setFilterValue(val || undefined);
+  }, [column]);
 
   return (
     <div className={styles.filterWrapper}>
-      <input
+      <Input
         type="text"
-        value={(columnFilterValue ?? '') as string}
-        onChange={(e) => column.setFilterValue(e.target.value)}
+        value={columnFilterValue ?? ''}
+        onChange={handleChange}
         placeholder={`Search... (${facetedValues.size})`}
-        className={styles.filterInput}
-        list={column.id + 'list'}
+        size="sm"
+        fullWidth
       />
-      <datalist id={column.id + 'list'}>
-        {sortedUniqueValues.slice(0, 5000).map((value: unknown) => (
-          <option value={String(value)} key={String(value)} />
-        ))}
-      </datalist>
     </div>
   );
 });
@@ -1381,6 +1584,8 @@ function DataGridInner<TData>(
 
     // Filtering
     enableFiltering = true,
+    showColumnFilters: showColumnFiltersProp,
+    onShowColumnFiltersChange,
     enableGlobalFilter = true,
     globalFilter: globalFilterProp,
     onGlobalFilterChange,
@@ -1506,6 +1711,7 @@ function DataGridInner<TData>(
   const [sorting, setSorting] = useState<SortingState>(sortingProp ?? []);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(columnFiltersProp ?? []);
   const [globalFilter, setGlobalFilter] = useState<string>(globalFilterProp ?? '');
+  const [showColumnFiltersState, setShowColumnFiltersState] = useState<boolean>(true);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(rowSelectionProp ?? {});
   const [expanded, setExpanded] = useState<ExpandedState>(
     expandedProp ?? (defaultExpanded === true ? true : defaultExpanded ?? {})
@@ -1526,6 +1732,98 @@ function DataGridInner<TData>(
   const focusedCellRef = useRef<{ rowIndex: number; columnIndex: number } | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
+
+  // Sync controlled props with internal state
+  useEffect(() => {
+    if (sortingProp !== undefined) {
+      setSorting(sortingProp);
+    }
+  }, [sortingProp]);
+
+  useEffect(() => {
+    if (columnFiltersProp !== undefined) {
+      setColumnFilters(columnFiltersProp);
+    }
+  }, [columnFiltersProp]);
+
+  useEffect(() => {
+    if (globalFilterProp !== undefined) {
+      setGlobalFilter(globalFilterProp);
+    }
+  }, [globalFilterProp]);
+
+  useEffect(() => {
+    if (rowSelectionProp !== undefined) {
+      setRowSelection(rowSelectionProp);
+    }
+  }, [rowSelectionProp]);
+
+  useEffect(() => {
+    if (expandedProp !== undefined) {
+      setExpanded(expandedProp);
+    }
+  }, [expandedProp]);
+
+  useEffect(() => {
+    if (groupingProp !== undefined) {
+      setGrouping(groupingProp);
+    }
+  }, [groupingProp]);
+
+  useEffect(() => {
+    if (columnVisibilityProp !== undefined) {
+      setColumnVisibility(columnVisibilityProp);
+    }
+  }, [columnVisibilityProp]);
+
+  useEffect(() => {
+    if (columnOrderProp !== undefined) {
+      setColumnOrder(columnOrderProp);
+    }
+  }, [columnOrderProp]);
+
+  useEffect(() => {
+    if (columnPinningProp !== undefined) {
+      setColumnPinning(columnPinningProp);
+    }
+  }, [columnPinningProp]);
+
+  useEffect(() => {
+    if (columnSizingProp !== undefined) {
+      setColumnSizing(columnSizingProp);
+    }
+  }, [columnSizingProp]);
+
+  useEffect(() => {
+    if (rowPinningProp !== undefined) {
+      setRowPinning(rowPinningProp);
+    }
+  }, [rowPinningProp]);
+
+  useEffect(() => {
+    if (paginationProp !== undefined) {
+      setPagination(paginationProp);
+    }
+  }, [paginationProp]);
+
+  // Filter visibility (controlled or uncontrolled)
+  const showColumnFilters = showColumnFiltersProp ?? showColumnFiltersState;
+
+  useEffect(() => {
+    if (showColumnFiltersProp !== undefined) {
+      setShowColumnFiltersState(showColumnFiltersProp);
+    }
+  }, [showColumnFiltersProp]);
+
+  const toggleColumnFilters = useCallback(() => {
+    const newValue = !showColumnFilters;
+    if (onShowColumnFiltersChange) {
+      onShowColumnFiltersChange(newValue);
+    }
+    if (showColumnFiltersProp === undefined) {
+      setShowColumnFiltersState(newValue);
+    }
+  }, [showColumnFilters, onShowColumnFiltersChange, showColumnFiltersProp]);
 
   // Context menu state
   const [contextMenu, setContextMenu] = useState<{
@@ -1943,8 +2241,7 @@ function DataGridInner<TData>(
       }, 0);
       return () => clearTimeout(timer);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enableVirtualization, virtualScrollElement]);
+  }, [enableVirtualization, virtualScrollElement, rowVirtualizer]);
 
   // Column virtualization
   const visibleColumns = table.getVisibleLeafColumns();
@@ -2098,6 +2395,26 @@ function DataGridInner<TData>(
     }
   }, [isSelecting]);
 
+  // ============================================
+  // Event Delegation Handlers (Performance)
+  // ============================================
+
+  // Helper to extract cell info from event target
+  const getCellInfoFromEvent = useCallback((e: React.MouseEvent): { rowIndex: number; columnIndex: number; columnId: string } | null => {
+    const target = e.target as HTMLElement;
+    const cell = target.closest('[role="gridcell"]') as HTMLElement;
+    if (!cell) return null;
+
+    const rowIndex = parseInt(cell.dataset.rowIndex || '', 10);
+    const columnIndex = parseInt(cell.dataset.columnIndex || '', 10);
+    if (isNaN(rowIndex) || isNaN(columnIndex)) return null;
+
+    const columnId = visibleColumnIds[columnIndex];
+    if (!columnId) return null;
+
+    return { rowIndex, columnIndex, columnId };
+  }, [visibleColumnIds]);
+
   // Get cell value as string
   const getCellValueAsString = useCallback((rowIndex: number, columnId: string): string => {
     const row = rows[rowIndex];
@@ -2235,6 +2552,35 @@ function DataGridInner<TData>(
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [enableClipboard, handleCopyToClipboard, handlePasteFromClipboard, onPaste]);
 
+  // Column pinning helpers - pins/unpins all columns up to the target column (like Excel freeze panes)
+  const pinColumnsUpTo = useCallback((columnId: string) => {
+    const allColumns = table.getAllLeafColumns();
+    const targetIndex = allColumns.findIndex(col => col.id === columnId);
+    if (targetIndex === -1) return;
+
+    const newPinning: ColumnPinningState = { left: [], right: [] };
+    for (let i = 0; i <= targetIndex; i++) {
+      const col = allColumns[i];
+      if (col.getCanPin()) {
+        newPinning.left!.push(col.id);
+      }
+    }
+    table.setColumnPinning(newPinning);
+  }, [table]);
+
+  const unpinColumnsFrom = useCallback((columnId: string) => {
+    const allColumns = table.getAllLeafColumns();
+    const targetIndex = allColumns.findIndex(col => col.id === columnId);
+    if (targetIndex === -1) return;
+
+    const currentPinning = table.getState().columnPinning;
+    const newLeft = (currentPinning.left || []).filter(id => {
+      const colIndex = allColumns.findIndex(col => col.id === id);
+      return colIndex < targetIndex;
+    });
+    table.setColumnPinning({ left: newLeft, right: [] });
+  }, [table]);
+
   // Context menu handlers
   const handleContextMenu = useCallback((
     e: React.MouseEvent,
@@ -2268,6 +2614,46 @@ function DataGridInner<TData>(
       items,
     });
   }, [enableContextMenu, cellContextMenuItems, rowContextMenuItems, headerContextMenuItems, rows, table]);
+
+  // ============================================
+  // Event Delegation Handlers (Performance)
+  // These must be after handleContextMenu/handleCellMouseDown/handleCellMouseEnter
+  // ============================================
+
+  // Event delegation: Context menu on grid body
+  const handleBodyContextMenu = useCallback((e: React.MouseEvent) => {
+    const cellInfo = getCellInfoFromEvent(e);
+    if (!cellInfo) return;
+
+    const row = rows[cellInfo.rowIndex];
+    if (!row) return;
+
+    handleContextMenu(e, 'cell', {
+      type: 'cell',
+      rowData: row.original,
+      rowIndex: cellInfo.rowIndex,
+      columnId: cellInfo.columnId,
+      cellValue: row.getValue(cellInfo.columnId),
+    });
+  }, [getCellInfoFromEvent, rows, handleContextMenu]);
+
+  // Event delegation: Mouse down on grid body
+  const handleBodyMouseDown = useCallback((e: React.MouseEvent) => {
+    const cellInfo = getCellInfoFromEvent(e);
+    if (!cellInfo) return;
+
+    handleCellMouseDown(cellInfo.rowIndex, cellInfo.columnId, e);
+  }, [getCellInfoFromEvent, handleCellMouseDown]);
+
+  // Event delegation: Mouse move for range selection
+  const handleBodyMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isSelecting) return;
+
+    const cellInfo = getCellInfoFromEvent(e);
+    if (!cellInfo) return;
+
+    handleCellMouseEnter(cellInfo.rowIndex, cellInfo.columnId);
+  }, [getCellInfoFromEvent, isSelecting, handleCellMouseEnter]);
 
   const handleContextMenuAction = useCallback((actionId: string) => {
     if (!contextMenu) return;
@@ -2306,7 +2692,9 @@ function DataGridInner<TData>(
         }
         break;
       case 'unpin':
-        if (context.rowData) {
+        if (type === 'header' && context.columnId) {
+          unpinColumnsFrom(context.columnId);
+        } else if (context.rowData) {
           const row = rows.find(r => r.original === context.rowData);
           row?.pin(false);
         }
@@ -2329,16 +2717,9 @@ function DataGridInner<TData>(
           column?.clearSorting();
         }
         break;
-      case 'pin-left':
+      case 'pin':
         if (context.columnId) {
-          const column = table.getColumn(context.columnId);
-          column?.pin('left');
-        }
-        break;
-      case 'pin-right':
-        if (context.columnId) {
-          const column = table.getColumn(context.columnId);
-          column?.pin('right');
+          pinColumnsUpTo(context.columnId);
         }
         break;
       case 'hide':
@@ -2351,7 +2732,7 @@ function DataGridInner<TData>(
 
     // Call custom handler
     onContextMenuAction?.(actionId, context);
-  }, [contextMenu, rows, table, onContextMenuAction]);
+  }, [contextMenu, rows, table, onContextMenuAction, pinColumnsUpTo, unpinColumnsFrom]);
 
   const closeContextMenu = useCallback(() => {
     setContextMenu(null);
@@ -2679,10 +3060,19 @@ function DataGridInner<TData>(
       setRangeSelectionStart(null);
       setRangeSelectionEnd(null);
     },
-  }));
+  }), [
+    table,
+    enableVirtualization,
+    rowVirtualizer,
+    getExportDataFn,
+    downloadFile,
+    escapeCSV,
+    handleCopyToClipboard,
+    selectedCells,
+  ]);
 
-  // Render header cell
-  const renderHeaderCell = useCallback((header: Header<TData, unknown>) => {
+  // Render header cell (div-based)
+  const renderHeaderCell = useCallback((header: Header<TData, unknown>, isLastColumn: boolean = false) => {
     const canSort = header.column.getCanSort();
     const sorted = header.column.getIsSorted();
     const canFilter = header.column.getCanFilter();
@@ -2691,18 +3081,33 @@ function DataGridInner<TData>(
     const canResize = header.column.getCanResize();
     const align = (header.column.columnDef.meta as any)?.align ?? 'left';
 
+    // Check if this is the last pinned column (for shadow)
+    const pinnedLeftCols = table.getState().columnPinning.left || [];
+    const pinnedRightCols = table.getState().columnPinning.right || [];
+    const isLastPinnedLeft = isPinned === 'left' && pinnedLeftCols[pinnedLeftCols.length - 1] === header.column.id;
+    const isFirstPinnedRight = isPinned === 'right' && pinnedRightCols[0] === header.column.id;
+
+    const cellClasses = [
+      styles.gridHeaderCell,
+      isPinned === 'left' && styles.pinnedLeft,
+      isPinned === 'right' && styles.pinnedRight,
+      isLastPinnedLeft && styles.pinnedLeftLast,
+      isFirstPinnedRight && styles.pinnedRightFirst,
+      (!showColumnFilters || !enableFiltering) && styles.filtersHidden,
+    ].filter(Boolean).join(' ');
+
     return (
-      <th
+      <div
         key={header.id}
-        colSpan={header.colSpan}
-        className={`${styles.th} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
-          isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-        }`}
+        className={cellClasses}
         style={{
-          width: header.getSize(),
+          flex: isLastColumn ? '1 0 auto' : `0 0 ${header.getSize()}px`,
+          minWidth: header.getSize(),
           left: isPinned === 'left' ? header.getStart('left') : undefined,
           right: isPinned === 'right' ? header.getStart('right') : undefined,
         }}
+        role="columnheader"
+        aria-sort={sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined}
         onContextMenu={(e) => handleContextMenu(e, 'header', { type: 'header', columnId: header.id })}
       >
         {header.isPlaceholder ? null : (
@@ -2729,9 +3134,9 @@ function DataGridInner<TData>(
                 className={styles.pinButton}
                 onClick={() => {
                   if (isPinned) {
-                    header.column.pin(false);
+                    unpinColumnsFrom(header.column.id);
                   } else {
-                    header.column.pin('left');
+                    pinColumnsUpTo(header.column.id);
                   }
                 }}
                 title={isPinned ? 'Unpin column' : 'Pin column'}
@@ -2750,77 +3155,113 @@ function DataGridInner<TData>(
             )}
           </div>
         )}
-        {canFilter && enableFiltering && (
+        {canFilter && enableFiltering && showColumnFilters && (
           <div className={styles.thFilter}>
             <ColumnFilter column={header.column} table={table} />
           </div>
         )}
-      </th>
+      </div>
     );
-  }, [table, enableColumnPinning, enableFiltering]);
+  }, [table, enableColumnPinning, enableFiltering, showColumnFilters, pinColumnsUpTo, unpinColumnsFrom]);
 
-  // Render row
+  // Render row (div-based)
   const renderRow = useCallback((row: Row<TData>, virtualRow?: { index: number; start: number; size: number }) => {
     const isSelected = row.getIsSelected();
     const isExpanded = row.getIsExpanded();
     const isGrouped = row.getIsGrouped();
     const isPinnedRow = row.getIsPinned();
+    const visibleCells = row.getVisibleCells();
 
-    const rowContent = (
-      <>
-        {/* Drag handle cell for row ordering */}
-        {enableRowOrdering && (
-          <RowDragHandle rowId={row.id} />
-        )}
-        {row.getVisibleCells().map((cell, cellIndex) => {
-          const isPinned = cell.column.getIsPinned();
-          const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
-          // Focus styling is handled via DOM manipulation in useEffect (performance optimization)
-          const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
+    // Row classes
+    const rowClasses = [
+      styles.gridRow,
+      virtualRow && styles.virtual,
+      isSelected && styles.selected,
+      isGrouped && styles.grouped,
+      striped && styles.striped,
+      hoverable && styles.hoverable,
+      isPinnedRow && styles.pinnedRow,
+      isPinnedRow === 'top' && styles.pinnedRowTop,
+      isPinnedRow === 'bottom' && styles.pinnedRowBottom,
+    ].filter(Boolean).join(' ');
 
-          return (
-            <td
-              key={cell.id}
-              className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
-                isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-              } ${isCellInRange ? styles.selectedCell : ''}`}
-              style={{
-                width: cell.column.getSize(),
-                left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
-                right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
-              }}
-              data-row-index={row.index}
-              data-column-index={cellIndex}
-              onContextMenu={(e) => handleContextMenu(e, 'cell', {
-                type: 'cell',
-                rowData: row.original,
-                rowIndex: row.index,
-                columnId: cell.column.id,
-                cellValue: cell.getValue(),
-              })}
-              onMouseDown={(e) => handleCellMouseDown(row.index, cell.column.id, e)}
-              onMouseEnter={() => handleCellMouseEnter(row.index, cell.column.id)}
-            >
-              {cell.getIsGrouped() ? (
-                <button
-                  className={styles.groupToggle}
-                  onClick={row.getToggleExpandedHandler()}
-                >
-                  {row.getIsExpanded() ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
-                </button>
-              ) : cell.getIsAggregated() ? (
-                flexRender(
-                  cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
-                  cell.getContext()
-                )
-              ) : cell.getIsPlaceholder() ? null : (
-                flexRender(cell.column.columnDef.cell, cell.getContext())
-              )}
-            </td>
-          );
-        })}
-      </>
+    // Row style for virtual positioning
+    const rowStyle: React.CSSProperties | undefined = virtualRow
+      ? {
+          height: `${virtualRow.size}px`,
+          transform: `translateY(${virtualRow.start}px)`,
+        }
+      : undefined;
+
+    // Render cell content
+    const renderCellContent = (cell: typeof visibleCells[0], cellIndex: number) => {
+      const isPinned = cell.column.getIsPinned();
+      const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
+      const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
+      const isLastColumn = cellIndex === visibleCells.length - 1;
+
+      // Check if this is the last pinned column (for shadow)
+      const pinnedLeftCols = table.getState().columnPinning.left || [];
+      const pinnedRightCols = table.getState().columnPinning.right || [];
+      const isLastPinnedLeft = isPinned === 'left' && pinnedLeftCols[pinnedLeftCols.length - 1] === cell.column.id;
+      const isFirstPinnedRight = isPinned === 'right' && pinnedRightCols[0] === cell.column.id;
+
+      const cellClasses = [
+        styles.gridCell,
+        align === 'center' && styles.alignCenter,
+        align === 'right' && styles.alignRight,
+        isPinned === 'left' && styles.pinnedLeft,
+        isPinned === 'right' && styles.pinnedRight,
+        isCellInRange && styles.selectedCell,
+        isLastPinnedLeft && styles.pinnedLeftLast,
+        isFirstPinnedRight && styles.pinnedRightFirst,
+      ].filter(Boolean).join(' ');
+
+      // Cell content - grouped, aggregated, placeholder, or normal
+      const cellContent = cell.getIsGrouped() ? (
+        <button
+          className={styles.groupToggle}
+          onClick={row.getToggleExpandedHandler()}
+        >
+          {row.getIsExpanded() ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+          {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
+        </button>
+      ) : cell.getIsAggregated() ? (
+        flexRender(
+          cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+          cell.getContext()
+        )
+      ) : cell.getIsPlaceholder() ? null : (
+        flexRender(cell.column.columnDef.cell, cell.getContext())
+      );
+
+      // Use memoized GridCell component (event handlers are delegated to grid body)
+      return (
+        <GridCell
+          key={cell.id}
+          cellId={cell.id}
+          className={cellClasses}
+          style={{
+            flex: isLastColumn ? '1 0 auto' : `0 0 ${cell.column.getSize()}px`,
+            minWidth: cell.column.getSize(),
+            left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
+            right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
+          }}
+          rowIndex={row.index}
+          columnIndex={cellIndex}
+        >
+          {cellContent}
+        </GridCell>
+      );
+    };
+
+    // Render expanded row
+    const expandedRow = isExpanded && renderExpandedRow && !isGrouped && (
+      <div className={styles.gridExpandedRow} role="row">
+        <div className={styles.gridExpandedCell} role="gridcell">
+          {renderExpandedRow(row.original)}
+        </div>
+      </div>
     );
 
     // Use SortableRow if row ordering is enabled
@@ -2829,119 +3270,41 @@ function DataGridInner<TData>(
         <React.Fragment key={row.id}>
           <SortableRow
             id={row.id}
-            className={`${styles.tr} ${styles.row} ${isSelected ? styles.selected : ''} ${
-              isGrouped ? styles.grouped : ''
-            } ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''} ${
-              isPinnedRow ? styles.pinnedRow : ''
-            } ${isPinnedRow === 'top' ? styles.pinnedRowTop : ''} ${isPinnedRow === 'bottom' ? styles.pinnedRowBottom : ''}`}
+            className={rowClasses}
             data-row-index={row.index}
             onClick={() => onRowClick?.(row.original)}
             onDoubleClick={() => onRowDoubleClick?.(row.original)}
-            style={
-              virtualRow
-                ? {
-                    height: `${virtualRow.size}px`,
-                    transform: `translateY(${virtualRow.start}px)`,
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    display: 'flex',
-                  }
-                : undefined
-            }
+            style={rowStyle}
           >
-            {rowContent}
+            <RowDragHandle rowId={row.id} />
+            {visibleCells.map((cell, cellIndex) => renderCellContent(cell, cellIndex))}
           </SortableRow>
-          {/* Expanded content */}
-          {isExpanded && renderExpandedRow && !isGrouped && (
-            <tr className={styles.expandedRow}>
-              <td colSpan={row.getVisibleCells().length + (enableRowOrdering ? 1 : 0)}>
-                {renderExpandedRow(row.original)}
-              </td>
-            </tr>
-          )}
+          {expandedRow}
         </React.Fragment>
       );
     }
 
+    // Row click handlers - memoized per row would be ideal but keeping simple for now
+    const handleRowClick = onRowClick ? () => onRowClick(row.original) : undefined;
+    const handleRowDoubleClick = onRowDoubleClick ? () => onRowDoubleClick(row.original) : undefined;
+
     return (
       <React.Fragment key={row.id}>
-        <tr
-          className={`${styles.tr} ${styles.row} ${isSelected ? styles.selected : ''} ${
-            isGrouped ? styles.grouped : ''
-          } ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''} ${
-            isPinnedRow ? styles.pinnedRow : ''
-          } ${isPinnedRow === 'top' ? styles.pinnedRowTop : ''} ${isPinnedRow === 'bottom' ? styles.pinnedRowBottom : ''}`}
-          data-row-index={row.index}
-          onClick={() => onRowClick?.(row.original)}
-          onDoubleClick={() => onRowDoubleClick?.(row.original)}
-          style={
-            virtualRow
-              ? {
-                  height: `${virtualRow.size}px`,
-                  transform: `translateY(${virtualRow.start}px)`,
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  display: 'flex',
-                }
-              : undefined
-          }
+        <GridRow
+          rowId={row.id}
+          className={rowClasses}
+          style={rowStyle}
+          isSelected={isSelected}
+          rowIndex={row.index}
+          onClick={handleRowClick}
+          onDoubleClick={handleRowDoubleClick}
         >
-          {row.getVisibleCells().map((cell, cellIndex) => {
-            const isPinned = cell.column.getIsPinned();
-            const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
-            // Focus styling is handled via DOM manipulation in useEffect (performance optimization)
-            const isCellInRange = enableRangeSelection && isCellSelected(row.index, cell.column.id);
-
-            return (
-              <td
-                key={cell.id}
-                className={`${styles.td} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]} ${
-                  isPinned ? styles[`pinned${String(isPinned).charAt(0).toUpperCase() + String(isPinned).slice(1)}`] : ''
-                } ${isCellInRange ? styles.selectedCell : ''}`}
-                style={{
-                  width: cell.column.getSize(),
-                  left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
-                  right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
-                }}
-                data-row-index={row.index}
-                data-column-index={cellIndex}
-                onMouseDown={(e) => handleCellMouseDown(row.index, cell.column.id, e)}
-                onMouseEnter={() => handleCellMouseEnter(row.index, cell.column.id)}
-              >
-                {cell.getIsGrouped() ? (
-                  <button
-                    className={styles.groupToggle}
-                    onClick={row.getToggleExpandedHandler()}
-                  >
-                    {row.getIsExpanded() ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
-                  </button>
-                ) : cell.getIsAggregated() ? (
-                  flexRender(
-                    cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
-                    cell.getContext()
-                  )
-                ) : cell.getIsPlaceholder() ? null : (
-                  flexRender(cell.column.columnDef.cell, cell.getContext())
-                )}
-              </td>
-            );
-          })}
-        </tr>
-        {isExpanded && renderExpandedRow && (
-          <tr className={styles.expandedRow}>
-            <td colSpan={row.getVisibleCells().length} className={styles.expandedCell}>
-              {renderExpandedRow(row.original)}
-            </td>
-          </tr>
-        )}
+          {visibleCells.map((cell, cellIndex) => renderCellContent(cell, cellIndex))}
+        </GridRow>
+        {expandedRow}
       </React.Fragment>
     );
-  }, [onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableRangeSelection, isCellSelected, handleCellMouseDown, handleCellMouseEnter, enableRowOrdering, handleContextMenu]);
+  }, [table, onRowClick, onRowDoubleClick, striped, hoverable, renderExpandedRow, enableRangeSelection, isCellSelected, enableRowOrdering]);
 
   // Render pagination
   const renderPagination = useCallback(() => {
@@ -3051,6 +3414,15 @@ function DataGridInner<TData>(
           )}
           <div className={styles.toolbarActions}>
             {toolbarContent}
+            {enableFiltering && (
+              <button
+                className={`${styles.toolbarButton} ${showColumnFilters ? styles.active : ''}`}
+                onClick={toggleColumnFilters}
+                title={showColumnFilters ? 'Hide column filters' : 'Show column filters'}
+              >
+                <Filter size={16} />
+              </button>
+            )}
             {enableExpandAll && (enableExpanding || getSubRows) && (
               <>
                 <button
@@ -3128,197 +3500,106 @@ function DataGridInner<TData>(
             onDragStart={enableRowOrdering ? handleRowDragStart : undefined}
             onDragEnd={enableRowOrdering ? handleRowDragEnd : undefined}
           >
-            {/* Virtualized Grid - div-based rendering for performance */}
-            {enableVirtualization ? (
-              <div className={styles.virtualGrid} role="grid">
-                {/* Virtualized Header - sticky outside scroll area */}
-                {showHeader && (
-                  <div className={styles.virtualHeader} role="rowgroup">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <div key={headerGroup.id} className={styles.virtualHeaderRow} role="row">
+            {/* Unified Grid - div-based rendering */}
+            <div className={styles.grid} role="grid">
+              {/* Header */}
+              {showHeader && (
+                <div className={styles.gridHeader} role="rowgroup">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <div key={headerGroup.id} className={`${styles.gridHeaderRow} ${(!showColumnFilters || !enableFiltering) ? styles.filtersHidden : ''}`} role="row">
+                      {/* Drag handle column header for row ordering */}
+                      {enableRowOrdering && (
+                        <div className={styles.gridDragHandleHeader} role="columnheader">
+                          <GripVertical size={16} />
+                        </div>
+                      )}
+                      <SortableContext items={columnIds} strategy={horizontalListSortingStrategy}>
                         {headerGroup.headers.map((header, headerIndex, headers) => {
-                          const canSort = header.column.getCanSort();
-                          const sorted = header.column.getIsSorted();
-                          const align = (header.column.columnDef.meta as any)?.align ?? 'left';
+                          const isSpecialColumn = header.id.startsWith('_');
                           const isLastColumn = headerIndex === headers.length - 1;
-
-                          return (
-                            <div
-                              key={header.id}
-                              className={`${styles.virtualHeaderCell} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]}`}
-                              style={{
-                                minWidth: header.getSize(),
-                                flex: isLastColumn ? '1 0 auto' : `0 0 ${header.getSize()}px`,
-                              }}
-                              role="columnheader"
-                            >
-                              {header.isPlaceholder ? null : (
-                                <div className={styles.thContent}>
-                                  <div
-                                    className={`${styles.thLabel} ${canSort ? styles.sortable : ''}`}
-                                    onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
-                                  >
-                                    {flexRender(header.column.columnDef.header, header.getContext())}
-                                    {canSort && (
-                                      <span className={styles.sortIcon}>
-                                        {sorted === 'asc' ? (
-                                          <ChevronUp size={14} />
-                                        ) : sorted === 'desc' ? (
-                                          <ChevronDown size={14} />
-                                        ) : (
-                                          <ChevronsUpDown size={14} />
-                                        )}
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
+                          return enableColumnDrag && !isSpecialColumn ? (
+                            <DraggableHeaderCell key={header.id} id={header.id}>
+                              {renderHeaderCell(header, isLastColumn)}
+                            </DraggableHeaderCell>
+                          ) : (
+                            renderHeaderCell(header, isLastColumn)
                           );
                         })}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Virtualized Body - scrollable container */}
-                <div
-                  ref={handleVirtualScrollRef}
-                  className={styles.virtualScrollContainer}
-                  style={{ height: typeof height === 'number' ? `${height - 48}px` : `calc(${height} - 48px)` }}
-                >
-                  <div
-                    className={styles.virtualBody}
-                    style={{ height: `${totalSize}px` }}
-                    role="rowgroup"
-                  >
-                    {rows.length === 0 ? (
-                      <div className={styles.virtualEmptyRow}>
-                        {renderEmpty ? renderEmpty() : (
-                          <div className={styles.emptyState}>
-                            <Filter size={48} className={styles.emptyIcon} />
-                            <p>{emptyMessage}</p>
-                          </div>
-                        )}
-                      </div>
-                    ) : virtualRows?.map((virtualRow) => {
-                      const row = rows[virtualRow.index];
-                      const isSelected = row.getIsSelected();
-
-                      return (
-                        <div
-                          key={row.id}
-                          className={`${styles.virtualRow} ${isSelected ? styles.selected : ''} ${striped ? styles.striped : ''} ${hoverable ? styles.hoverable : ''}`}
-                          style={{
-                            height: `${virtualRow.size}px`,
-                            transform: `translateY(${virtualRow.start}px)`,
-                          }}
-                          role="row"
-                          data-row-index={row.index}
-                          onClick={() => onRowClick?.(row.original)}
-                          onDoubleClick={() => onRowDoubleClick?.(row.original)}
-                        >
-                          {row.getVisibleCells().map((cell, cellIndex, cells) => {
-                            const align = (cell.column.columnDef.meta as any)?.align ?? 'left';
-                            const isLastColumn = cellIndex === cells.length - 1;
-
-                            return (
-                              <div
-                                key={cell.id}
-                                className={`${styles.virtualCell} ${styles[`align${align.charAt(0).toUpperCase() + align.slice(1)}`]}`}
-                                style={{
-                                  minWidth: cell.column.getSize(),
-                                  flex: isLastColumn ? '1 0 auto' : `0 0 ${cell.column.getSize()}px`,
-                                }}
-                                role="gridcell"
-                                data-row-index={row.index}
-                                data-column-index={cellIndex}
-                              >
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      );
-                    })}
-                  </div>
+                      </SortableContext>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ) : (
-              /* Standard Table - native table elements for accessibility and proper layout */
-              <table className={styles.table}>
-                {showHeader && (
-                  <thead className={styles.thead}>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id} className={styles.headerRow}>
-                        {/* Drag handle column header for row ordering */}
-                        {enableRowOrdering && (
-                          <th className={`${styles.th} ${styles.dragHandleHeader}`} style={{ width: 40 }}>
-                            <GripVertical size={16} />
-                          </th>
-                        )}
-                        <SortableContext items={columnIds} strategy={horizontalListSortingStrategy}>
-                          {headerGroup.headers.map((header) => {
-                            const isSpecialColumn = header.id.startsWith('_');
-                            return enableColumnDrag && !isSpecialColumn ? (
-                              <th
-                                key={header.id}
-                                className={styles.th}
-                                style={{ width: header.getSize() }}
-                              >
-                                <DraggableHeaderCell id={header.id}>
-                                  {renderHeaderCell(header)}
-                                </DraggableHeaderCell>
-                              </th>
-                            ) : (
-                              renderHeaderCell(header)
-                            );
-                          })}
-                        </SortableContext>
-                      </tr>
-                    ))}
-                  </thead>
-                )}
+              )}
 
-                <tbody className={styles.tbody}>
+              {/* Body - with optional virtualization */}
+              <div
+                ref={enableVirtualization ? handleVirtualScrollRef : undefined}
+                className={styles.gridBody}
+                style={enableVirtualization ? {
+                  height: typeof height === 'number' ? `${height - 48}px` : `calc(${height} - 48px)`,
+                  overflow: 'auto'
+                } : undefined}
+                role="rowgroup"
+                onContextMenu={handleBodyContextMenu}
+                onMouseDown={handleBodyMouseDown}
+                onMouseMove={handleBodyMouseMove}
+              >
+                <div style={enableVirtualization ? { height: `${totalSize}px`, position: 'relative' } : undefined}>
                   {rows.length === 0 ? (
-                    <tr className={styles.emptyRow}>
-                      <td colSpan={table.getAllLeafColumns().length + (enableRowOrdering ? 1 : 0)} className={styles.emptyCell}>
+                    <div className={styles.gridEmptyRow} role="row">
+                      <div className={styles.gridEmptyCell} role="gridcell">
                         {renderEmpty ? renderEmpty() : (
                           <div className={styles.emptyState}>
                             <Filter size={48} className={styles.emptyIcon} />
                             <p>{emptyMessage}</p>
                           </div>
                         )}
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
                   ) : enableRowOrdering ? (
                     <SortableContext items={rowIds} strategy={verticalListSortingStrategy}>
-                      {rows.map((row) => renderRow(row))}
+                      {enableVirtualization
+                        ? virtualRows?.map((virtualRow) => renderRow(rows[virtualRow.index], virtualRow))
+                        : rows.map((row) => renderRow(row))
+                      }
                     </SortableContext>
                   ) : (
-                    rows.map((row) => renderRow(row))
+                    enableVirtualization
+                      ? virtualRows?.map((virtualRow) => renderRow(rows[virtualRow.index], virtualRow))
+                      : rows.map((row) => renderRow(row))
                   )}
-                </tbody>
+                </div>
+              </div>
 
-                {showFooter && (
-                  <tfoot className={styles.tfoot}>
-                    {table.getFooterGroups().map((footerGroup) => (
-                      <tr key={footerGroup.id} className={styles.footerRow}>
-                        {enableRowOrdering && <th className={styles.footerCell} style={{ width: 40 }} />}
-                        {footerGroup.headers.map((header) => (
-                          <th key={header.id} className={styles.footerCell}>
+              {/* Footer */}
+              {showFooter && (
+                <div className={styles.gridFooter} role="rowgroup">
+                  {table.getFooterGroups().map((footerGroup) => (
+                    <div key={footerGroup.id} className={styles.gridFooterRow} role="row">
+                      {enableRowOrdering && <div className={styles.gridDragHandleHeader} role="gridcell" />}
+                      {footerGroup.headers.map((header, headerIndex, headers) => {
+                        const isLastColumn = headerIndex === headers.length - 1;
+                        return (
+                          <div
+                            key={header.id}
+                            className={styles.gridFooterCell}
+                            style={{
+                              flex: isLastColumn ? '1 0 auto' : `0 0 ${header.getSize()}px`,
+                              minWidth: header.getSize(),
+                            }}
+                            role="gridcell"
+                          >
                             {header.isPlaceholder
                               ? null
                               : flexRender(header.column.columnDef.footer, header.getContext())}
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </tfoot>
-                )}
-              </table>
-            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Row Drag Overlay */}
             {enableRowOrdering && (

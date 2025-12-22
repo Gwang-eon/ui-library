@@ -417,3 +417,114 @@
     color: var(--text-tertiary);
   }
 }
+
+/* ==================== Dark Mode - data-theme attribute ==================== */
+
+:global([data-theme="dark"]) .ruleCard,
+:global(.dark) .ruleCard {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .ruleCard:hover,
+:global(.dark) .ruleCard:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .ruleHeader,
+:global(.dark) .ruleHeader {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .ruleIconWrapper,
+:global([data-theme="dark"]) .ruleMetaGroups,
+:global([data-theme="dark"]) .ruleFlow,
+:global(.dark) .ruleIconWrapper,
+:global(.dark) .ruleMetaGroups,
+:global(.dark) .ruleFlow {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .ruleCategoryIcon,
+:global(.dark) .ruleCategoryIcon {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .ruleName,
+:global(.dark) .ruleName {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .ruleDescription,
+:global(.dark) .ruleDescription {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .badgeSuccess,
+:global(.dark) .badgeSuccess {
+  background: var(--color-success-900);
+  color: var(--color-success-300);
+}
+
+:global([data-theme="dark"]) .badgeDefault,
+:global(.dark) .badgeDefault {
+  background: var(--surface-quaternary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .btnIcon,
+:global(.dark) .btnIcon {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .btnIcon:hover,
+:global(.dark) .btnIcon:hover {
+  background: var(--surface-quaternary);
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .ruleDivider,
+:global(.dark) .ruleDivider {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .switchSlider,
+:global(.dark) .switchSlider {
+  background-color: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .switchInput:focus + .switchSlider,
+:global(.dark) .switchInput:focus + .switchSlider {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+:global([data-theme="dark"]) .ruleMetaLabel,
+:global(.dark) .ruleMetaLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .ruleMetaValue,
+:global(.dark) .ruleMetaValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .ruleStep,
+:global(.dark) .ruleStep {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .ruleStepLabel,
+:global(.dark) .ruleStepLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .ruleStepContent,
+:global(.dark) .ruleStepContent {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .ruleArrow,
+:global(.dark) .ruleArrow {
+  color: var(--text-tertiary);
+}

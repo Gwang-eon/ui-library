@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+export type TreeSelectSize = 'sm' | 'md' | 'lg';
 export interface TreeSelectNode {
     /** Unique value */
     value: string;
@@ -28,6 +29,8 @@ export interface TreeSelectProps {
     searchPlaceholder?: string;
     /** Placeholder text */
     placeholder?: string;
+    /** Size variant */
+    size?: TreeSelectSize;
     /** Disabled state */
     disabled?: boolean;
     /** Additional CSS classes */
@@ -56,4 +59,4 @@ export interface TreeSelectProps {
  * />
  * ```
  */
-export declare const TreeSelect: ({ data, value: controlledValue, defaultValue, onChange, multiple, showSearch, searchPlaceholder, placeholder, disabled, className, clearable, }: TreeSelectProps) => import("react/jsx-runtime").JSX.Element;
+export declare const TreeSelect: ({ data, value: controlledValue, defaultValue, onChange, multiple, showSearch, searchPlaceholder, placeholder, size, disabled, className, clearable, }: TreeSelectProps) => import("react/jsx-runtime").JSX.Element;

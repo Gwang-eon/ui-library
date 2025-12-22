@@ -453,3 +453,137 @@
     color: var(--color-error-400);
   }
 }
+
+/* ==================== Dark Mode - data-theme attribute ==================== */
+
+:global([data-theme="dark"]) .logContainer,
+:global([data-theme="dark"]) .timelineContent,
+:global([data-theme="dark"]) .groupedLog,
+:global([data-theme="dark"]) .logStat,
+:global(.dark) .logContainer,
+:global(.dark) .timelineContent,
+:global(.dark) .groupedLog,
+:global(.dark) .logStat {
+  background: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .logHeader,
+:global(.dark) .logHeader {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .logTitle,
+:global(.dark) .logTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .logGroupHeader,
+:global(.dark) .logGroupHeader {
+  background: var(--surface-tertiary);
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .logEntry,
+:global(.dark) .logEntry {
+  border-bottom-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .logEntry:hover,
+:global(.dark) .logEntry:hover {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .logTimestamp,
+:global(.dark) .logTimestamp {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .logMessage,
+:global(.dark) .logMessage {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .logDetails,
+:global(.dark) .logDetails {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineItem::before,
+:global(.dark) .timelineItem::before {
+  background: var(--surface-quaternary);
+}
+
+:global([data-theme="dark"]) .timelineMarker,
+:global(.dark) .timelineMarker {
+  background: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .timelineTitle,
+:global(.dark) .timelineTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .timelineTime,
+:global(.dark) .timelineTime {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineDescription,
+:global(.dark) .timelineDescription {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .timelineMeta,
+:global(.dark) .timelineMeta {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .logIconInfo,
+:global(.dark) .logIconInfo {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .logIconSuccess,
+:global(.dark) .logIconSuccess {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .logIconWarning,
+:global(.dark) .logIconWarning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .logIconError,
+:global(.dark) .logIconError {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .logStatLabel,
+:global(.dark) .logStatLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .logStatValueInfo,
+:global(.dark) .logStatValueInfo {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .logStatValueSuccess,
+:global(.dark) .logStatValueSuccess {
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .logStatValueWarning,
+:global(.dark) .logStatValueWarning {
+  color: var(--color-warning-400);
+}
+
+:global([data-theme="dark"]) .logStatValueError,
+:global(.dark) .logStatValueError {
+  color: var(--color-error-400);
+}

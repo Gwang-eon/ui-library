@@ -130,6 +130,12 @@
   border-color: var(--border-hover);
 }
 
+.toolbarButton.active {
+  color: var(--accent-color);
+  background: var(--selected-bg);
+  border-color: var(--accent-color);
+}
+
 /* ========================================
    DROPDOWN
    ======================================== */
@@ -241,48 +247,9 @@
   overflow: auto;
 }
 
-.table {
-  width: 100%;
-  min-width: max-content;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
 /* ========================================
-   HEADER
+   HEADER CELL CONTENT
    ======================================== */
-
-.thead {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: var(--surface-secondary);
-}
-
-.headerRow {
-  /* height set to auto to accommodate filter row */
-}
-
-.th {
-  position: relative;
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-label-medium);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-secondary);
-  text-align: left;
-  background: var(--surface-secondary);
-  border-bottom: 1px solid var(--border-default);
-  vertical-align: top;
-  white-space: nowrap;
-}
-
-.th.alignCenter {
-  text-align: center;
-}
-
-.th.alignRight {
-  text-align: right;
-}
 
 .thContent {
   display: flex;
@@ -317,6 +284,7 @@
   flex-shrink: 0;
   width: 16px;
   height: 16px;
+  overflow: visible;
 }
 
 .thLabel.sortable:hover .sortIcon {
@@ -337,7 +305,7 @@
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.th:hover .pinButton {
+.gridHeaderCell:hover .pinButton {
   opacity: 1;
 }
 
@@ -370,7 +338,9 @@
   position: sticky;
   left: 0;
   z-index: 1;
-  background: inherit;
+}
+
+.pinnedLeftLast {
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -378,7 +348,9 @@
   position: sticky;
   right: 0;
   z-index: 1;
-  background: inherit;
+}
+
+.pinnedRightFirst {
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -499,6 +471,18 @@
   overflow-y: auto;
 }
 
+/* Portal-based dropdown (fixed positioning, escapes overflow) */
+.selectFilterDropdownPortal {
+  padding: var(--spacing-1);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown, 1000);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .selectFilterOption {
   display: flex;
   align-items: center;
@@ -533,73 +517,17 @@
 }
 
 /* ========================================
-   BODY
+   UNIFIED GRID (div-based, replaces table)
    ======================================== */
 
-.tbody {
-  background: var(--surface-primary);
-}
-
-.tr {
-  height: 48px;
-  transition: background-color var(--duration-fast) var(--ease-out);
-}
-
-.row {
-  /* Used for hover effects on row actions */
-}
-
-.tr.hoverable:hover {
-  background: var(--surface-secondary);
-}
-
-.tr.selected {
-  background: var(--selected-bg);
-}
-
-.tr.selected:hover {
-  background: var(--selected-bg-hover);
-}
-
-.tr.grouped {
-  background: var(--surface-secondary);
-  font-weight: var(--font-weight-semibold);
-}
-
-.tr.striped:nth-child(even) {
-  background: var(--surface-secondary);
-}
-
-.td {
-  padding: var(--spacing-3) var(--spacing-4);
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-subtle);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-}
-
-.td.alignCenter {
-  text-align: center;
-}
-
-.td.alignRight {
-  text-align: right;
-}
-
-/* ========================================
-   VIRTUALIZED GRID (div-based)
-   ======================================== */
-
-.virtualGrid {
+.grid {
   display: flex;
   flex-direction: column;
   width: 100%;
   min-width: max-content;
 }
 
-.virtualHeader {
+.gridHeader {
   position: sticky;
   top: 0;
   z-index: 2;
@@ -607,117 +535,304 @@
   border-bottom: 1px solid var(--border-default);
 }
 
-.virtualHeaderRow {
+.gridHeaderRow {
   display: flex;
   align-items: stretch;
+  min-height: 48px;
 }
 
-.virtualHeaderCell {
+.gridHeaderRow.filtersHidden {
+  min-height: 40px;
+}
+
+.gridHeaderCell {
+  position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-label-medium);
   font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
   background: var(--surface-secondary);
-  border-bottom: 1px solid var(--border-default);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: visible to allow filter dropdowns to escape */
+  overflow: visible;
   box-sizing: border-box;
 }
 
-.virtualScrollContainer {
-  overflow: auto;
-  /* Remove flex: 1 - it was overriding the inline height style */
-  /* Height is set via inline style for virtualization to work correctly */
+/* When filters are hidden, center content vertically with equal padding */
+.gridHeaderCell.filtersHidden {
+  justify-content: center;
+  padding-top: var(--spacing-2);
+  padding-bottom: var(--spacing-2);
 }
 
-.virtualBody {
+.gridHeaderCell.pinnedLeft,
+.gridHeaderCell.pinnedRight {
+  position: sticky;
+  z-index: 1;
+}
+
+.gridBody {
   position: relative;
   background: var(--surface-primary);
+  flex: 1;
+  overflow: auto;
 }
 
-.virtualRow {
+.gridRow {
+  display: flex;
+  align-items: stretch;
+  min-height: 48px;
+  transition: background-color var(--duration-fast) var(--ease-out);
+  box-sizing: border-box;
+  /* Performance: isolate style/layout recalculations */
+  contain: layout style;
+}
+
+/* Virtual row positioning (absolute) */
+.gridRow.virtual {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  align-items: stretch;
-  transition: background-color var(--duration-fast) var(--ease-out);
-  box-sizing: border-box;
 }
 
-.virtualRow.hoverable:hover {
+.gridRow.hoverable:hover {
   background: var(--surface-secondary);
 }
 
-.virtualRow.selected {
+.gridRow.selected {
   background: var(--selected-bg);
 }
 
-.virtualRow.selected:hover {
+.gridRow.selected:hover {
   background: var(--selected-bg-hover);
 }
 
-.virtualRow.striped:nth-child(even) {
+.gridRow.grouped {
+  background: var(--surface-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.gridRow.striped:nth-child(even) {
   background: var(--surface-secondary);
 }
 
-.virtualCell {
+.gridCell {
   display: flex;
   align-items: center;
   padding: var(--spacing-3) var(--spacing-4);
   color: var(--text-primary);
+  background: var(--surface-primary);
   border-bottom: 1px solid var(--border-subtle);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box;
+  /* Performance: isolate paint/layout for each cell */
+  contain: layout style paint;
 }
 
-.virtualCell.alignCenter {
+.gridCell.pinnedLeft,
+.gridCell.pinnedRight {
+  position: sticky;
+  z-index: 1;
+}
+
+.gridCell.alignCenter {
   justify-content: center;
   text-align: center;
 }
 
-.virtualCell.alignRight {
+.gridCell.alignRight {
   justify-content: flex-end;
   text-align: right;
 }
 
-.virtualEmptyRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-8);
-}
-
-/* Dark mode support for virtualized grid */
-:global([data-theme="dark"]) .virtualHeader,
-:global(.dark) .virtualHeader {
-  background: var(--surface-primary);
-}
-
-:global([data-theme="dark"]) .virtualHeaderCell,
-:global(.dark) .virtualHeaderCell {
-  background: var(--surface-primary);
-}
-
-:global([data-theme="dark"]) .virtualBody,
-:global(.dark) .virtualBody {
+/* Row state backgrounds for cells */
+.gridRow.hoverable:hover .gridCell {
   background: var(--surface-secondary);
 }
 
-:global([data-theme="dark"]) .virtualRow.hoverable:hover,
-:global(.dark) .virtualRow.hoverable:hover {
+.gridRow.selected .gridCell {
+  background: var(--selected-bg);
+}
+
+.gridRow.selected:hover .gridCell {
+  background: var(--selected-bg-hover);
+}
+
+.gridRow.grouped .gridCell {
+  background: var(--surface-secondary);
+}
+
+.gridRow.striped:nth-child(even) .gridCell {
+  background: var(--surface-secondary);
+}
+
+/* Pinned column shadows */
+.gridHeaderCell.pinnedLeftLast,
+.gridCell.pinnedLeftLast {
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.gridHeaderCell.pinnedRightFirst,
+.gridCell.pinnedRightFirst {
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.gridFooter {
+  background: var(--surface-secondary);
+  border-top: 1px solid var(--border-default);
+}
+
+.gridFooterRow {
+  display: flex;
+  align-items: stretch;
+}
+
+.gridFooterCell {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-label-medium);
+  color: var(--text-secondary);
+  background: var(--surface-secondary);
+  box-sizing: border-box;
+}
+
+/* Empty state */
+.gridEmptyRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.gridEmptyCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: var(--spacing-8);
+  color: var(--text-tertiary);
+}
+
+/* Expanded row */
+.gridExpandedRow {
+  display: flex;
+}
+
+.gridExpandedCell {
+  flex: 1;
+  padding: var(--spacing-4);
+  background: var(--surface-tertiary);
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* Drag handle cell */
+.gridDragHandleCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  padding: 0;
+  color: var(--text-tertiary);
+  cursor: grab;
+}
+
+.gridDragHandleCell:active {
+  cursor: grabbing;
+}
+
+.gridDragHandleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  background: var(--surface-secondary);
+}
+
+/* Dark mode for unified grid */
+:global([data-theme="dark"]) .gridHeader,
+:global(.dark) .gridHeader {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .gridHeaderCell,
+:global(.dark) .gridHeaderCell {
+  color: var(--text-tertiary);
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .gridBody,
+:global(.dark) .gridBody {
+  background: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .gridCell,
+:global(.dark) .gridCell {
+  background: var(--surface-secondary);
+}
+
+:global([data-theme="dark"]) .gridRow.hoverable:hover .gridCell,
+:global(.dark) .gridRow.hoverable:hover .gridCell {
   background: var(--surface-primary);
 }
 
-:global([data-theme="dark"]) .virtualRow.selected,
-:global(.dark) .virtualRow.selected {
+:global([data-theme="dark"]) .gridRow.selected .gridCell,
+:global(.dark) .gridRow.selected .gridCell {
   background: var(--selected-bg);
+}
+
+:global([data-theme="dark"]) .gridRow.selected:hover .gridCell,
+:global(.dark) .gridRow.selected:hover .gridCell {
+  background: var(--selected-bg-hover);
+}
+
+:global([data-theme="dark"]) .gridRow.grouped .gridCell,
+:global(.dark) .gridRow.grouped .gridCell {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .gridRow.striped:nth-child(even) .gridCell,
+:global(.dark) .gridRow.striped:nth-child(even) .gridCell {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .gridFooter,
+:global(.dark) .gridFooter {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .gridFooterCell,
+:global(.dark) .gridFooterCell {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .gridExpandedCell,
+:global(.dark) .gridExpandedCell {
+  background: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .gridHeaderCell.pinnedLeftLast,
+:global(.dark) .gridHeaderCell.pinnedLeftLast,
+:global([data-theme="dark"]) .gridCell.pinnedLeftLast,
+:global(.dark) .gridCell.pinnedLeftLast {
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .gridHeaderCell.pinnedRightFirst,
+:global(.dark) .gridHeaderCell.pinnedRightFirst,
+:global([data-theme="dark"]) .gridCell.pinnedRightFirst,
+:global(.dark) .gridCell.pinnedRightFirst {
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ========================================
@@ -1343,6 +1458,13 @@
   background: var(--surface-quaternary);
 }
 
+:global([data-theme="dark"]) .toolbarButton.active,
+:global(.dark) .toolbarButton.active {
+  color: var(--accent-color);
+  background: var(--selected-bg);
+  border-color: var(--accent-color);
+}
+
 :global([data-theme="dark"]) .dropdownMenu,
 :global(.dark) .dropdownMenu {
   background: var(--surface-primary);
@@ -1410,13 +1532,13 @@
   background: var(--accent-color);
 }
 
-:global([data-theme="dark"]) .pinnedLeft,
-:global(.dark) .pinnedLeft {
+:global([data-theme="dark"]) .pinnedLeftLast,
+:global(.dark) .pinnedLeftLast {
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
 }
 
-:global([data-theme="dark"]) .pinnedRight,
-:global(.dark) .pinnedRight {
+:global([data-theme="dark"]) .pinnedRightFirst,
+:global(.dark) .pinnedRightFirst {
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -1470,7 +1592,33 @@
 :global([data-theme="dark"]) .td,
 :global(.dark) .td {
   color: var(--text-primary);
+  background: var(--surface-secondary);
   border-bottom-color: var(--border-subtle);
+}
+
+:global([data-theme="dark"]) .tr.hoverable:hover .td,
+:global(.dark) .tr.hoverable:hover .td {
+  background: var(--surface-primary);
+}
+
+:global([data-theme="dark"]) .tr.selected .td,
+:global(.dark) .tr.selected .td {
+  background: var(--selected-bg);
+}
+
+:global([data-theme="dark"]) .tr.selected:hover .td,
+:global(.dark) .tr.selected:hover .td {
+  background: var(--selected-bg-hover);
+}
+
+:global([data-theme="dark"]) .tr.grouped .td,
+:global(.dark) .tr.grouped .td {
+  background: var(--surface-tertiary);
+}
+
+:global([data-theme="dark"]) .tr.striped:nth-child(even) .td,
+:global(.dark) .tr.striped:nth-child(even) .td {
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .expandButton,
@@ -1714,7 +1862,9 @@
 }
 
 :global([data-theme="dark"]) .selectFilterDropdown,
-:global(.dark) .selectFilterDropdown {
+:global(.dark) .selectFilterDropdown,
+:global([data-theme="dark"]) .selectFilterDropdownPortal,
+:global(.dark) .selectFilterDropdownPortal {
   background: var(--surface-primary);
   border-color: var(--text-secondary);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);

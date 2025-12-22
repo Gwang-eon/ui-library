@@ -1,4 +1,5 @@
 import React, { type HTMLAttributes } from 'react';
+export type CascadeSelectSize = 'sm' | 'md' | 'lg';
 export interface CascadeOption {
     /**
      * Option label
@@ -34,6 +35,10 @@ export interface CascadeSelectProps extends Omit<HTMLAttributes<HTMLDivElement>,
      * Placeholder text
      */
     placeholder?: string;
+    /**
+     * Size variant
+     */
+    size?: CascadeSelectSize;
     /**
      * Disabled state
      */

@@ -1038,7 +1038,9 @@ a:hover {
    DARK MODE
    ======================================== */
 
-body.dark-mode {
+body.dark-mode,
+[data-theme="dark"],
+.dark {
   /* Component Colors - Dark Mode */
   --button-primary-bg: var(--color-primary-600);
   --button-primary-bg-hover: var(--color-primary-500);

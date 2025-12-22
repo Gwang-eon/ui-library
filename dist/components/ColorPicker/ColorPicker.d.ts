@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+export type ColorPickerSize = 'sm' | 'md' | 'lg';
 export interface ColorPickerProps {
     value?: string;
     defaultValue?: string;
@@ -7,7 +8,7 @@ export interface ColorPickerProps {
     presets?: string[];
     showRecent?: boolean;
     compact?: boolean;
-    size?: 'sm' | 'md';
+    size?: ColorPickerSize;
     allowCustom?: boolean;
     disabled?: boolean;
     className?: string;

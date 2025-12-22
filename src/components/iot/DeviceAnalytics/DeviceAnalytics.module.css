@@ -687,3 +687,165 @@
     );
   }
 }
+
+/* ==================== Dark Mode - data-theme attribute ==================== */
+
+:global([data-theme="dark"]) .analyticsCard,
+:global(.dark) .analyticsCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .analyticsLabel,
+:global(.dark) .analyticsLabel {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .analyticsValue,
+:global(.dark) .analyticsValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .analyticsChange.positive,
+:global(.dark) .analyticsChange.positive {
+  color: var(--color-success-400);
+}
+
+:global([data-theme="dark"]) .analyticsChange.negative,
+:global(.dark) .analyticsChange.negative {
+  color: var(--color-error-400);
+}
+
+:global([data-theme="dark"]) .chartCard,
+:global(.dark) .chartCard {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .chartTitle,
+:global(.dark) .chartTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .chartPlaceholder,
+:global(.dark) .chartPlaceholder {
+  background-color: var(--surface-tertiary);
+  border-color: var(--text-secondary);
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .deviceHealthItem,
+:global(.dark) .deviceHealthItem {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .deviceHealthName,
+:global(.dark) .deviceHealthName {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .healthScore.excellent,
+:global(.dark) .healthScore.excellent {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-success-300);
+  border-color: var(--color-success-500);
+}
+
+:global([data-theme="dark"]) .healthScore.good,
+:global(.dark) .healthScore.good {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary-300);
+  border-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .healthScore.warning,
+:global(.dark) .healthScore.warning {
+  background: rgba(251, 146, 60, 0.15);
+  color: var(--color-warning-300);
+  border-color: var(--color-warning-500);
+}
+
+:global([data-theme="dark"]) .healthScore.poor,
+:global(.dark) .healthScore.poor {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error-300);
+  border-color: var(--color-error-500);
+}
+
+:global([data-theme="dark"]) .healthMetrics,
+:global(.dark) .healthMetrics {
+  color: var(--text-tertiary);
+}
+
+:global([data-theme="dark"]) .metricValue,
+:global(.dark) .metricValue {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .insightItem,
+:global(.dark) .insightItem {
+  background-color: var(--surface-primary);
+  border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .insightTitle,
+:global(.dark) .insightTitle {
+  color: var(--text-primary);
+}
+
+:global([data-theme="dark"]) .insightDescription,
+:global(.dark) .insightDescription {
+  color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .insightAction,
+:global(.dark) .insightAction {
+  color: var(--color-primary-400);
+}
+
+:global([data-theme="dark"]) .insightAction:hover,
+:global(.dark) .insightAction:hover {
+  color: var(--color-primary-300);
+}
+
+:global([data-theme="dark"]) .insightAction:focus,
+:global(.dark) .insightAction:focus {
+  outline-color: var(--color-primary-500);
+}
+
+:global([data-theme="dark"]) .iconSkeleton,
+:global([data-theme="dark"]) .labelSkeleton,
+:global([data-theme="dark"]) .valueSkeleton,
+:global([data-theme="dark"]) .changeSkeleton,
+:global([data-theme="dark"]) .titleSkeleton,
+:global([data-theme="dark"]) .chartSkeleton,
+:global([data-theme="dark"]) .nameSkeleton,
+:global([data-theme="dark"]) .badgeSkeleton,
+:global([data-theme="dark"]) .scoreSkeleton,
+:global([data-theme="dark"]) .metricRowSkeleton,
+:global([data-theme="dark"]) .insightIconSkeleton,
+:global([data-theme="dark"]) .insightTitleSkeleton,
+:global([data-theme="dark"]) .insightDescSkeleton,
+:global([data-theme="dark"]) .insightActionSkeleton,
+:global(.dark) .iconSkeleton,
+:global(.dark) .labelSkeleton,
+:global(.dark) .valueSkeleton,
+:global(.dark) .changeSkeleton,
+:global(.dark) .titleSkeleton,
+:global(.dark) .chartSkeleton,
+:global(.dark) .nameSkeleton,
+:global(.dark) .badgeSkeleton,
+:global(.dark) .scoreSkeleton,
+:global(.dark) .metricRowSkeleton,
+:global(.dark) .insightIconSkeleton,
+:global(.dark) .insightTitleSkeleton,
+:global(.dark) .insightDescSkeleton,
+:global(.dark) .insightActionSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-tertiary) 0%,
+    var(--surface-quaternary) 50%,
+    var(--surface-tertiary) 100%
+  );
+}
