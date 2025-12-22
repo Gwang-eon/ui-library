@@ -21,6 +21,9 @@ const changelogMd = `# Changelog
 ## v1.2.3 (2025-12-22)
 
 ### Bug Fixes
+- **IoT Dark Mode Fix** - demo/App.css에서 raw palette tokens를 semantic tokens로 변경
+  - \`--palette-gray-*\` → \`--surface-primary\`, \`--border-default\`
+  - design-tokens.css 기반 다크모드 일관성 확보
 - **Size prop propagation fix** - 7개 컴포넌트의 size prop이 하위 요소에 올바르게 전파되도록 수정
   - Select: 옵션, 아이콘, 그룹 레이블에 size variant 적용
   - Autocomplete: dropdown 아이템, 카테고리 헤더에 size variant 적용
@@ -149,6 +152,11 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
 
                 <h3>Recent Updates</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <UpdateItem
+                    date="2025-12-22"
+                    title="IoT Dark Mode Fix"
+                    description="Fixed dark mode styling using semantic tokens for demo page and IoT components"
+                  />
                   <UpdateItem
                     date="2025-12-22"
                     title="Size Prop Propagation Fix"
