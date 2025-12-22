@@ -26,6 +26,7 @@ const changelogMd = `# Changelog
   - 17개 IoT 컴포넌트: \`border-color: --text-secondary\` → \`--border-default\` (99개 수정)
   - 11개 alpha 토큰 추가 (\`--color-*-alpha-15/20\`)
   - 13개 IoT 컴포넌트: 하드코딩 rgba → alpha 토큰 (~130개 수정)
+  - Border 토큰 스펙 적용: default(600), subtle(700), strong(500)
 - **Size prop propagation fix** - 7개 컴포넌트의 size prop이 하위 요소에 올바르게 전파되도록 수정
   - Select: 옵션, 아이콘, 그룹 레이블에 size variant 적용
   - Autocomplete: dropdown 아이템, 카테고리 헤더에 size variant 적용
