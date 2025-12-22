@@ -128,7 +128,7 @@
 }
 
 .slider:disabled::-webkit-slider-thumb {
-  background: var(--text-tertiary);
+  background: var(--text-disabled);
   cursor: not-allowed;
 }
 
@@ -153,7 +153,7 @@
 }
 
 .slider:disabled::-moz-range-thumb {
-  background: var(--text-tertiary);
+  background: var(--text-disabled);
   cursor: not-allowed;
 }
 
