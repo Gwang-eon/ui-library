@@ -145,53 +145,46 @@ git --version    # 2.0.0+`}</code>
             설치 방법
           </h2>
 
-          <Accordion
-            items={[
-              {
-                id: 'github-install',
-                title: '방법 1: GitHub에서 직접 설치 (권장)',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <p>
-                      가장 간단한 방법입니다. npm이 자동으로 GitHub 저장소에서 패키지를 다운로드합니다.
-                    </p>
-                    <pre className={styles.codeBlock}>
-                      <code>{`# 최신 main 브랜치 설치
+          <Accordion>
+            <Accordion.Item title="방법 1: GitHub에서 직접 설치 (권장)" defaultOpen>
+              <div className={styles.accordionContent}>
+                <p>
+                  가장 간단한 방법입니다. npm이 자동으로 GitHub 저장소에서 패키지를 다운로드합니다.
+                </p>
+                <pre className={styles.codeBlock}>
+                  <code>{`# 최신 main 브랜치 설치
 npm install github:Gwang-eon/ui-library
 
 # 또는 HTTPS URL 사용
 npm install git+https://github.com/Gwang-eon/ui-library.git`}</code>
-                    </pre>
-                    <div className={styles.prosConsGrid}>
-                      <div className={styles.prosConsColumn}>
-                        <Badge variant="success">장점</Badge>
-                        <ul className={styles.prosConsList}>
-                          <li>빠르고 간편한 설치</li>
-                          <li>항상 최신 버전 사용</li>
-                          <li>package.json에 자동 등록</li>
-                        </ul>
-                      </div>
-                      <div className={styles.prosConsColumn}>
-                        <Badge variant="warning">단점</Badge>
-                        <ul className={styles.prosConsList}>
-                          <li>소스 코드 수정 불가</li>
-                          <li>로컬 개발 시 실시간 반영 불가</li>
-                        </ul>
-                      </div>
-                    </div>
+                </pre>
+                <div className={styles.prosConsGrid}>
+                  <div className={styles.prosConsColumn}>
+                    <Badge variant="success">장점</Badge>
+                    <ul className={styles.prosConsList}>
+                      <li>빠르고 간편한 설치</li>
+                      <li>항상 최신 버전 사용</li>
+                      <li>package.json에 자동 등록</li>
+                    </ul>
                   </div>
-                ),
-              },
-              {
-                id: 'branch-install',
-                title: '방법 2: 특정 브랜치/태그 설치',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <p>
-                      특정 버전이나 브랜치를 설치할 수 있습니다.
-                    </p>
-                    <pre className={styles.codeBlock}>
-                      <code>{`# 특정 브랜치 설치
+                  <div className={styles.prosConsColumn}>
+                    <Badge variant="warning">단점</Badge>
+                    <ul className={styles.prosConsList}>
+                      <li>소스 코드 수정 불가</li>
+                      <li>로컬 개발 시 실시간 반영 불가</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </Accordion.Item>
+
+            <Accordion.Item title="방법 2: 특정 브랜치/태그 설치">
+              <div className={styles.accordionContent}>
+                <p>
+                  특정 버전이나 브랜치를 설치할 수 있습니다.
+                </p>
+                <pre className={styles.codeBlock}>
+                  <code>{`# 특정 브랜치 설치
 npm install github:Gwang-eon/ui-library#develop
 
 # 특정 태그/릴리스 설치
@@ -199,55 +192,49 @@ npm install github:Gwang-eon/ui-library#v1.2.2
 
 # 특정 커밋 해시 설치
 npm install github:Gwang-eon/ui-library#b37917c`}</code>
-                    </pre>
-                  </div>
-                ),
-              },
-              {
-                id: 'local-install',
-                title: '방법 3: Git Clone 후 로컬 설치 (개발용)',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <p>
-                      라이브러리를 수정하거나 기여하려는 경우 이 방법을 사용하세요.
-                    </p>
-                    <div className={styles.subsection}>
-                      <strong>1. 저장소 클론</strong>
-                      <pre className={styles.codeBlock}>
-                        <code>{`# HTTPS 클론
+                </pre>
+              </div>
+            </Accordion.Item>
+
+            <Accordion.Item title="방법 3: Git Clone 후 로컬 설치 (개발용)">
+              <div className={styles.accordionContent}>
+                <p>
+                  라이브러리를 수정하거나 기여하려는 경우 이 방법을 사용하세요.
+                </p>
+                <div className={styles.subsection}>
+                  <strong>1. 저장소 클론</strong>
+                  <pre className={styles.codeBlock}>
+                    <code>{`# HTTPS 클론
 git clone https://github.com/Gwang-eon/ui-library.git
 
 # 클론한 디렉토리로 이동
 cd ui-library`}</code>
-                      </pre>
-                    </div>
-                    <div className={styles.subsection}>
-                      <strong>2. 의존성 설치 및 빌드</strong>
-                      <pre className={styles.codeBlock}>
-                        <code>{`npm install
+                  </pre>
+                </div>
+                <div className={styles.subsection}>
+                  <strong>2. 의존성 설치 및 빌드</strong>
+                  <pre className={styles.codeBlock}>
+                    <code>{`npm install
 npm run build`}</code>
-                      </pre>
-                    </div>
-                    <div className={styles.subsection}>
-                      <strong>3. 프로젝트에 로컬 경로로 연결</strong>
-                      <pre className={styles.codeBlock}>
-                        <code>{`cd /path/to/your-project
+                  </pre>
+                </div>
+                <div className={styles.subsection}>
+                  <strong>3. 프로젝트에 로컬 경로로 연결</strong>
+                  <pre className={styles.codeBlock}>
+                    <code>{`cd /path/to/your-project
 npm install /path/to/ui-library`}</code>
-                      </pre>
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                id: 'npm-link',
-                title: '방법 4: npm link 사용 (개발용 - 고급)',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <p>
-                      라이브러리를 여러 프로젝트에서 동시에 개발할 때 유용합니다.
-                    </p>
-                    <pre className={styles.codeBlock}>
-                      <code>{`# 1. ui-library 디렉토리에서
+                  </pre>
+                </div>
+              </div>
+            </Accordion.Item>
+
+            <Accordion.Item title="방법 4: npm link 사용 (개발용 - 고급)">
+              <div className={styles.accordionContent}>
+                <p>
+                  라이브러리를 여러 프로젝트에서 동시에 개발할 때 유용합니다.
+                </p>
+                <pre className={styles.codeBlock}>
+                  <code>{`# 1. ui-library 디렉토리에서
 cd /path/to/ui-library
 npm link
 
@@ -257,12 +244,10 @@ npm link @gractor/ui
 
 # 링크 해제
 npm unlink @gractor/ui`}</code>
-                    </pre>
-                  </div>
-                ),
-              },
-            ]}
-          />
+                </pre>
+              </div>
+            </Accordion.Item>
+          </Accordion>
         </Card>
 
         {/* Setup After Installation */}
@@ -360,24 +345,20 @@ function MyComponent() {
             트러블슈팅
           </h2>
 
-          <Accordion
-            items={[
-              {
-                id: 'trouble-1',
-                title: '문제 1: "Cannot find module \'@gractor/ui\'"',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="error">원인</Badge>
-                    </div>
-                    <p>
-                      패키지가 제대로 설치되지 않았거나 node_modules가 손상됨
-                    </p>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="success">해결책</Badge>
-                    </div>
-                    <pre className={styles.codeBlock}>
-                      <code>{`# node_modules 및 package-lock.json 삭제
+          <Accordion>
+            <Accordion.Item title="문제 1: &quot;Cannot find module '@gractor/ui'&quot;" defaultOpen>
+              <div className={styles.accordionContent}>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="error">원인</Badge>
+                </div>
+                <p>
+                  패키지가 제대로 설치되지 않았거나 node_modules가 손상됨
+                </p>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="success">해결책</Badge>
+                </div>
+                <pre className={styles.codeBlock}>
+                  <code>{`# node_modules 및 package-lock.json 삭제
 rm -rf node_modules package-lock.json
 
 # 캐시 정리
@@ -386,71 +367,62 @@ npm cache clean --force
 # 재설치
 npm install
 npm install github:Gwang-eon/ui-library`}</code>
-                    </pre>
-                  </div>
-                ),
-              },
-              {
-                id: 'trouble-2',
-                title: '문제 2: "Git is not installed" 에러',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="error">원인</Badge>
-                    </div>
-                    <p>
-                      Git이 시스템에 설치되지 않음
-                    </p>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="success">해결책</Badge>
-                    </div>
-                    <ol className={styles.orderedList}>
-                      <li>Git 설치: <a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer" className={styles.link}>https://git-scm.com/downloads</a></li>
-                      <li>설치 후 터미널 재시작</li>
-                      <li>git --version으로 설치 확인</li>
-                      <li>npm install 재실행</li>
-                    </ol>
-                  </div>
-                ),
-              },
-              {
-                id: 'trouble-3',
-                title: '문제 3: CSS 스타일이 적용되지 않음',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="error">원인</Badge>
-                    </div>
-                    <p>
-                      CSS 파일 임포트가 누락되었거나 순서가 잘못됨
-                    </p>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="success">해결책</Badge>
-                    </div>
-                    <pre className={styles.codeBlock}>
-                      <code>{`// 올바른 순서로 임포트
+                </pre>
+              </div>
+            </Accordion.Item>
+
+            <Accordion.Item title="문제 2: &quot;Git is not installed&quot; 에러">
+              <div className={styles.accordionContent}>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="error">원인</Badge>
+                </div>
+                <p>
+                  Git이 시스템에 설치되지 않음
+                </p>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="success">해결책</Badge>
+                </div>
+                <ol className={styles.orderedList}>
+                  <li>Git 설치: <a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer" className={styles.link}>https://git-scm.com/downloads</a></li>
+                  <li>설치 후 터미널 재시작</li>
+                  <li>git --version으로 설치 확인</li>
+                  <li>npm install 재실행</li>
+                </ol>
+              </div>
+            </Accordion.Item>
+
+            <Accordion.Item title="문제 3: CSS 스타일이 적용되지 않음">
+              <div className={styles.accordionContent}>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="error">원인</Badge>
+                </div>
+                <p>
+                  CSS 파일 임포트가 누락되었거나 순서가 잘못됨
+                </p>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="success">해결책</Badge>
+                </div>
+                <pre className={styles.codeBlock}>
+                  <code>{`// 올바른 순서로 임포트
 import '@gractor/ui/dist/styles/all.css';  // 1번째
 import '@gractor/ui/dist/ui.css';          // 2번째`}</code>
-                    </pre>
-                  </div>
-                ),
-              },
-              {
-                id: 'trouble-4',
-                title: '문제 4: React 버전 충돌',
-                content: (
-                  <div className={styles.accordionContent}>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="error">원인</Badge>
-                    </div>
-                    <p>
-                      Peer dependency 불일치
-                    </p>
-                    <div className={styles.accordionBadge}>
-                      <Badge variant="success">해결책</Badge>
-                    </div>
-                    <pre className={styles.codeBlock}>
-                      <code>{`# React 버전 확인
+                </pre>
+              </div>
+            </Accordion.Item>
+
+            <Accordion.Item title="문제 4: React 버전 충돌">
+              <div className={styles.accordionContent}>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="error">원인</Badge>
+                </div>
+                <p>
+                  Peer dependency 불일치
+                </p>
+                <div className={styles.accordionBadge}>
+                  <Badge variant="success">해결책</Badge>
+                </div>
+                <pre className={styles.codeBlock}>
+                  <code>{`# React 버전 확인
 npm list react
 
 # React 18 또는 19로 업그레이드
@@ -458,12 +430,10 @@ npm install react@18 react-dom@18
 
 # 또는 강제 설치 (권장하지 않음)
 npm install --legacy-peer-deps`}</code>
-                    </pre>
-                  </div>
-                ),
-              },
-            ]}
-          />
+                </pre>
+              </div>
+            </Accordion.Item>
+          </Accordion>
         </Card>
 
         {/* Next Steps */}
