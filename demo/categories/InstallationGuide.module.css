@@ -1,0 +1,232 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: var(--font-size-heading-1);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.subtitle {
+  font-size: var(--font-size-body-large);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-8);
+}
+
+.card {
+  margin-bottom: var(--spacing-8);
+  padding: var(--spacing-6);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.sectionDescription {
+  margin-bottom: var(--spacing-4);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.requirementList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requirementItem {
+  padding: var(--spacing-2) 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.requirementItem:last-child {
+  border-bottom: none;
+}
+
+.requirementItem strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.codeBlock {
+  background: var(--surface-secondary);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-large);
+  font-size: var(--font-size-body-small);
+  font-family: var(--font-family-mono);
+  overflow: auto;
+  margin-bottom: var(--spacing-4);
+}
+
+.codeBlock code {
+  color: var(--text-primary);
+  white-space: pre;
+}
+
+.tabContent {
+  padding: var(--spacing-4) 0;
+}
+
+.tabContent p {
+  margin-bottom: var(--spacing-3);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.tabContent strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.link {
+  color: var(--color-info-600);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  color: var(--color-info-700);
+  text-decoration: underline;
+}
+
+.prosConsGrid {
+  display: flex;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-2);
+}
+
+@media (max-width: 768px) {
+  .prosConsGrid {
+    flex-direction: column;
+  }
+}
+
+.prosConsColumn {
+  flex: 1;
+}
+
+.prosConsList {
+  margin-top: var(--spacing-2);
+  padding-left: var(--spacing-5);
+  color: var(--text-secondary);
+}
+
+.prosConsList li {
+  margin-bottom: var(--spacing-1);
+}
+
+.accordionContent {
+  padding: var(--spacing-2) 0;
+}
+
+.accordionContent p {
+  margin-bottom: var(--spacing-3);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.accordionBadge {
+  margin-bottom: var(--spacing-2);
+}
+
+.orderedList {
+  padding-left: var(--spacing-5);
+  color: var(--text-secondary);
+}
+
+.orderedList li {
+  margin-bottom: var(--spacing-2);
+}
+
+.subsection {
+  margin-bottom: var(--spacing-4);
+}
+
+.subsection:last-child {
+  margin-bottom: 0;
+}
+
+.subsectionTitle {
+  font-size: var(--font-size-body-large);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-3);
+}
+
+.warning {
+  margin-bottom: var(--spacing-3);
+}
+
+.warning strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+.nextStepsCard {
+  padding: var(--spacing-6);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
+}
+
+.nextStepsTitle {
+  font-size: var(--font-size-heading-3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.nextStepsDescription {
+  margin-bottom: var(--spacing-4);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.nextStepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-3);
+}
+
+.nextStepsItem {
+  padding: var(--spacing-3);
+  background: var(--surface-primary);
+  border-radius: var(--radius-large);
+  border: 1px solid var(--border-default);
+}
+
+.nextStepsItem strong {
+  display: block;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
+}
+
+.nextStepsItem p {
+  font-size: var(--font-size-body-small);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.badgeContainer {
+  margin-bottom: var(--spacing-2);
+}
