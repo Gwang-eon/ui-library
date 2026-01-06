@@ -19,6 +19,7 @@ import { Tour } from '../src/components/Tour';
 import { CategoryLoader } from './components/CategoryLoader';
 import { DocsModal } from './components/DocsModal';
 import {
+  InstallationGuide,
   FormDemos,
   DisplayDemos,
   DataGridDemos,
@@ -32,9 +33,10 @@ import {
 // ============================================
 // Types & Data
 // ============================================
-type Category = 'tokens' | 'form' | 'display' | 'datagrid' | 'feedback' | 'navigation' | 'iot' | 'mobile';
+type Category = 'installation' | 'tokens' | 'form' | 'display' | 'datagrid' | 'feedback' | 'navigation' | 'iot' | 'mobile';
 
 const categories: { id: Category; label: string }[] = [
+  { id: 'installation', label: 'Installation' },
   { id: 'tokens', label: 'Design Tokens' },
   { id: 'form', label: 'Form' },
   { id: 'display', label: 'Data Display' },
@@ -64,7 +66,7 @@ const tourSteps = [
 // Main App Component
 // ============================================
 function App() {
-  const [activeCategory, setActiveCategory] = useState<Category>('tokens');
+  const [activeCategory, setActiveCategory] = useState<Category>('installation');
   const [darkMode, setDarkMode] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const [docsOpen, setDocsOpen] = useState(false);
@@ -88,6 +90,8 @@ function App() {
 
   const renderCategory = () => {
     switch (activeCategory) {
+      case 'installation':
+        return <CategoryLoader><InstallationGuide /></CategoryLoader>;
       case 'tokens':
         return <CategoryLoader><TokensDemos /></CategoryLoader>;
       case 'form':
@@ -105,7 +109,7 @@ function App() {
       case 'mobile':
         return <CategoryLoader><MobileDemos /></CategoryLoader>;
       default:
-        return <CategoryLoader><TokensDemos /></CategoryLoader>;
+        return <CategoryLoader><InstallationGuide /></CategoryLoader>;
     }
   };
 
@@ -194,7 +198,7 @@ function App() {
       </main>
 
       <footer className="demo-footer">
-        <p>@gractor/ui v1.0.0 - {categories.length} categories, 70+ components</p>
+        <p>@gractor/ui v1.2.2 - {categories.length} categories, 70+ components</p>
       </footer>
 
       {/* Tour */}
