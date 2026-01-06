@@ -689,10 +689,10 @@ export default function DataGridDemos() {
 
       {/* Virtualization Demo */}
       <div className="demo-item full-width" style={{ marginBottom: '32px' }}>
-        <h3>Virtualization (10,000 Rows)</h3>
+        <h3>Large Dataset with Pagination (10,000 Rows)</h3>
         <p className="demo-note">
-          Efficient rendering of large datasets using virtual scrolling. Only ~50-100 visible rows are rendered at a time,
-          allowing smooth scrolling through all 10,000 rows without performance issues. Scroll down to see more data load dynamically.
+          Displaying 10,000 rows with pagination support. Use the page size selector to switch between 20, 50, or 100 rows per page.
+          Sorting and global search are also available to filter the large dataset.
         </p>
         <DataGrid
           data={largeDataGridData}
@@ -715,14 +715,12 @@ export default function DataGridDemos() {
               cell: ({ getValue }) => `${(getValue() as number).toFixed(1)}%`
             },
           ]}
-          enableVirtualization
-          estimateRowHeight={40}
-          overscan={10}
           enableSorting
           enableGlobalFilter
           enableFiltering={false}
-          enablePagination={false}
-          height={400}
+          enablePagination
+          pageSizeOptions={[20, 50, 100]}
+          height={500}
         />
       </div>
 

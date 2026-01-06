@@ -20,6 +20,8 @@ npm install git+https://github.com/Gwang-eon/ui-library.git
 npm install ../ui-library
 ```
 
+> 💡 **상세한 설치 가이드**: Git 설치, 트러블슈팅 등 자세한 내용은 [설치 가이드](./docs/INSTALLATION.md)를 참고하세요.
+
 ## 사용법
 
 ### 기본 사용
