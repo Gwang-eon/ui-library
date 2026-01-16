@@ -32,12 +32,15 @@ export interface PopconfirmProps {
     disabled?: boolean;
     /** ARIA label */
     'aria-label'?: string;
+    /** Container for the popup. Defaults to document.body */
+    getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
 }
 /**
  * Popconfirm Component
  *
  * Confirmation popup for user actions with confirm/cancel options.
- * Ideal for destructive actions, critical state changes, and preventing accidental clicks.
+ * Uses createPortal to render popup outside of parent DOM hierarchy,
+ * avoiding overflow and transform issues.
  *
  * @example
  * ```tsx
@@ -52,22 +55,17 @@ export interface PopconfirmProps {
  *
  * @example
  * ```tsx
- * // With icon and custom buttons
+ * // With custom container (for scroll scenarios)
  * <Popconfirm
- *   title="Delete device?"
- *   description="This will permanently delete the device."
- *   icon={<Trash2 />}
- *   iconType="danger"
- *   okText="Delete"
- *   cancelText="Cancel"
- *   okType="danger"
- *   onConfirm={async () => await deleteDevice()}
+ *   title="Delete item?"
+ *   getPopupContainer={(trigger) => trigger.parentElement!}
+ *   onConfirm={handleDelete}
  * >
- *   <button className="btn btn-danger">Delete Device</button>
+ *   <Button>Delete</Button>
  * </Popconfirm>
  * ```
  */
 export declare const Popconfirm: {
-    ({ title, description, icon, iconType, okText, cancelText, okType, placement, children, onConfirm, onCancel, open: controlledOpen, onOpenChange, disabled, "aria-label": ariaLabel, }: PopconfirmProps): import("react/jsx-runtime").JSX.Element;
+    ({ title, description, icon, iconType, okText, cancelText, okType, placement, children, onConfirm, onCancel, open: controlledOpen, onOpenChange, disabled, "aria-label": ariaLabel, getPopupContainer, }: PopconfirmProps): import("react/jsx-runtime").JSX.Element;
     displayName: string;
 };

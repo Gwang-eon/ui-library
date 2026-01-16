@@ -373,6 +373,19 @@
   --color-danger-800: var(--color-error-800);
   --color-danger-900: var(--color-error-900);
 
+  /* Alpha Colors (semi-transparent backgrounds for dark mode) */
+  --color-primary-alpha-15: rgba(59, 130, 246, 0.15);
+  --color-primary-alpha-20: rgba(59, 130, 246, 0.2);
+  --color-success-alpha-15: rgba(34, 197, 94, 0.15);
+  --color-success-alpha-20: rgba(34, 197, 94, 0.2);
+  --color-error-alpha-15: rgba(239, 68, 68, 0.15);
+  --color-error-alpha-20: rgba(239, 68, 68, 0.2);
+  --color-warning-alpha-15: rgba(251, 146, 60, 0.15);
+  --color-warning-alpha-20: rgba(245, 158, 11, 0.2);
+  --color-info-alpha-15: rgba(59, 130, 246, 0.15);
+  --color-info-alpha-20: rgba(59, 130, 246, 0.2);
+  --color-gray-alpha-30: rgba(107, 114, 128, 0.3);
+
   /* ========================================
      COMPONENT COLOR TOKENS
      ======================================== */
@@ -1117,9 +1130,9 @@ body.dark-mode,
   --surface-quinary: var(--palette-dark-blue-600);     /* 서브 컴포넌트, 최상위 레이어 #486581 */
 
   /* Border - Dark Mode (WCAG AA: 3:1+ contrast, Dark Blue) */
-  --border-default: var(--palette-dark-blue-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-blue-600);   /* Subtle borders */
-  --border-strong: var(--palette-dark-blue-300);   /* Strong emphasis */
+  --border-default: var(--palette-dark-blue-600);  /* WCAG AA Pass */
+  --border-subtle: var(--palette-dark-blue-700);   /* Subtle borders */
+  --border-strong: var(--palette-dark-blue-500);   /* Strong emphasis */
   --border-hover: var(--palette-dark-blue-300);    /* Hover state for borders */
 
   /* Interactive States - Focus (Dark Mode) */
@@ -1204,9 +1217,9 @@ body.dark-mode,
     --surface-quinary: var(--palette-dark-blue-600);
 
     /* Border - Dark Mode (Dark Blue) */
-    --border-default: var(--palette-dark-blue-400);
-    --border-subtle: var(--palette-dark-blue-600);
-    --border-strong: var(--palette-dark-blue-300);
+    --border-default: var(--palette-dark-blue-600);
+    --border-subtle: var(--palette-dark-blue-700);
+    --border-strong: var(--palette-dark-blue-500);
 
     /* Overlay - Dark Mode */
     --overlay-light: rgba(0, 0, 0, 0.25);
@@ -1250,9 +1263,9 @@ body.theme-dark-blue {
   --surface-quinary: var(--palette-dark-blue-600);     /* 서브 컴포넌트 #486581 */
 
   /* Border (WCAG AA: 3:1+ contrast) */
-  --border-default: var(--palette-dark-blue-400);  /* WCAG AA Pass */
-  --border-subtle: var(--palette-dark-blue-600);
-  --border-strong: var(--palette-dark-blue-300);   /* Strong emphasis */
+  --border-default: var(--palette-dark-blue-600);  /* WCAG AA Pass */
+  --border-subtle: var(--palette-dark-blue-700);
+  --border-strong: var(--palette-dark-blue-500);   /* Strong emphasis */
 }
 
 /* Dark Green Theme */
