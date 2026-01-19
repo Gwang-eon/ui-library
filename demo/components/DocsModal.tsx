@@ -6,6 +6,7 @@ import { Badge } from '../../src/components/Badge';
 
 // Import markdown content as raw strings
 import testRoadmapMd from '../../docs/TEST_ROADMAP.md?raw';
+import planMd from '../../PLAN.md?raw';
 
 interface DocsModalProps {
   open: boolean;
@@ -131,6 +132,7 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
             <Tab value="tests">
               Tests <Badge variant="primary" size="sm" style={{ marginLeft: '6px' }}>{stats.tests}</Badge>
             </Tab>
+            <Tab value="roadmap">Roadmap</Tab>
           </TabsList>
 
           <TabContent>
@@ -193,6 +195,12 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
             <TabPanel value="tests">
               <div className="docs-markdown">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{testRoadmapMd}</ReactMarkdown>
+              </div>
+            </TabPanel>
+
+            <TabPanel value="roadmap">
+              <div className="docs-markdown">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{planMd}</ReactMarkdown>
               </div>
             </TabPanel>
           </TabContent>
