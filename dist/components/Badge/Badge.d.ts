@@ -1,4 +1,5 @@
-import { default as React, ReactNode } from 'react';
+import React from 'react';
+import type { ReactNode } from 'react';
 export type BadgeVariant = 'default' | 'primary' | 'success' | 'warning' | 'error';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 export interface BadgeProps {

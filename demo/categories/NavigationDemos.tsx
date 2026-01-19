@@ -11,6 +11,12 @@ import {
   Archive,
   ZoomIn,
   ZoomOut,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Bold,
+  Italic,
+  Underline,
 } from 'lucide-react';
 
 import { Button } from '../../src/components/Button';
@@ -30,6 +36,8 @@ import { Anchor } from '../../src/components/Anchor';
 export default function NavigationDemos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [alignment, setAlignment] = useState<string | undefined>('left');
+  const [formats, setFormats] = useState<string[]>(['bold']);
 
   return (
     <section className="demo-section">
@@ -136,11 +144,49 @@ export default function NavigationDemos() {
         {/* ButtonGroup */}
         <div className="demo-item">
           <h3>ButtonGroup</h3>
-          <ButtonGroup>
-            <Button variant="outline">Left</Button>
-            <Button variant="outline">Center</Button>
-            <Button variant="outline">Right</Button>
-          </ButtonGroup>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {/* Basic (no selection) */}
+            <div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '8px' }}>Basic</div>
+              <ButtonGroup>
+                <Button variant="outline">Left</Button>
+                <Button variant="outline">Center</Button>
+                <Button variant="outline">Right</Button>
+              </ButtonGroup>
+            </div>
+
+            {/* Single selection */}
+            <div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                Single Selection: {alignment || 'none'}
+              </div>
+              <ButtonGroup
+                selectionMode="single"
+                value={alignment}
+                onChange={(v) => setAlignment(v as string | undefined)}
+              >
+                <Button value="left" variant="outline"><AlignLeft size={16} /></Button>
+                <Button value="center" variant="outline"><AlignCenter size={16} /></Button>
+                <Button value="right" variant="outline"><AlignRight size={16} /></Button>
+              </ButtonGroup>
+            </div>
+
+            {/* Multiple selection */}
+            <div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                Multiple Selection: {formats.length > 0 ? formats.join(', ') : 'none'}
+              </div>
+              <ButtonGroup
+                selectionMode="multiple"
+                value={formats}
+                onChange={(v) => setFormats(v as string[])}
+              >
+                <Button value="bold" variant="outline"><Bold size={16} /></Button>
+                <Button value="italic" variant="outline"><Italic size={16} /></Button>
+                <Button value="underline" variant="outline"><Underline size={16} /></Button>
+              </ButtonGroup>
+            </div>
+          </div>
         </div>
 
         {/* SplitButton */}

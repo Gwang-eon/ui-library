@@ -1,4 +1,7 @@
-import { CalendarViewMode, DateRange } from '../types';
+/**
+ * 캘린더 상태 관리 훅
+ */
+import type { CalendarViewMode, DateRange } from '../types';
 interface UseCalendarStateOptions {
     /** 초기 선택 날짜 */
     initialDate?: Date | null;

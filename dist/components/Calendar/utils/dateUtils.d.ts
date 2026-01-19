@@ -1,4 +1,7 @@
-import { DayOfWeek, TimeValue, DateRange } from '../types';
+/**
+ * 날짜 유틸리티 함수
+ */
+import type { DayOfWeek, TimeValue, DateRange } from '../types';
 /** 두 날짜가 같은 날인지 확인 */
 export declare const isSameDay: (date1: Date | null, date2: Date | null) => boolean;
 /** 두 날짜가 같은 월인지 확인 */

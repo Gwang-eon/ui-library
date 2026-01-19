@@ -1,4 +1,4 @@
-import { default as React, ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 export interface SelectOption {
     value: string;
     label: string;

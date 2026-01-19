@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export interface BackTopProps {
     /** Scroll threshold in pixels before button appears */
     threshold?: number;

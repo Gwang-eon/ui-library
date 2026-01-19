@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export type SpinSize = 'sm' | 'md' | 'lg';
 export type SpinVariant = 'circle' | 'dots' | 'pulse' | 'bars';
 export interface SpinProps {

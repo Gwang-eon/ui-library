@@ -1,4 +1,5 @@
-import { default as React, ReactNode, AnchorHTMLAttributes } from 'react';
+import React from 'react';
+import type { ReactNode, AnchorHTMLAttributes } from 'react';
 export interface BreadcrumbItemData {
     label: string;
     href?: string;

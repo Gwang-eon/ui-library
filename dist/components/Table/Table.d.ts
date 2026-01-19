@@ -1,4 +1,4 @@
-import { default as React, ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 export type SortDirection = 'asc' | 'desc' | null;
 export interface TableContextValue {
     striped?: boolean;

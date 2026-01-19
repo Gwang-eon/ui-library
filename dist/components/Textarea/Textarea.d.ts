@@ -1,4 +1,4 @@
-import { default as React, TextareaHTMLAttributes } from 'react';
+import React, { type TextareaHTMLAttributes } from 'react';
 export type TextareaSize = 'sm' | 'md' | 'lg';
 export type TextareaState = 'default' | 'error' | 'success' | 'warning';
 export type TextareaResize = 'none' | 'both' | 'horizontal' | 'vertical';

@@ -72,6 +72,6 @@ export interface ImageViewerProps {
  * ```
  */
 export declare const ImageViewer: {
-    ({ open, onClose, src, alt, images, initialIndex, toolbar, closable, maskClosable, keyboard, navigation, thumbnails, loop, minZoom, maxZoom, zoomStep, onNavigate, }: ImageViewerProps): import('react').ReactPortal | null;
+    ({ open, onClose, src, alt, images, initialIndex, toolbar, closable, maskClosable, keyboard, navigation, thumbnails, loop, minZoom, maxZoom, zoomStep, onNavigate, }: ImageViewerProps): import("react").ReactPortal | null;
     displayName: string;
 };

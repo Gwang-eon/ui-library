@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export type EmptyStateSize = 'default' | 'compact';
 export interface EmptyStateProps {
     icon?: React.ReactNode;

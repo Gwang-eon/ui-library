@@ -1,4 +1,5 @@
-import { default as React, ReactNode, ButtonHTMLAttributes } from 'react';
+import React from 'react';
+import type { ReactNode, ButtonHTMLAttributes } from 'react';
 export interface PaginationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     active?: boolean;
     children: ReactNode;

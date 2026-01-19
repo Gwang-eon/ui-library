@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export type PullToRefreshStyle = 'default' | 'compact' | 'spinner';
 export interface PullToRefreshProps {
     onRefresh: () => Promise<void>;

@@ -1,5 +1,5 @@
-import { default as React } from 'react';
-import { LucideIcon } from 'lucide-react';
+import React from 'react';
+import type { LucideIcon } from 'lucide-react';
 type IconType = LucideIcon;
 export type FABSize = 'standard' | 'mini' | 'extended';
 export type FABPosition = 'bottom-right' | 'bottom-left' | 'bottom-center' | 'top-right';

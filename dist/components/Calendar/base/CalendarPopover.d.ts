@@ -1,4 +1,7 @@
-import { default as React } from 'react';
+/**
+ * CalendarPopover - 캘린더 팝오버 컨테이너
+ */
+import React from 'react';
 interface CalendarPopoverProps {
     /** 열림 상태 */
     isOpen: boolean;

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 export type TreeSelectSize = 'sm' | 'md' | 'lg';
 export interface TreeSelectNode {
     /** Unique value */

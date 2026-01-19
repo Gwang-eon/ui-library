@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 export interface AffixProps {
     /** Content to be affixed */
     children: ReactNode;

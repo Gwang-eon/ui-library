@@ -33,3 +33,8 @@
 .btn-group > button:active:not(:disabled) {
   z-index: 2;
 }
+
+/* Selected state */
+.btn-group > button.selected {
+  z-index: 1;
+}

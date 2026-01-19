@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 export interface TransferItem {
     /** Unique key for the item */
     key: string;

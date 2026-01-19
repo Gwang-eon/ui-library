@@ -1,4 +1,10 @@
-import { default as React } from 'react';
+/**
+ * DataGrid Component
+ * Enterprise-grade data grid built on TanStack Table
+ * Features: sorting, filtering, pagination, column resizing/pinning/reordering,
+ *           row selection, expansion, grouping, cell editing, virtualization
+ */
+import React from 'react';
 import { SortingState, ColumnFiltersState, VisibilityState, RowSelectionState, ExpandedState, GroupingState, ColumnOrderState, ColumnPinningState, ColumnSizingState, PaginationState, RowPinningState, Row, Table as TanStackTable, ColumnResizeMode, Updater } from '@tanstack/react-table';
 export type FilterType = 'text' | 'number' | 'select' | 'multi-select' | 'date' | 'date-range';
 export interface FilterOption {

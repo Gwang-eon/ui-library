@@ -1,4 +1,4 @@
-import { ImgHTMLAttributes, ReactNode } from 'react';
+import type { ImgHTMLAttributes, ReactNode } from 'react';
 export interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'className'> {
     /** Image source URL */
     src: string;

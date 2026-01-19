@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export type MessageType = 'success' | 'error' | 'warning' | 'info' | 'loading';
 export interface MessageProps {
     /** Type of message */

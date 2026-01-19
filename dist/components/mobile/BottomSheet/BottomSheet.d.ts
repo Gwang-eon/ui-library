@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export type BottomSheetHeight = 'peek' | 'half' | 'full';
 export interface BottomSheetProps {
     open: boolean;

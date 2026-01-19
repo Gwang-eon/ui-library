@@ -1,5 +1,5 @@
-import { default as React } from 'react';
-import { LucideIcon } from 'lucide-react';
+import React from 'react';
+import type { LucideIcon } from 'lucide-react';
 type IconType = LucideIcon;
 export type EventType = 'success' | 'warning' | 'error' | 'info' | 'default';
 export interface EventTimelineProps {
