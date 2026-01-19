@@ -341,7 +341,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
               currentDate={currentDate2}
               viewMode="day"
               onViewModeChange={() => {}}
-              onPrevious={() => {}}
+              onPrevious={undefined}
               onNext={handleNext}
               minDate={minDate}
               maxDate={maxDate}

@@ -190,7 +190,7 @@
   position: relative;
 }
 
-.day:hover:not(:disabled):not(.day--selected) {
+.day:hover:not(:disabled):not(.day--selected):not(.day--rangeStart):not(.day--rangeEnd):not(.day--inRange) {
   background: var(--surface-secondary);
 }
 
@@ -262,6 +262,16 @@
 
 .day--rangeStart.day--rangeEnd {
   border-radius: var(--radius-base);
+}
+
+/* 범위 내 hover 효과 */
+.day--inRange:hover:not(:disabled) {
+  background: var(--color-primary-200);
+}
+
+.day--rangeStart:hover:not(:disabled),
+.day--rangeEnd:hover:not(:disabled) {
+  background: var(--color-primary-700);
 }
 
 /* ============================================
@@ -374,21 +384,22 @@
 }
 
 .timeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 캘린더 헤더와 동일: height(32px) + margin(12px) */
+  height: calc(var(--spacing-8) + var(--spacing-3));
   font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-tertiary);
-  text-align: center;
-  padding-bottom: var(--spacing-2);
-  margin-bottom: var(--spacing-2);
-  border-bottom: 1px solid var(--border-default);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
 }
 
 .timeList {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  flex: 1;
-  min-height: 0;
+  /* 요일(32px) + margin(4px) + 그리드(6×36px + 5×1px) + 푸터여백(12px + 12px) */
+  max-height: calc(var(--spacing-8) + var(--spacing-1) + 6 * 36px + 5 * 1px + var(--spacing-3) * 2);
   overflow-y: auto;
 }
 
@@ -664,8 +675,8 @@
 }
 
 /* 날짜 호버 */
-:global([data-theme="dark"]) .day:hover:not(:disabled):not(.day--selected),
-:global(.dark) .day:hover:not(:disabled):not(.day--selected) {
+:global([data-theme="dark"]) .day:hover:not(:disabled):not(.day--selected):not(.day--rangeStart):not(.day--rangeEnd):not(.day--inRange),
+:global(.dark) .day:hover:not(:disabled):not(.day--selected):not(.day--rangeStart):not(.day--rangeEnd):not(.day--inRange) {
   background: var(--surface-tertiary);
 }
 
@@ -686,6 +697,19 @@
 :global([data-theme="dark"]) .day--rangeEnd,
 :global(.dark) .day--rangeEnd {
   background: var(--color-primary-500);
+}
+
+/* 범위 내 hover - 다크모드 */
+:global([data-theme="dark"]) .day--inRange:hover:not(:disabled),
+:global(.dark) .day--inRange:hover:not(:disabled) {
+  background: var(--color-primary-800);
+}
+
+:global([data-theme="dark"]) .day--rangeStart:hover:not(:disabled),
+:global(.dark) .day--rangeStart:hover:not(:disabled),
+:global([data-theme="dark"]) .day--rangeEnd:hover:not(:disabled),
+:global(.dark) .day--rangeEnd:hover:not(:disabled) {
+  background: var(--color-primary-400);
 }
 
 /* 월 선택 */
