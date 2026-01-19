@@ -492,37 +492,7 @@
 <a name='L427'></a><a href='#L427'>427</a>
 <a name='L428'></a><a href='#L428'>428</a>
 <a name='L429'></a><a href='#L429'>429</a>
-<a name='L430'></a><a href='#L430'>430</a>
-<a name='L431'></a><a href='#L431'>431</a>
-<a name='L432'></a><a href='#L432'>432</a>
-<a name='L433'></a><a href='#L433'>433</a>
-<a name='L434'></a><a href='#L434'>434</a>
-<a name='L435'></a><a href='#L435'>435</a>
-<a name='L436'></a><a href='#L436'>436</a>
-<a name='L437'></a><a href='#L437'>437</a>
-<a name='L438'></a><a href='#L438'>438</a>
-<a name='L439'></a><a href='#L439'>439</a>
-<a name='L440'></a><a href='#L440'>440</a>
-<a name='L441'></a><a href='#L441'>441</a>
-<a name='L442'></a><a href='#L442'>442</a>
-<a name='L443'></a><a href='#L443'>443</a>
-<a name='L444'></a><a href='#L444'>444</a>
-<a name='L445'></a><a href='#L445'>445</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L430'></a><a href='#L430'>430</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -973,7 +943,7 @@
 }
 &nbsp;
 .required {
-  color: var(--error-text);
+  color: var(--color-error-500);
   font-weight: var(--font-weight-semibold);
   margin-left: 2px;
 }
@@ -1011,7 +981,7 @@
 &nbsp;
 .error:focus {
   border-color: var(--input-error-border);
-  box-shadow: 0 0 0 3px var(--error-bg);
+  box-shadow: 0 0 0 3px var(--color-error-100);
 }
 &nbsp;
 /* Success State */
@@ -1021,7 +991,7 @@
 &nbsp;
 .success:focus {
   border-color: var(--input-success-border);
-  box-shadow: 0 0 0 3px var(--success-bg);
+  box-shadow: 0 0 0 3px var(--color-success-100);
 }
 &nbsp;
 /* Warning State */
@@ -1031,7 +1001,7 @@
 &nbsp;
 .warning:focus {
   border-color: var(--input-warning-border);
-  box-shadow: 0 0 0 3px var(--warning-bg);
+  box-shadow: 0 0 0 3px var(--color-warning-100);
 }
 &nbsp;
 /* Icon Support - compose from atomic */
@@ -1092,16 +1062,16 @@
 }
 &nbsp;
 .input-filled.error {
-  border-bottom-color: var(--error-border);
-  background-color: var(--error-bg);
+  border-bottom-color: var(--color-error-500);
+  background-color: var(--color-error-50);
 }
 &nbsp;
 .input-filled.success {
-  border-bottom-color: var(--success-border);
+  border-bottom-color: var(--color-success-500);
 }
 &nbsp;
 .input-filled.warning {
-  border-bottom-color: var(--warning-border);
+  border-bottom-color: var(--color-warning-500);
 }
 &nbsp;
 /* Underline Style (Minimalist) */
@@ -1125,17 +1095,17 @@
 }
 &nbsp;
 .input-underline.error {
-  border-bottom-color: var(--error-border);
+  border-bottom-color: var(--color-error-500);
   border-bottom-width: 2px;
 }
 &nbsp;
 .input-underline.success {
-  border-bottom-color: var(--success-border);
+  border-bottom-color: var(--color-success-500);
   border-bottom-width: 2px;
 }
 &nbsp;
 .input-underline.warning {
-  border-bottom-color: var(--warning-border);
+  border-bottom-color: var(--color-warning-500);
   border-bottom-width: 2px;
 }
 &nbsp;
@@ -1145,15 +1115,15 @@
 }
 &nbsp;
 .input-flush.error {
-  outline: 1px solid var(--error-border);
+  outline: 1px solid var(--color-error-500);
 }
 &nbsp;
 .input-flush.success {
-  outline: 1px solid var(--success-border);
+  outline: 1px solid var(--color-success-500);
 }
 &nbsp;
 .input-flush.warning {
-  outline: 1px solid var(--warning-border);
+  outline: 1px solid var(--color-warning-500);
 }
 &nbsp;
 /* Horizontal Label Layout */
@@ -1205,7 +1175,7 @@
 &nbsp;
   /* Focus shadow - more subtle on mobile */
   .input:focus {
-    box-shadow: 0 0 0 2px var(--focus-ring-shadow);
+    box-shadow: 0 0 0 2px var(--color-primary-50);
   }
 }
 &nbsp;
@@ -1213,187 +1183,172 @@
    DARK MODE
    ======================================== */
 &nbsp;
-:global([data-theme="dark"]) .input-label,
-:global(.dark) .input-label {
-  color: var(--text-secondary);
-}
+@media (prefers-color-scheme: dark) {
+  /* Label */
+  .input-label {
+    color: var(--text-secondary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .required,
-:global(.dark) .required {
-  color: var(--error-text);
-}
+  /* Required asterisk */
+  .required {
+    color: var(--color-error-400);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-message,
-:global(.dark) .input-message {
-  color: var(--text-tertiary);
-}
+  /* Helper and Message Text */
+  .input-message {
+    color: var(--text-tertiary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-error,
-:global(.dark) .input-error {
-  color: var(--error-text);
-}
+  .input-error {
+    color: var(--color-error-400);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-success,
-:global(.dark) .input-success {
-  color: var(--success-text);
-}
+  .input-success {
+    color: var(--color-success-400);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-warning,
-:global(.dark) .input-warning {
-  color: var(--warning-text);
-}
+  .input-warning {
+    color: var(--color-warning-400);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input,
-:global(.dark) .input {
-  background-color: var(--surface-primary);
-  border-color: var(--border-default);
-  color: var(--text-primary);
-}
+  /* Base Input - Dark Mode */
+  .input {
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input::placeholder,
-:global(.dark) .input::placeholder {
-  color: var(--text-tertiary);
-}
+  .input::placeholder {
+    color: var(--text-tertiary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input:hover:not(:disabled):not(:focus):not(:read-only),
-:global(.dark) .input:hover:not(:disabled):not(:focus):not(:read-only) {
-  border-color: var(--focus-border-color);
-}
+  .input:hover:not(:disabled):not(:focus):not(:read-only) {
+    border-color: var(--color-primary-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input:focus,
-:global(.dark) .input:focus {
-  border-color: var(--focus-border-color);
-  box-shadow: var(--focus-ring-shadow);
-}
+  .input:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input:disabled,
-:global(.dark) .input:disabled {
-  background-color: var(--surface-secondary);
-  border-color: var(--border-subtle);
-  color: var(--text-disabled);
-}
+  .input:disabled {
+    background-color: var(--surface-secondary);
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input:read-only,
-:global(.dark) .input:read-only {
-  background-color: var(--surface-tertiary);
-  border-color: var(--border-subtle);
-  color: var(--text-secondary);
-}
+  .input:read-only {
+    background-color: var(--surface-tertiary);
+    border-color: var(--border-subtle);
+    color: var(--text-secondary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-icon-left,
-:global([data-theme="dark"]) .input-icon-right,
-:global(.dark) .input-icon-left,
-:global(.dark) .input-icon-right {
-  color: var(--text-tertiary);
-}
+  /* Input Icons */
+  .input-icon-left,
+  .input-icon-right {
+    color: var(--text-tertiary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .error,
-:global(.dark) .error {
-  border-color: var(--error-border);
-}
+  /* Error State - Dark Mode */
+  .error {
+    border-color: var(--color-error-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .error:focus,
-:global(.dark) .error:focus {
-  border-color: var(--error-border);
-  box-shadow: 0 0 0 3px var(--error-bg);
-}
+  .error:focus {
+    border-color: var(--color-error-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
 &nbsp;
-:global([data-theme="dark"]) .success,
-:global(.dark) .success {
-  border-color: var(--success-border);
-}
+  /* Success State - Dark Mode */
+  .success {
+    border-color: var(--color-success-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .success:focus,
-:global(.dark) .success:focus {
-  border-color: var(--success-border);
-  box-shadow: 0 0 0 3px var(--success-bg);
-}
+  .success:focus {
+    border-color: var(--color-success-500);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+  }
 &nbsp;
-:global([data-theme="dark"]) .warning,
-:global(.dark) .warning {
-  border-color: var(--warning-border);
-}
+  /* Warning State - Dark Mode */
+  .warning {
+    border-color: var(--color-warning-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .warning:focus,
-:global(.dark) .warning:focus {
-  border-color: var(--warning-border);
-  box-shadow: 0 0 0 3px var(--warning-bg);
-}
+  .warning:focus {
+    border-color: var(--color-warning-500);
+    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.15);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline,
-:global(.dark) .input-underline {
-  border-bottom-color: var(--border-default);
-  color: var(--text-primary);
-}
+  /* Underline Style - Dark Mode */
+  .input-underline {
+    border-bottom-color: var(--text-secondary);
+    color: var(--text-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline::placeholder,
-:global(.dark) .input-underline::placeholder {
-  color: var(--text-tertiary);
-}
+  .input-underline::placeholder {
+    color: var(--text-tertiary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline:hover:not(:disabled):not(:read-only),
-:global(.dark) .input-underline:hover:not(:disabled):not(:read-only) {
-  border-bottom-color: var(--focus-border-color);
-}
+  .input-underline:hover:not(:disabled):not(:read-only) {
+    border-bottom-color: var(--color-primary-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline:focus,
-:global(.dark) .input-underline:focus {
-  border-bottom-color: var(--focus-border-color);
-}
+  .input-underline:focus {
+    border-bottom-color: var(--color-primary-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline.error,
-:global(.dark) .input-underline.error {
-  border-bottom-color: var(--error-border);
-}
+  .input-underline.error {
+    border-bottom-color: var(--color-error-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline.success,
-:global(.dark) .input-underline.success {
-  border-bottom-color: var(--success-border);
-}
+  .input-underline.success {
+    border-bottom-color: var(--color-success-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-underline.warning,
-:global(.dark) .input-underline.warning {
-  border-bottom-color: var(--warning-border);
-}
+  .input-underline.warning {
+    border-bottom-color: var(--color-warning-500);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-flush,
-:global(.dark) .input-flush {
-  color: var(--text-primary);
-}
+  /* Flush Style - Dark Mode */
+  .input-flush {
+    color: var(--text-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-flush::placeholder,
-:global(.dark) .input-flush::placeholder {
-  color: var(--text-tertiary);
-}
+  .input-flush::placeholder {
+    color: var(--text-tertiary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-flush:hover:not(:disabled):not(:read-only),
-:global(.dark) .input-flush:hover:not(:disabled):not(:read-only) {
-  background-color: var(--surface-primary);
-}
+  .input-flush:hover:not(:disabled):not(:read-only) {
+    background-color: var(--surface-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-flush:focus,
-:global(.dark) .input-flush:focus {
-  background-color: var(--surface-primary);
-}
+  .input-flush:focus {
+    background-color: var(--surface-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-filled,
-:global(.dark) .input-filled {
-  background-color: var(--surface-primary);
-}
+  /* Filled Style - Dark Mode */
+  .input-filled {
+    background-color: var(--surface-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-filled:hover:not(:disabled):not(:read-only),
-:global(.dark) .input-filled:hover:not(:disabled):not(:read-only) {
-  background-color: var(--surface-tertiary);
-}
+  .input-filled:hover:not(:disabled):not(:read-only) {
+    background-color: var(--surface-tertiary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-filled:focus,
-:global(.dark) .input-filled:focus {
-  background-color: var(--surface-primary);
-}
+  .input-filled:focus {
+    background-color: var(--surface-primary);
+  }
 &nbsp;
-:global([data-theme="dark"]) .input-filled.error,
-:global(.dark) .input-filled.error {
-  background-color: var(--error-bg);
+  .input-filled.error {
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+&nbsp;
+  /* Mobile dark mode adjustments */
+  @media (max-width: 767px) {
+    .input:focus {
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    }
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -1402,7 +1357,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-15T01:51:56.942Z
+                at 2026-01-19T07:55:18.292Z
             </div>
         <script src="../prettify.js"></script>
         <script>
