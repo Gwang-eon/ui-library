@@ -197,3 +197,48 @@ const sampleAlarms = [
 - `/mnt/h/platform/ui-library/demo/App.tsx` - Main demo application
 - `/mnt/h/platform/ui-library/demo/App.css` - Demo styles
 - `/mnt/h/platform/ui-library/src/components/` - Component sources
+
+---
+
+## Future Components (예정)
+
+### Comment / CommentThread (댓글/대댓글 시스템)
+게시판 형태의 댓글 및 대댓글 기능을 위한 컴포넌트
+
+**구조:**
+```
+CommentThread
+├── Comment
+│   ├── Avatar + 작성자명
+│   ├── 타임스탬프
+│   ├── 본문 내용
+│   ├── 액션 (답글, 수정, 삭제, 좋아요)
+│   └── 대댓글 (재귀적 중첩)
+│       └── Comment
+│           └── Comment ...
+```
+
+**주요 기능:**
+- 무한 중첩 답글 지원
+- 답글 작성 폼
+- 수정/삭제 기능
+- 좋아요/싫어요
+- 접기/펼치기
+- 멘션 (@user)
+- 정렬 옵션 (최신순, 인기순)
+
+**Props (예상):**
+```typescript
+interface CommentThreadProps {
+  comments: Comment[];
+  onReply?: (parentId: string, content: string) => void;
+  onEdit?: (id: string, content: string) => void;
+  onDelete?: (id: string) => void;
+  onLike?: (id: string) => void;
+  maxDepth?: number;
+  sortBy?: 'newest' | 'oldest' | 'popular';
+}
+```
+
+**우선순위:** 낮음
+**상태:** 예정
