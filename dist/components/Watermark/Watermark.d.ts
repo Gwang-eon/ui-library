@@ -1,4 +1,4 @@
-import type { ReactNode, CSSProperties } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 export interface WatermarkProps {
     /** Watermark text content */
     content?: string | string[];

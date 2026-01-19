@@ -368,6 +368,18 @@
   width: 100%;
 }
 
+/* Override input-group default gap/margin for compact filter appearance */
+.filterWrapper > div {
+  gap: 0;
+  margin-bottom: 0;
+}
+
+/* Override Select component wrapper gap/margin */
+.filterWrapper :global(.input-group) {
+  gap: 0;
+  margin-bottom: 0;
+}
+
 .filterInput {
   width: 100%;
   height: 26px;
@@ -394,6 +406,20 @@
 .filterRange {
   display: flex;
   gap: var(--spacing-1);
+  max-width: 160px;
+}
+
+/* Override input-group default gap/margin for compact range filter appearance */
+.filterRange > div {
+  gap: 0;
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 40px;
+}
+
+.filterRange :global(.input-group) {
+  gap: 0;
+  margin-bottom: 0;
 }
 
 .filterRange .filterInput {
@@ -415,12 +441,13 @@
   padding: var(--spacing-1) var(--spacing-2);
   background: var(--surface-primary);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-base);
   font-size: var(--font-size-body-small);
   color: var(--text-primary);
   cursor: pointer;
   gap: var(--spacing-1);
-  min-height: 28px;
+  min-height: 32px;
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
 .selectFilterTrigger:hover {
@@ -867,6 +894,23 @@
 .expandSpacer {
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
+}
+
+/* Tree cell - used for first column in tree structure */
+.treeCell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  width: 100%;
+}
+
+.treeCellContent {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .expandedRow {
@@ -1296,6 +1340,50 @@
   border: 1px solid var(--border-default);
   border-radius: var(--radius-base);
   cursor: pointer;
+}
+
+.pageSizeSelectTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  height: 32px;
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.pageSizeSelectTrigger:hover {
+  border-color: var(--border-strong);
+}
+
+.pageSizeSelectDropdown {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.pageSizeSelectOption {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-body-small);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.pageSizeSelectOption:hover {
+  background: var(--surface-secondary);
+}
+
+.pageSizeSelectOption.selected {
+  background: var(--accent-bg);
+  color: var(--accent-color);
 }
 
 .paginationButtons {
@@ -1791,6 +1879,29 @@
   color: var(--text-primary);
   background: var(--surface-primary);
   border-color: var(--text-secondary);
+}
+
+:global([data-theme="dark"]) .pageSizeSelectTrigger,
+:global(.dark) .pageSizeSelectTrigger {
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .pageSizeSelectTrigger:hover,
+:global(.dark) .pageSizeSelectTrigger:hover {
+  border-color: var(--border-strong);
+}
+
+:global([data-theme="dark"]) .pageSizeSelectDropdown,
+:global(.dark) .pageSizeSelectDropdown {
+  background: var(--surface-primary);
+  border-color: var(--border-default);
+}
+
+:global([data-theme="dark"]) .pageSizeSelectOption:hover,
+:global(.dark) .pageSizeSelectOption:hover {
+  background: var(--surface-tertiary);
 }
 
 :global([data-theme="dark"]) .paginationButton,

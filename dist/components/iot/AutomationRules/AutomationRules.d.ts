@@ -1,5 +1,5 @@
-import React from 'react';
-import type { LucideIcon } from 'lucide-react';
+import { default as React } from 'react';
+import { LucideIcon } from 'lucide-react';
 type IconType = LucideIcon;
 export interface RuleStep {
     label: string;

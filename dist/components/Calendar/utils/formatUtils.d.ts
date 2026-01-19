@@ -1,7 +1,4 @@
-/**
- * 날짜 포맷 유틸리티
- */
-import type { TimeValue } from '../types';
+import { TimeValue } from '../types';
 /** 날짜를 문자열로 포맷 */
 export declare const formatDate: (date: Date, format?: string) => string;
 /** 시간을 문자열로 포맷 */

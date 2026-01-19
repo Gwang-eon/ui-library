@@ -1,5 +1,4 @@
-import React from 'react';
-import type { ReactNode } from 'react';
+import { default as React, ReactNode } from 'react';
 export interface SliderProps {
     /** Current value (controlled) */
     value?: number;

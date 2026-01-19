@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type AvatarShape = 'circle' | 'rounded' | 'square';
 export type AvatarColor = 'primary' | 'success' | 'warning' | 'error' | 'grey';

@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes } from 'react';
+import { default as React, HTMLAttributes } from 'react';
 export type CascadeSelectSize = 'sm' | 'md' | 'lg';
 export interface CascadeOption {
     /**

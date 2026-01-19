@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactNode } from 'react';
+import { default as React, HTMLAttributes, ReactNode } from 'react';
 export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
     /**
      * Button elements to group together

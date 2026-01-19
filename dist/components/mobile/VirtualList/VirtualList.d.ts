@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export interface VirtualListProps<T> {
     /** Array of items to render */
     items: T[];

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export interface AnchorItem {
     /** Unique key for the anchor item */
     key: string;

@@ -102,10 +102,10 @@ const treeData: TreeNode[] = [
 ];
 
 const treeColumns: DataGridColumn<TreeNode>[] = [
-  { id: 'name', header: 'Name', accessorKey: 'name', size: 250 },
-  { id: 'type', header: 'Type', accessorKey: 'type', size: 120 },
+  { id: 'name', header: 'Name', accessorKey: 'name' },
+  { id: 'type', header: 'Type', accessorKey: 'type' },
   {
-    id: 'status', header: 'Status', accessorKey: 'status', size: 100,
+    id: 'status', header: 'Status', accessorKey: 'status',
     cell: ({ getValue }) => {
       const status = getValue() as string;
       const color = status === 'online' ? 'var(--color-success-500)' : status === 'warning' ? 'var(--color-warning-500)' : 'var(--color-error-500)';
@@ -184,7 +184,7 @@ const advancedFilterColumns: DataGridColumn<DeviceData>[] = [
   { id: 'location', header: 'Location', accessorKey: 'location', size: 180, minSize: 120, filterType: 'select' },
   { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', size: 130, minSize: 110, filterType: 'number', align: 'right', cell: ({ getValue }) => `${getValue()}°C` },
   { id: 'humidity', header: 'Humidity', accessorKey: 'humidity', size: 120, minSize: 100, filterType: 'number', align: 'right', cell: ({ getValue }) => `${getValue()}%` },
-  { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 180, minSize: 150, filterType: 'date-range' },
+  { id: 'lastUpdate', header: 'Last Update', accessorKey: 'lastUpdate', size: 180, minSize: 150, filterType: 'date' },
 ];
 
 export default function DataGridDemos() {
@@ -211,6 +211,8 @@ export default function DataGridDemos() {
           enablePagination
           enableExpanding
           pageSizeOptions={[5, 10, 20]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={400}
           striped
           hoverable
@@ -242,6 +244,8 @@ export default function DataGridDemos() {
           enablePagination={false}
           enableFiltering={false}
           enableColumnResizing
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={250}
           compact
           bordered
@@ -273,6 +277,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination
           pageSizeOptions={[5, 10]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={320}
           hoverable
         />
@@ -303,6 +309,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination
           pageSizeOptions={[5, 10]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={320}
           hoverable
         />
@@ -334,6 +342,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination
           pageSizeOptions={[5, 10]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={320}
           hoverable
         />
@@ -364,6 +374,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination
           pageSizeOptions={[3, 5, 10]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={280}
           hoverable
         />
@@ -377,7 +389,7 @@ export default function DataGridDemos() {
           <strong>Status:</strong> Multi-select checkboxes &nbsp;|&nbsp;
           <strong>Location:</strong> Auto-generated select from data &nbsp;|&nbsp;
           <strong>Temp/Humidity:</strong> Number range (min-max) &nbsp;|&nbsp;
-          <strong>Last Update:</strong> Date range picker
+          <strong>Last Update:</strong> Date picker
         </p>
         <DataGrid
           data={dataGridData}
@@ -386,6 +398,8 @@ export default function DataGridDemos() {
           enableFiltering
           enablePagination
           pageSizeOptions={[5, 10, 20]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={400}
           striped
           hoverable
@@ -405,6 +419,8 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={350}
           columnPinning={{ left: ['name'] }}
         />
@@ -416,6 +432,7 @@ export default function DataGridDemos() {
         <p className="demo-note">
           Display hierarchical data with <code>getSubRows</code>. Click expand icons to show child rows.
           Use expand/collapse buttons in toolbar to toggle all rows.
+          Uses <code>autoSizeColumns</code> for automatic column width calculation.
         </p>
         <DataGrid
           data={treeData}
@@ -426,6 +443,8 @@ export default function DataGridDemos() {
           enableSorting={false}
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={400}
           hoverable
         />
@@ -471,6 +490,8 @@ export default function DataGridDemos() {
           enableSorting={false}
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={280}
           hoverable
         />
@@ -490,6 +511,8 @@ export default function DataGridDemos() {
               enableSorting={false}
               enableFiltering={false}
               enablePagination={false}
+              autoSizeColumns
+              fillRemainingSpace="distribute"
             />
           </div>
           <div>
@@ -502,6 +525,8 @@ export default function DataGridDemos() {
               enableSorting={false}
               enableFiltering={false}
               enablePagination={false}
+              autoSizeColumns
+              fillRemainingSpace="distribute"
             />
           </div>
         </div>
@@ -522,6 +547,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination={false}
           showToolbar={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
         />
       </div>
 
@@ -555,6 +582,8 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={400}
         />
       </div>
@@ -579,6 +608,8 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={300}
         />
       </div>
@@ -652,6 +683,8 @@ export default function DataGridDemos() {
           enableSorting={false}
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={300}
         />
       </div>
@@ -682,6 +715,8 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={350}
           hoverable
         />
@@ -720,6 +755,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination
           pageSizeOptions={[20, 50, 100]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={500}
         />
       </div>
@@ -764,6 +801,8 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={350}
         />
       </div>
@@ -794,6 +833,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination={false}
           showFooter
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={400}
         />
       </div>
@@ -845,6 +886,8 @@ export default function DataGridDemos() {
           enableFiltering={false}
           enablePagination
           pageSizeOptions={[5, 10]}
+          autoSizeColumns
+          fillRemainingSpace="distribute"
           height={320}
         />
       </div>
@@ -904,6 +947,8 @@ function ContextMenuDemo() {
         enableSorting
         enableFiltering={false}
         enablePagination={false}
+        autoSizeColumns
+        fillRemainingSpace="distribute"
         height={280}
         showToolbar={false}
       />
@@ -949,6 +994,8 @@ function RowDragDemo() {
         enableSorting={false}
         enableFiltering={false}
         enablePagination={false}
+        autoSizeColumns
+        fillRemainingSpace="distribute"
         height={320}
         showToolbar={false}
       />
@@ -991,6 +1038,8 @@ function ClipboardDemo() {
         enableSorting={false}
         enableFiltering={false}
         enablePagination={false}
+        autoSizeColumns
+        fillRemainingSpace="distribute"
         height={280}
         showToolbar={false}
       />
@@ -1060,6 +1109,8 @@ function ExportDemo() {
         enableSorting={false}
         enableFiltering={false}
         enablePagination={false}
+        autoSizeColumns
+        fillRemainingSpace="distribute"
         height={280}
         showToolbar={false}
       />
@@ -1169,6 +1220,8 @@ function ServerSideDemo() {
         enablePagination
         pageSizeOptions={[5, 10]}
         loading={loading}
+        autoSizeColumns
+        fillRemainingSpace="distribute"
         height={350}
         showToolbar
       />

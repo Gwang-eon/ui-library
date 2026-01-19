@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export type ColorPickerSize = 'sm' | 'md' | 'lg';
 export interface ColorPickerProps {
     value?: string;

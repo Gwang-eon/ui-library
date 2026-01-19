@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type DeviceCardVariant = 'default' | 'warning' | 'error';
 export interface DeviceCardProps {
     children: React.ReactNode;

@@ -1,5 +1,4 @@
-import React from 'react';
-import type { ReactNode, HTMLAttributes, AnchorHTMLAttributes } from 'react';
+import { default as React, ReactNode, HTMLAttributes, AnchorHTMLAttributes } from 'react';
 export type MenuSize = 'sm' | 'md' | 'lg';
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
     trigger: ReactNode;

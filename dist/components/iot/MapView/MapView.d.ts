@@ -1,5 +1,5 @@
-import React from 'react';
-import type { LucideIcon } from 'lucide-react';
+import { default as React } from 'react';
+import { LucideIcon } from 'lucide-react';
 type IconType = LucideIcon;
 export type MarkerStatus = 'online' | 'warning' | 'offline';
 export interface MapMarkerProps {

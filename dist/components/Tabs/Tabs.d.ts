@@ -1,5 +1,4 @@
-import React from 'react';
-import type { ReactNode, HTMLAttributes } from 'react';
+import { default as React, ReactNode, HTMLAttributes } from 'react';
 export type TabsVariant = 'line' | 'contained' | 'pills' | 'icon-bar';
 export type TabsSize = 'sm' | 'md' | 'lg';
 export type TabsOrientation = 'horizontal' | 'vertical';

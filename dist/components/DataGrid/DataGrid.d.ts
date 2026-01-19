@@ -1,10 +1,4 @@
-/**
- * DataGrid Component
- * Enterprise-grade data grid built on TanStack Table
- * Features: sorting, filtering, pagination, column resizing/pinning/reordering,
- *           row selection, expansion, grouping, cell editing, virtualization
- */
-import React from 'react';
+import { default as React } from 'react';
 import { SortingState, ColumnFiltersState, VisibilityState, RowSelectionState, ExpandedState, GroupingState, ColumnOrderState, ColumnPinningState, ColumnSizingState, PaginationState, RowPinningState, Row, Table as TanStackTable, ColumnResizeMode, Updater } from '@tanstack/react-table';
 export type FilterType = 'text' | 'number' | 'select' | 'multi-select' | 'date' | 'date-range';
 export interface FilterOption {
@@ -254,6 +248,14 @@ export interface DataGridProps<TData> {
     virtualPageSizeOptions?: number[];
     /** Callback when virtual page size changes */
     onVirtualPageSizeChange?: (size: number) => void;
+    /** Auto-size columns based on content. true for all columns, or array of column IDs */
+    autoSizeColumns?: boolean | string[];
+    /** How to handle remaining space after auto-sizing: 'last' fills last column, 'distribute' spreads among all, 'none' leaves empty */
+    fillRemainingSpace?: 'last' | 'distribute' | 'none';
+    /** Maximum characters to consider when calculating auto-size (for performance) */
+    autoSizeMaxSampleRows?: number;
+    /** Padding to add to auto-calculated width (in pixels) */
+    autoSizePadding?: number;
     /** Grid height */
     height?: number | string;
     /** Enable striped rows */
@@ -335,7 +337,7 @@ export interface CellPosition {
     rowIndex: number;
     columnId: string;
 }
-declare function DataGridInner<TData>({ data, columns: columnsProp, getRowId, enableSorting, enableMultiSort, sorting: sortingProp, onSortingChange, manualSorting, enableFiltering, showColumnFilters: showColumnFiltersProp, onShowColumnFiltersChange, enableGlobalFilter, globalFilter: globalFilterProp, onGlobalFilterChange, columnFilters: columnFiltersProp, onColumnFiltersChange, manualFiltering, enableFuzzyFilter, enablePagination, pageSizeOptions, pagination: paginationProp, onPaginationChange, rowCount, manualPagination, enableRowSelection, enableMultiRowSelection, selectionMode, getRowCanSelect, enableSubRowSelection, selectAllMode, rowSelection: rowSelectionProp, onRowSelectionChange, onRowClick, onRowDoubleClick, enableExpanding, renderExpandedRow, getSubRows, defaultExpanded, enableExpandAll, expanded: expandedProp, onExpandedChange, enableGrouping, groupedColumnMode, grouping: groupingProp, onGroupingChange, enableColumnResizing, columnResizeMode, enableColumnPinning, enableColumnOrdering, enableColumnVisibility, columnVisibility: columnVisibilityProp, onColumnVisibilityChange, columnOrder: columnOrderProp, onColumnOrderChange, columnPinning: columnPinningProp, onColumnPinningChange, columnSizing: columnSizingProp, onColumnSizingChange, enableCellEditing, onCellEdit, enableRowPinning, rowPinning: rowPinningProp, onRowPinningChange, keepPinnedRows, enableRowOrdering, onRowOrderChange, enableColumnDrag, enableContextMenu, cellContextMenuItems, rowContextMenuItems, headerContextMenuItems, onContextMenuAction, enableClipboard, enableRangeSelection, onPaste, onCopy, enableVirtualization, enableColumnVirtualization, estimateRowHeight, estimateColumnWidth, overscan, virtualPageSize, virtualPageSizeOptions, onVirtualPageSizeChange, height: heightProp, striped, hoverable, bordered, compact, showHeader, showFooter, loading, emptyMessage, renderEmpty, showToolbar, toolbarContent, enableKeyboardNavigation, className, style, }: DataGridProps<TData>, ref: React.ForwardedRef<DataGridRef<TData>>): import("react/jsx-runtime").JSX.Element;
+declare function DataGridInner<TData>({ data, columns: columnsProp, getRowId, enableSorting, enableMultiSort, sorting: sortingProp, onSortingChange, manualSorting, enableFiltering, showColumnFilters: showColumnFiltersProp, onShowColumnFiltersChange, enableGlobalFilter, globalFilter: globalFilterProp, onGlobalFilterChange, columnFilters: columnFiltersProp, onColumnFiltersChange, manualFiltering, enableFuzzyFilter, enablePagination, pageSizeOptions, pagination: paginationProp, onPaginationChange, rowCount, manualPagination, enableRowSelection, enableMultiRowSelection, selectionMode, getRowCanSelect, enableSubRowSelection, selectAllMode, rowSelection: rowSelectionProp, onRowSelectionChange, onRowClick, onRowDoubleClick, enableExpanding, renderExpandedRow, getSubRows, defaultExpanded, enableExpandAll, expanded: expandedProp, onExpandedChange, enableGrouping, groupedColumnMode, grouping: groupingProp, onGroupingChange, enableColumnResizing, columnResizeMode, enableColumnPinning, enableColumnOrdering, enableColumnVisibility, columnVisibility: columnVisibilityProp, onColumnVisibilityChange, columnOrder: columnOrderProp, onColumnOrderChange, columnPinning: columnPinningProp, onColumnPinningChange, columnSizing: columnSizingProp, onColumnSizingChange, enableCellEditing, onCellEdit, enableRowPinning, rowPinning: rowPinningProp, onRowPinningChange, keepPinnedRows, enableRowOrdering, onRowOrderChange, enableColumnDrag, enableContextMenu, cellContextMenuItems, rowContextMenuItems, headerContextMenuItems, onContextMenuAction, enableClipboard, enableRangeSelection, onPaste, onCopy, enableVirtualization, enableColumnVirtualization, estimateRowHeight, estimateColumnWidth, overscan, virtualPageSize, virtualPageSizeOptions, onVirtualPageSizeChange, autoSizeColumns, fillRemainingSpace, autoSizeMaxSampleRows, autoSizePadding, height: heightProp, striped, hoverable, bordered, compact, showHeader, showFooter, loading, emptyMessage, renderEmpty, showToolbar, toolbarContent, enableKeyboardNavigation, className, style, }: DataGridProps<TData>, ref: React.ForwardedRef<DataGridRef<TData>>): import("react/jsx-runtime").JSX.Element;
 export declare const DataGrid: <TData>(props: DataGridProps<TData> & {
     ref?: React.ForwardedRef<DataGridRef<TData>>;
 }) => ReturnType<typeof DataGridInner>;

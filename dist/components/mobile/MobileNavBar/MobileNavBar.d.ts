@@ -1,5 +1,5 @@
-import React from 'react';
-import type { LucideIcon } from 'lucide-react';
+import { default as React } from 'react';
+import { LucideIcon } from 'lucide-react';
 type IconType = LucideIcon;
 export type MobileNavBarStyle = 'top-bar' | 'background' | 'bottom-bar' | 'filled' | 'outlined' | 'minimal';
 export interface MobileNavItem {

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export interface OrderListItemProps {
     /** Unique identifier for the item */
     id?: string;

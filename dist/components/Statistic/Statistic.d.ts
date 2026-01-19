@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import { default as React, ReactNode } from 'react';
 export interface StatisticProps {
     /** Title/label for the statistic */
     title: string;

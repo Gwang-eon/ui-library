@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 type IconType = React.ComponentType<{
     size?: number;
     className?: string;

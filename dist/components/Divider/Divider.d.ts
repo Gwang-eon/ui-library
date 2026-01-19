@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type DividerOrientation = 'horizontal' | 'vertical';
 export type DividerThickness = 'thin' | 'medium' | 'thick';
 export type DividerStyle = 'solid' | 'dashed' | 'dotted';

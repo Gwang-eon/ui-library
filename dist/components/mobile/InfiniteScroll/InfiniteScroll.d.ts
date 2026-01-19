@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export interface InfiniteScrollProps {
     /** Callback when reaching the threshold */
     onLoadMore: () => void | Promise<void>;

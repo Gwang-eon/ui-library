@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export interface ProgressProps {
     children?: React.ReactNode;
     size?: 'sm' | 'md' | 'lg';

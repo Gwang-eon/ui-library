@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export interface SidemenuItem {
     /** Unique key */
     key: string;

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export interface DrawerProps {
     /** Whether the drawer is open */
     open: boolean;
@@ -63,7 +63,7 @@ export interface DrawerFooterProps {
  * ```
  */
 export declare const Drawer: {
-    ({ open, onClose, placement, size, closeOnOverlayClick, closeOnEsc, children, className, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, }: DrawerProps): import("react").ReactPortal | null;
+    ({ open, onClose, placement, size, closeOnOverlayClick, closeOnEsc, children, className, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, }: DrawerProps): import('react').ReactPortal | null;
     Header: {
         ({ children, showClose, onClose, className, }: DrawerHeaderProps): import("react/jsx-runtime").JSX.Element;
         displayName: string;

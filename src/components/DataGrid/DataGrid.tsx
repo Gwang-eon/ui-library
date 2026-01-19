@@ -114,6 +114,142 @@ const DEFAULT_HEIGHT = 600;
 const DEFAULT_EMPTY_MESSAGE = 'No data available';
 
 // ============================================
+// DebouncedInput Component
+// Official TanStack Table pattern for filter inputs
+// Uses local state to avoid re-render issues
+// ============================================
+
+const DebouncedInput = ({
+  value: initialValue,
+  onChange,
+  debounce = 300,
+  ...props
+}: {
+  value: string | number;
+  onChange: (value: string | number) => void;
+  debounce?: number;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) => {
+  const [value, setValue] = useState(initialValue);
+
+  // Sync with external value
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  // Debounced onChange
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      onChange(value);
+    }, debounce);
+
+    return () => clearTimeout(timeout);
+  }, [value, debounce, onChange]);
+
+  return (
+    <input
+      {...props}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+};
+
+// Page size select component with portal for overflow handling
+const PageSizeSelect = ({
+  value,
+  options,
+  onChange,
+}: {
+  value: number;
+  options: number[];
+  onChange: (value: number) => void;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0, width: 0 });
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const updatePosition = useCallback(() => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      updatePosition();
+      const handleScroll = () => updatePosition();
+      window.addEventListener('scroll', handleScroll, true);
+      return () => window.removeEventListener('scroll', handleScroll, true);
+    }
+  }, [isOpen, updatePosition]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        triggerRef.current && !triggerRef.current.contains(target) &&
+        dropdownRef.current && !dropdownRef.current.contains(target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
+  const handleSelect = useCallback((size: number) => {
+    onChange(size);
+    setIsOpen(false);
+  }, [onChange]);
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        className={styles.pageSizeSelectTrigger}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{value} / page</span>
+        <ChevronDown size={14} />
+      </button>
+      {isOpen && createPortal(
+        <div
+          ref={dropdownRef}
+          className={styles.pageSizeSelectDropdown}
+          style={{
+            position: 'fixed',
+            top: position.top,
+            left: position.left,
+            minWidth: position.width,
+            zIndex: 9999,
+          }}
+        >
+          {options.map((size) => (
+            <div
+              key={size}
+              className={`${styles.pageSizeSelectOption} ${size === value ? styles.selected : ''}`}
+              onClick={() => handleSelect(size)}
+            >
+              {size} / page
+            </div>
+          ))}
+        </div>,
+        document.body
+      )}
+    </>
+  );
+};
+
+// ============================================
 // Types
 // ============================================
 
@@ -388,6 +524,16 @@ export interface DataGridProps<TData> {
   virtualPageSizeOptions?: number[];
   /** Callback when virtual page size changes */
   onVirtualPageSizeChange?: (size: number) => void;
+
+  // Auto Column Sizing
+  /** Auto-size columns based on content. true for all columns, or array of column IDs */
+  autoSizeColumns?: boolean | string[];
+  /** How to handle remaining space after auto-sizing: 'last' fills last column, 'distribute' spreads among all, 'none' leaves empty */
+  fillRemainingSpace?: 'last' | 'distribute' | 'none';
+  /** Maximum characters to consider when calculating auto-size (for performance) */
+  autoSizeMaxSampleRows?: number;
+  /** Padding to add to auto-calculated width (in pixels) */
+  autoSizePadding?: number;
 
   // Appearance
   /** Grid height */
@@ -905,7 +1051,7 @@ const getDefaultHeaderMenuItems = (isPinned: string | false): ContextMenuItem[] 
 ];
 
 // Single select filter using Select component
-const SingleSelectFilter = memo(({
+const SingleSelectFilter = ({
   column,
   options: customOptions,
 }: {
@@ -913,7 +1059,22 @@ const SingleSelectFilter = memo(({
   options?: FilterOption[];
 }) => {
   const columnFilterValue = column.getFilterValue() as string | undefined;
-  const facetedValues = column.getFacetedUniqueValues();
+  const [facetedValues, setFacetedValues] = useState<Map<any, number>>(new Map());
+  const columnRef = useRef(column);
+  columnRef.current = column;
+
+  // Safely get faceted values after mount
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      try {
+        const values = columnRef.current.getFacetedUniqueValues();
+        if (values) setFacetedValues(values);
+      } catch {
+        // Ignore StrictMode errors
+      }
+    }, 0);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // Get options from faceted values or custom options
   const options = useMemo(() => {
@@ -928,8 +1089,7 @@ const SingleSelectFilter = memo(({
         label: String(value),
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [facetedValues.size, column.id, customOptions]);
+  }, [facetedValues, customOptions]);
 
   // Add "All" option at the beginning
   const selectOptions = useMemo(() => [
@@ -953,12 +1113,10 @@ const SingleSelectFilter = memo(({
       />
     </div>
   );
-});
-
-SingleSelectFilter.displayName = 'SingleSelectFilter';
+};
 
 // Multi select filter component (checkbox list)
-const MultiSelectFilter = memo(({
+const MultiSelectFilter = ({
   column,
   options: customOptions,
 }: {
@@ -970,7 +1128,22 @@ const MultiSelectFilter = memo(({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const columnFilterValue = column.getFilterValue();
-  const facetedValues = column.getFacetedUniqueValues();
+  const [facetedValues, setFacetedValues] = useState<Map<any, number>>(new Map());
+  const columnRef = useRef(column);
+  columnRef.current = column;
+
+  // Safely get faceted values after mount
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      try {
+        const values = columnRef.current.getFacetedUniqueValues();
+        if (values) setFacetedValues(values);
+      } catch {
+        // Ignore StrictMode errors
+      }
+    }, 0);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // Get options from faceted values or custom options
   const options = useMemo(() => {
@@ -985,7 +1158,6 @@ const MultiSelectFilter = memo(({
         label: String(value),
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facetedValues.size, column.id, customOptions]);
 
   // Update dropdown position when opening
@@ -1091,29 +1263,36 @@ const MultiSelectFilter = memo(({
           {options.length === 0 ? (
             <div className={styles.selectFilterEmpty}>No options</div>
           ) : (
-            options.map((option) => (
-              <label
-                key={option.value}
-                className={`${styles.selectFilterOption} ${selectedValues.includes(option.value) ? styles.selected : ''}`}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedValues.includes(option.value)}
-                  onChange={() => handleSelect(option.value)}
-                  className={styles.selectFilterCheckbox}
-                />
-                <span>{option.label}</span>
-              </label>
-            ))
+            options.map((option) => {
+              const isChecked = selectedValues.includes(option.value);
+              return (
+                <div
+                  key={option.value}
+                  className={`${styles.selectFilterOption} ${isChecked ? styles.selected : ''}`}
+                  onClick={() => handleSelect(option.value)}
+                >
+                  <label className={styles.checkbox}>
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={() => {}}
+                      className={styles.checkboxInput}
+                    />
+                    <span className={styles.checkboxMark}>
+                      {isChecked && <Check size={12} />}
+                    </span>
+                  </label>
+                  <span>{option.label}</span>
+                </div>
+              );
+            })
           )}
         </div>,
         document.body
       )}
     </div>
   );
-});
-
-MultiSelectFilter.displayName = 'MultiSelectFilter';
+};
 
 // Helper functions for date conversion
 const dateToString = (date: Date | null): string => {
@@ -1236,84 +1415,96 @@ const ColumnFilter = memo(({
 ColumnFilter.displayName = 'ColumnFilter';
 
 // Number range filter component
-const NumberRangeFilter = memo(({ column }: { column: any }) => {
-  const columnFilterValue = column.getFilterValue() as [string | number, string | number] | undefined;
-  const [min, max] = column.getFacetedMinMaxValues() ?? [undefined, undefined];
+const NumberRangeFilter = ({ column }: { column: any }) => {
+  const columnFilterValue = column.getFilterValue() as [number, number] | undefined;
+  const [minValue, setMinValue] = useState<string>(columnFilterValue?.[0]?.toString() ?? '');
+  const [maxValue, setMaxValue] = useState<string>(columnFilterValue?.[1]?.toString() ?? '');
+  const prevFilterValue = useRef(columnFilterValue);
 
-  const minValue = columnFilterValue?.[0] ?? '';
-  const maxValue = columnFilterValue?.[1] ?? '';
+  // Convert string to number, return undefined for empty/invalid
+  const toNumber = useCallback((val: string): number | undefined => {
+    if (val === '' || val === undefined || val === null) return undefined;
+    const num = Number(val);
+    return isNaN(num) ? undefined : num;
+  }, []);
 
-  const handleMinChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    column.setFilterValue((old: [string | number, string | number] | undefined) => {
-      const newMax = old?.[1] ?? '';
-      if (!val && !newMax) return undefined;
-      return [val, newMax];
-    });
-  }, [column]);
+  // Sync only when filter is externally cleared (e.g., "Clear all filters" button)
+  useEffect(() => {
+    // Only react when columnFilterValue actually changes to undefined from a non-undefined value
+    if (prevFilterValue.current !== undefined && columnFilterValue === undefined) {
+      setMinValue('');
+      setMaxValue('');
+    }
+    prevFilterValue.current = columnFilterValue;
+  }, [columnFilterValue]);
 
-  const handleMaxChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    column.setFilterValue((old: [string | number, string | number] | undefined) => {
-      const newMin = old?.[0] ?? '';
-      if (!val && !newMin) return undefined;
-      return [newMin, val];
-    });
-  }, [column]);
+  // Debounced update
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const numMin = toNumber(minValue);
+      const numMax = toNumber(maxValue);
+      if (numMin === undefined && numMax === undefined) {
+        column.setFilterValue(undefined);
+      } else {
+        column.setFilterValue([numMin, numMax]);
+      }
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [minValue, maxValue, column, toNumber]);
 
   return (
     <div className={styles.filterRange}>
       <Input
-        type="number"
-        min={min != null ? Number(min) : undefined}
-        max={max != null ? Number(max) : undefined}
-        value={String(minValue)}
-        onChange={handleMinChange}
-        placeholder="Min"
+        type="text"
+        inputMode="decimal"
         size="sm"
-        fullWidth
+        value={minValue}
+        onChange={(e) => setMinValue(e.target.value)}
+        placeholder="Min"
       />
       <Input
-        type="number"
-        min={min != null ? Number(min) : undefined}
-        max={max != null ? Number(max) : undefined}
-        value={String(maxValue)}
-        onChange={handleMaxChange}
-        placeholder="Max"
+        type="text"
+        inputMode="decimal"
         size="sm"
-        fullWidth
+        value={maxValue}
+        onChange={(e) => setMaxValue(e.target.value)}
+        placeholder="Max"
       />
     </div>
   );
-});
-
-NumberRangeFilter.displayName = 'NumberRangeFilter';
+};
 
 // Text filter component
-const TextFilter = memo(({ column }: { column: any }) => {
-  const columnFilterValue = column.getFilterValue() as string | undefined;
-  const facetedValues = column.getFacetedUniqueValues();
+const TextFilter = ({ column }: { column: any }) => {
+  const columnFilterValue = (column.getFilterValue() ?? '') as string;
+  const [value, setValue] = useState(columnFilterValue);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    column.setFilterValue(val || undefined);
-  }, [column]);
+  // Sync with external value
+  useEffect(() => {
+    setValue(columnFilterValue);
+  }, [columnFilterValue]);
+
+  // Debounced update
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      column.setFilterValue(value || undefined);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [value, column]);
 
   return (
     <div className={styles.filterWrapper}>
       <Input
         type="text"
-        value={columnFilterValue ?? ''}
-        onChange={handleChange}
-        placeholder={`Search... (${facetedValues.size})`}
         size="sm"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Search..."
         fullWidth
       />
     </div>
   );
-});
-
-TextFilter.displayName = 'TextFilter';
+};
 
 // Editable cell component with validation and multiple editor types
 const EditableCell = memo(({
@@ -1682,6 +1873,12 @@ function DataGridInner<TData>(
     virtualPageSizeOptions = [20, 50, 100],
     onVirtualPageSizeChange,
 
+    // Auto Column Sizing
+    autoSizeColumns = false,
+    fillRemainingSpace = 'last',
+    autoSizeMaxSampleRows = 100,
+    autoSizePadding = 16,
+
     // Appearance
     height: heightProp = DEFAULT_HEIGHT,
     striped = false,
@@ -1806,6 +2003,26 @@ function DataGridInner<TData>(
     }
   }, [paginationProp]);
 
+  // Safe page index reset when data changes (replaces autoResetPageIndex)
+  // This runs in useEffect to avoid StrictMode state update issues
+  const dataLength = data.length;
+  const currentPageSize = paginationProp?.pageSize ?? pagination.pageSize;
+  const currentPageIndex = paginationProp?.pageIndex ?? pagination.pageIndex;
+
+  useEffect(() => {
+    if (!enablePagination) return;
+
+    const maxPageIndex = Math.max(0, Math.ceil(dataLength / currentPageSize) - 1);
+    if (currentPageIndex > maxPageIndex) {
+      const newPagination = { pageIndex: maxPageIndex, pageSize: currentPageSize };
+      if (onPaginationChange) {
+        onPaginationChange(newPagination);
+      } else {
+        setPagination(newPagination);
+      }
+    }
+  }, [dataLength, currentPageSize, currentPageIndex, enablePagination, onPaginationChange]);
+
   // Filter visibility (controlled or uncontrolled)
   const showColumnFilters = showColumnFiltersProp ?? showColumnFiltersState;
 
@@ -1876,6 +2093,10 @@ function DataGridInner<TData>(
     }),
     useSensor(KeyboardSensor)
   );
+
+  // Ref for data to use in column auto-detection without causing re-renders
+  const dataRef = useRef(data);
+  dataRef.current = data;
 
   // Convert columns to TanStack format
   const columns = useMemo<ColumnDef<TData, unknown>[]>(() => {
@@ -1985,24 +2206,21 @@ function DataGridInner<TData>(
       });
     }
 
-    // Expansion column (for both expandable rows and tree structure)
-    if (enableExpanding || getSubRows) {
+    // Expansion column (only for row expansion without tree structure)
+    // For tree structure (getSubRows), expand button is integrated into first data column
+    if (enableExpanding && !getSubRows) {
       cols.push({
         id: '_expand',
-        size: getSubRows ? 80 : 50,
+        size: 50,
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
         header: () => null,
         cell: ({ row }) => {
-          const depth = row.depth;
           const canExpand = row.getCanExpand();
 
           return (
-            <div
-              className={styles.expandCell}
-              style={{ paddingLeft: getSubRows ? `${depth * 20}px` : 0 }}
-            >
+            <div className={styles.expandCell}>
               {canExpand ? (
                 <button
                   className={styles.expandButton}
@@ -2014,9 +2232,9 @@ function DataGridInner<TData>(
                     <ChevronRight size={16} />
                   )}
                 </button>
-              ) : getSubRows ? (
+              ) : (
                 <span className={styles.expandSpacer} />
-              ) : null}
+              )}
             </div>
           );
         },
@@ -2024,9 +2242,9 @@ function DataGridInner<TData>(
     }
 
     // Data columns
-    columnsProp.forEach((col) => {
-      // Determine filter function based on filterType
-      let filterFn: string | undefined;
+    columnsProp.forEach((col, colIndex) => {
+      // Determine filter function based on filterType or auto-detect from data
+      let filterFn: string = 'includesString'; // Default filter function for text
       if (col.filterType === 'multi-select') {
         filterFn = 'multiSelect';
       } else if (col.filterType === 'select') {
@@ -2036,8 +2254,84 @@ function DataGridInner<TData>(
       } else if (col.filterType === 'date') {
         filterFn = 'dateExact';
       } else if (col.filterType === 'number') {
-        filterFn = 'inNumberRange';
+        filterFn = 'numberRange';
+      } else if (!col.filterType) {
+        // Auto-detect: check first row's value type (use dataRef to avoid dependency)
+        const firstRow = dataRef.current[0];
+        if (firstRow) {
+          const value = col.accessorKey
+            ? (firstRow as any)[col.accessorKey]
+            : col.accessorFn
+              ? col.accessorFn(firstRow)
+              : undefined;
+          if (typeof value === 'number') {
+            filterFn = 'numberRange';
+          }
+        }
       }
+
+      // Check if this is the first data column and tree structure is enabled
+      const isFirstColumnWithTree = colIndex === 0 && getSubRows;
+
+      // Create cell renderer - wrap with tree expand for first column in tree mode
+      const createCellRenderer = () => {
+        const baseRenderer = enableCellEditing && col.editable
+          ? (info: any) => (
+              <EditableCell
+                value={info.getValue()}
+                row={info.row}
+                column={info.column}
+                onEdit={onCellEdit}
+                editComponent={col.editComponent}
+                editorType={col.editorType}
+                editorOptions={col.editorOptions}
+                validateCell={col.validateCell as any}
+              />
+            )
+          : col.cell
+          ? (info: any) => col.cell!(info as any)
+          : (info: any) => {
+              const value = info.getValue();
+              return value != null ? String(value) : '';
+            };
+
+        // Wrap first column with tree expand functionality
+        if (isFirstColumnWithTree) {
+          return (info: any) => {
+            const row = info.row;
+            const depth = row.depth;
+            const canExpand = row.getCanExpand();
+            const isExpanded = row.getIsExpanded();
+
+            return (
+              <div className={styles.treeCell} style={{ paddingLeft: `${depth * 20}px` }}>
+                {canExpand ? (
+                  <button
+                    className={styles.expandButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      row.getToggleExpandedHandler()();
+                    }}
+                  >
+                    {isExpanded ? (
+                      <ChevronDown size={16} />
+                    ) : (
+                      <ChevronRight size={16} />
+                    )}
+                  </button>
+                ) : (
+                  <span className={styles.expandSpacer} />
+                )}
+                <span className={styles.treeCellContent}>
+                  {baseRenderer(info)}
+                </span>
+              </div>
+            );
+          };
+        }
+
+        return baseRenderer;
+      };
 
       const colDef: ColumnDef<TData, unknown> = {
         id: col.id,
@@ -2054,25 +2348,7 @@ function DataGridInner<TData>(
         aggregationFn: col.aggregationFn,
         aggregatedCell: col.aggregatedCell as any,
         filterFn: filterFn as any,
-        cell: enableCellEditing && col.editable
-          ? (info) => (
-              <EditableCell
-                value={info.getValue()}
-                row={info.row}
-                column={info.column}
-                onEdit={onCellEdit}
-                editComponent={col.editComponent}
-                editorType={col.editorType}
-                editorOptions={col.editorOptions}
-                validateCell={col.validateCell as any}
-              />
-            )
-          : col.cell
-          ? (info) => col.cell!(info as any)
-          : (info) => {
-              const value = info.getValue();
-              return value != null ? String(value) : '';
-            },
+        cell: createCellRenderer(),
         meta: {
           align: col.align,
           filterType: col.filterType,
@@ -2109,11 +2385,83 @@ function DataGridInner<TData>(
     onCellEdit,
   ]);
 
+  // Auto-size columns calculation
+  const calculatedColumnSizing = useMemo<ColumnSizingState>(() => {
+    if (!autoSizeColumns) return {};
+
+    // Create a canvas context for measuring text width
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return {};
+
+    // Set font to match the grid's font
+    ctx.font = compact ? '12px system-ui, sans-serif' : '14px system-ui, sans-serif';
+
+    const measureText = (text: string): number => {
+      return ctx.measureText(text).width;
+    };
+
+    const sizing: ColumnSizingState = {};
+    const columnsToAutoSize = autoSizeColumns === true
+      ? columnsProp.map(c => c.id)
+      : autoSizeColumns;
+
+    // Sample rows for measurement (limit for performance)
+    const sampleRows = data.slice(0, autoSizeMaxSampleRows);
+
+    columnsProp.forEach((col) => {
+      if (!columnsToAutoSize.includes(col.id)) return;
+
+      // Measure header width
+      const headerText = typeof col.header === 'string' ? col.header : col.id;
+      let maxWidth = measureText(headerText);
+
+      // Measure data width
+      sampleRows.forEach((row) => {
+        let cellValue: unknown;
+        if (col.accessorKey) {
+          cellValue = (row as any)[col.accessorKey];
+        } else if (col.accessorFn) {
+          cellValue = col.accessorFn(row);
+        }
+
+        if (cellValue != null) {
+          const textWidth = measureText(String(cellValue));
+          maxWidth = Math.max(maxWidth, textWidth);
+        }
+      });
+
+      // Add padding and respect min/max constraints
+      const calculatedSize = Math.ceil(maxWidth + autoSizePadding + (getSubRows && columnsProp[0]?.id === col.id ? 40 : 0));
+      const minSize = col.minSize ?? 50;
+      const maxSize = col.maxSize ?? 500;
+
+      sizing[col.id] = Math.min(Math.max(calculatedSize, minSize), maxSize);
+    });
+
+    return sizing;
+  }, [autoSizeColumns, columnsProp, data, autoSizeMaxSampleRows, autoSizePadding, compact, getSubRows]);
+
+  // Merge auto-calculated sizes with controlled/state sizes
+  const effectiveColumnSizing = useMemo<ColumnSizingState>(() => {
+    const baseSizing = columnSizingProp ?? columnSizing;
+
+    // If autoSizeColumns is enabled, use calculated sizes as defaults
+    if (autoSizeColumns) {
+      return { ...calculatedColumnSizing, ...baseSizing };
+    }
+
+    return baseSizing;
+  }, [autoSizeColumns, calculatedColumnSizing, columnSizingProp, columnSizing]);
+
   // Table instance
   const table = useReactTable({
     data,
     columns,
     getRowId,
+    // Disable auto-reset to prevent state updates during StrictMode double-render
+    // See: https://github.com/TanStack/table/issues/5026
+    autoResetPageIndex: false,
     state: {
       sorting: sortingProp ?? sorting,
       columnFilters: columnFiltersProp ?? columnFilters,
@@ -2124,7 +2472,7 @@ function DataGridInner<TData>(
       columnVisibility: columnVisibilityProp ?? columnVisibility,
       columnOrder: columnOrderProp ?? columnOrder,
       columnPinning: columnPinningProp ?? columnPinning,
-      columnSizing: columnSizingProp ?? columnSizing,
+      columnSizing: effectiveColumnSizing,
       rowPinning: rowPinningProp ?? rowPinning,
       pagination: paginationProp ?? pagination,
     },
@@ -2156,6 +2504,28 @@ function DataGridInner<TData>(
         const itemRank = rankItem(String(row.getValue(columnId)), String(filterValue));
         addMeta({ itemRank });
         return itemRank.passed;
+      },
+      // Custom number range filter - handles both pure numbers and strings containing numbers
+      numberRange: (row, columnId, filterValue: [number | undefined, number | undefined]) => {
+        if (!filterValue || (filterValue[0] === undefined && filterValue[1] === undefined)) {
+          return true;
+        }
+        const rawValue = row.getValue(columnId);
+        // Parse number from value (handles "23.5°C", "$100", "50%", etc.)
+        let numValue: number;
+        if (typeof rawValue === 'number') {
+          numValue = rawValue;
+        } else if (typeof rawValue === 'string') {
+          const parsed = parseFloat(rawValue.replace(/[^\d.-]/g, ''));
+          if (isNaN(parsed)) return true; // Can't parse, include row
+          numValue = parsed;
+        } else {
+          return true; // Unknown type, include row
+        }
+        const [min, max] = filterValue;
+        if (min !== undefined && numValue < min) return false;
+        if (max !== undefined && numValue > max) return false;
+        return true;
       },
       // Custom filter function for multi-select
       multiSelect: (row, columnId, filterValue: string[]) => {
@@ -3071,6 +3441,22 @@ function DataGridInner<TData>(
     selectedCells,
   ]);
 
+  // Helper to calculate flex value based on fillRemainingSpace
+  const getFlexValue = useCallback((size: number, isLastColumn: boolean, isSpecialColumn: boolean = false): string => {
+    // Special columns (select, expand, etc.) never flex
+    if (isSpecialColumn) return `0 0 ${size}px`;
+
+    switch (fillRemainingSpace) {
+      case 'none':
+        return `0 0 ${size}px`;
+      case 'distribute':
+        return `1 1 ${size}px`; // All columns can grow/shrink proportionally
+      case 'last':
+      default:
+        return isLastColumn ? '1 0 auto' : `0 0 ${size}px`;
+    }
+  }, [fillRemainingSpace]);
+
   // Render header cell (div-based)
   const renderHeaderCell = useCallback((header: Header<TData, unknown>, isLastColumn: boolean = false) => {
     const canSort = header.column.getCanSort();
@@ -3101,7 +3487,7 @@ function DataGridInner<TData>(
         key={header.id}
         className={cellClasses}
         style={{
-          flex: isLastColumn ? '1 0 auto' : `0 0 ${header.getSize()}px`,
+          flex: getFlexValue(header.getSize(), isLastColumn, header.id.startsWith('_')),
           minWidth: header.getSize(),
           left: isPinned === 'left' ? header.getStart('left') : undefined,
           right: isPinned === 'right' ? header.getStart('right') : undefined,
@@ -3242,7 +3628,7 @@ function DataGridInner<TData>(
           cellId={cell.id}
           className={cellClasses}
           style={{
-            flex: isLastColumn ? '1 0 auto' : `0 0 ${cell.column.getSize()}px`,
+            flex: getFlexValue(cell.column.getSize(), isLastColumn, cell.column.id.startsWith('_')),
             minWidth: cell.column.getSize(),
             left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
             right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
@@ -3326,17 +3712,11 @@ function DataGridInner<TData>(
           )}
         </div>
         <div className={styles.paginationControls}>
-          <select
+          <PageSizeSelect
             value={pageSize}
-            onChange={(e) => table.setPageSize(Number(e.target.value))}
-            className={styles.pageSizeSelect}
-          >
-            {pageSizeOptions.map((size) => (
-              <option key={size} value={size}>
-                {size} / page
-              </option>
-            ))}
-          </select>
+            options={pageSizeOptions}
+            onChange={(size) => table.setPageSize(size)}
+          />
           <div className={styles.paginationButtons}>
             <button
               className={styles.paginationButton}
@@ -3584,7 +3964,7 @@ function DataGridInner<TData>(
                             key={header.id}
                             className={styles.gridFooterCell}
                             style={{
-                              flex: isLastColumn ? '1 0 auto' : `0 0 ${header.getSize()}px`,
+                              flex: getFlexValue(header.getSize(), isLastColumn, header.id.startsWith('_')),
                               minWidth: header.getSize(),
                             }}
                             role="gridcell"

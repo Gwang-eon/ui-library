@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type StepperSize = 'sm' | 'md' | 'lg';
 export type StepperVariant = 'default' | 'filled' | 'outlined';
 export interface StepperProps {

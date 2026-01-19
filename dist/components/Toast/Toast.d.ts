@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type ToastVariant = 'info' | 'success' | 'warning' | 'error';
 export type ToastPosition = 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
 export interface ToastProps {

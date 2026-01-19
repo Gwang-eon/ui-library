@@ -1,5 +1,4 @@
-import React from 'react';
-import type { InputHTMLAttributes } from 'react';
+import { default as React, InputHTMLAttributes } from 'react';
 export interface InputBaseProps extends Omit<InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>, 'size'> {
     /** Input variant */
     variant?: 'default' | 'error' | 'success' | 'warning' | 'info';

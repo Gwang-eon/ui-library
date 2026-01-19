@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type ConnectionStatus = 'connected' | 'connecting' | 'disconnected' | 'warning';
 export type ConnectionSize = 'sm' | 'md' | 'lg';
 export interface ConnectionIndicatorProps {

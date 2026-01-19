@@ -1,7 +1,4 @@
-/**
- * 로케일 유틸리티
- */
-import type { CalendarLocale, DayOfWeek } from '../types';
+import { CalendarLocale, DayOfWeek } from '../types';
 /** 기본 한국어 로케일 */
 export declare const koKRLocale: CalendarLocale;
 /** 기본 영어 로케일 */

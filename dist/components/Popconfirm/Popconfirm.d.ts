@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export type PopconfirmPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type PopconfirmIconType = 'info' | 'success' | 'warning' | 'danger';
 export interface PopconfirmProps {

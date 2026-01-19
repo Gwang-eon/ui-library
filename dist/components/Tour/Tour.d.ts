@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 export type TourPlacement = 'top' | 'bottom' | 'left' | 'right';
 export interface TourStep {
     /** Target element selector (e.g., '#step-1', '.my-element') */
@@ -72,6 +72,6 @@ export interface TourProps {
  * ```
  */
 export declare const Tour: {
-    ({ open, steps, current: controlledCurrent, onChange, onClose, onFinish, onSkip, mask, closable, showSkip, showProgress, placement: defaultPlacement, "aria-label": ariaLabel, }: TourProps): import("react").ReactPortal | null;
+    ({ open, steps, current: controlledCurrent, onChange, onClose, onFinish, onSkip, mask, closable, showSkip, showProgress, placement: defaultPlacement, "aria-label": ariaLabel, }: TourProps): import('react').ReactPortal | null;
     displayName: string;
 };

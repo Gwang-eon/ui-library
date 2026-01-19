@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export type ToggleSize = 'sm' | 'md' | 'lg';
 export interface ToggleProps {
     /**
