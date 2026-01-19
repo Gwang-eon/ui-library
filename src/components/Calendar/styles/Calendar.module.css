@@ -234,6 +234,10 @@
   color: var(--error-text);
 }
 
+.day--weekend.day--selected {
+  color: var(--button-primary-text);
+}
+
 .day--weekend.day--otherMonth {
   color: var(--text-disabled);
 }
@@ -383,7 +387,8 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
-  max-height: 200px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
 }
 
