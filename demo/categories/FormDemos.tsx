@@ -154,7 +154,7 @@ export default function FormDemos() {
           <Input placeholder="Search..." prefix={<Search size={16} />} />
           <Input placeholder="Enter email" label="Email" prefix={<Mail size={16} />} />
           <Input placeholder="Password" type="password" prefix={<Lock size={16} />} />
-          <Input placeholder="Error state" status="error" statusMessage="Invalid input" />
+          <Input placeholder="Error state" state="error" errorMessage="Invalid input" />
         </div>
 
         {/* Select */}

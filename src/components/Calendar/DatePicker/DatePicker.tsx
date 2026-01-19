@@ -40,8 +40,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [internalDate, setInternalDate] = useState<Date | null>(value ?? null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Controlled vs Uncontrolled
+  const isControlled = value !== undefined;
+  const selectedDate = isControlled ? value : internalDate;
 
   // 로케일 병합
   const locale = useMemo(() => mergeLocale(defaultLocale, localeProp), [localeProp]);
@@ -51,8 +56,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   // 캘린더 상태
   const calendar = useCalendarState({
-    initialDate: value,
+    initialDate: selectedDate,
     onChange: (date) => {
+      if (!isControlled) {
+        setInternalDate(date);
+      }
       onChange?.(date);
       if (date) {
         setInputValue(formatDate(date, format));
@@ -68,30 +76,31 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   // 뷰 모드 상태
   const [viewMode, setViewMode] = useState<CalendarViewMode>('day');
-  const [currentDate, setCurrentDate] = useState(value || new Date());
+  const [currentDate, setCurrentDate] = useState(selectedDate || new Date());
 
-  // 선택된 날짜 동기화
-  const selectedDate = value;
-
-  // 입력값 동기화
+  // 입력값 동기화 (controlled mode에서 외부 value 변경 시)
   React.useEffect(() => {
-    if (value) {
-      setInputValue(formatDate(value, format));
-    } else {
-      setInputValue('');
+    if (isControlled) {
+      if (value) {
+        setInputValue(formatDate(value, format));
+        setInternalDate(value);
+      } else {
+        setInputValue('');
+        setInternalDate(null);
+      }
     }
-  }, [value, format]);
+  }, [value, format, isControlled]);
 
   // 팝업 열기/닫기
   const handleOpen = useCallback(() => {
     if (disabled || readOnly) return;
     setIsOpen(true);
     setViewMode('day');
-    if (value) {
-      setCurrentDate(value);
+    if (selectedDate) {
+      setCurrentDate(selectedDate);
     }
     onOpen?.();
-  }, [disabled, readOnly, value, onOpen]);
+  }, [disabled, readOnly, selectedDate, onOpen]);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -101,6 +110,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   // 날짜 선택
   const handleSelect = useCallback((date: Date) => {
     if (viewMode === 'day') {
+      if (!isControlled) {
+        setInternalDate(date);
+      }
       onChange?.(date);
       setInputValue(formatDate(date, format));
       if (!inline) {
@@ -113,15 +125,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       setCurrentDate(date);
       setViewMode('month');
     }
-  }, [viewMode, onChange, format, inline, handleClose]);
+  }, [viewMode, onChange, format, inline, handleClose, isControlled]);
 
   // 클리어
   const handleClear = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    if (!isControlled) {
+      setInternalDate(null);
+    }
     onChange?.(null);
     setInputValue('');
     inputRef.current?.focus();
-  }, [onChange]);
+  }, [onChange, isControlled]);
 
   // 입력값 변경
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,23 +146,26 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     // 날짜 파싱 시도
     const parsed = parseDate(newValue, format);
     if (parsed) {
+      if (!isControlled) {
+        setInternalDate(parsed);
+      }
       onChange?.(parsed);
       setCurrentDate(parsed);
     }
-  }, [format, onChange]);
+  }, [format, onChange, isControlled]);
 
   // 입력 블러
   const handleInputBlur = useCallback(() => {
     // 유효하지 않은 입력이면 원래 값으로 복원
     if (inputValue && !parseDate(inputValue, format)) {
-      if (value) {
-        setInputValue(formatDate(value, format));
+      if (selectedDate) {
+        setInputValue(formatDate(selectedDate, format));
       } else {
         setInputValue('');
       }
     }
     onBlur?.();
-  }, [inputValue, format, value, onBlur]);
+  }, [inputValue, format, selectedDate, onBlur]);
 
   // 네비게이션
   const handlePrevious = useCallback(() => {
@@ -273,7 +291,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         autoComplete="off"
       />
 
-      {clearable && value && !disabled && !readOnly && (
+      {clearable && selectedDate && !disabled && !readOnly && (
         <button
           type="button"
           className={styles.clearButton}
