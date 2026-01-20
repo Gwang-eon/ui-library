@@ -160,7 +160,7 @@
 
 .sidemenuItem.active {
   background-color: var(--color-primary-50);
-  color: var(--color-primary-600);
+  color: var(--color-primary-800);
   font-weight: var(--font-weight-semibold);
 }
 

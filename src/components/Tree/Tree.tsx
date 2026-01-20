@@ -81,12 +81,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
 
   return (
     <div className={nodeClasses}>
-      <div
-        className={styles.treeNodeContent}
-        onClick={handleContentClick}
-        role={!selectable ? 'button' : undefined}
-        tabIndex={!selectable && !node.disabled ? 0 : undefined}
-      >
+      <div className={styles.treeNodeContent}>
         {hasChildren ? (
           <button
             className={`${styles.treeExpandBtn} ${
@@ -103,23 +98,36 @@ const TreeNode: React.FC<TreeNodeProps> = ({
         )}
 
         {selectable && (
-          <input
-            type="checkbox"
-            className={styles.treeCheckbox}
-            checked={isSelected}
-            onChange={handleCheckboxChange}
-            disabled={node.disabled}
-            onClick={(e) => e.stopPropagation()}
-          />
+          <label className={styles.treeCheckboxLabel}>
+            <input
+              type="checkbox"
+              className={styles.treeCheckbox}
+              checked={isSelected}
+              onChange={handleCheckboxChange}
+              disabled={node.disabled}
+            />
+            {node.icon && <span className={styles.treeIcon}>{node.icon}</span>}
+            <span className={styles.treeLabel}>
+              <span className={styles.treeLabelText}>{node.label}</span>
+            </span>
+            {node.badge && <span className={styles.treeBadge}>{node.badge}</span>}
+          </label>
         )}
 
-        {node.icon && <span className={styles.treeIcon}>{node.icon}</span>}
-
-        <span className={styles.treeLabel}>
-          <span className={styles.treeLabelText}>{node.label}</span>
-        </span>
-
-        {node.badge && <span className={styles.treeBadge}>{node.badge}</span>}
+        {!selectable && (
+          <button
+            className={styles.treeNodeButton}
+            onClick={handleContentClick}
+            disabled={node.disabled}
+            type="button"
+          >
+            {node.icon && <span className={styles.treeIcon}>{node.icon}</span>}
+            <span className={styles.treeLabel}>
+              <span className={styles.treeLabelText}>{node.label}</span>
+            </span>
+            {node.badge && <span className={styles.treeBadge}>{node.badge}</span>}
+          </button>
+        )}
       </div>
 
       {hasChildren && isExpanded && (

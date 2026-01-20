@@ -694,7 +694,7 @@ export default function DataGridDemos() {
         <h3>Row Pinning</h3>
         <p className="demo-note">
           Hover over a row to see pin buttons. Pin rows to top or bottom to keep them visible while scrolling.
-          Click the pin icon on a pinned row to unpin it.
+          Click the pin icon on a pinned row to unpin it. The pin column is separate from the selection checkbox.
         </p>
         <DataGrid
           data={dataGridData}
@@ -712,6 +712,7 @@ export default function DataGridDemos() {
             { id: 'temperature', header: 'Temp (°C)', accessorKey: 'temperature', align: 'right' },
           ]}
           enableRowPinning
+          enableRowSelection
           enableSorting
           enableFiltering={false}
           enablePagination={false}

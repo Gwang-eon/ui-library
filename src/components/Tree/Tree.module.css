@@ -31,17 +31,11 @@
   padding: var(--spacing-2) var(--spacing-3);
   border-radius: var(--radius-base);
   transition: background-color var(--duration-fast) var(--ease-out);
-  cursor: pointer;
   position: relative;
 }
 
 .treeNodeContent:hover {
   background: var(--surface-secondary);
-}
-
-.treeNodeContent:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: -2px;
 }
 
 .treeNodeSelected .treeNodeContent {
@@ -152,8 +146,54 @@
 }
 
 /* ========================================
+   NODE BUTTON (NON-SELECTABLE MODE)
+   ======================================== */
+
+.treeNodeButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.treeNodeButton:hover {
+  background: transparent;
+}
+
+.treeNodeButton:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.treeNodeButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ========================================
    SELECTABLE TREE (WITH CHECKBOXES)
    ======================================== */
+
+.treeCheckboxLabel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+}
+
+.treeCheckboxLabel:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
 .treeSelectable .treeCheckbox {
   flex-shrink: 0;

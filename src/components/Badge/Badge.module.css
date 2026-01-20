@@ -54,7 +54,7 @@
 
 .badge-success {
   background-color: var(--color-success-100);
-  color: var(--color-success-700);
+  color: var(--color-success-900);
 }
 
 .badge-warning {

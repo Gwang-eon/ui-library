@@ -38,25 +38,25 @@ const tableData = [
 
 const treeData = [
   {
-    key: 'building-a',
+    id: 'building-a',
     label: 'Building A',
     icon: <Building size={14} />,
     children: [
       {
-        key: 'floor-1',
+        id: 'floor-1',
         label: 'Floor 1',
         icon: <Layers size={14} />,
         children: [
-          { key: 'room-101', label: 'Room 101', icon: <Box size={14} /> },
-          { key: 'room-102', label: 'Room 102', icon: <Box size={14} /> },
+          { id: 'room-101', label: 'Room 101', icon: <Box size={14} /> },
+          { id: 'room-102', label: 'Room 102', icon: <Box size={14} /> },
         ],
       },
       {
-        key: 'floor-2',
+        id: 'floor-2',
         label: 'Floor 2',
         icon: <Layers size={14} />,
         children: [
-          { key: 'room-201', label: 'Room 201', icon: <Box size={14} /> },
+          { id: 'room-201', label: 'Room 201', icon: <Box size={14} /> },
         ],
       },
     ],
@@ -264,7 +264,7 @@ export default function DisplayDemos() {
         {/* Tree */}
         <div className="demo-item">
           <h3>Tree</h3>
-          <Tree data={treeData} defaultExpandedKeys={['building-a', 'floor-1']} />
+          <Tree data={treeData} defaultExpandAll />
         </div>
 
         {/* Image */}
