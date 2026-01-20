@@ -300,17 +300,17 @@
     color: var(--color-primary-300);
   }
 
-  /* Primary Button - darker shades */
+  /* Primary Button - WCAG AA compliant (4.5:1 with white text) */
   .btn-primary {
-    background-color: var(--color-primary-600);
+    background-color: var(--color-primary-700);
   }
 
   .btn-primary:hover:not(:disabled) {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-600);
   }
 
   .btn-primary:active:not(:disabled) {
-    background-color: var(--color-primary-700);
+    background-color: var(--color-primary-800);
   }
 
   /* Success Button - adjusted for dark mode */
@@ -401,12 +401,12 @@
 
 :global(.dark-mode) .btn-primary,
 :global([data-theme="dark"]) .btn-primary {
-  background-color: var(--color-primary-600);
+  background-color: var(--color-primary-700);
 }
 
 :global(.dark-mode) .btn-primary:hover:not(:disabled),
 :global([data-theme="dark"]) .btn-primary:hover:not(:disabled) {
-  background-color: var(--color-primary-500);
+  background-color: var(--color-primary-600);
 }
 
 :global(.dark-mode) .btn-success,

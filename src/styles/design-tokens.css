@@ -1055,9 +1055,9 @@ body.dark-mode,
 [data-theme="dark"],
 .dark {
   /* Component Colors - Dark Mode */
-  --button-primary-bg: var(--color-primary-600);
-  --button-primary-bg-hover: var(--color-primary-500);
-  --button-primary-bg-active: var(--color-primary-400);
+  --button-primary-bg: var(--color-primary-700);      /* WCAG AA compliant with white text */
+  --button-primary-bg-hover: var(--color-primary-600);
+  --button-primary-bg-active: var(--color-primary-800);
   --button-primary-text: var(--palette-white);
 
   --button-secondary-bg: transparent;
