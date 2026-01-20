@@ -43,7 +43,7 @@
 .alert-warning {
   background-color: var(--color-warning-50);
   border-color: var(--color-warning-200);
-  color: var(--color-warning-900);
+  color: #7B3F00; /* Dark amber for WCAG AA contrast (5.5:1 on warning-50) */
 }
 
 .alert-error {
