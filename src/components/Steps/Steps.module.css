@@ -117,14 +117,14 @@
 /* Active step */
 .step-active .stepIcon {
   background-color: var(--color-primary-50);
-  border-color: var(--color-primary-600);
-  color: var(--color-primary-600);
+  border-color: var(--color-primary-700);
+  color: var(--color-primary-700);
   border-width: 3px;
   box-shadow: 0 0 0 4px var(--color-primary-100);
 }
 
 .step-active .stepTitle {
-  color: var(--color-primary-600);
+  color: var(--color-primary-700);
 }
 
 /* Error step */
@@ -229,7 +229,7 @@
 }
 
 .stepClickable:hover .stepTitle {
-  color: var(--color-primary-600);
+  color: var(--color-primary-700);
 }
 
 .stepClickable:focus {
