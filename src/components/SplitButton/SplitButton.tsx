@@ -1,5 +1,6 @@
 import type { ReactNode, MouseEvent } from 'react';
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '../Button';
 import styles from './SplitButton.module.css';
@@ -44,6 +45,8 @@ export interface SplitButtonProps {
   'aria-label'?: string;
   /** Custom className */
   className?: string;
+  /** Render menu via Portal to avoid overflow issues */
+  portal?: boolean;
 }
 
 /**
@@ -93,15 +96,21 @@ export const SplitButton = ({
   loading = false,
   'aria-label': ariaLabel,
   className,
+  portal = false,
 }: SplitButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
 
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        (!portal || (menuRef.current && !menuRef.current.contains(event.target as Node)))
+      ) {
         setIsOpen(false);
       }
     };
@@ -110,7 +119,25 @@ export const SplitButton = ({
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [isOpen]);
+  }, [isOpen, portal]);
+
+  // Calculate menu position for portal mode
+  useEffect(() => {
+    if (portal && isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const menuHeight = 200;
+
+      let top = rect.bottom + 4;
+      const left = rect.left;
+      const width = rect.width;
+
+      if (top + menuHeight > window.innerHeight) {
+        top = rect.top - menuHeight - 4;
+      }
+
+      setMenuPosition({ top, left, width });
+    }
+  }, [portal, isOpen]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -202,45 +229,56 @@ export const SplitButton = ({
         {isOpen ? <ChevronUp size={SPLIT_BUTTON_ICON_SIZES[size]} /> : <ChevronDown size={SPLIT_BUTTON_ICON_SIZES[size]} />}
       </Button>
 
-      <ul
-        ref={menuRef}
-        className={`${styles.splitButtonMenu} ${isOpen ? styles.splitButtonMenuOpen : ''}`}
-        role="menu"
-      >
-        {items.map((item, index) => {
-          if (item.divider) {
-            return (
-              <li
-                key={`divider-${index}`}
-                className={styles.splitButtonMenuDivider}
-                role="separator"
-                aria-hidden="true"
-              />
-            );
-          }
+      {(() => {
+        const menuContent = (
+          <ul
+            ref={menuRef}
+            className={`${styles.splitButtonMenu} ${isOpen ? styles.splitButtonMenuOpen : ''} ${portal ? styles.portalMenu : ''}`}
+            role="menu"
+            style={portal && isOpen ? {
+              position: 'fixed',
+              top: menuPosition.top,
+              left: menuPosition.left,
+              minWidth: menuPosition.width,
+            } : undefined}
+          >
+            {items.map((item, index) => {
+              if (item.divider) {
+                return (
+                  <li
+                    key={`divider-${index}`}
+                    className={styles.splitButtonMenuDivider}
+                    role="separator"
+                    aria-hidden="true"
+                  />
+                );
+              }
 
-          return (
-            <li
-              key={index}
-              className={`${styles.splitButtonMenuItem} ${
-                item.danger ? styles.splitButtonMenuItemDanger : ''
-              }`}
-              role="menuitem"
-              tabIndex={0}
-              onClick={() => handleMenuItemClick(item)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleMenuItemClick(item);
-                }
-              }}
-            >
-              {item.icon && <span className={styles.splitButtonMenuItemIcon}>{item.icon}</span>}
-              <span>{item.label}</span>
-            </li>
-          );
-        })}
-      </ul>
+              return (
+                <li
+                  key={index}
+                  className={`${styles.splitButtonMenuItem} ${
+                    item.danger ? styles.splitButtonMenuItemDanger : ''
+                  }`}
+                  role="menuitem"
+                  tabIndex={0}
+                  onClick={() => handleMenuItemClick(item)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleMenuItemClick(item);
+                    }
+                  }}
+                >
+                  {item.icon && <span className={styles.splitButtonMenuItemIcon}>{item.icon}</span>}
+                  <span>{item.label}</span>
+                </li>
+              );
+            })}
+          </ul>
+        );
+        return portal && isOpen ? createPortal(menuContent, document.body) : menuContent;
+      })()}
     </div>
   );
 };

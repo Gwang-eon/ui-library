@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { ReactNode, HTMLAttributes, AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './Menu.module.css';
 
 export type MenuSize = 'sm' | 'md' | 'lg';
@@ -15,6 +16,8 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   /** Size variant */
   size?: MenuSize;
   className?: string;
+  /** Render menu via Portal to avoid overflow issues */
+  portal?: boolean;
 }
 
 export const Menu: React.FC<MenuProps> = ({
@@ -26,10 +29,13 @@ export const Menu: React.FC<MenuProps> = ({
   wide = false,
   size = 'md',
   className = '',
+  portal = false,
   ...props
 }) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuDropdownRef = useRef<HTMLDivElement>(null);
   const isControlled = controlledOpen !== undefined;
   const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
 
@@ -53,7 +59,11 @@ export const Menu: React.FC<MenuProps> = ({
     if (!isOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        (!portal || (menuDropdownRef.current && !menuDropdownRef.current.contains(event.target as Node)))
+      ) {
         handleClose();
       }
     };
@@ -62,7 +72,24 @@ export const Menu: React.FC<MenuProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, portal]);
+
+  // Calculate menu position for portal mode
+  useEffect(() => {
+    if (portal && isOpen && menuRef.current) {
+      const rect = menuRef.current.getBoundingClientRect();
+      const menuHeight = 200;
+
+      let top = rect.bottom + 4;
+      let left = align === 'right' ? rect.right : rect.left;
+
+      if (top + menuHeight > window.innerHeight) {
+        top = rect.top - menuHeight - 4;
+      }
+
+      setMenuPosition({ top, left });
+    }
+  }, [portal, isOpen, align]);
 
   const containerClass = [styles['menu-container'], className].filter(Boolean).join(' ');
 
@@ -78,7 +105,22 @@ export const Menu: React.FC<MenuProps> = ({
   return (
     <div className={containerClass} ref={menuRef} {...props}>
       <div onClick={handleToggle}>{trigger}</div>
-      {isOpen && <div className={menuClass}>{children}</div>}
+      {isOpen && (() => {
+        const menuContent = (
+          <div
+            ref={menuDropdownRef}
+            className={`${menuClass} ${portal ? styles.portalMenu : ''}`}
+            style={portal ? {
+              position: 'fixed',
+              top: menuPosition.top,
+              left: menuPosition.left,
+            } : undefined}
+          >
+            {children}
+          </div>
+        );
+        return portal ? createPortal(menuContent, document.body) : menuContent;
+      })()}
     </div>
   );
 };

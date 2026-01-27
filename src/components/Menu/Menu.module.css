@@ -21,6 +21,12 @@
   z-index: var(--z-dropdown);
 }
 
+/* Portal menu - rendered outside component via createPortal */
+.portalMenu {
+  position: fixed;
+  z-index: var(--z-modal);
+}
+
 .menu-wide {
   min-width: 320px;
 }

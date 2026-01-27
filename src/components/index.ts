@@ -25,6 +25,7 @@ export * from './Tree';
 export * from './Badge';
 export * from './Avatar';
 export * from './Tag';
+export * from './TagInput';
 export * from './Descriptions';
 export * from './Statistic';
 export * from './Timeline';

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, Fragment } from 'react';
 import type { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown, ChevronRight, Search, X } from 'lucide-react';
 import styles from './TreeSelect.module.css';
 
@@ -49,6 +50,8 @@ export interface TreeSelectProps {
   className?: string;
   /** Clear button */
   clearable?: boolean;
+  /** Render dropdown via Portal to avoid overflow issues */
+  portal?: boolean;
 }
 
 /**
@@ -85,6 +88,7 @@ export const TreeSelect = ({
   disabled = false,
   className = '',
   clearable = false,
+  portal = false,
 }: TreeSelectProps) => {
   const [uncontrolledValue, setUncontrolledValue] = useState<string | string[] | null>(
     defaultValue
@@ -92,7 +96,9 @@ export const TreeSelect = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const isMountedRef = useRef(false);
 
   const value = controlledValue !== undefined ? controlledValue : uncontrolledValue;
@@ -102,14 +108,36 @@ export const TreeSelect = ({
     if (!isOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        (!portal || (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)))
+      ) {
         setIsOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
+  }, [isOpen, portal]);
+
+  // Calculate dropdown position for portal mode
+  useEffect(() => {
+    if (portal && isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const dropdownHeight = 300;
+
+      let top = rect.bottom + 4;
+      const left = rect.left;
+      const width = rect.width;
+
+      if (top + dropdownHeight > window.innerHeight) {
+        top = rect.top - dropdownHeight - 4;
+      }
+
+      setDropdownPosition({ top, left, width });
+    }
+  }, [portal, isOpen]);
 
   // Handle value change
   const handleChange = (newValue: string | string[]) => {
@@ -345,32 +373,44 @@ export const TreeSelect = ({
       </div>
 
       {/* Dropdown */}
-      {isOpen && (
-        <div className={styles.treeselectDropdown}>
-          {showSearch && (
-            <div className={styles.treeselectSearch}>
-              <Search className={styles.treeselectSearchIcon} size={TREE_ICON_SIZES[size]} />
-              <input
-                type="text"
-                className={styles.treeselectSearchInput}
-                placeholder={searchPlaceholder}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          )}
-
-          <div className={styles.treeselectTree} role="tree">
-            {filteredData.length === 0 ? (
-              <div className={styles.treeselectEmpty}>No results found</div>
-            ) : (
-              filteredData.map((node) => (
-                <Fragment key={node.value}>{renderNode(node)}</Fragment>
-              ))
+      {isOpen && (() => {
+        const dropdownContent = (
+          <div
+            ref={dropdownRef}
+            className={`${styles.treeselectDropdown} ${portal ? styles.portalDropdown : ''}`}
+            style={portal ? {
+              position: 'fixed',
+              top: dropdownPosition.top,
+              left: dropdownPosition.left,
+              width: dropdownPosition.width,
+            } : undefined}
+          >
+            {showSearch && (
+              <div className={styles.treeselectSearch}>
+                <Search className={styles.treeselectSearchIcon} size={TREE_ICON_SIZES[size]} />
+                <input
+                  type="text"
+                  className={styles.treeselectSearchInput}
+                  placeholder={searchPlaceholder}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
             )}
+
+            <div className={styles.treeselectTree} role="tree">
+              {filteredData.length === 0 ? (
+                <div className={styles.treeselectEmpty}>No results found</div>
+              ) : (
+                filteredData.map((node) => (
+                  <Fragment key={node.value}>{renderNode(node)}</Fragment>
+                ))
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        );
+        return portal ? createPortal(dropdownContent, document.body) : dropdownContent;
+      })()}
     </div>
   );
 };

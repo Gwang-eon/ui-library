@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback, memo, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown } from 'lucide-react';
 import styles from './Select.module.css';
 
@@ -41,6 +42,8 @@ export interface SelectProps {
   onChange?: (value: string, option: SelectOption | null) => void;
   className?: string;
   id?: string;
+  /** Render dropdown via Portal to avoid overflow issues */
+  portal?: boolean;
 }
 
 // Memoized Option component
@@ -97,6 +100,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       onChange,
       className = '',
       id,
+      portal = false,
     },
     ref
   ) => {
@@ -104,6 +108,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState(controlledValue ?? defaultValue);
     const [focusedIndex, setFocusedIndex] = useState(-1);
+    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
@@ -155,7 +160,8 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       const handleClickOutside = (event: MouseEvent) => {
         if (
           containerRef.current &&
-          !containerRef.current.contains(event.target as Node)
+          !containerRef.current.contains(event.target as Node) &&
+          (!portal || (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)))
         ) {
           setIsOpen(false);
         }
@@ -165,7 +171,26 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       return () => {
         document.removeEventListener('mousedown', handleClickOutside);
       };
-    }, [isOpen]);
+    }, [isOpen, portal]);
+
+    // Calculate dropdown position for portal mode
+    useEffect(() => {
+      if (portal && isOpen && triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        const dropdownHeight = 250; // Approximate max dropdown height
+
+        let top = rect.bottom + 4;
+        const left = rect.left;
+        const width = rect.width;
+
+        // Adjust if dropdown would go off-screen bottom
+        if (top + dropdownHeight > window.innerHeight) {
+          top = rect.top - dropdownHeight - 4;
+        }
+
+        setDropdownPosition({ top, left, width });
+      }
+    }, [portal, isOpen]);
 
     // Keyboard navigation
     const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
@@ -341,15 +366,36 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
           </div>
 
           {/* Dropdown */}
-          <div
-            ref={dropdownRef}
-            className={styles['custom-select-dropdown']}
-            role="listbox"
-            id={`${selectId}-listbox`}
-            aria-labelledby={label ? `${selectId}-label` : undefined}
-          >
-            {dropdownContent}
-          </div>
+          {portal && isOpen
+            ? createPortal(
+                <div
+                  ref={dropdownRef}
+                  className={`${styles['custom-select-dropdown']} ${styles['portal-dropdown']}`}
+                  role="listbox"
+                  id={`${selectId}-listbox`}
+                  aria-labelledby={label ? `${selectId}-label` : undefined}
+                  style={{
+                    position: 'fixed',
+                    top: dropdownPosition.top,
+                    left: dropdownPosition.left,
+                    width: dropdownPosition.width,
+                  }}
+                >
+                  {dropdownContent}
+                </div>,
+                document.body
+              )
+            : (
+              <div
+                ref={dropdownRef}
+                className={styles['custom-select-dropdown']}
+                role="listbox"
+                id={`${selectId}-listbox`}
+                aria-labelledby={label ? `${selectId}-label` : undefined}
+              >
+                {dropdownContent}
+              </div>
+            )}
         </div>
 
         {/* Helper text or error message */}

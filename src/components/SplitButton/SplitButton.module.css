@@ -51,6 +51,15 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px);
+}
+
+/* Portal menu - rendered outside component via createPortal */
+.portalMenu {
+  position: fixed;
+  z-index: var(--z-modal);
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
   transition: opacity var(--duration-fast), transform var(--duration-fast),
     visibility var(--duration-fast);
 }

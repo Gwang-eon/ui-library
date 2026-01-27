@@ -261,6 +261,14 @@
     visibility 0s linear 0s;
 }
 
+/* Portal dropdown - rendered outside component via createPortal */
+.portal-dropdown {
+  position: fixed;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* Scrollbar styling */
 .custom-select-dropdown::-webkit-scrollbar {
   width: 8px;

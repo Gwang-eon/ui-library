@@ -1,0 +1,313 @@
+/**
+ * TagInput Component Styles
+ * Input field with tag support
+ */
+
+/* ========================================
+   WRAPPER
+   ======================================== */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* ========================================
+   LABEL
+   ======================================== */
+
+.label {
+  display: block;
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-1);
+  line-height: var(--line-height-label-medium);
+}
+
+.required {
+  color: var(--color-error-500);
+  margin-left: 2px;
+}
+
+/* ========================================
+   TAG INPUT CONTAINER
+   ======================================== */
+
+.tagInput {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-2);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-base);
+  cursor: text;
+  transition: all var(--duration-fast) var(--ease-out);
+  min-height: 40px;
+}
+
+.tagInput:hover:not(.disabled) {
+  border-color: var(--input-border-hover);
+}
+
+.tagInput.focused {
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.tagInput.error {
+  border-color: var(--input-error-border);
+}
+
+.tagInput.error.focused {
+  box-shadow: 0 0 0 3px var(--color-error-100);
+}
+
+.tagInput.disabled {
+  background-color: var(--input-disabled-bg);
+  border-color: var(--input-disabled-border);
+  cursor: not-allowed;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ========================================
+   SIZE VARIANTS
+   ======================================== */
+
+.tagInput-sm {
+  min-height: 32px;
+  padding: var(--spacing-1);
+  gap: var(--spacing-1);
+}
+
+.tagInput-sm .tag {
+  padding: 2px var(--spacing-1-5);
+  font-size: var(--font-size-xs);
+}
+
+.tagInput-sm .input {
+  font-size: var(--font-size-body-small);
+}
+
+.tagInput-md {
+  min-height: 40px;
+  padding: var(--spacing-1-5) var(--spacing-2);
+}
+
+.tagInput-lg {
+  min-height: 48px;
+  padding: var(--spacing-2) var(--spacing-3);
+  gap: var(--spacing-2);
+}
+
+.tagInput-lg .tag {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-body-medium);
+}
+
+.tagInput-lg .input {
+  font-size: var(--font-size-body-large);
+}
+
+/* ========================================
+   TAG
+   ======================================== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 2px var(--spacing-2);
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.tagText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tagRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  color: var(--color-primary-600);
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  transition: all var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.tagRemove:hover {
+  color: var(--color-primary-800);
+  background-color: var(--color-primary-200);
+}
+
+.tagRemove:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 1px;
+}
+
+/* ========================================
+   INPUT
+   ======================================== */
+
+.input {
+  flex: 1;
+  min-width: 80px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-body-medium);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+
+/* ========================================
+   MESSAGE
+   ======================================== */
+
+.message {
+  display: block;
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  margin-top: var(--spacing-1);
+  line-height: var(--line-height-body-small);
+}
+
+.messageError {
+  color: var(--color-error-600);
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .label {
+    color: var(--text-secondary);
+  }
+
+  .required {
+    color: var(--color-error-400);
+  }
+
+  .tagInput {
+    background-color: var(--surface-primary);
+    border-color: var(--text-secondary);
+  }
+
+  .tagInput:hover:not(.disabled) {
+    border-color: var(--color-primary-500);
+  }
+
+  .tagInput.focused {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .tagInput.disabled {
+    background-color: var(--surface-secondary);
+    border-color: var(--border-subtle);
+  }
+
+  .tag {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+  }
+
+  .tagRemove {
+    color: var(--color-primary-400);
+  }
+
+  .tagRemove:hover {
+    color: var(--color-primary-300);
+    background-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .input {
+    color: var(--text-primary);
+  }
+
+  .input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .message {
+    color: var(--text-tertiary);
+  }
+
+  .messageError {
+    color: var(--color-error-400);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .tagInput {
+    font-size: 16px; /* Prevent iOS zoom */
+  }
+
+  .tag {
+    max-width: 150px;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .tagInput,
+  .tag,
+  .tagRemove {
+    transition: none;
+  }
+}
+
+/* ========================================
+   HIGH CONTRAST
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  .tagInput {
+    border-width: 2px;
+  }
+
+  .tag {
+    border: 1px solid currentColor;
+  }
+
+  .tagRemove:focus-visible {
+    outline-width: 3px;
+  }
+}

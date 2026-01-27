@@ -90,6 +90,12 @@
   animation: cascadeFadeIn var(--duration-fast) var(--ease-out);
 }
 
+/* Portal panel - rendered outside component via createPortal */
+.portalPanel {
+  position: fixed;
+  z-index: var(--z-modal);
+}
+
 @keyframes cascadeFadeIn {
   from {
     opacity: 0;

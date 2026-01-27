@@ -126,6 +126,12 @@
   animation: slideIn 0.2s var(--ease-out);
 }
 
+/* Portal dropdown - rendered outside component via createPortal */
+.portalDropdown {
+  position: fixed;
+  z-index: var(--z-modal);
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;

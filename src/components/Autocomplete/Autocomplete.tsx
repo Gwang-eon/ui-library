@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Search, X, SearchX, Loader2 } from 'lucide-react';
 import styles from './Autocomplete.module.css';
 
@@ -61,6 +62,8 @@ export interface AutocompleteProps {
   className?: string;
   /** ARIA label */
   'aria-label'?: string;
+  /** Render dropdown via Portal to avoid overflow issues */
+  portal?: boolean;
 }
 
 const defaultFilterFn = (option: AutocompleteOption, query: string): boolean => {
@@ -113,6 +116,7 @@ export const Autocomplete = ({
   filterFn = defaultFilterFn,
   className = '',
   'aria-label': ariaLabel = 'Autocomplete',
+  portal = false,
 }: AutocompleteProps) => {
   // Controlled/uncontrolled value management
   const isControlled = controlledValue !== undefined;
@@ -125,6 +129,7 @@ export const Autocomplete = ({
   const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -249,14 +254,36 @@ export const Autocomplete = ({
   // Click outside to close
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        (!portal || (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)))
+      ) {
         setIsOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [portal]);
+
+  // Calculate dropdown position for portal mode
+  useEffect(() => {
+    if (portal && isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const dropdownHeight = 300;
+
+      let top = rect.bottom + 4;
+      const left = rect.left;
+      const width = rect.width;
+
+      if (top + dropdownHeight > window.innerHeight) {
+        top = rect.top - dropdownHeight - 4;
+      }
+
+      setDropdownPosition({ top, left, width });
+    }
+  }, [portal, isOpen]);
 
   // Scroll highlighted item into view
   useEffect(() => {
@@ -346,72 +373,82 @@ export const Autocomplete = ({
         )}
       </div>
 
-      {isOpen && (
-        <div
-          ref={dropdownRef}
-          className={styles.autocompleteDropdown}
-          role="listbox"
-          id="autocomplete-listbox"
-          aria-label="Suggestions"
-        >
-          {loading ? (
-            <div className={styles.autocompleteLoadingText}>Loading results...</div>
-          ) : filteredOptions.length === 0 ? (
-            <div className={styles.autocompleteEmpty}>
-              <SearchX size={AUTOCOMPLETE_EMPTY_ICON_SIZES[size]} />
-              <p>{emptyMessage}</p>
-              <span>Try adjusting your search terms</span>
-            </div>
-          ) : (
-            Object.entries(groupedOptions).map(([category, categoryOptions]) => (
-              <div key={category}>
-                {category && <div className={styles.autocompleteCategory}>{category}</div>}
-                {categoryOptions.map((option) => {
-                  const globalIndex = filteredOptions.indexOf(option);
-                  const isHighlighted = globalIndex === highlightedIndex;
-                  const isSelected = selectedValues.includes(option.value);
-
-                  return (
-                    <div
-                      key={option.value}
-                      id={`autocomplete-option-${globalIndex}`}
-                      role="option"
-                      aria-selected={isSelected}
-                      aria-disabled={option.disabled}
-                      className={`${styles.autocompleteItem} ${
-                        option.description ? styles.autocompleteItemWithDesc : ''
-                      } ${isHighlighted ? styles.autocompleteItemActive : ''} ${
-                        option.disabled ? styles.autocompleteItemDisabled : ''
-                      }`}
-                      onClick={() => handleSelect(option)}
-                      onMouseEnter={() => setHighlightedIndex(globalIndex)}
-                    >
-                      {option.description ? (
-                        <>
-                          {option.icon && (
-                            <div className={styles.autocompleteItemIcon}>{option.icon}</div>
-                          )}
-                          <div className={styles.autocompleteItemContent}>
-                            <div className={styles.autocompleteItemTitle}>{option.label}</div>
-                            <div className={styles.autocompleteItemDescription}>
-                              {option.description}
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          {option.icon}
-                          <span>{option.label}</span>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
+      {isOpen && (() => {
+        const dropdownContent = (
+          <div
+            ref={dropdownRef}
+            className={`${styles.autocompleteDropdown} ${portal ? styles.portalDropdown : ''}`}
+            role="listbox"
+            id="autocomplete-listbox"
+            aria-label="Suggestions"
+            style={portal ? {
+              position: 'fixed',
+              top: dropdownPosition.top,
+              left: dropdownPosition.left,
+              width: dropdownPosition.width,
+            } : undefined}
+          >
+            {loading ? (
+              <div className={styles.autocompleteLoadingText}>Loading results...</div>
+            ) : filteredOptions.length === 0 ? (
+              <div className={styles.autocompleteEmpty}>
+                <SearchX size={AUTOCOMPLETE_EMPTY_ICON_SIZES[size]} />
+                <p>{emptyMessage}</p>
+                <span>Try adjusting your search terms</span>
               </div>
-            ))
-          )}
-        </div>
-      )}
+            ) : (
+              Object.entries(groupedOptions).map(([category, categoryOptions]) => (
+                <div key={category}>
+                  {category && <div className={styles.autocompleteCategory}>{category}</div>}
+                  {categoryOptions.map((option) => {
+                    const globalIndex = filteredOptions.indexOf(option);
+                    const isHighlighted = globalIndex === highlightedIndex;
+                    const isSelected = selectedValues.includes(option.value);
+
+                    return (
+                      <div
+                        key={option.value}
+                        id={`autocomplete-option-${globalIndex}`}
+                        role="option"
+                        aria-selected={isSelected}
+                        aria-disabled={option.disabled}
+                        className={`${styles.autocompleteItem} ${
+                          option.description ? styles.autocompleteItemWithDesc : ''
+                        } ${isHighlighted ? styles.autocompleteItemActive : ''} ${
+                          option.disabled ? styles.autocompleteItemDisabled : ''
+                        }`}
+                        onClick={() => handleSelect(option)}
+                        onMouseEnter={() => setHighlightedIndex(globalIndex)}
+                      >
+                        {option.description ? (
+                          <>
+                            {option.icon && (
+                              <div className={styles.autocompleteItemIcon}>{option.icon}</div>
+                            )}
+                            <div className={styles.autocompleteItemContent}>
+                              <div className={styles.autocompleteItemTitle}>{option.label}</div>
+                              <div className={styles.autocompleteItemDescription}>
+                                {option.description}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {option.icon}
+                            <span>{option.label}</span>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))
+            )}
+          </div>
+        );
+
+        return portal ? createPortal(dropdownContent, document.body) : dropdownContent;
+      })()}
     </div>
   );
 };

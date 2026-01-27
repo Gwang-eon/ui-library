@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, type HTMLAttributes } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import styles from './CascadeSelect.module.css';
 
@@ -73,6 +74,11 @@ export interface CascadeSelectProps extends Omit<HTMLAttributes<HTMLDivElement>,
    * Additional CSS class
    */
   className?: string;
+
+  /**
+   * Render dropdown via Portal to avoid overflow issues
+   */
+  portal?: boolean;
 }
 
 /**
@@ -106,18 +112,25 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
   size = 'md',
   disabled = false,
   className = '',
+  portal = false,
   ...rest
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedPath, setSelectedPath] = useState<string[]>(value);
   const [hoveredPath, setHoveredPath] = useState<string[]>([]);
   const [hoveredOptionRefs, setHoveredOptionRefs] = useState<Map<number, HTMLDivElement>>(new Map());
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        (!portal || (panelRef.current && !panelRef.current.contains(event.target as Node)))
+      ) {
         setIsOpen(false);
         setHoveredPath([]);
         setHoveredOptionRefs(new Map());
@@ -131,7 +144,25 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, portal]);
+
+  // Calculate dropdown position for portal mode
+  useEffect(() => {
+    if (portal && isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const dropdownHeight = 300;
+
+      let top = rect.bottom + 4;
+      const left = rect.left;
+      const width = rect.width;
+
+      if (top + dropdownHeight > window.innerHeight) {
+        top = rect.top - dropdownHeight - 4;
+      }
+
+      setDropdownPosition({ top, left, width });
+    }
+  }, [portal, isOpen]);
 
   // Get display text from selected path
   const getDisplayText = () => {
@@ -298,71 +329,83 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
       </button>
 
       {/* Dropdown Panel */}
-      {isOpen && (
-        <div className={styles['cascade-panel']}>
-          {Array.from({ length: visibleLevels }).map((_, level) => {
-            const levelOptions = getOptionsForLevel(level);
-            if (levelOptions.length === 0) return null;
+      {isOpen && (() => {
+        const panelContent = (
+          <div
+            ref={panelRef}
+            className={`${styles['cascade-panel']} ${portal ? styles.portalPanel : ''}`}
+            style={portal ? {
+              position: 'fixed',
+              top: dropdownPosition.top,
+              left: dropdownPosition.left,
+              minWidth: dropdownPosition.width,
+            } : undefined}
+          >
+            {Array.from({ length: visibleLevels }).map((_, level) => {
+              const levelOptions = getOptionsForLevel(level);
+              if (levelOptions.length === 0) return null;
 
-            const subpanelClasses = [
-              styles['cascade-subpanel'],
-              level > 0 && styles.nested,
-              level > 0 && styles.show,
-            ]
-              .filter(Boolean)
-              .join(' ');
+              const subpanelClasses = [
+                styles['cascade-subpanel'],
+                level > 0 && styles.nested,
+                level > 0 && styles.show,
+              ]
+                .filter(Boolean)
+                .join(' ');
 
-            // Calculate top position based on the hovered option in the previous level
-            let topOffset = 0;
-            if (level > 0) {
-              const hoveredElement = hoveredOptionRefs.get(level - 1);
-              if (hoveredElement) {
-                topOffset = hoveredElement.offsetTop;
+              // Calculate top position based on the hovered option in the previous level
+              let topOffset = 0;
+              if (level > 0) {
+                const hoveredElement = hoveredOptionRefs.get(level - 1);
+                if (hoveredElement) {
+                  topOffset = hoveredElement.offsetTop;
+                }
               }
-            }
 
-            const subpanelStyle: React.CSSProperties =
-              level > 0
-                ? {
-                    position: 'absolute',
-                    left: `${level * 100}%`,
-                    top: topOffset,
-                  }
-                : {};
+              const subpanelStyle: React.CSSProperties =
+                level > 0
+                  ? {
+                      position: 'absolute',
+                      left: `${level * 100}%`,
+                      top: topOffset,
+                    }
+                  : {};
 
-            return (
-              <div key={level} className={subpanelClasses} style={subpanelStyle}>
-                {levelOptions.map((option) => {
-                  const hasChildren = option.children && option.children.length > 0;
-                  const optionClasses = [
-                    styles['cascade-option'],
-                    isSelected(option.value, level) && styles.selected,
-                    isActive(option.value, level) && styles.active,
-                    option.disabled && styles.disabled,
-                  ]
-                    .filter(Boolean)
-                    .join(' ');
+              return (
+                <div key={level} className={subpanelClasses} style={subpanelStyle}>
+                  {levelOptions.map((option) => {
+                    const hasChildren = option.children && option.children.length > 0;
+                    const optionClasses = [
+                      styles['cascade-option'],
+                      isSelected(option.value, level) && styles.selected,
+                      isActive(option.value, level) && styles.active,
+                      option.disabled && styles.disabled,
+                    ]
+                      .filter(Boolean)
+                      .join(' ');
 
-                  return (
-                    <div
-                      key={option.value}
-                      className={optionClasses}
-                      onClick={() => handleOptionClick(option, level)}
-                      onMouseEnter={(e) => handleOptionHover(option, level, e.currentTarget)}
-                      role="option"
-                      aria-selected={isSelected(option.value, level)}
-                      aria-disabled={option.disabled}
-                    >
-                      <span>{option.label}</span>
-                      {hasChildren && <ChevronRight className={styles['option-arrow']} size={CASCADE_ARROW_SIZES[size]} />}
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-      )}
+                    return (
+                      <div
+                        key={option.value}
+                        className={optionClasses}
+                        onClick={() => handleOptionClick(option, level)}
+                        onMouseEnter={(e) => handleOptionHover(option, level, e.currentTarget)}
+                        role="option"
+                        aria-selected={isSelected(option.value, level)}
+                        aria-disabled={option.disabled}
+                      >
+                        <span>{option.label}</span>
+                        {hasChildren && <ChevronRight className={styles['option-arrow']} size={CASCADE_ARROW_SIZES[size]} />}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        );
+        return portal ? createPortal(panelContent, document.body) : panelContent;
+      })()}
     </div>
   );
 };

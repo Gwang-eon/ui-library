@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import { createPortal } from 'react-dom';
 import { Palette, Plus } from 'lucide-react';
 import { Button } from '../Button';
 import styles from './ColorPicker.module.css';
@@ -54,6 +55,8 @@ export interface ColorPickerProps {
   disabled?: boolean;
   className?: string;
   children?: ReactNode;
+  /** Render dropdown via Portal to avoid overflow issues */
+  portal?: boolean;
 }
 
 const DEFAULT_PRESETS = [
@@ -202,6 +205,7 @@ export const ColorPicker = ({
   disabled = false,
   className = '',
   children,
+  portal = false,
 }: ColorPickerProps) => {
   const isControlled = controlledValue !== undefined;
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
@@ -212,8 +216,10 @@ export const ColorPicker = ({
   const [rgb, setRgb] = useState(hexToRgb(currentValue) || { r: 59, g: 130, b: 246 });
   const [recentColors, setRecentColors] = useState<string[]>([]);
   const [customPickerOpen, setCustomPickerOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Load recent colors from localStorage
   useEffect(() => {
@@ -357,7 +363,11 @@ export const ColorPicker = ({
   // Click outside to close
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node) &&
+        (!portal || (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)))
+      ) {
         setIsOpen(false);
         setCustomPickerOpen(false);
       }
@@ -365,7 +375,24 @@ export const ColorPicker = ({
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [portal]);
+
+  // Calculate dropdown position for portal mode
+  useEffect(() => {
+    if (portal && (isOpen || customPickerOpen) && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const dropdownHeight = 400;
+
+      let top = rect.bottom + 4;
+      const left = rect.left;
+
+      if (top + dropdownHeight > window.innerHeight) {
+        top = rect.top - dropdownHeight - 4;
+      }
+
+      setDropdownPosition({ top, left });
+    }
+  }, [portal, isOpen, customPickerOpen]);
 
   // Memoized class names
   const compactContainerClassName = useMemo(() =>
@@ -415,54 +442,65 @@ export const ColorPicker = ({
           )}
         </div>
 
-        {customPickerOpen && allowCustom && (
-          <div className={styles.colorPickerDropdown}>
-            <div className={styles.colorPickerPanel}>
-              <div className={styles.colorPickerHeader}>
-                <h3 className={styles.colorPickerTitle}>Choose Color</h3>
-                <div className={styles.colorPickerPreview}>
-                  <div
-                    className={`${styles.colorSwatch} ${styles.colorSwatchLg}`}
-                    style={previewStyle}
-                  />
-                  <div className={styles.colorValue}>
-                    <span className={styles.colorValueHex}>{hexInput}</span>
-                    <span className={styles.colorValueRgb}>
-                      RGB({rgb.r}, {rgb.g}, {rgb.b})
-                    </span>
+        {customPickerOpen && allowCustom && (() => {
+          const dropdownContent = (
+            <div
+              ref={dropdownRef}
+              className={`${styles.colorPickerDropdown} ${portal ? styles.portalDropdown : ''}`}
+              style={portal ? {
+                position: 'fixed',
+                top: dropdownPosition.top,
+                left: dropdownPosition.left,
+              } : undefined}
+            >
+              <div className={styles.colorPickerPanel}>
+                <div className={styles.colorPickerHeader}>
+                  <h3 className={styles.colorPickerTitle}>Choose Color</h3>
+                  <div className={styles.colorPickerPreview}>
+                    <div
+                      className={`${styles.colorSwatch} ${styles.colorSwatchLg}`}
+                      style={previewStyle}
+                    />
+                    <div className={styles.colorValue}>
+                      <span className={styles.colorValueHex}>{hexInput}</span>
+                      <span className={styles.colorValueRgb}>
+                        RGB({rgb.r}, {rgb.g}, {rgb.b})
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className={styles.colorPickerBody}>
-                <div className={styles.colorInputGroup}>
-                  <label className={styles.colorInputLabel}>HEX</label>
-                  <input
-                    type="text"
-                    className={styles.colorInputText}
-                    value={hexInput}
-                    onChange={handleHexChange}
-                  />
+                <div className={styles.colorPickerBody}>
+                  <div className={styles.colorInputGroup}>
+                    <label className={styles.colorInputLabel}>HEX</label>
+                    <input
+                      type="text"
+                      className={styles.colorInputText}
+                      value={hexInput}
+                      onChange={handleHexChange}
+                    />
+                  </div>
+
+                  <div className={styles.colorInputRow}>
+                    <RgbInput label="R" value={rgb.r} onChange={handleRChange} />
+                    <RgbInput label="G" value={rgb.g} onChange={handleGChange} />
+                    <RgbInput label="B" value={rgb.b} onChange={handleBChange} />
+                  </div>
                 </div>
 
-                <div className={styles.colorInputRow}>
-                  <RgbInput label="R" value={rgb.r} onChange={handleRChange} />
-                  <RgbInput label="G" value={rgb.g} onChange={handleGChange} />
-                  <RgbInput label="B" value={rgb.b} onChange={handleBChange} />
+                <div className={styles.colorPickerFooter}>
+                  <Button variant="secondary" size="sm" onClick={closeCustomPicker}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" size="sm" onClick={handleCustomApply}>
+                    Apply
+                  </Button>
                 </div>
-              </div>
-
-              <div className={styles.colorPickerFooter}>
-                <Button variant="secondary" size="sm" onClick={closeCustomPicker}>
-                  Cancel
-                </Button>
-                <Button variant="primary" size="sm" onClick={handleCustomApply}>
-                  Apply
-                </Button>
               </div>
             </div>
-          </div>
-        )}
+          );
+          return portal ? createPortal(dropdownContent, document.body) : dropdownContent;
+        })()}
       </div>
     );
   }
@@ -501,84 +539,95 @@ export const ColorPicker = ({
         </div>
       )}
 
-      {isOpen && !disabled && (
-        <div className={styles.colorPickerDropdown}>
-          <div className={styles.colorPickerPanel}>
-            <div className={styles.colorPickerHeader}>
-              <h3 className={styles.colorPickerTitle}>Choose Color</h3>
-              <div className={styles.colorPickerPreview}>
-                <div
-                  className={`${styles.colorSwatch} ${styles.colorSwatchLg}`}
-                  style={previewStyle}
-                />
-                <div className={styles.colorValue}>
-                  <span className={styles.colorValueHex}>{hexInput}</span>
-                  <span className={styles.colorValueRgb}>
-                    RGB({rgb.r}, {rgb.g}, {rgb.b})
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.colorPickerBody}>
-              <div className={styles.colorInputGroup}>
-                <label className={styles.colorInputLabel}>HEX</label>
-                <input
-                  type="text"
-                  className={styles.colorInputText}
-                  value={hexInput}
-                  onChange={handleHexChange}
-                />
-              </div>
-
-              <div className={styles.colorInputRow}>
-                <RgbInput label="R" value={rgb.r} onChange={handleRChange} />
-                <RgbInput label="G" value={rgb.g} onChange={handleGChange} />
-                <RgbInput label="B" value={rgb.b} onChange={handleBChange} />
-              </div>
-
-              {presets.length > 0 && (
-                <div className={styles.colorPresets}>
-                  <h4 className={styles.colorPresetsTitle}>Preset Colors</h4>
-                  <div className={styles.colorPresetsGrid}>
-                    {presets.map((color) => (
-                      <PresetColorButton
-                        key={color}
-                        color={color}
-                        onSelect={handleColorSelect}
-                      />
-                    ))}
+      {isOpen && !disabled && (() => {
+        const dropdownContent = (
+          <div
+            ref={dropdownRef}
+            className={`${styles.colorPickerDropdown} ${portal ? styles.portalDropdown : ''}`}
+            style={portal ? {
+              position: 'fixed',
+              top: dropdownPosition.top,
+              left: dropdownPosition.left,
+            } : undefined}
+          >
+            <div className={styles.colorPickerPanel}>
+              <div className={styles.colorPickerHeader}>
+                <h3 className={styles.colorPickerTitle}>Choose Color</h3>
+                <div className={styles.colorPickerPreview}>
+                  <div
+                    className={`${styles.colorSwatch} ${styles.colorSwatchLg}`}
+                    style={previewStyle}
+                  />
+                  <div className={styles.colorValue}>
+                    <span className={styles.colorValueHex}>{hexInput}</span>
+                    <span className={styles.colorValueRgb}>
+                      RGB({rgb.r}, {rgb.g}, {rgb.b})
+                    </span>
                   </div>
                 </div>
-              )}
+              </div>
 
-              {showRecent && recentColors.length > 0 && (
-                <div className={styles.colorRecent}>
-                  <h4 className={styles.colorRecentTitle}>Recent Colors</h4>
-                  <div className={styles.colorRecentList}>
-                    {recentColors.map((color) => (
-                      <RecentColorItem
-                        key={color}
-                        color={color}
-                        onSelect={handleColorSelect}
-                      />
-                    ))}
-                  </div>
+              <div className={styles.colorPickerBody}>
+                <div className={styles.colorInputGroup}>
+                  <label className={styles.colorInputLabel}>HEX</label>
+                  <input
+                    type="text"
+                    className={styles.colorInputText}
+                    value={hexInput}
+                    onChange={handleHexChange}
+                  />
                 </div>
-              )}
-            </div>
 
-            <div className={styles.colorPickerFooter}>
-              <Button variant="secondary" size="sm" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button variant="primary" size="sm" onClick={handleApply}>
-                Apply
-              </Button>
+                <div className={styles.colorInputRow}>
+                  <RgbInput label="R" value={rgb.r} onChange={handleRChange} />
+                  <RgbInput label="G" value={rgb.g} onChange={handleGChange} />
+                  <RgbInput label="B" value={rgb.b} onChange={handleBChange} />
+                </div>
+
+                {presets.length > 0 && (
+                  <div className={styles.colorPresets}>
+                    <h4 className={styles.colorPresetsTitle}>Preset Colors</h4>
+                    <div className={styles.colorPresetsGrid}>
+                      {presets.map((color) => (
+                        <PresetColorButton
+                          key={color}
+                          color={color}
+                          onSelect={handleColorSelect}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {showRecent && recentColors.length > 0 && (
+                  <div className={styles.colorRecent}>
+                    <h4 className={styles.colorRecentTitle}>Recent Colors</h4>
+                    <div className={styles.colorRecentList}>
+                      {recentColors.map((color) => (
+                        <RecentColorItem
+                          key={color}
+                          color={color}
+                          onSelect={handleColorSelect}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.colorPickerFooter}>
+                <Button variant="secondary" size="sm" onClick={handleCancel}>
+                  Cancel
+                </Button>
+                <Button variant="primary" size="sm" onClick={handleApply}>
+                  Apply
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+        return portal ? createPortal(dropdownContent, document.body) : dropdownContent;
+      })()}
     </div>
   );
 };

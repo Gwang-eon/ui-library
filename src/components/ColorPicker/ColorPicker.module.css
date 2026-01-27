@@ -113,6 +113,12 @@
   z-index: var(--z-dropdown);
 }
 
+/* Portal dropdown - rendered outside component via createPortal */
+.portalDropdown {
+  position: fixed;
+  z-index: var(--z-modal);
+}
+
 /* ========================================
    COLOR PICKER PANEL
    ======================================== */
