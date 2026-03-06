@@ -14,10 +14,37 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.2.3';
+const VERSION = '1.2.4';
 
 // Changelog content
 const changelogMd = `# Changelog
+
+## v1.2.4 (2026-03-06)
+
+### Added
+- **DataGrid i18n 로케일 시스템** - \`locale\` prop으로 40개 이상의 문자열 커스터마이징 가능
+  - \`DataGridLocale\` 타입 export, \`Partial<DataGridLocale>\`로 부분 오버라이드 지원
+  - 기본값은 영어, 한국어 등 자유롭게 설정 가능
+
+### Bug Fixes
+- **드롭다운 뷰포트 플립** - 브라우저 하단에 배치된 드롭다운이 상단으로 자동 전환
+  - Select, Autocomplete, CascadeSelect, TreeSelect, ColorPicker, SplitButton, Menu, DataGrid PageSizeSelect
+  - 포탈/비포탈 모드 모두 지원
+- **DataGrid 버그 수정**
+  - 컬럼 드래그 초기화 버그 수정 (\`columnOrder\` 빈 배열 시 fallback)
+  - ColumnVisibility에 컬럼 헤더명 표시 (\`column.id\` → \`columnDef.header\`)
+  - MultiSelectFilter 체크박스 \`onChange\` 핸들러 연결 수정
+  - \`dateToString\`/\`stringToDate\` 유효성 검사 강화
+- **DataGrid 접근성 개선**
+  - ContextMenu: \`role="menu"\`, 키보드 내비게이션 (Arrow, Home/End, Enter, Escape)
+  - EditableCell: \`aria-invalid\`, \`aria-describedby\`, 에러 \`role="alert"\`
+  - GridCell/GridRow: \`aria-colindex\`/\`aria-rowindex\` 추가
+  - Filter 컴포넌트: \`aria-label\`, \`aria-expanded\`, \`role="listbox"\` 등
+
+### Code Cleanup
+- DataGrid 중복 필터 함수 4개, 미사용 import 제거
+
+---
 
 ## v1.2.3 (2025-12-22)
 
@@ -157,6 +184,21 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
 
                 <h3>Recent Updates</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <UpdateItem
+                    date="2026-03-06"
+                    title="드롭다운 뷰포트 플립"
+                    description="Select, Autocomplete, CascadeSelect, TreeSelect, ColorPicker, SplitButton, Menu, PageSizeSelect 하단 공간 부족 시 상단 렌더링"
+                  />
+                  <UpdateItem
+                    date="2026-03-06"
+                    title="DataGrid i18n 로케일 시스템"
+                    description="locale prop으로 40+ 문자열 커스터마이징 (DataGridLocale 타입, Partial 오버라이드)"
+                  />
+                  <UpdateItem
+                    date="2026-03-06"
+                    title="DataGrid 접근성 및 버그 수정"
+                    description="ContextMenu 키보드 내비게이션, ARIA 속성 강화, 컬럼 드래그/필터/유틸 버그 수정"
+                  />
                   <UpdateItem
                     date="2025-12-22"
                     title="IoT Dark Mode Fix"
