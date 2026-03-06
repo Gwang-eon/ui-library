@@ -10,6 +10,10 @@
 - SearchBar: 모바일 검색바 컴포넌트
 - Picker: iOS/Android 스타일 휠 선택기
 - Stepper: 숫자 증감 입력 컴포넌트
+- **DataGrid**: i18n 로케일 시스템 추가 (`locale` prop, `DataGridLocale` 타입)
+  - 40개 이상의 문자열을 `Partial<DataGridLocale>`로 커스터마이징 가능
+  - 기본값은 영어, 부분 오버라이드 지원
+- **DataGrid**: `DataGridLocale` 타입 export 추가
 
 ### Changed
 - Toggle: size prop 네이밍 통일 (`sm`/`md`/`lg`)
@@ -22,6 +26,21 @@
 - Tour: Button import 경로 수정
 - Radio: 접근성 속성 추가 (aria-describedby)
 - Checkbox: 접근성 속성 추가 (aria-describedby)
+- **드롭다운 뷰포트 플립**: 브라우저 하단에 배치된 드롭다운이 상단으로 자동 전환 (포탈/비포탈 모드 모두 지원)
+  - Select, Autocomplete, CascadeSelect, TreeSelect, ColorPicker, SplitButton, Menu, DataGrid PageSizeSelect
+- **DataGrid**: 불필요한 코드 정리 (중복 필터 함수 4개, 미사용 import 제거)
+- **DataGrid**: 컬럼 드래그 초기화 버그 수정 (`columnOrder` 빈 배열 시 fallback 처리)
+- **DataGrid**: ColumnVisibility에 컬럼 헤더명 표시 (`column.id` → `columnDef.header`)
+- **DataGrid**: MultiSelectFilter 체크박스 `onChange` 핸들러 연결 수정
+- **DataGrid**: MultiSelectFilter 드롭다운 뷰포트 플립 로직 추가
+- **DataGrid**: utils `dateToString`/`stringToDate` 유효성 검사 강화
+- **DataGrid 접근성 개선**:
+  - ContextMenu: `role="menu"`, `role="menuitem"`, 키보드 내비게이션 (Arrow, Home, End, Enter, Escape)
+  - EditableCell: `aria-invalid`, `aria-describedby`, `role="alert"` 에러 메시지
+  - GridCell: `aria-colindex` 추가
+  - GridRow: `aria-rowindex` 추가
+  - TextFilter/NumberRangeFilter: `aria-label` 컬럼명 연동
+  - MultiSelectFilter: `aria-expanded`, `role="listbox"`, `role="option"`, `aria-selected`
 
 ## [1.2.2] - 2025-12-18
 

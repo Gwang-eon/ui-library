@@ -12,23 +12,33 @@ interface PageSizeSelectProps {
   value: number;
   options: number[];
   onChange: (value: number) => void;
+  perPageLabel?: string;
 }
 
 export const PageSizeSelect: React.FC<PageSizeSelectProps> = ({
   value,
   options,
   onChange,
+  perPageLabel = '{size} / page',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [dropUp, setDropUp] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const updatePosition = useCallback(() => {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownMaxHeight = 200;
+
+      const shouldDropUp = spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow;
+      setDropUp(shouldDropUp);
+
       setPosition({
-        top: rect.bottom + 4,
+        top: shouldDropUp ? rect.top - 4 : rect.bottom + 4,
         left: rect.left,
         width: rect.width,
       });
@@ -73,7 +83,7 @@ export const PageSizeSelect: React.FC<PageSizeSelectProps> = ({
         className={styles.pageSizeSelectTrigger}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{value} / page</span>
+        <span>{perPageLabel.replace('{size}', String(value))}</span>
         <ChevronDown size={14} />
       </button>
       {isOpen && createPortal(
@@ -86,6 +96,7 @@ export const PageSizeSelect: React.FC<PageSizeSelectProps> = ({
             left: position.left,
             minWidth: position.width,
             zIndex: 9999,
+            ...(dropUp && { transform: 'translateY(-100%)' }),
           }}
         >
           {options.map((size) => (
@@ -94,7 +105,7 @@ export const PageSizeSelect: React.FC<PageSizeSelectProps> = ({
               className={`${styles.pageSizeSelectOption} ${size === value ? styles.selected : ''}`}
               onClick={() => handleSelect(size)}
             >
-              {size} / page
+              {perPageLabel.replace('{size}', String(size))}
             </div>
           ))}
         </div>,

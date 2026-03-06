@@ -407,8 +407,16 @@
 
 .filterRange {
   display: flex;
+  align-items: center;
   gap: var(--spacing-1);
   max-width: 160px;
+}
+
+.filterRangeSeparator {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-body-small);
+  flex-shrink: 0;
+  user-select: none;
 }
 
 /* Override input-group default gap/margin for compact range filter appearance */

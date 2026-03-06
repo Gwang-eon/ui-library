@@ -126,6 +126,13 @@
   animation: slideIn 0.2s var(--ease-out);
 }
 
+/* Upward dropdown - when no space below */
+.dropUp .treeselectDropdown {
+  top: auto;
+  bottom: calc(100% + 4px);
+  animation-name: slideInUp;
+}
+
 /* Portal dropdown - rendered outside component via createPortal */
 .portalDropdown {
   position: fixed;
@@ -136,6 +143,17 @@
   from {
     opacity: 0;
     transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;

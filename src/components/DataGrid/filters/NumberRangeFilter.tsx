@@ -9,9 +9,10 @@ import styles from '../DataGrid.module.css';
 
 interface NumberRangeFilterProps {
   column: any;
+  columnName?: string;
 }
 
-export const NumberRangeFilter: React.FC<NumberRangeFilterProps> = ({ column }) => {
+export const NumberRangeFilter: React.FC<NumberRangeFilterProps> = ({ column, columnName }) => {
   const columnFilterValue = column.getFilterValue() as [number, number] | undefined;
   const [minValue, setMinValue] = useState<string>(columnFilterValue?.[0]?.toString() ?? '');
   const [maxValue, setMaxValue] = useState<string>(columnFilterValue?.[1]?.toString() ?? '');
@@ -57,7 +58,9 @@ export const NumberRangeFilter: React.FC<NumberRangeFilterProps> = ({ column }) 
         value={minValue}
         onChange={(e) => setMinValue(e.target.value)}
         placeholder="Min"
+        aria-label={columnName ? `${columnName} minimum` : 'Minimum value'}
       />
+      <span className={styles.filterRangeSeparator}>~</span>
       <Input
         type="text"
         inputMode="decimal"
@@ -65,6 +68,7 @@ export const NumberRangeFilter: React.FC<NumberRangeFilterProps> = ({ column }) 
         value={maxValue}
         onChange={(e) => setMaxValue(e.target.value)}
         placeholder="Max"
+        aria-label={columnName ? `${columnName} maximum` : 'Maximum value'}
       />
     </div>
   );

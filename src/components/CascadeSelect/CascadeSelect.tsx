@@ -120,6 +120,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
   const [hoveredPath, setHoveredPath] = useState<string[]>([]);
   const [hoveredOptionRefs, setHoveredOptionRefs] = useState<Map<number, HTMLDivElement>>(new Map());
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [dropUp, setDropUp] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -146,21 +147,27 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
     };
   }, [isOpen, portal]);
 
-  // Calculate dropdown position for portal mode
+  // Determine dropdown direction and calculate portal position
   useEffect(() => {
-    if (portal && isOpen && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const dropdownHeight = 300;
+    if (!isOpen || !containerRef.current) {
+      setDropUp(false);
+      return;
+    }
 
-      let top = rect.bottom + 4;
-      const left = rect.left;
-      const width = rect.width;
+    const rect = containerRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const dropdownMaxHeight = 300;
 
-      if (top + dropdownHeight > window.innerHeight) {
-        top = rect.top - dropdownHeight - 4;
-      }
+    const shouldDropUp = spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow;
+    setDropUp(shouldDropUp);
 
-      setDropdownPosition({ top, left, width });
+    if (portal) {
+      setDropdownPosition({
+        top: shouldDropUp ? rect.top - 4 : rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+      });
     }
   }, [portal, isOpen]);
 
@@ -298,6 +305,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
     styles['cascade-select'],
     styles[`cascade-${size}`],
     isOpen && styles.open,
+    dropUp && styles['drop-up'],
     disabled && styles.disabled,
     className,
   ]
@@ -339,6 +347,7 @@ export const CascadeSelect: React.FC<CascadeSelectProps> = ({
               top: dropdownPosition.top,
               left: dropdownPosition.left,
               minWidth: dropdownPosition.width,
+              ...(dropUp && { transform: 'translateY(-100%)' }),
             } : undefined}
           >
             {Array.from({ length: visibleLevels }).map((_, level) => {

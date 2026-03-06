@@ -28,6 +28,7 @@ export const GridCell = memo<GridCellProps>(({
       className={className}
       style={style}
       role="gridcell"
+      aria-colindex={columnIndex + 1}
       data-row-index={rowIndex}
       data-column-index={columnIndex}
     >

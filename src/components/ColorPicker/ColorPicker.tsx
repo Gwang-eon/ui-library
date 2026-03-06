@@ -217,6 +217,7 @@ export const ColorPicker = ({
   const [recentColors, setRecentColors] = useState<string[]>([]);
   const [customPickerOpen, setCustomPickerOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const [dropUp, setDropUp] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -377,27 +378,33 @@ export const ColorPicker = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [portal]);
 
-  // Calculate dropdown position for portal mode
+  // Determine dropdown direction and calculate portal position
   useEffect(() => {
-    if (portal && (isOpen || customPickerOpen) && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const dropdownHeight = 400;
+    if ((!isOpen && !customPickerOpen) || !containerRef.current) {
+      setDropUp(false);
+      return;
+    }
 
-      let top = rect.bottom + 4;
-      const left = rect.left;
+    const rect = containerRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const dropdownMaxHeight = 400;
 
-      if (top + dropdownHeight > window.innerHeight) {
-        top = rect.top - dropdownHeight - 4;
-      }
+    const shouldDropUp = spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow;
+    setDropUp(shouldDropUp);
 
-      setDropdownPosition({ top, left });
+    if (portal) {
+      setDropdownPosition({
+        top: shouldDropUp ? rect.top - 8 : rect.bottom + 8,
+        left: rect.left,
+      });
     }
   }, [portal, isOpen, customPickerOpen]);
 
   // Memoized class names
   const compactContainerClassName = useMemo(() =>
-    `${styles.colorPickerCompact} ${styles[`colorPicker-${size}`]} ${className}`,
-    [size, className]
+    `${styles.colorPickerCompact} ${styles[`colorPicker-${size}`]} ${dropUp ? styles.dropUp : ''} ${className}`,
+    [size, dropUp, className]
   );
 
   const swatchesClassName = useMemo(() =>
@@ -406,8 +413,8 @@ export const ColorPicker = ({
   );
 
   const containerClassName = useMemo(() =>
-    `${styles.colorPicker} ${styles[`colorPicker-${size}`]} ${className}`,
-    [size, className]
+    `${styles.colorPicker} ${styles[`colorPicker-${size}`]} ${dropUp ? styles.dropUp : ''} ${className}`,
+    [size, dropUp, className]
   );
 
   // Memoized inline styles
@@ -451,6 +458,7 @@ export const ColorPicker = ({
                 position: 'fixed',
                 top: dropdownPosition.top,
                 left: dropdownPosition.left,
+                ...(dropUp && { transform: 'translateY(-100%)' }),
               } : undefined}
             >
               <div className={styles.colorPickerPanel}>

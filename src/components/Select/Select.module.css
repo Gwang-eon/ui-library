@@ -261,6 +261,17 @@
     visibility 0s linear 0s;
 }
 
+/* Upward dropdown - when no space below */
+.custom-select.drop-up .custom-select-dropdown {
+  top: auto;
+  bottom: calc(100% + 4px);
+  transform: translateY(8px);
+}
+
+.custom-select.open.drop-up .custom-select-dropdown {
+  transform: translateY(0);
+}
+
 /* Portal dropdown - rendered outside component via createPortal */
 .portal-dropdown {
   position: fixed;

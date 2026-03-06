@@ -30,6 +30,7 @@ export const GridRow = memo<GridRowProps>(({
     <div
       className={className}
       role="row"
+      aria-rowindex={rowIndex + 1}
       aria-selected={isSelected}
       data-row-index={rowIndex}
       onClick={onClick}

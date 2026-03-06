@@ -100,6 +100,7 @@ export const SplitButton = ({
 }: SplitButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [dropUp, setDropUp] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
 
@@ -121,21 +122,27 @@ export const SplitButton = ({
     }
   }, [isOpen, portal]);
 
-  // Calculate menu position for portal mode
+  // Determine dropdown direction and calculate portal position
   useEffect(() => {
-    if (portal && isOpen && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const menuHeight = 200;
+    if (!isOpen || !containerRef.current) {
+      setDropUp(false);
+      return;
+    }
 
-      let top = rect.bottom + 4;
-      const left = rect.left;
-      const width = rect.width;
+    const rect = containerRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const menuMaxHeight = 300;
 
-      if (top + menuHeight > window.innerHeight) {
-        top = rect.top - menuHeight - 4;
-      }
+    const shouldDropUp = spaceBelow < menuMaxHeight && spaceAbove > spaceBelow;
+    setDropUp(shouldDropUp);
 
-      setMenuPosition({ top, left, width });
+    if (portal) {
+      setMenuPosition({
+        top: shouldDropUp ? rect.top - 8 : rect.bottom + 8,
+        left: rect.left,
+        width: rect.width,
+      });
     }
   }, [portal, isOpen]);
 
@@ -193,6 +200,7 @@ export const SplitButton = ({
 
   const containerClasses = [
     styles.splitButton,
+    dropUp && styles.dropUp,
     size === 'sm' && styles.splitButtonSm,
     size === 'lg' && styles.splitButtonLg,
     className,
@@ -240,6 +248,7 @@ export const SplitButton = ({
               top: menuPosition.top,
               left: menuPosition.left,
               minWidth: menuPosition.width,
+              ...(dropUp && { transform: 'translateY(-100%)' }),
             } : undefined}
           >
             {items.map((item, index) => {

@@ -3,7 +3,7 @@
  * Editable cell component with validation and multiple editor types
  */
 
-import React, { memo, useState, useRef, useEffect, useCallback } from 'react';
+import React, { memo, useState, useRef, useEffect, useCallback, useId } from 'react';
 import { Row } from '@tanstack/react-table';
 import type { EditorType, EditorOption } from '../types';
 import styles from '../DataGrid.module.css';
@@ -17,6 +17,7 @@ interface EditableCellProps {
   editorType?: EditorType;
   editorOptions?: EditorOption[];
   validateCell?: (value: unknown, row: any) => string | null;
+  editTooltip?: string;
 }
 
 export const EditableCell = memo<EditableCellProps>(({
@@ -28,12 +29,14 @@ export const EditableCell = memo<EditableCellProps>(({
   editorType = 'text',
   editorOptions,
   validateCell,
+  editTooltip = 'Double-click to edit',
 }) => {
   const [value, setValue] = useState(initialValue);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const errorId = useId();
 
   useEffect(() => {
     setValue(initialValue);
@@ -114,6 +117,8 @@ export const EditableCell = memo<EditableCellProps>(({
       <div
         className={styles.editableCell}
         onDoubleClick={() => setIsEditing(true)}
+        title={editTooltip}
+        style={{ cursor: 'text' }}
       >
         {formatDisplayValue(value)}
       </div>
@@ -130,7 +135,7 @@ export const EditableCell = memo<EditableCellProps>(({
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
         />
-        {error && <div className={styles.editorError}>{error}</div>}
+        {error && <div id={errorId} className={styles.editorError} role="alert" aria-live="assertive">{error}</div>}
       </div>
     );
   }
@@ -148,6 +153,8 @@ export const EditableCell = memo<EditableCellProps>(({
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             className={`${styles.editInput} ${error ? styles.editInputError : ''}`}
+            aria-invalid={!!error}
+            aria-describedby={error ? errorId : undefined}
           />
         );
 
@@ -160,6 +167,8 @@ export const EditableCell = memo<EditableCellProps>(({
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             className={`${styles.editSelect} ${error ? styles.editInputError : ''}`}
+            aria-invalid={!!error}
+            aria-describedby={error ? errorId : undefined}
           >
             {editorOptions?.map((option) => (
               <option key={option.value} value={option.value}>
@@ -179,6 +188,8 @@ export const EditableCell = memo<EditableCellProps>(({
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             className={`${styles.editInput} ${error ? styles.editInputError : ''}`}
+            aria-invalid={!!error}
+            aria-describedby={error ? errorId : undefined}
           />
         );
 
@@ -193,6 +204,8 @@ export const EditableCell = memo<EditableCellProps>(({
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             className={`${styles.editInput} ${error ? styles.editInputError : ''}`}
+            aria-invalid={!!error}
+            aria-describedby={error ? errorId : undefined}
           />
         );
     }
@@ -201,7 +214,7 @@ export const EditableCell = memo<EditableCellProps>(({
   return (
     <div className={styles.editorWrapper}>
       {renderEditor()}
-      {error && <div className={styles.editorError}>{error}</div>}
+      {error && <div id={errorId} className={styles.editorError} role="alert" aria-live="assertive">{error}</div>}
     </div>
   );
 });

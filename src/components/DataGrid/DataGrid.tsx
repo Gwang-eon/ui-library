@@ -13,6 +13,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useId,
   memo,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -117,6 +118,7 @@ import {
   DEFAULT_OVERSCAN,
   DEFAULT_HEIGHT,
   DEFAULT_EMPTY_MESSAGE,
+  DEFAULT_LOCALE,
 } from './constants';
 import type {
   FilterType,
@@ -127,12 +129,13 @@ import type {
   ContextMenuContext,
   DataGridColumn,
   DataGridProps,
+  DataGridLocale,
   ExportOptions,
   DataGridRef,
   CellPosition,
   ContextMenuState,
 } from './types';
-import { dateToString, stringToDate } from './utils';
+import { formatLocale } from './utils';
 import { ColumnFilter } from './filters';
 import {
   DraggableHeaderCell,
@@ -165,6 +168,7 @@ export type {
   ContextMenuContext,
   DataGridColumn,
   DataGridProps,
+  DataGridLocale,
   ExportOptions,
   DataGridRef,
   CellPosition,
@@ -176,43 +180,6 @@ export type {
 // - ./filters/* - Filter components
 // - ./drag-drop/* - Drag-and-drop components
 // - ./pagination/* - Pagination components
-
-// Define fuzzy filter function
-const fuzzyFilter = (row: any, columnId: string, value: string, addMeta: any) => {
-  const itemRank = rankItem(row.getValue(columnId), value);
-  addMeta({ itemRank });
-  return itemRank.passed;
-};
-
-// Number range filter function
-const numberRangeFilter = (row: any, columnId: string, value: [number | undefined, number | undefined]) => {
-  const cellValue = row.getValue(columnId) as number;
-  const [min, max] = value ?? [undefined, undefined];
-  if (min !== undefined && cellValue < min) return false;
-  if (max !== undefined && cellValue > max) return false;
-  return true;
-};
-
-// Date range filter function
-const dateRangeFilter = (row: any, columnId: string, value: [string, string]) => {
-  const [startStr, endStr] = value ?? ['', ''];
-  const cellValue = row.getValue(columnId);
-  if (!cellValue) return false;
-
-  const cellDate = cellValue instanceof Date ? cellValue : new Date(cellValue as string);
-  const cellDateStr = dateToString(cellDate);
-
-  if (startStr && cellDateStr < startStr) return false;
-  if (endStr && cellDateStr > endStr) return false;
-  return true;
-};
-
-// Multi-select filter function
-const multiSelectFilter = (row: any, columnId: string, filterValue: string[]) => {
-  if (!filterValue || filterValue.length === 0) return true;
-  const cellValue = String(row.getValue(columnId));
-  return filterValue.includes(cellValue);
-};
 
 // ============================================
 // Main DataGrid Component
@@ -356,6 +323,9 @@ function DataGridInner<TData>(
     // Keyboard Navigation
     enableKeyboardNavigation = false,
 
+    // Locale
+    locale: localeProp,
+
     // Additional
     className,
     style,
@@ -363,6 +333,15 @@ function DataGridInner<TData>(
   }: DataGridProps<TData>,
   ref: React.ForwardedRef<DataGridRef<TData>>
 ) {
+  // Unique ID for this DataGrid instance
+  const gridId = useId();
+
+  // Merge locale with defaults
+  const t = useMemo<DataGridLocale>(
+    () => localeProp ? { ...DEFAULT_LOCALE, ...localeProp } : DEFAULT_LOCALE,
+    [localeProp]
+  );
+
   // State
   const [sorting, setSorting] = useState<SortingState>(sortingProp ?? []);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(columnFiltersProp ?? []);
@@ -605,6 +584,7 @@ function DataGridInner<TData>(
                   row.toggleSelected(true);
                 }}
                 disabled={!row.getCanSelect()}
+                name={`row-selection-${gridId}`}
               />
             );
           }
@@ -637,7 +617,7 @@ function DataGridInner<TData>(
                 <button
                   className={`${styles.pinButton} ${styles.pinButtonActive}`}
                   onClick={() => row.pin(false)}
-                  title="Unpin row"
+                  title={t.unpinRow}
                 >
                   <PinOff size={14} />
                 </button>
@@ -646,14 +626,14 @@ function DataGridInner<TData>(
                   <button
                     className={styles.pinButton}
                     onClick={() => row.pin('top')}
-                    title="Pin to top"
+                    title={t.pinToTop}
                   >
                     <Pin size={14} style={{ transform: 'rotate(0deg)' }} />
                   </button>
                   <button
                     className={styles.pinButton}
                     onClick={() => row.pin('bottom')}
-                    title="Pin to bottom"
+                    title={t.pinToBottom}
                   >
                     <Pin size={14} style={{ transform: 'rotate(180deg)' }} />
                   </button>
@@ -745,6 +725,7 @@ function DataGridInner<TData>(
                 editorType={col.editorType}
                 editorOptions={col.editorOptions}
                 validateCell={col.validateCell as any}
+                editTooltip={t.editTooltip}
               />
             )
           : col.cell
@@ -1096,16 +1077,20 @@ function DataGridInner<TData>(
     setActiveColumnId(null);
 
     if (over && active.id !== over.id) {
-      const oldIndex = columnOrder.indexOf(active.id as string);
-      const newIndex = columnOrder.indexOf(over.id as string);
+      // Use current column order from table if internal state is empty
+      const currentOrder = columnOrder.length > 0
+        ? columnOrder
+        : table.getVisibleLeafColumns().map(col => col.id);
+      const oldIndex = currentOrder.indexOf(active.id as string);
+      const newIndex = currentOrder.indexOf(over.id as string);
 
       if (oldIndex !== -1 && newIndex !== -1) {
-        const newOrder = arrayMove(columnOrder, oldIndex, newIndex);
+        const newOrder = arrayMove(currentOrder, oldIndex, newIndex);
         setColumnOrder(newOrder);
         onColumnOrderChange?.(newOrder);
       }
     }
-  }, [columnOrder, onColumnOrderChange]);
+  }, [columnOrder, onColumnOrderChange, table]);
 
   // Drag & Drop handlers for rows
   const handleRowDragStart = useCallback((event: DragStartEvent) => {
@@ -2280,10 +2265,10 @@ function DataGridInner<TData>(
     return (
       <div className={styles.pagination}>
         <div className={styles.paginationInfo}>
-          Showing {start} to {end} of {totalRows} entries
+          {formatLocale(t.showing, { start, end, total: totalRows })}
           {enableRowSelection && Object.keys(rowSelectionProp ?? rowSelection).length > 0 && (
             <span className={styles.selectionInfo}>
-              ({Object.keys(rowSelectionProp ?? rowSelection).length} selected)
+              ({formatLocale(t.selected, { count: Object.keys(rowSelectionProp ?? rowSelection).length })})
             </span>
           )}
         </div>
@@ -2292,13 +2277,14 @@ function DataGridInner<TData>(
             value={pageSize}
             options={pageSizeOptions}
             onChange={(size) => table.setPageSize(size)}
+            perPageLabel={t.perPage}
           />
           <div className={styles.paginationButtons}>
             <button
               className={styles.paginationButton}
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
-              aria-label="Go to first page"
+              aria-label={t.firstPage}
             >
               <ChevronsLeft size={16} />
             </button>
@@ -2306,18 +2292,18 @@ function DataGridInner<TData>(
               className={styles.paginationButton}
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              aria-label="Go to previous page"
+              aria-label={t.previousPage}
             >
               <ChevronLeft size={16} />
             </button>
             <span className={styles.pageInfo}>
-              Page {pageIndex + 1} of {pageCount}
+              {formatLocale(t.pageInfo, { page: pageIndex + 1, pages: pageCount })}
             </span>
             <button
               className={styles.paginationButton}
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              aria-label="Go to next page"
+              aria-label={t.nextPage}
             >
               <ChevronRight size={16} />
             </button>
@@ -2325,7 +2311,7 @@ function DataGridInner<TData>(
               className={styles.paginationButton}
               onClick={() => table.setPageIndex(pageCount - 1)}
               disabled={!table.getCanNextPage()}
-              aria-label="Go to last page"
+              aria-label={t.lastPage}
             >
               <ChevronsRight size={16} />
             </button>
@@ -2333,7 +2319,7 @@ function DataGridInner<TData>(
         </div>
       </div>
     );
-  }, [table, manualPagination, rowCount, pageSizeOptions, enableRowSelection, rowSelectionProp, rowSelection]);
+  }, [table, manualPagination, rowCount, pageSizeOptions, enableRowSelection, rowSelectionProp, rowSelection, t]);
 
   // Class names
   const containerClass = useMemo(() => {
@@ -2359,14 +2345,14 @@ function DataGridInner<TData>(
                 type="text"
                 value={globalFilterProp ?? globalFilter}
                 onChange={(e) => (onGlobalFilterChange ?? setGlobalFilter)(e.target.value)}
-                placeholder="Search all columns..."
+                placeholder={t.searchPlaceholder}
                 className={styles.globalSearchInput}
               />
               {(globalFilterProp ?? globalFilter) && (
                 <button
                   className={styles.clearSearch}
                   onClick={() => (onGlobalFilterChange ?? setGlobalFilter)('')}
-                  aria-label="Clear search"
+                  aria-label={t.clearSearch}
                 >
                   <X size={14} />
                 </button>
@@ -2379,7 +2365,7 @@ function DataGridInner<TData>(
               <button
                 className={`${styles.toolbarButton} ${showColumnFilters ? styles.active : ''}`}
                 onClick={toggleColumnFilters}
-                aria-label={showColumnFilters ? 'Hide column filters' : 'Show column filters'}
+                aria-label={showColumnFilters ? t.hideFilters : t.showFilters}
                 aria-pressed={showColumnFilters}
               >
                 <Filter size={16} />
@@ -2390,14 +2376,14 @@ function DataGridInner<TData>(
                 <button
                   className={styles.toolbarButton}
                   onClick={() => table.toggleAllRowsExpanded(true)}
-                  aria-label="Expand all rows"
+                  aria-label={t.expandAll}
                 >
                   <Expand size={16} />
                 </button>
                 <button
                   className={styles.toolbarButton}
                   onClick={() => table.toggleAllRowsExpanded(false)}
-                  aria-label="Collapse all rows"
+                  aria-label={t.collapseAll}
                 >
                   <Shrink size={16} />
                 </button>
@@ -2405,7 +2391,7 @@ function DataGridInner<TData>(
             )}
             {enableVirtualization && virtualPageSizeOptions.length > 0 && (
               <div className={styles.virtualPageSizeSelector}>
-                <span className={styles.virtualPageSizeLabel}>Rows:</span>
+                <span className={styles.virtualPageSizeLabel}>{t.rowsLabel}</span>
                 <select
                   value={effectiveVirtualPageSize}
                   onChange={(e) => handleVirtualPageSizeChange(Number(e.target.value))}
@@ -2419,7 +2405,14 @@ function DataGridInner<TData>(
                 </select>
               </div>
             )}
-            {enableColumnVisibility && <ColumnVisibilityDropdown table={table} />}
+            {enableColumnVisibility && (
+              <ColumnVisibilityDropdown
+                table={table}
+                toggleColumnsLabel={t.toggleColumns}
+                toggleAllLabel={t.toggleAll}
+                buttonAriaLabel={t.toggleColumnVisibility}
+              />
+            )}
           </div>
         </div>
       )}
@@ -2606,6 +2599,7 @@ function DataGridInner<TData>(
           y={contextMenu.y}
           items={contextMenu.items}
           onAction={handleContextMenuAction}
+          aria-label={t.contextMenuLabel}
           onClose={closeContextMenu}
         />
       )}

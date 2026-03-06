@@ -59,8 +59,16 @@ export const MultiSelectFilter: React.FC<MultiSelectFilterProps> = ({
   const updatePosition = useCallback(() => {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
+      const dropdownMaxHeight = 200; // matches CSS max-height
+      let top = rect.bottom + 4;
+
+      // Flip above trigger if it would overflow viewport
+      if (top + dropdownMaxHeight > window.innerHeight) {
+        top = rect.top - dropdownMaxHeight - 4;
+      }
+
       setDropdownPosition({
-        top: rect.bottom + 4,
+        top,
         left: rect.left,
         width: rect.width,
       });
@@ -134,6 +142,8 @@ export const MultiSelectFilter: React.FC<MultiSelectFilterProps> = ({
         type="button"
         className={styles.selectFilterTrigger}
         onClick={handleToggle}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
       >
         <span className={styles.selectFilterText}>{displayText}</span>
         {selectedValues.length > 0 && (
@@ -147,6 +157,8 @@ export const MultiSelectFilter: React.FC<MultiSelectFilterProps> = ({
         <div
           ref={dropdownRef}
           className={styles.selectFilterDropdownPortal}
+          role="listbox"
+          aria-multiselectable="true"
           style={{
             position: 'fixed',
             top: dropdownPosition.top,
@@ -164,14 +176,17 @@ export const MultiSelectFilter: React.FC<MultiSelectFilterProps> = ({
                 <div
                   key={option.value}
                   className={`${styles.selectFilterOption} ${isChecked ? styles.selected : ''}`}
+                  role="option"
+                  aria-selected={isChecked}
                   onClick={() => handleSelect(option.value)}
                 >
                   <label className={styles.checkbox}>
                     <input
                       type="checkbox"
                       checked={isChecked}
-                      onChange={() => {}}
+                      onChange={() => handleSelect(option.value)}
                       className={styles.checkboxInput}
+                      aria-label={option.label}
                     />
                     <span className={styles.checkboxMark}>
                       {isChecked && <Check size={12} />}

@@ -53,6 +53,17 @@
   transform: translateY(-8px);
 }
 
+/* Upward menu - when no space below */
+.dropUp .splitButtonMenu {
+  top: auto;
+  bottom: calc(100% + var(--spacing-2));
+  transform: translateY(8px);
+}
+
+.dropUp .splitButtonMenuOpen {
+  transform: translateY(0);
+}
+
 /* Portal menu - rendered outside component via createPortal */
 .portalMenu {
   position: fixed;

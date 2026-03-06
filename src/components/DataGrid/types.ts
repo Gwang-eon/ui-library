@@ -358,11 +358,71 @@ export interface DataGridProps<TData> {
   /** Enable keyboard navigation between cells */
   enableKeyboardNavigation?: boolean;
 
+  // Locale / i18n
+  /** Locale strings for customizing all UI text */
+  locale?: Partial<DataGridLocale>;
+
   // Additional
   /** CSS class name */
   className?: string;
   /** Inline styles */
   style?: React.CSSProperties;
+}
+
+// ============================================
+// Locale / i18n
+// ============================================
+
+export interface DataGridLocale {
+  // Toolbar
+  searchPlaceholder: string;
+  clearSearch: string;
+  showFilters: string;
+  hideFilters: string;
+  expandAll: string;
+  collapseAll: string;
+  rowsLabel: string;
+  toggleColumnVisibility: string;
+
+  // Column Visibility
+  toggleColumns: string;
+  toggleAll: string;
+
+  // Pagination
+  showing: string; // "Showing {start} to {end} of {total} entries"
+  selected: string; // "{count} selected"
+  pageInfo: string; // "Page {page} of {pages}"
+  perPage: string; // "{size} / page"
+  firstPage: string;
+  previousPage: string;
+  nextPage: string;
+  lastPage: string;
+
+  // Empty state
+  noData: string;
+
+  // Filters
+  filterSearch: string; // "Search..."
+  filterSearchColumn: string; // "Search {column}"
+  filterMin: string;
+  filterMax: string;
+  filterMinColumn: string; // "{column} minimum"
+  filterMaxColumn: string; // "{column} maximum"
+  filterSelect: string; // "Select..."
+  filterSelectedCount: string; // "{count} selected"
+  filterNoOptions: string;
+  filterAll: string; // "All"
+
+  // Editable cell
+  editTooltip: string;
+
+  // Context menu
+  contextMenuLabel: string;
+
+  // Drag
+  pinToTop: string;
+  pinToBottom: string;
+  unpinRow: string;
 }
 
 // ============================================
@@ -479,6 +539,7 @@ export interface ContextMenuProps {
   items: ContextMenuItem[];
   onAction: (actionId: string) => void;
   onClose: () => void;
+  'aria-label'?: string;
 }
 
 export interface EditableCellProps<TData> {

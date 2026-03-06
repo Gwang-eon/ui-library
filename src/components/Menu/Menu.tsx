@@ -34,6 +34,7 @@ export const Menu: React.FC<MenuProps> = ({
 }) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [dropUp, setDropUp] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuDropdownRef = useRef<HTMLDivElement>(null);
   const isControlled = controlledOpen !== undefined;
@@ -74,24 +75,30 @@ export const Menu: React.FC<MenuProps> = ({
     };
   }, [isOpen, portal]);
 
-  // Calculate menu position for portal mode
+  // Determine dropdown direction and calculate portal position
   useEffect(() => {
-    if (portal && isOpen && menuRef.current) {
-      const rect = menuRef.current.getBoundingClientRect();
-      const menuHeight = 200;
+    if (!isOpen || !menuRef.current) {
+      setDropUp(false);
+      return;
+    }
 
-      let top = rect.bottom + 4;
-      let left = align === 'right' ? rect.right : rect.left;
+    const rect = menuRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const menuMaxHeight = 300;
 
-      if (top + menuHeight > window.innerHeight) {
-        top = rect.top - menuHeight - 4;
-      }
+    const shouldDropUp = spaceBelow < menuMaxHeight && spaceAbove > spaceBelow;
+    setDropUp(shouldDropUp);
 
-      setMenuPosition({ top, left });
+    if (portal) {
+      setMenuPosition({
+        top: shouldDropUp ? rect.top - 8 : rect.bottom + 8,
+        left: align === 'right' ? rect.right : rect.left,
+      });
     }
   }, [portal, isOpen, align]);
 
-  const containerClass = [styles['menu-container'], className].filter(Boolean).join(' ');
+  const containerClass = [styles['menu-container'], dropUp && styles['drop-up'], className].filter(Boolean).join(' ');
 
   const menuClass = [
     styles.menu,
@@ -114,6 +121,7 @@ export const Menu: React.FC<MenuProps> = ({
               position: 'fixed',
               top: menuPosition.top,
               left: menuPosition.left,
+              ...(dropUp && { transform: 'translateY(-100%)' }),
             } : undefined}
           >
             {children}

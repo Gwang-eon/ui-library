@@ -25,6 +25,7 @@ export const ColumnFilter = memo<ColumnFilterProps>(({
   const filterType: FilterType = columnDef.meta?.filterType ?? columnDef.filterType;
   const filterOptions: FilterOption[] | undefined = columnDef.meta?.filterOptions ?? columnDef.filterOptions;
   const FilterComponent = columnDef.meta?.filterComponent ?? columnDef.filterComponent;
+  const columnName = typeof columnDef.header === 'string' ? columnDef.header : column.id;
 
   // Custom filter component takes precedence
   if (FilterComponent) {
@@ -42,7 +43,7 @@ export const ColumnFilter = memo<ColumnFilterProps>(({
     case 'date-range':
       return <DateFilter column={column} isRange={true} />;
     case 'number':
-      return <NumberRangeFilter column={column} />;
+      return <NumberRangeFilter column={column} columnName={columnName} />;
     case 'text':
     default:
       // Auto-detect based on data type
@@ -51,10 +52,10 @@ export const ColumnFilter = memo<ColumnFilterProps>(({
         .flatRows[0]?.getValue(column.id);
 
       if (typeof firstValue === 'number') {
-        return <NumberRangeFilter column={column} />;
+        return <NumberRangeFilter column={column} columnName={columnName} />;
       }
 
-      return <TextFilter column={column} />;
+      return <TextFilter column={column} columnName={columnName} />;
   }
 });
 

@@ -109,6 +109,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     const [selectedValue, setSelectedValue] = useState(controlledValue ?? defaultValue);
     const [focusedIndex, setFocusedIndex] = useState(-1);
     const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+    const [dropUp, setDropUp] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
@@ -173,22 +174,27 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       };
     }, [isOpen, portal]);
 
-    // Calculate dropdown position for portal mode
+    // Determine dropdown direction and calculate portal position
     useEffect(() => {
-      if (portal && isOpen && triggerRef.current) {
-        const rect = triggerRef.current.getBoundingClientRect();
-        const dropdownHeight = 250; // Approximate max dropdown height
+      if (!isOpen || !triggerRef.current) {
+        setDropUp(false);
+        return;
+      }
 
-        let top = rect.bottom + 4;
-        const left = rect.left;
-        const width = rect.width;
+      const rect = triggerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownMaxHeight = 300; // matches CSS max-height
 
-        // Adjust if dropdown would go off-screen bottom
-        if (top + dropdownHeight > window.innerHeight) {
-          top = rect.top - dropdownHeight - 4;
-        }
+      const shouldDropUp = spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow;
+      setDropUp(shouldDropUp);
 
-        setDropdownPosition({ top, left, width });
+      if (portal) {
+        setDropdownPosition({
+          top: shouldDropUp ? rect.top - 4 : rect.bottom + 4,
+          left: rect.left,
+          width: rect.width,
+        });
       }
     }, [portal, isOpen]);
 
@@ -262,8 +268,8 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     );
 
     const selectClassName = useMemo(() =>
-      `${styles['custom-select']} ${isOpen ? styles.open : ''} ${state === 'error' ? styles.error : ''} ${disabled ? styles.disabled : ''} ${styles[`select-${size}`] || ''}`,
-      [isOpen, state, disabled, size]
+      `${styles['custom-select']} ${isOpen ? styles.open : ''} ${dropUp ? styles['drop-up'] : ''} ${state === 'error' ? styles.error : ''} ${disabled ? styles.disabled : ''} ${styles[`select-${size}`] || ''}`,
+      [isOpen, dropUp, state, disabled, size]
     );
 
     const triggerClassName = useMemo(() =>
@@ -379,6 +385,7 @@ export const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                     top: dropdownPosition.top,
                     left: dropdownPosition.left,
                     width: dropdownPosition.width,
+                    ...(dropUp && { transform: 'translateY(-100%)' }),
                   }}
                 >
                   {dropdownContent}

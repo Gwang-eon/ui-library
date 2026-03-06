@@ -29,8 +29,12 @@ import {
 import type { ContextMenuItem, ContextMenuProps } from '../types';
 import menuStyles from '../../Menu/Menu.module.css';
 
-export const ContextMenu = memo<ContextMenuProps>(({ x, y, items, onAction, onClose }) => {
+export const ContextMenu = memo<ContextMenuProps>(({ x, y, items, onAction, onClose, 'aria-label': ariaLabel = 'Context menu' }) => {
   const menuRef = useRef<HTMLDivElement>(null);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
+
+  // Get actionable (non-divider) items for keyboard navigation
+  const actionableItems = items.filter(item => !item.divider);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -39,20 +43,55 @@ export const ContextMenu = memo<ContextMenuProps>(({ x, y, items, onAction, onCl
       }
     };
 
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-
     document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEscape);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscape);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onClose]);
+
+  // Focus menu on mount and handle keyboard navigation
+  useEffect(() => {
+    menuRef.current?.focus();
+  }, []);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
+        onClose();
+        break;
+      case 'ArrowDown': {
+        e.preventDefault();
+        let next = focusedIndex + 1;
+        while (next < actionableItems.length && actionableItems[next].disabled) next++;
+        if (next < actionableItems.length) setFocusedIndex(next);
+        break;
+      }
+      case 'ArrowUp': {
+        e.preventDefault();
+        let prev = focusedIndex - 1;
+        while (prev >= 0 && actionableItems[prev].disabled) prev--;
+        if (prev >= 0) setFocusedIndex(prev);
+        break;
+      }
+      case 'Home':
+        e.preventDefault();
+        setFocusedIndex(actionableItems.findIndex(item => !item.disabled));
+        break;
+      case 'End':
+        e.preventDefault();
+        for (let i = actionableItems.length - 1; i >= 0; i--) {
+          if (!actionableItems[i].disabled) { setFocusedIndex(i); break; }
+        }
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        if (focusedIndex >= 0 && !actionableItems[focusedIndex].disabled) {
+          onAction(actionableItems[focusedIndex].id);
+          onClose();
+        }
+        break;
+    }
+  };
 
   // Adjust position to stay within viewport
   const [position, setPosition] = useState({ x, y });
@@ -77,41 +116,56 @@ export const ContextMenu = memo<ContextMenuProps>(({ x, y, items, onAction, onCl
     }
   }, [x, y]);
 
+  // Track actionable item index for mapping
+  let actionableIndex = -1;
+
   return createPortal(
     <div
       ref={menuRef}
       className={menuStyles.menu}
+      role="menu"
+      aria-label={ariaLabel}
+      tabIndex={-1}
+      onKeyDown={handleKeyDown}
       style={{
         position: 'fixed',
         top: position.y,
         left: position.x,
         right: 'auto',
         bottom: 'auto',
-        zIndex: 9999,
+        zIndex: 1500,
       }}
     >
-      {items.map((item, index) => (
-        item.divider ? (
-          <div key={`divider-${index}`} className={menuStyles['menu-divider']} />
-        ) : (
+      {items.map((item, index) => {
+        if (item.divider) {
+          return <div key={`divider-${index}`} className={menuStyles['menu-divider']} role="separator" />;
+        }
+        actionableIndex++;
+        const isFocused = actionableIndex === focusedIndex;
+        const currentActionableIndex = actionableIndex;
+        return (
           <button
             key={item.id}
-            className={`${menuStyles['menu-item']} ${item.disabled ? menuStyles['menu-item-disabled'] : ''} ${item.danger ? menuStyles['menu-item-danger'] : ''}`}
+            className={`${menuStyles['menu-item']} ${item.disabled ? menuStyles['menu-item-disabled'] : ''} ${item.danger ? menuStyles['menu-item-danger'] : ''} ${isFocused ? menuStyles['menu-item-focused'] : ''}`}
             onClick={() => {
               if (!item.disabled) {
                 onAction(item.id);
                 onClose();
               }
             }}
+            onMouseEnter={() => setFocusedIndex(currentActionableIndex)}
             disabled={item.disabled}
+            aria-disabled={item.disabled}
             type="button"
+            role="menuitem"
+            tabIndex={-1}
           >
             {item.icon && <span className={menuStyles['menu-item-icon']}>{item.icon}</span>}
             <span>{item.label}</span>
             {item.shortcut && <span className={menuStyles['menu-shortcut']}>{item.shortcut}</span>}
           </button>
-        )
-      ))}
+        );
+      })}
     </div>,
     document.body
   );

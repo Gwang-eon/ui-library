@@ -90,6 +90,24 @@
   animation: cascadeFadeIn var(--duration-fast) var(--ease-out);
 }
 
+/* Upward panel - when no space below */
+.cascade-select.drop-up .cascade-panel {
+  top: auto;
+  bottom: calc(100% + 4px);
+  animation-name: cascadeFadeInUp;
+}
+
+@keyframes cascadeFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Portal panel - rendered outside component via createPortal */
 .portalPanel {
   position: fixed;

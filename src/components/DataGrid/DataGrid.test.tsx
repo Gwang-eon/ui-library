@@ -540,7 +540,7 @@ describe('DataGrid', () => {
       );
 
       // Find column visibility toggle button
-      const columnsButton = screen.getByRole('button', { name: /columns/i });
+      const columnsButton = screen.getByRole('button', { name: /column visibility/i });
       if (columnsButton) {
         await user.click(columnsButton);
 

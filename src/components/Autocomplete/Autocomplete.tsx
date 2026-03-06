@@ -130,6 +130,7 @@ export const Autocomplete = ({
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+  const [dropUp, setDropUp] = useState(false);
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -267,21 +268,27 @@ export const Autocomplete = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [portal]);
 
-  // Calculate dropdown position for portal mode
+  // Determine dropdown direction and calculate portal position
   useEffect(() => {
-    if (portal && isOpen && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const dropdownHeight = 300;
+    if (!isOpen || !containerRef.current) {
+      setDropUp(false);
+      return;
+    }
 
-      let top = rect.bottom + 4;
-      const left = rect.left;
-      const width = rect.width;
+    const rect = containerRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const dropdownMaxHeight = 320; // matches CSS max-height
 
-      if (top + dropdownHeight > window.innerHeight) {
-        top = rect.top - dropdownHeight - 4;
-      }
+    const shouldDropUp = spaceBelow < dropdownMaxHeight && spaceAbove > spaceBelow;
+    setDropUp(shouldDropUp);
 
-      setDropdownPosition({ top, left, width });
+    if (portal) {
+      setDropdownPosition({
+        top: shouldDropUp ? rect.top - 4 : rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+      });
     }
   }, [portal, isOpen]);
 
@@ -304,7 +311,7 @@ export const Autocomplete = ({
   return (
     <div
       ref={containerRef}
-      className={`${styles.autocomplete} ${sizeClass} ${multipleClass} ${className}`}
+      className={`${styles.autocomplete} ${sizeClass} ${multipleClass} ${dropUp ? styles.dropUp : ''} ${className}`}
       role="combobox"
       aria-expanded={isOpen}
       aria-haspopup="listbox"
@@ -386,6 +393,7 @@ export const Autocomplete = ({
               top: dropdownPosition.top,
               left: dropdownPosition.left,
               width: dropdownPosition.width,
+              ...(dropUp && { transform: 'translateY(-100%)' }),
             } : undefined}
           >
             {loading ? (

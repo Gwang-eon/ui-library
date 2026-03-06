@@ -9,9 +9,10 @@ import styles from '../DataGrid.module.css';
 
 interface TextFilterProps {
   column: any;
+  columnName?: string;
 }
 
-export const TextFilter: React.FC<TextFilterProps> = ({ column }) => {
+export const TextFilter: React.FC<TextFilterProps> = ({ column, columnName }) => {
   const columnFilterValue = (column.getFilterValue() ?? '') as string;
   const [value, setValue] = useState(columnFilterValue);
 
@@ -36,6 +37,7 @@ export const TextFilter: React.FC<TextFilterProps> = ({ column }) => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Search..."
+        aria-label={columnName ? `Search ${columnName}` : 'Search column'}
         fullWidth
       />
     </div>

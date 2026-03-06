@@ -113,6 +113,12 @@
   z-index: var(--z-dropdown);
 }
 
+/* Upward dropdown - when no space below */
+.dropUp .colorPickerDropdown {
+  top: auto;
+  bottom: calc(100% + 8px);
+}
+
 /* Portal dropdown - rendered outside component via createPortal */
 .portalDropdown {
   position: fixed;

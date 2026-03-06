@@ -12,10 +12,16 @@ import styles from '../DataGrid.module.css';
 
 interface ColumnVisibilityDropdownProps {
   table: TanStackTable<any>;
+  toggleColumnsLabel?: string;
+  toggleAllLabel?: string;
+  buttonAriaLabel?: string;
 }
 
 export const ColumnVisibilityDropdown = memo<ColumnVisibilityDropdownProps>(({
   table,
+  toggleColumnsLabel = 'Toggle Columns',
+  toggleAllLabel = 'Toggle All',
+  buttonAriaLabel = 'Toggle column visibility',
 }) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -80,7 +86,7 @@ export const ColumnVisibilityDropdown = memo<ColumnVisibilityDropdownProps>(({
         ref={buttonRef}
         className={styles.toolbarButton}
         onClick={() => setOpen(!open)}
-        aria-label="Toggle column visibility"
+        aria-label={buttonAriaLabel}
         aria-expanded={open}
         aria-haspopup="menu"
       >
@@ -100,14 +106,14 @@ export const ColumnVisibilityDropdown = memo<ColumnVisibilityDropdownProps>(({
               bottom: 'auto',
             }}
           >
-            <div className={styles.dropdownHeader}>Toggle Columns</div>
+            <div className={styles.dropdownHeader}>{toggleColumnsLabel}</div>
             <label className={styles.dropdownItem}>
               <input
                 type="checkbox"
                 checked={table.getIsAllColumnsVisible()}
                 onChange={table.getToggleAllColumnsVisibilityHandler()}
               />
-              <span>Toggle All</span>
+              <span>{toggleAllLabel}</span>
             </label>
             <div className={styles.dropdownDivider} />
             {table.getAllLeafColumns().map((column) => (
@@ -118,7 +124,7 @@ export const ColumnVisibilityDropdown = memo<ColumnVisibilityDropdownProps>(({
                   onChange={column.getToggleVisibilityHandler()}
                   disabled={!column.getCanHide()}
                 />
-                <span>{column.id}</span>
+                <span>{typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id}</span>
               </label>
             ))}
           </div>

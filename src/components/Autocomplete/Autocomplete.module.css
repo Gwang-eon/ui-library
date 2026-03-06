@@ -96,6 +96,12 @@
   z-index: var(--z-dropdown);
 }
 
+/* Upward dropdown - when no space below */
+.dropUp .autocompleteDropdown {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
 /* Portal dropdown - rendered outside component via createPortal */
 .portalDropdown {
   position: fixed;
