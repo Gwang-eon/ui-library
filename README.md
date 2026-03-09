@@ -88,6 +88,8 @@ import '@gractor/ui/dist/styles/base.css';           // 기본 스타일만
 | `TreeSelect` | 트리 선택 |
 | `Transfer` | 전송 |
 | `Knob` | 노브 컨트롤 |
+| `TagInput` | 태그 입력 |
+| `FormField` | 폼 필드 래퍼 (정렬 통일) |
 
 ### 데이터 표시
 | 컴포넌트 | 설명 |
@@ -95,6 +97,7 @@ import '@gractor/ui/dist/styles/base.css';           // 기본 스타일만
 | `Card` | 카드 |
 | `List` | 리스트 |
 | `Table` | 테이블 |
+| `DataGrid` | 데이터 그리드 (정렬, 필터, 핀, 가상화) |
 | `Tree` | 트리 |
 | `Badge` | 뱃지 |
 | `Avatar` | 아바타 |
