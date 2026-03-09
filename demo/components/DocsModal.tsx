@@ -14,10 +14,30 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.2.4';
+const VERSION = '1.2.5';
 
 // Changelog content
 const changelogMd = `# Changelog
+
+## v1.2.5 (2026-03-09)
+
+### Added
+- **FormField 래퍼 컴포넌트** - 폼 컴포넌트 1열 배치 시 일관된 정렬을 위한 통합 래퍼
+  - label/control/helper 영역 분리, size variant (\`sm\`/\`md\`/\`lg\`) 대응
+  - vertical/horizontal 레이아웃 지원
+
+### Bug Fixes
+- **DataGrid 컬럼 핀 UX 개선**
+  - 내부 컬럼(\`_select\`, \`_pin\`, \`_expand\`)에 \`enablePinning: false\` 적용 — 체크박스와 핀 버튼 겹침 해소
+  - 핀 해제 시 전체 컬럼 핀 초기화 (Excel 프리즈 해제 방식)
+  - 헤더/바디 핀 컬럼 스크롤 동기화 수정 (\`.gridBody\` 별도 스크롤 컨텍스트 제거)
+- **폼 컴포넌트 간격 표준화** — label/input/helper 간격을 4px(\`--spacing-1\`)로 통일
+  - atomic \`.input-label\` \`margin-bottom\` 제거 (gap으로 대체)
+  - atomic \`.input-group\` \`margin-bottom: 16px\` 제거 (레이아웃 책임 부모로 이관)
+  - \`.input-base\`에 \`box-sizing: border-box\` 추가
+  - Select trigger padding/height를 Input과 동일하게 통일
+
+---
 
 ## v1.2.4 (2026-03-06)
 
@@ -184,6 +204,16 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
 
                 <h3>Recent Updates</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <UpdateItem
+                    date="2026-03-09"
+                    title="DataGrid 컬럼 핀 UX 개선"
+                    description="체크박스/핀 버튼 겹침 해소, 핀 해제 시 전체 초기화, 헤더/바디 스크롤 동기화 수정"
+                  />
+                  <UpdateItem
+                    date="2026-03-09"
+                    title="폼 컴포넌트 정렬 표준화 + FormField"
+                    description="label/input/helper 간격 4px 통일, Select padding 표준화, FormField 래퍼 컴포넌트 추가"
+                  />
                   <UpdateItem
                     date="2026-03-06"
                     title="드롭다운 뷰포트 플립"
