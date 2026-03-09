@@ -1,0 +1,122 @@
+/**
+ * FormField Component Styles
+ * Unified wrapper for consistent form component alignment
+ */
+
+/* ========================================
+   BASE STRUCTURE
+   ======================================== */
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* ========================================
+   LABEL AREA
+   ======================================== */
+
+.label {
+  display: block;
+  font-size: var(--font-size-label-medium);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  line-height: var(--line-height-label-medium);
+}
+
+.label--sm {
+  font-size: var(--font-size-label-small);
+  line-height: var(--line-height-label-small);
+}
+
+.label--lg {
+  font-size: var(--font-size-label-large);
+  line-height: var(--line-height-label-large);
+}
+
+.required {
+  color: var(--color-error-500);
+  margin-left: 2px;
+}
+
+/* ========================================
+   CONTROL AREA
+   ======================================== */
+
+.control {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+}
+
+.control--sm {
+  min-height: 32px;
+}
+
+.control--lg {
+  min-height: 48px;
+}
+
+/* ========================================
+   HELPER / MESSAGE AREA
+   ======================================== */
+
+.message {
+  display: block;
+  font-size: var(--font-size-body-small);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-body-small);
+  min-height: var(--line-height-body-small);
+}
+
+.message--error {
+  color: var(--color-error-600);
+}
+
+.message--success {
+  color: var(--color-success-600);
+}
+
+.message--warning {
+  color: var(--palette-orange-600);
+}
+
+/* ========================================
+   HORIZONTAL LAYOUT
+   ======================================== */
+
+.formField--horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+}
+
+.formField--horizontal .label {
+  flex-shrink: 0;
+  min-width: 120px;
+  padding-top: 10px;
+}
+
+.formField--horizontal .label.label--sm {
+  padding-top: 6px;
+}
+
+.formField--horizontal .label.label--lg {
+  padding-top: 14px;
+}
+
+.formField--horizontal .fieldBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* ========================================
+   FULL WIDTH
+   ======================================== */
+
+.formField--fullWidth {
+  width: 100%;
+}
