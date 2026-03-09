@@ -549,6 +549,7 @@ function DataGridInner<TData>(
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
+        enablePinning: false,
         header: ({ table }) => {
           // Single selection mode - no header checkbox/radio
           if (isSingleSelection) {
@@ -608,6 +609,7 @@ function DataGridInner<TData>(
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
+        enablePinning: false,
         header: () => <Pin size={14} className={styles.pinHeaderIcon} />,
         cell: ({ row }) => {
           const isPinned = row.getIsPinned();
@@ -654,6 +656,7 @@ function DataGridInner<TData>(
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
+        enablePinning: false,
         header: () => null,
         cell: ({ row }) => {
           const canExpand = row.getCanExpand();
@@ -1382,17 +1385,8 @@ function DataGridInner<TData>(
     table.setColumnPinning(newPinning);
   }, [table]);
 
-  const unpinColumnsFrom = useCallback((columnId: string) => {
-    const allColumns = table.getAllLeafColumns();
-    const targetIndex = allColumns.findIndex(col => col.id === columnId);
-    if (targetIndex === -1) return;
-
-    const currentPinning = table.getState().columnPinning;
-    const newLeft = (currentPinning.left || []).filter(id => {
-      const colIndex = allColumns.findIndex(col => col.id === id);
-      return colIndex < targetIndex;
-    });
-    table.setColumnPinning({ left: newLeft, right: [] });
+  const unpinAllColumns = useCallback(() => {
+    table.setColumnPinning({ left: [], right: [] });
   }, [table]);
 
   // Context menu handlers
@@ -1578,8 +1572,7 @@ function DataGridInner<TData>(
       // ===== Column Pin Actions =====
       case 'unpin':
         if (type === 'header' && context.columnId) {
-          const column = table.getColumn(context.columnId);
-          column?.pin(false);
+          unpinAllColumns();
         } else if (context.rowData) {
           const row = rows.find(r => r.original === context.rowData);
           row?.pin(false);
@@ -2081,7 +2074,7 @@ function DataGridInner<TData>(
                 className={styles.pinButton}
                 onClick={() => {
                   if (isPinned) {
-                    unpinColumnsFrom(header.column.id);
+                    unpinAllColumns();
                   } else {
                     pinColumnsUpTo(header.column.id);
                   }
@@ -2109,7 +2102,7 @@ function DataGridInner<TData>(
         )}
       </div>
     );
-  }, [table, enableColumnPinning, enableFiltering, showColumnFilters, pinColumnsUpTo, unpinColumnsFrom]);
+  }, [table, enableColumnPinning, enableFiltering, showColumnFilters, pinColumnsUpTo, unpinAllColumns]);
 
   // Render row (div-based)
   const renderRow = useCallback((row: Row<TData>, virtualRow?: { index: number; start: number; size: number }) => {
@@ -2492,7 +2485,8 @@ function DataGridInner<TData>(
                 className={styles.gridBody}
                 style={enableVirtualization ? {
                   height: typeof height === 'number' ? `${height - 48}px` : `calc(${height} - 48px)`,
-                  overflow: 'auto'
+                  overflowY: 'auto',
+                  overflowX: 'hidden'
                 } : undefined}
                 role="rowgroup"
                 onContextMenu={handleBodyContextMenu}

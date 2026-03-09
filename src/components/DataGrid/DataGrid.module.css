@@ -615,7 +615,6 @@
   position: relative;
   background: var(--surface-primary);
   flex: 1;
-  overflow: auto;
 }
 
 .gridRow {
