@@ -32,6 +32,8 @@ export * from './components/TreeSelect';
 export * from './components/CascadeSelect';
 export * from './components/Autocomplete';
 export * from './components/Knob';
+export * from './components/TagInput';
+export * from './components/FormField';
 
 // Data Display Components
 export * from './components/Card';
