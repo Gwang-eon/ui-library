@@ -2326,8 +2326,20 @@ function DataGridInner<TData>(
       .join(' ');
   }, [bordered, compact, className]);
 
+  // Compute grid container style with height
+  const containerStyle = useMemo(() => {
+    const h = height
+      ? (typeof height === 'number' ? `${height}px` : height)
+      : undefined;
+    return {
+      ...style,
+      height: h,
+      minHeight: h ? undefined : '300px',
+    };
+  }, [height, style]);
+
   return (
-    <div className={containerClass} style={style}>
+    <div className={containerClass} style={containerStyle}>
       {/* Toolbar */}
       {showToolbar && (
         <div className={styles.toolbar}>
@@ -2414,7 +2426,6 @@ function DataGridInner<TData>(
       <div
         ref={enableVirtualization ? undefined : tableContainerRef}
         className={styles.tableContainer}
-        style={{ height: typeof height === 'number' ? `${height}px` : height }}
         tabIndex={enableKeyboardNavigation ? 0 : undefined}
         onKeyDown={enableKeyboardNavigation ? handleTableKeyDown : undefined}
         onClick={(e) => {
@@ -2484,7 +2495,7 @@ function DataGridInner<TData>(
                 ref={enableVirtualization ? handleVirtualScrollRef : undefined}
                 className={styles.gridBody}
                 style={enableVirtualization ? {
-                  height: typeof height === 'number' ? `${height - 48}px` : `calc(${height} - 48px)`,
+                  flex: 1,
                   overflowY: 'auto',
                   overflowX: 'hidden'
                 } : undefined}

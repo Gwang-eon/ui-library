@@ -245,6 +245,7 @@
   position: relative;
   flex: 1;
   overflow: auto;
+  min-height: 0;
 }
 
 /* ========================================
@@ -562,6 +563,8 @@
   flex-direction: column;
   width: 100%;
   min-width: max-content;
+  flex: 1;
+  min-height: 0;
 }
 
 .gridHeader {
@@ -615,6 +618,8 @@
   position: relative;
   background: var(--surface-primary);
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .gridRow {
