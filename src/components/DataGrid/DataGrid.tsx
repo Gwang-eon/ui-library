@@ -2334,7 +2334,7 @@ function DataGridInner<TData>(
     return {
       ...style,
       height: h,
-      minHeight: h ? undefined : '300px',
+      minHeight: h ? undefined : '480px',
     };
   }, [height, style]);
 
