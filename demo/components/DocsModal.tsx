@@ -33,7 +33,7 @@ const changelogMd = `# Changelog
   - 헤더/바디 핀 컬럼 스크롤 동기화 수정 (\`.gridBody\` 별도 스크롤 컨텍스트 제거)
 - **DataGrid 내부 스크롤 레이아웃** — 툴바/페이지네이션 고정, 데이터 행만 내부 스크롤
   - \`height\` prop을 \`.dataGrid\` 루트에 적용, \`.tableContainer\`/\`.grid\`/\`.gridBody\` flex 체인 구성
-  - \`height\` 미지정 시 \`min-height: 300px\` 기본 적용
+  - \`height\` 미지정 시 \`min-height: 480px\` 기본 적용
   - 브라우저 높이 축소 시에도 페이지네이션이 항상 노출
 - **폼 컴포넌트 간격 표준화** — label/input/helper 간격을 4px(\`--spacing-1\`)로 통일
   - atomic \`.input-label\` \`margin-bottom\` 제거 (gap으로 대체)
