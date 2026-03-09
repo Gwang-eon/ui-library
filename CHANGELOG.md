@@ -14,6 +14,10 @@
   - 내부 컬럼(`_select`, `_pin`, `_expand`)에 `enablePinning: false` 적용 — 체크박스와 핀 버튼 겹침 해소
   - 핀 해제 시 전체 컬럼 핀 초기화 (Excel 프리즈 해제 방식)
   - 헤더/바디 핀 컬럼 스크롤 동기화 수정 (`.gridBody` 별도 스크롤 컨텍스트 제거)
+- **DataGrid 내부 스크롤 레이아웃**: 툴바/페이지네이션 고정, 데이터 행만 내부 스크롤
+  - `height` prop을 `.dataGrid` 루트에 적용, flex 체인으로 `.gridBody`만 스크롤
+  - `height` 미지정 시 `min-height: 300px` 기본 적용
+  - 브라우저 높이 축소 시에도 페이지네이션이 항상 노출
 - **폼 컴포넌트 간격 표준화**: label/input/helper 간격을 4px(`--spacing-1`)로 통일
   - atomic `.input-label` `margin-bottom` 제거 (gap으로 대체)
   - atomic `.input-group` `margin-bottom: 16px` 제거 (레이아웃 책임 부모로 이관)
