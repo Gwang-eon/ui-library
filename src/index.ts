@@ -34,6 +34,7 @@ export * from './components/Autocomplete';
 export * from './components/Knob';
 export * from './components/TagInput';
 export * from './components/FormField';
+export * from './components/EmailInput';
 
 // Data Display Components
 export * from './components/Card';

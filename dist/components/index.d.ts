@@ -5,6 +5,7 @@ export * from './Select';
 export * from './Checkbox';
 export * from './Radio';
 export * from './FormField';
+export * from './EmailInput';
 export * from './Toggle';
 export * from './Textarea';
 export * from './FileUpload';
