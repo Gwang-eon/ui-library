@@ -2,6 +2,24 @@
 
 이 프로젝트는 [Semantic Versioning](https://semver.org/lang/ko/)을 따릅니다.
 
+## [1.2.8] - 2026-03-12
+
+### Fixed
+- **DataGrid 컬럼 핀(틀고정) 전면 재구현** (TanStack Table 공식 패턴 적용):
+  - `position: sticky` + `column.getStart('left')` / `column.getAfter('right')` 오프셋 계산
+  - 핀된 컬럼은 `flex: 0 0 Xpx` 고정 — `fillRemainingSpace` 모드 무관하게 너비 유지
+  - 핀 변경 시 DOM에서 실제 렌더링 너비를 캡처하여 `columnSizing` 동기화 (너비 축소 방지)
+  - `contain: layout/paint` → `contain: style`로 변경 (sticky 호환)
+  - `.gridBody` overflow 제거 — `.tableContainer`가 유일한 스크롤 컨테이너
+  - 특수 컬럼(`_select`, `_pin`, `_expand`) 자동 핀 처리
+- **ColumnVisibility 체크박스 미반영 버그**: `memo`가 `table` 참조 동일로 re-render 차단 → `columnVisibility` 상태를 별도 prop으로 전달하여 해결
+- **Filter 자동감지 개선**: 첫 행만 체크 → 최대 5행까지 non-null 값 탐색 (sparse 데이터 대응)
+- **SingleSelectFilter `setTimeout(0)` 제거**: StrictMode 해킹을 `useMemo` + `try/catch`로 교체
+- **SingleSelectFilter "All" 하드코딩**: locale `filterAll` 키 사용으로 i18n 대응
+- **DragOverlay 콘텐츠 프리뷰**: Row 드래그 시 첫 3개 셀 값 표시, Column 드래그 시 헤더명 표시
+- **`src/components/index.ts` DataGrid export 누락** 수정
+- **right 핀 컬럼 오프셋**: `getStart('right')` → `getAfter('right')` 올바른 API 사용
+
 ## [1.2.5] - 2026-03-09
 
 ### Added
