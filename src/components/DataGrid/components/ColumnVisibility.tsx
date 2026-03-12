@@ -118,7 +118,9 @@ export const ColumnVisibilityDropdown = memo<ColumnVisibilityDropdownProps>(({
               <span>{toggleAllLabel}</span>
             </label>
             <div className={styles.dropdownDivider} />
-            {table.getAllLeafColumns().map((column) => (
+            {table.getAllLeafColumns()
+              .filter((column) => !column.id.startsWith('_'))
+              .map((column) => (
               <label key={column.id} className={styles.dropdownItem}>
                 <input
                   type="checkbox"
