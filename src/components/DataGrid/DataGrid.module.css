@@ -338,8 +338,7 @@
 .pinnedLeft {
   position: sticky;
   left: 0;
-  z-index: 2;
-  order: -1;
+  z-index: 1;
 }
 
 .pinnedLeftLast {
@@ -349,8 +348,7 @@
 .pinnedRight {
   position: sticky;
   right: 0;
-  z-index: 2;
-  order: 1;
+  z-index: 1;
 }
 
 .pinnedRightFirst {
@@ -570,7 +568,7 @@
 .gridHeader {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 4;
   background: var(--surface-secondary);
   border-bottom: 1px solid var(--border-default);
 }
@@ -611,15 +609,15 @@
 .gridHeaderCell.pinnedLeft,
 .gridHeaderCell.pinnedRight {
   position: sticky;
-  z-index: 1;
+  z-index: 3;
 }
 
 .gridBody {
   position: relative;
   background: var(--surface-primary);
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
+  /* No overflow here — .tableContainer is the single scroll container.
+     This ensures position: sticky (left/right) on pinned cells works
+     relative to .tableContainer for both header and body cells. */
 }
 
 .gridRow {
@@ -628,8 +626,9 @@
   min-height: 48px;
   transition: background-color var(--duration-fast) var(--ease-out);
   box-sizing: border-box;
-  /* Performance: isolate style/layout recalculations */
-  contain: layout style;
+  /* contain: layout breaks position: sticky on child cells,
+     use contain: style only (safe, doesn't affect positioning) */
+  contain: style;
 }
 
 /* Virtual row positioning (absolute) */
@@ -672,8 +671,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box;
-  /* Performance: isolate paint/layout for each cell */
-  contain: layout style paint;
+  /* contain: layout/paint breaks position: sticky on pinned cells,
+     use contain: style only */
+  contain: style;
 }
 
 .gridCell.pinnedLeft,

@@ -419,8 +419,6 @@ export default function DataGridDemos() {
           enableSorting
           enableFiltering={false}
           enablePagination={false}
-          autoSizeColumns
-          fillRemainingSpace="distribute"
           height={350}
           columnPinning={{ left: ['name'] }}
         />

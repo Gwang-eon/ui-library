@@ -496,8 +496,6 @@ function DataGridInner<TData>(
   const [isSelecting, setIsSelecting] = useState(false);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
-  // State-based ref for virtualization (triggers re-render when scroll element is available)
-  const [virtualScrollElement, setVirtualScrollElement] = useState<HTMLDivElement | null>(null);
 
   // Internal state for virtual page size (controllable or uncontrolled)
   const [internalVirtualPageSize, setInternalVirtualPageSize] = useState(virtualPageSize ?? virtualPageSizeOptions[0] ?? 20);
@@ -515,11 +513,6 @@ function DataGridInner<TData>(
     setInternalVirtualPageSize(newSize);
     onVirtualPageSizeChange?.(newSize);
   }, [onVirtualPageSizeChange]);
-
-  // Ref callback for virtualization scroll element
-  const handleVirtualScrollRef = useCallback((element: HTMLDivElement | null) => {
-    setVirtualScrollElement(element);
-  }, []);
 
   // Drag & Drop sensors
   const sensors = useSensors(
@@ -549,7 +542,6 @@ function DataGridInner<TData>(
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
-        enablePinning: false,
         header: ({ table }) => {
           // Single selection mode - no header checkbox/radio
           if (isSingleSelection) {
@@ -609,7 +601,6 @@ function DataGridInner<TData>(
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
-        enablePinning: false,
         header: () => <Pin size={14} className={styles.pinHeaderIcon} />,
         cell: ({ row }) => {
           const isPinned = row.getIsPinned();
@@ -656,7 +647,6 @@ function DataGridInner<TData>(
         enableResizing: false,
         enableSorting: false,
         enableColumnFilter: false,
-        enablePinning: false,
         header: () => null,
         cell: ({ row }) => {
           const canExpand = row.getCanExpand();
@@ -897,6 +887,72 @@ function DataGridInner<TData>(
     return baseSizing;
   }, [autoSizeColumns, calculatedColumnSizing, columnSizingProp, columnSizing]);
 
+  // Intercept column pinning changes to capture rendered widths before pinning.
+  // When fillRemainingSpace causes columns to render wider than their base size,
+  // we lock in the rendered width so pinned columns don't shrink.
+  const handleColumnPinningChange = useCallback((updater: Updater<ColumnPinningState>) => {
+    const oldPinning = columnPinningProp ?? columnPinning;
+    const newPinning = typeof updater === 'function' ? updater(oldPinning) : updater;
+
+    // Find newly pinned columns
+    const oldPinned = new Set([...(oldPinning.left || []), ...(oldPinning.right || [])]);
+    const newlyPinned = [
+      ...(newPinning.left || []),
+      ...(newPinning.right || []),
+    ].filter(id => !oldPinned.has(id) && !id.startsWith('_'));
+
+    // Measure current rendered widths from DOM before pinning takes effect
+    if (newlyPinned.length > 0 && tableContainerRef.current) {
+      const newSizing: Record<string, number> = {};
+      newlyPinned.forEach(colId => {
+        const headerCell = tableContainerRef.current!.querySelector(
+          `[data-column-id="${colId}"]`
+        ) as HTMLElement | null;
+        if (headerCell) {
+          newSizing[colId] = Math.round(headerCell.getBoundingClientRect().width);
+        }
+      });
+
+      if (Object.keys(newSizing).length > 0) {
+        if (onColumnSizingChange) {
+          onColumnSizingChange((prev: ColumnSizingState) => ({ ...prev, ...newSizing }));
+        } else {
+          setColumnSizing(prev => ({ ...prev, ...newSizing }));
+        }
+      }
+    }
+
+    // Apply the pinning change
+    if (onColumnPinningChange) {
+      onColumnPinningChange(newPinning);
+    } else {
+      setColumnPinning(newPinning);
+    }
+  }, [columnPinningProp, columnPinning, onColumnPinningChange, onColumnSizingChange]);
+
+  // Auto-pin special columns (_select, _pin, _expand) when any data column is pinned left.
+  // This ensures checkbox/expand/pin columns stay visible alongside frozen columns.
+  const effectiveColumnPinning = useMemo<ColumnPinningState>(() => {
+    const pinning = columnPinningProp ?? columnPinning;
+    const leftPinned = pinning.left || [];
+
+    // Check if any data (non-special) columns are pinned left
+    const hasDataColumnsPinned = leftPinned.some(id => !id.startsWith('_'));
+    if (!hasDataColumnsPinned) return pinning;
+
+    // Collect IDs of special columns that exist but are not yet in the pinned list
+    const specialColumnIds = columns
+      .filter(col => col.id?.startsWith('_') && !leftPinned.includes(col.id!))
+      .map(col => col.id!);
+
+    if (specialColumnIds.length === 0) return pinning;
+
+    return {
+      ...pinning,
+      left: [...specialColumnIds, ...leftPinned],
+    };
+  }, [columnPinningProp, columnPinning, columns]);
+
   // Table instance
   const table = useReactTable({
     data,
@@ -914,7 +970,7 @@ function DataGridInner<TData>(
       grouping: groupingProp ?? grouping,
       columnVisibility: columnVisibilityProp ?? columnVisibility,
       columnOrder: columnOrderProp ?? columnOrder,
-      columnPinning: columnPinningProp ?? columnPinning,
+      columnPinning: effectiveColumnPinning,
       columnSizing: effectiveColumnSizing,
       rowPinning: rowPinningProp ?? rowPinning,
       pagination: paginationProp ?? pagination,
@@ -927,7 +983,7 @@ function DataGridInner<TData>(
     onGroupingChange: onGroupingChange ?? setGrouping,
     onColumnVisibilityChange: onColumnVisibilityChange ?? setColumnVisibility,
     onColumnOrderChange: onColumnOrderChange ?? setColumnOrder,
-    onColumnPinningChange: onColumnPinningChange ?? setColumnPinning,
+    onColumnPinningChange: handleColumnPinningChange,
     onColumnSizingChange: onColumnSizingChange ?? setColumnSizing,
     onRowPinningChange: onRowPinningChange ?? setRowPinning,
     onPaginationChange: onPaginationChange ?? setPagination,
@@ -1032,39 +1088,33 @@ function DataGridInner<TData>(
   });
 
   // Virtualization
+  // .tableContainer is the single scroll container for both axes.
+  // This ensures position: sticky works for both pinned columns (left/right)
+  // and the header (top) relative to the same scroll ancestor.
   const { rows } = table.getRowModel();
 
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => virtualScrollElement,
+    getScrollElement: () => tableContainerRef.current,
     estimateSize: () => estimateRowHeight,
     overscan,
-    enabled: enableVirtualization && virtualScrollElement !== null,
+    enabled: enableVirtualization,
+    // Account for sticky header height inside the scroll container
+    scrollMargin: showHeader ? HEADER_HEIGHT : 0,
   });
 
   const virtualRows = enableVirtualization ? rowVirtualizer.getVirtualItems() : null;
   const totalSize = enableVirtualization ? rowVirtualizer.getTotalSize() : 0;
 
-  // Force virtualizer to re-measure when scroll element becomes available
-  useEffect(() => {
-    if (enableVirtualization && virtualScrollElement) {
-      // Small delay to ensure DOM has been laid out
-      const timer = setTimeout(() => {
-        rowVirtualizer.measure();
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-  }, [enableVirtualization, virtualScrollElement, rowVirtualizer]);
-
   // Column virtualization
   const visibleColumns = table.getVisibleLeafColumns();
   const columnVirtualizer = useVirtualizer({
     count: visibleColumns.length,
-    getScrollElement: () => virtualScrollElement,
+    getScrollElement: () => tableContainerRef.current,
     estimateSize: (index) => visibleColumns[index]?.getSize() ?? estimateColumnWidth,
     horizontal: true,
     overscan,
-    enabled: enableColumnVirtualization && virtualScrollElement !== null,
+    enabled: enableColumnVirtualization,
   });
 
   // Note: Column virtualization is prepared but rendering integration is deferred
@@ -1996,7 +2046,9 @@ function DataGridInner<TData>(
   ]);
 
   // Helper to calculate flex value based on fillRemainingSpace
-  const getFlexValue = useCallback((size: number, isLastColumn: boolean, isSpecialColumn: boolean = false): string => {
+  const getFlexValue = useCallback((size: number, isLastColumn: boolean, isSpecialColumn: boolean = false, isPinned: false | 'left' | 'right' = false): string => {
+    // Pinned columns must never flex — fixed width for sticky positioning
+    if (isPinned) return `0 0 ${size}px`;
     // Special columns (select, expand, etc.) never flex
     if (isSpecialColumn) return `0 0 ${size}px`;
 
@@ -2039,12 +2091,14 @@ function DataGridInner<TData>(
     return (
       <div
         key={header.id}
+        data-column-id={header.column.id}
         className={cellClasses}
         style={{
-          flex: getFlexValue(header.getSize(), isLastColumn, header.id.startsWith('_')),
+          flex: getFlexValue(header.getSize(), isLastColumn, header.id.startsWith('_'), isPinned || false),
+          width: isPinned ? header.column.getSize() : undefined,
           minWidth: header.getSize(),
-          left: isPinned === 'left' ? header.getStart('left') : undefined,
-          right: isPinned === 'right' ? header.getStart('right') : undefined,
+          left: isPinned === 'left' ? `${header.column.getStart('left')}px` : undefined,
+          right: isPinned === 'right' ? `${header.column.getAfter('right')}px` : undefined,
         }}
         role="columnheader"
         aria-sort={sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined}
@@ -2069,7 +2123,7 @@ function DataGridInner<TData>(
                 </span>
               )}
             </div>
-            {canPin && enableColumnPinning && (
+            {canPin && enableColumnPinning && !header.id.startsWith('_') && (
               <button
                 className={styles.pinButton}
                 onClick={() => {
@@ -2182,10 +2236,11 @@ function DataGridInner<TData>(
           cellId={cell.id}
           className={cellClasses}
           style={{
-            flex: getFlexValue(cell.column.getSize(), isLastColumn, cell.column.id.startsWith('_')),
+            flex: getFlexValue(cell.column.getSize(), isLastColumn, cell.column.id.startsWith('_'), isPinned || false),
+            width: isPinned ? cell.column.getSize() : undefined,
             minWidth: cell.column.getSize(),
-            left: isPinned === 'left' ? cell.column.getStart('left') : undefined,
-            right: isPinned === 'right' ? cell.column.getStart('right') : undefined,
+            left: isPinned === 'left' ? `${cell.column.getStart('left')}px` : undefined,
+            right: isPinned === 'right' ? `${cell.column.getAfter('right')}px` : undefined,
           }}
           rowIndex={row.index}
           columnIndex={cellIndex}
@@ -2424,7 +2479,7 @@ function DataGridInner<TData>(
 
       {/* Table Container */}
       <div
-        ref={enableVirtualization ? undefined : tableContainerRef}
+        ref={tableContainerRef}
         className={styles.tableContainer}
         tabIndex={enableKeyboardNavigation ? 0 : undefined}
         onKeyDown={enableKeyboardNavigation ? handleTableKeyDown : undefined}
@@ -2492,13 +2547,7 @@ function DataGridInner<TData>(
 
               {/* Body - with optional virtualization */}
               <div
-                ref={enableVirtualization ? handleVirtualScrollRef : undefined}
                 className={styles.gridBody}
-                style={enableVirtualization ? {
-                  flex: 1,
-                  overflowY: 'auto',
-                  overflowX: 'hidden'
-                } : undefined}
                 role="rowgroup"
                 onContextMenu={handleBodyContextMenu}
                 onMouseDown={handleBodyMouseDown}
@@ -2550,10 +2599,11 @@ function DataGridInner<TData>(
                             key={header.id}
                             className={footerCellClasses}
                             style={{
-                              flex: getFlexValue(header.getSize(), isLastColumn, header.id.startsWith('_')),
+                              flex: getFlexValue(header.getSize(), isLastColumn, header.id.startsWith('_'), isPinned || false),
+                              width: isPinned ? header.column.getSize() : undefined,
                               minWidth: header.getSize(),
-                              left: isPinned === 'left' ? header.getStart('left') : undefined,
-                              right: isPinned === 'right' ? header.getStart('right') : undefined,
+                              left: isPinned === 'left' ? `${header.column.getStart('left')}px` : undefined,
+                              right: isPinned === 'right' ? `${header.column.getAfter('right')}px` : undefined,
                             }}
                             role="gridcell"
                           >
