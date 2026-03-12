@@ -2471,6 +2471,7 @@ function DataGridInner<TData>(
             {enableColumnVisibility && (
               <ColumnVisibilityDropdown
                 table={table}
+                columnVisibility={columnVisibilityProp ?? columnVisibility}
                 toggleColumnsLabel={t.toggleColumns}
                 toggleAllLabel={t.toggleAll}
                 buttonAriaLabel={t.toggleColumnVisibility}

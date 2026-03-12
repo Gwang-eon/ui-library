@@ -12,6 +12,7 @@ import styles from '../DataGrid.module.css';
 
 interface ColumnVisibilityDropdownProps {
   table: TanStackTable<any>;
+  columnVisibility?: Record<string, boolean>;
   toggleColumnsLabel?: string;
   toggleAllLabel?: string;
   buttonAriaLabel?: string;
@@ -19,6 +20,7 @@ interface ColumnVisibilityDropdownProps {
 
 export const ColumnVisibilityDropdown = memo<ColumnVisibilityDropdownProps>(({
   table,
+  columnVisibility: _columnVisibility,
   toggleColumnsLabel = 'Toggle Columns',
   toggleAllLabel = 'Toggle All',
   buttonAriaLabel = 'Toggle column visibility',

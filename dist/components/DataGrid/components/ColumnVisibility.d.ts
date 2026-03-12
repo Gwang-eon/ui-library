@@ -7,6 +7,7 @@ import React from 'react';
 import { Table as TanStackTable } from '@tanstack/react-table';
 interface ColumnVisibilityDropdownProps {
     table: TanStackTable<any>;
+    columnVisibility?: Record<string, boolean>;
     toggleColumnsLabel?: string;
     toggleAllLabel?: string;
     buttonAriaLabel?: string;
