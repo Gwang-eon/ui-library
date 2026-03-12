@@ -14,10 +14,31 @@ interface DocsModalProps {
 }
 
 // Version info
-const VERSION = '1.2.5';
+const VERSION = '1.2.9';
 
 // Changelog content
 const changelogMd = `# Changelog
+
+## v1.2.9 (2026-03-12)
+
+### Bug Fixes
+- **DataGrid 컬럼 핀(틀고정) 전면 재구현** — TanStack Table 공식 sticky 패턴 적용
+  - \`position: sticky\` + \`column.getStart('left')\` / \`column.getAfter('right')\` 오프셋 계산
+  - 핀된 컬럼 \`flex: 0 0 Xpx\` 고정 — \`fillRemainingSpace\` 모드 무관하게 너비 유지
+  - 핀 변경 시 DOM에서 실제 렌더링 너비 캡처 → \`columnSizing\` 동기화 (너비 축소 방지)
+  - \`contain: layout/paint\` → \`contain: style\`로 변경 (sticky 호환)
+  - \`.gridBody\` overflow 제거 — \`.tableContainer\`가 유일한 스크롤 컨테이너
+  - 특수 컬럼(\`_select\`, \`_pin\`, \`_expand\`) 자동 핀 처리
+  - right 핀 컬럼 오프셋: \`getStart('right')\` → \`getAfter('right')\` 수정
+- **ColumnVisibility 체크박스 미반영** — \`memo\`가 \`table\` 참조 동일로 re-render 차단 → \`columnVisibility\` 상태를 prop으로 전달하여 해결
+- **ColumnVisibility 내부 컬럼 노출** — \`_select\`, \`_expand\`, \`_dragHandle\` 등 내부 컬럼 필터링
+- **Filter 자동감지** — 첫 행만 체크 → 최대 5행까지 non-null 값 탐색 (sparse 데이터 대응)
+- **SingleSelectFilter \`setTimeout(0)\` 제거** — StrictMode 해킹을 \`useMemo\` + \`try/catch\`로 교체
+- **SingleSelectFilter "All" 하드코딩** — locale \`filterAll\` 키 사용으로 i18n 대응
+- **DragOverlay 콘텐츠 프리뷰** — Row: 첫 3개 셀 값, Column: 헤더명 표시
+- **\`src/components/index.ts\` DataGrid export 누락** 수정
+
+---
 
 ## v1.2.5 (2026-03-09)
 
@@ -208,6 +229,16 @@ export const DocsModal = ({ open, onClose }: DocsModalProps) => {
 
                 <h3>Recent Updates</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <UpdateItem
+                    date="2026-03-12"
+                    title="DataGrid 컬럼 핀(틀고정) 전면 재구현"
+                    description="TanStack Table 공식 sticky 패턴 적용, 핀 너비 유지, right 핀 오프셋 수정, 특수 컬럼 자동 핀"
+                  />
+                  <UpdateItem
+                    date="2026-03-12"
+                    title="DataGrid 개선 — ColumnVisibility, Filter, DragOverlay"
+                    description="체크박스 미반영 수정, 내부 컬럼 필터링, Filter 자동감지 개선, DragOverlay 콘텐츠 프리뷰, i18n 대응"
+                  />
                   <UpdateItem
                     date="2026-03-09"
                     title="DataGrid 내부 스크롤 레이아웃"
