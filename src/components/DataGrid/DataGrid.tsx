@@ -688,16 +688,19 @@ function DataGridInner<TData>(
       } else if (col.filterType === 'number') {
         filterFn = 'numberRange';
       } else if (!col.filterType) {
-        // Auto-detect: check first row's value type (use dataRef to avoid dependency)
-        const firstRow = dataRef.current[0];
-        if (firstRow) {
+        // Auto-detect: check up to 5 rows to find a non-null value for type detection
+        const sampleRows = dataRef.current.slice(0, 5);
+        for (const row of sampleRows) {
           const value = col.accessorKey
-            ? (firstRow as any)[col.accessorKey]
+            ? (row as any)[col.accessorKey]
             : col.accessorFn
-              ? col.accessorFn(firstRow)
+              ? col.accessorFn(row)
               : undefined;
-          if (typeof value === 'number') {
-            filterFn = 'numberRange';
+          if (value != null) {
+            if (typeof value === 'number') {
+              filterFn = 'numberRange';
+            }
+            break;
           }
         }
       }
@@ -2151,7 +2154,7 @@ function DataGridInner<TData>(
         )}
         {canFilter && enableFiltering && showColumnFilters && (
           <div className={styles.thFilter}>
-            <ColumnFilter column={header.column} table={table} />
+            <ColumnFilter column={header.column} table={table} locale={t} />
           </div>
         )}
       </div>
@@ -2622,11 +2625,22 @@ function DataGridInner<TData>(
             {/* Row Drag Overlay */}
             {enableRowOrdering && (
               <DragOverlay>
-                {activeRowId && (
-                  <div className={styles.dragOverlay}>
-                    Row {activeRowId}
-                  </div>
-                )}
+                {activeRowId && (() => {
+                  const row = rows.find(r => r.id === activeRowId);
+                  const firstCells = row?.getVisibleCells().slice(0, 3) ?? [];
+                  const preview = firstCells
+                    .map(cell => {
+                      const val = cell.getValue();
+                      return val != null ? String(val) : '';
+                    })
+                    .filter(Boolean)
+                    .join(' · ');
+                  return (
+                    <div className={styles.dragOverlay}>
+                      {preview || `Row ${activeRowId}`}
+                    </div>
+                  );
+                })()}
               </DragOverlay>
             )}
           </DndContext>
@@ -2634,11 +2648,17 @@ function DataGridInner<TData>(
           {/* Column Drag Overlay */}
           {enableColumnDrag && (
             <DragOverlay>
-              {activeColumnId && (
-                <div className={styles.dragOverlay}>
-                  {activeColumnId}
-                </div>
-              )}
+              {activeColumnId && (() => {
+                const col = table.getColumn(activeColumnId);
+                const header = typeof col?.columnDef.header === 'string'
+                  ? col.columnDef.header
+                  : activeColumnId;
+                return (
+                  <div className={styles.dragOverlay}>
+                    {header}
+                  </div>
+                );
+              })()}
             </DragOverlay>
           )}
         </DndContext>

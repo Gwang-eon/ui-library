@@ -26,6 +26,7 @@ export * from './Badge';
 export * from './Avatar';
 export * from './Tag';
 export * from './TagInput';
+export * from './DataGrid';
 export * from './Descriptions';
 export * from './Statistic';
 export * from './Timeline';

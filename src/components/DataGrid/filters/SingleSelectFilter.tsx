@@ -3,7 +3,7 @@
  * Single select dropdown filter for DataGrid columns
  */
 
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Select } from '../../Select';
 import type { FilterOption } from '../types';
 import styles from '../DataGrid.module.css';
@@ -11,29 +11,25 @@ import styles from '../DataGrid.module.css';
 interface SingleSelectFilterProps {
   column: any;
   options?: FilterOption[];
+  allLabel?: string;
 }
 
 export const SingleSelectFilter: React.FC<SingleSelectFilterProps> = ({
   column,
   options: customOptions,
+  allLabel = 'All',
 }) => {
   const columnFilterValue = column.getFilterValue() as string | undefined;
-  const [facetedValues, setFacetedValues] = useState<Map<any, number>>(new Map());
-  const columnRef = useRef(column);
-  columnRef.current = column;
 
-  // Safely get faceted values after mount
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      try {
-        const values = columnRef.current.getFacetedUniqueValues();
-        if (values) setFacetedValues(values);
-      } catch {
-        // Ignore StrictMode errors
-      }
-    }, 0);
-    return () => clearTimeout(timeoutId);
-  }, []);
+  // Get faceted values directly — safe in render since TanStack Table
+  // provides memoized results via getFacetedUniqueValues()
+  const facetedValues = useMemo<Map<any, number>>(() => {
+    try {
+      return column.getFacetedUniqueValues() ?? new Map();
+    } catch {
+      return new Map();
+    }
+  }, [column]);
 
   // Get options from faceted values or custom options
   const options = useMemo(() => {
@@ -52,9 +48,9 @@ export const SingleSelectFilter: React.FC<SingleSelectFilterProps> = ({
 
   // Add "All" option at the beginning
   const selectOptions = useMemo(() => [
-    { value: '', label: 'All' },
+    { value: '', label: allLabel },
     ...options,
-  ], [options]);
+  ], [options, allLabel]);
 
   const handleChange = useCallback((value: string, _option: { value: string; label: string } | null) => {
     column.setFilterValue(value || undefined);
@@ -67,7 +63,7 @@ export const SingleSelectFilter: React.FC<SingleSelectFilterProps> = ({
         options={selectOptions}
         onChange={handleChange}
         size="sm"
-        placeholder="All"
+        placeholder={allLabel}
         fullWidth
       />
     </div>

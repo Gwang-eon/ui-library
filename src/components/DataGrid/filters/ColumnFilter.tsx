@@ -12,14 +12,20 @@ import { DateFilter } from './DateFilter';
 import { NumberRangeFilter } from './NumberRangeFilter';
 import { TextFilter } from './TextFilter';
 
+interface ColumnFilterLocale {
+  filterAll?: string;
+}
+
 interface ColumnFilterProps {
   column: any;
   table: TanStackTable<any>;
+  locale?: ColumnFilterLocale;
 }
 
 export const ColumnFilter = memo<ColumnFilterProps>(({
   column,
   table,
+  locale,
 }) => {
   const columnDef = column.columnDef;
   const filterType: FilterType = columnDef.meta?.filterType ?? columnDef.filterType;
@@ -35,7 +41,7 @@ export const ColumnFilter = memo<ColumnFilterProps>(({
   // Route to appropriate filter based on filterType
   switch (filterType) {
     case 'select':
-      return <SingleSelectFilter column={column} options={filterOptions} />;
+      return <SingleSelectFilter column={column} options={filterOptions} allLabel={locale?.filterAll} />;
     case 'multi-select':
       return <MultiSelectFilter column={column} options={filterOptions} />;
     case 'date':
@@ -45,17 +51,24 @@ export const ColumnFilter = memo<ColumnFilterProps>(({
     case 'number':
       return <NumberRangeFilter column={column} columnName={columnName} />;
     case 'text':
-    default:
-      // Auto-detect based on data type
-      const firstValue = table
-        .getPreFilteredRowModel()
-        .flatRows[0]?.getValue(column.id);
+    default: {
+      // Auto-detect based on data type — check up to 5 rows for non-null value
+      const flatRows = table.getPreFilteredRowModel().flatRows;
+      let detectedNumber = false;
+      for (let i = 0; i < Math.min(5, flatRows.length); i++) {
+        const val = flatRows[i]?.getValue(column.id);
+        if (val != null) {
+          detectedNumber = typeof val === 'number';
+          break;
+        }
+      }
 
-      if (typeof firstValue === 'number') {
+      if (detectedNumber) {
         return <NumberRangeFilter column={column} columnName={columnName} />;
       }
 
       return <TextFilter column={column} columnName={columnName} />;
+    }
   }
 });
 
